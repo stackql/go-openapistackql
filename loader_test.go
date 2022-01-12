@@ -1,9 +1,10 @@
 package openapistackql_test
 
 import (
-	. "openapistackql"
 	"os"
 	"testing"
+
+	. "github.com/stackql/openapistackql"
 
 	"gotest.tools/assert"
 )
@@ -69,15 +70,16 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 
 	assert.Assert(t, s != "")
 
-	f, err := os.OpenFile(outFile, os.O_RDWR|os.O_CREATE, 0666)
+	f, err := os.OpenFile(outFile, os.O_TRUNC|os.O_RDWR|os.O_CREATE, 0666)
 	assert.NilError(t, err)
 
 	f.WriteString("package apptestwrite\n\n")
 	f.WriteString("import(\n")
-	f.WriteString(`  "github.com/stackql/openapistackql"`)
-	f.WriteString(`  "github.com/getkin/kin-openapi/openapi3"\n`)
+	f.WriteString(`  "encoding/json"` + "\n\n")
+	f.WriteString(`  "github.com/getkin/kin-openapi/openapi3"` + "\n")
+	f.WriteString(`  "github.com/stackql/openapistackql"` + "\n")
 	f.WriteString(")\n\n")
-	f.WriteString(s)
+	f.WriteString("var Svc *openapistackql.Service = " + s)
 
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed")
 }
