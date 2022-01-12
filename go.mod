@@ -3,6 +3,7 @@ module openapistackql
 go 1.16
 
 require (
+	github.com/davecgh/go-spew v1.1.1
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/jsonpointer v0.19.5
