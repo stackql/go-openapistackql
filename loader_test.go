@@ -73,7 +73,7 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 	f, err := os.OpenFile(outFile, os.O_TRUNC|os.O_RDWR|os.O_CREATE, 0666)
 	assert.NilError(t, err)
 
-	f.WriteString("package apptestwrite\n\n")
+	f.WriteString("package main\n\n")
 	f.WriteString("import(\n")
 	f.WriteString(`  "encoding/json"` + "\n\n")
 	f.WriteString(`  "github.com/getkin/kin-openapi/openapi3"` + "\n")
