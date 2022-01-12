@@ -9,6 +9,7 @@ require (
 	github.com/go-openapi/jsonpointer v0.19.5
 	github.com/magiconair/properties v1.8.1
 	github.com/sirupsen/logrus v1.8.1
+	github.com/stackql/go-spew v0.0.0-20180830191138-d8f796af33cc
 	github.com/stretchr/testify v1.5.1
 	gopkg.in/yaml.v2 v2.4.0
 	gotest.tools v2.2.0+incompatible

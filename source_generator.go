@@ -3,11 +3,19 @@ package openapistackql
 import (
 	"os"
 
-	"github.com/davecgh/go-spew/spew"
+	"github.com/stackql/go-spew/spew"
 )
 
+func getSpewConfig() *spew.ConfigState {
+	cs := spew.NewDefaultConfig()
+	cs.DisableCapacities = true
+	cs.DisablePointerAddresses = true
+	return cs
+}
+
 func (svc *Service) AsSourceString() string {
-	return spew.Sdump(svc)
+	cs := getSpewConfig()
+	return cs.Sdump(svc)
 }
 
 func (svc *Service) ToSourceFile(outFile string) error {
@@ -15,6 +23,7 @@ func (svc *Service) ToSourceFile(outFile string) error {
 	if err != nil {
 		return err
 	}
-	spew.Fdump(f, svc)
+	cs := getSpewConfig()
+	cs.Fdump(f, svc)
 	return nil
 }
