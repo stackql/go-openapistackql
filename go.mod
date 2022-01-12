@@ -3,7 +3,7 @@ module github.com/stackql/openapistackql
 go 1.16
 
 require (
-	github.com/stackql/go-spew v1.1.3-alpha15
+	github.com/stackql/go-spew v1.1.3-alpha16
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/jsonpointer v0.19.5
