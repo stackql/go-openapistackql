@@ -10,6 +10,7 @@ func getSpewConfig() *spew.ConfigState {
 	cs := spew.NewDefaultConfig()
 	cs.DisableCapacities = true
 	cs.DisablePointerAddresses = true
+	cs.AsGolangSource = true
 	return cs
 }
 
