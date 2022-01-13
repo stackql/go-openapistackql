@@ -1,4 +1,4 @@
-module github.com/stackql/openapistackql
+module github.com/stackql/go-openapistackql
 
 go 1.16
 
