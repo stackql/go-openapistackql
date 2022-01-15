@@ -1328,6 +1328,8 @@ providerServices:
     preferred: true
     service:
       $ref: googleapis.com/services/compute-v1.yaml
+    resources:
+      $ref: googleapis.com/resources/compute-v1.yaml
     title: Compute Engine API
     version: v1
   compute:alpha:

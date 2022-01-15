@@ -28,14 +28,14 @@ type Provider struct {
 
 type ProviderService struct {
 	openapi3.ExtensionProps
-	ID           string            `json:"id" yaml:"id"`           // Required
-	Name         string            `json:"name" yaml:"name"`       // Required
-	Title        string            `json:"title" yaml:"title"`     // Required
-	Version      string            `json:"version" yaml:"version"` // Required
-	Description  string            `json:"description" yaml:"description"`
-	Preferred    bool              `json:"preferred" yaml:"preferred"`
-	ServiceRef   *ServiceRef       `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
-	ResourcesRef *ResourceRegister `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
+	ID           string        `json:"id" yaml:"id"`           // Required
+	Name         string        `json:"name" yaml:"name"`       // Required
+	Title        string        `json:"title" yaml:"title"`     // Required
+	Version      string        `json:"version" yaml:"version"` // Required
+	Description  string        `json:"description" yaml:"description"`
+	Preferred    bool          `json:"preferred" yaml:"preferred"`
+	ServiceRef   *ServiceRef   `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
+	ResourcesRef *ResourcesRef `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
 
 }
 
@@ -45,11 +45,19 @@ func (sv *ProviderService) ConditionIsValid(lhs string, rhs interface{}) bool {
 }
 
 func getService(url string) (*Service, error) {
-	b, err := GetServiceDocBytes(url)
+	b, err := getServiceDocBytes(url)
 	if err != nil {
 		return nil, err
 	}
 	return LoadServiceDocFromBytes(b)
+}
+
+func getResourcesShallow(url string) (*ResourceRegister, error) {
+	b, err := getServiceDocBytes(url)
+	if err != nil {
+		return nil, err
+	}
+	return loadResourcesShallow(b)
 }
 
 func (pr *Provider) MarshalJSON() ([]byte, error) {
@@ -117,6 +125,10 @@ func (ps ProviderService) GetService() (*Service, error) {
 	}
 	ps.ServiceRef.Value = svc
 	return ps.ServiceRef.Value, nil
+}
+
+func (ps ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
+	return getResourcesShallow(ps.ResourcesRef.Ref)
 }
 
 func (ps *ProviderService) GetName() string {

@@ -174,3 +174,21 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed")
 }
+
+func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
+	b, err := GetServiceDocBytes("googleapis.com/resources/compute-v1.yaml")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	rr, err := LoadResourcesShallow(b)
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, rr != nil)
+	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services/compute-v1.yaml")
+
+	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed")
+}

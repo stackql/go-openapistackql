@@ -12,6 +12,13 @@ type ResourceRegister struct {
 	Resources      map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
 }
 
+func NewResourceRegister() ResourceRegister {
+	return ResourceRegister{
+		ServiceDocPath: &ServiceRef{},
+		Resources:      make(map[string]*Resource),
+	}
+}
+
 type Resource struct {
 	ID                string      `json:"id" yaml:"id"`       // Required
 	Name              string      `json:"name" yaml:"name"`   // Required

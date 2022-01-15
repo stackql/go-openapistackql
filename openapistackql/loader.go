@@ -43,13 +43,17 @@ type Loader struct {
 	visitedPathItem         map[*openapi3.PathItem]struct{}
 }
 
-func loadResourcesShallow(bt []byte) (map[string]*Resource, error) {
-	rscMap := make(map[string]*Resource)
-	err := yaml.Unmarshal(bt, rscMap)
+func LoadResourcesShallow(bt []byte) (*ResourceRegister, error) {
+	return loadResourcesShallow(bt)
+}
+
+func loadResourcesShallow(bt []byte) (*ResourceRegister, error) {
+	rv := NewResourceRegister()
+	err := yaml.Unmarshal(bt, &rv)
 	if err != nil {
 		return nil, err
 	}
-	return rscMap, nil
+	return &rv, nil
 }
 
 func (l *Loader) LoadFromBytes(bytes []byte) (*Service, error) {
@@ -220,7 +224,7 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 	return os.ReadFile(fn)
 }
 
-func GetServiceDocBytes(url string) ([]byte, error) {
+func getServiceDocBytes(url string) ([]byte, error) {
 	if !IgnoreEmbedded {
 		pathElems := strings.Split(url, "/")
 		prov := pathElems[0]
@@ -241,6 +245,14 @@ func GetServiceDocBytes(url string) ([]byte, error) {
 		}
 	}
 	return os.ReadFile(path.Join(OpenapiFileRoot, url))
+}
+
+func GetResourcesRegisterDocBytes(url string) ([]byte, error) {
+	return getServiceDocBytes(url)
+}
+
+func GetServiceDocBytes(url string) ([]byte, error) {
+	return getServiceDocBytes(url)
 }
 
 func LoadProviderByName(provider string) (*Provider, error) {
