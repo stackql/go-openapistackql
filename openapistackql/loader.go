@@ -43,6 +43,15 @@ type Loader struct {
 	visitedPathItem         map[*openapi3.PathItem]struct{}
 }
 
+func loadResourcesShallow(bt []byte) (map[string]*Resource, error) {
+	rscMap := make(map[string]*Resource)
+	err := yaml.Unmarshal(bt, rscMap)
+	if err != nil {
+		return nil, err
+	}
+	return rscMap, nil
+}
+
 func (l *Loader) LoadFromBytes(bytes []byte) (*Service, error) {
 	doc, err := l.LoadFromData(bytes)
 	if err != nil {

@@ -7,13 +7,19 @@ import (
 	"vitess.io/vitess/go/sqltypes"
 )
 
+type ResourceRegister struct {
+	ServiceDocPath *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	Resources      map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
+}
+
 type Resource struct {
-	ID                string  `json:"id" yaml:"id"`       // Required
-	Name              string  `json:"name" yaml:"name"`   // Required
-	Title             string  `json:"title" yaml:"title"` // Required
-	Description       string  `json:"description,omitempty" yaml:"desription,omitempty"`
-	SelectorAlgorithm string  `json:"selectorAlgorithm,omitempty" yaml:"selectorAlgorithm,omitempty"`
-	Methods           Methods `json:"methods" yaml:"methods"`
+	ID                string      `json:"id" yaml:"id"`       // Required
+	Name              string      `json:"name" yaml:"name"`   // Required
+	Title             string      `json:"title" yaml:"title"` // Required
+	Description       string      `json:"description,omitempty" yaml:"desription,omitempty"`
+	SelectorAlgorithm string      `json:"selectorAlgorithm,omitempty" yaml:"selectorAlgorithm,omitempty"`
+	Methods           Methods     `json:"methods" yaml:"methods"`
+	ServiceDocPath    *ServiceRef `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 
 	// Hacks
 	BaseUrl string `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"`

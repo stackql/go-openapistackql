@@ -24,6 +24,11 @@ type ServiceRef struct {
 	Value *Service
 }
 
+type ResourcesRef struct {
+	Ref   string `json:"$ref" yaml:"$ref"`
+	Value *ResourceRegister
+}
+
 var _ jsonpointer.JSONPointable = (*OperationRef)(nil)
 
 func (value *OperationRef) MarshalJSON() ([]byte, error) {

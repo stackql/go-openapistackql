@@ -67,13 +67,14 @@ type OperationStore struct {
 	MethodKey string `json:"-" yaml:"-"`
 	SQLVerb   string `json:"sqlVerb" yaml:"sqlVerb"` // Required
 	// Optional parameters.
-	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
-	PathItemRef  *PathItemRef           `json:"path" yaml:"path"`           // Required
-	APIMethod    string                 `json:"apiMethod" yaml:"apiMethod"` // Required
-	OperationRef *OperationRef          `json:"operation" yaml:"operation"` // Required
-	Request      *ExpectedRequest       `json:"request" yaml:"request"`
-	Response     *ExpectedResponse      `json:"response" yaml:"response"`
-	Servers      *openapi3.Servers      `json:"servers" yaml:"servers"`
+	Parameters     map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
+	PathItemRef    *PathItemRef           `json:"path" yaml:"path"`           // Required
+	APIMethod      string                 `json:"apiMethod" yaml:"apiMethod"` // Required
+	OperationRef   *OperationRef          `json:"operation" yaml:"operation"` // Required
+	Request        *ExpectedRequest       `json:"request" yaml:"request"`
+	Response       *ExpectedResponse      `json:"response" yaml:"response"`
+	Servers        *openapi3.Servers      `json:"servers" yaml:"servers"`
+	ServiceDocPath *ServiceRef            `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	// private
 	parameterizedPath string `json:"-" yaml:"-"`
 }
