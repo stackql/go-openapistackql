@@ -53,7 +53,7 @@ func loadResourcesShallow(bt []byte) (*ResourceRegister, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &rv, nil
+	return rv, nil
 }
 
 func (l *Loader) LoadFromBytes(bytes []byte) (*Service, error) {
@@ -63,6 +63,24 @@ func (l *Loader) LoadFromBytes(bytes []byte) (*Service, error) {
 	}
 	svc := NewService(doc)
 	err = l.extractResources(svc)
+	if err != nil {
+		return nil, err
+	}
+	return svc, nil
+}
+
+func (l *Loader) LoadFromBytesAndResources(rr *ResourceRegister, resourceKey string, bytes []byte) (*Service, error) {
+	doc, err := l.LoadFromData(bytes)
+	if err != nil {
+		return nil, err
+	}
+	svc := NewService(doc)
+	docUrl := rr.ObtainServiceDocUrl(resourceKey)
+	if docUrl != "" {
+		err = l.mergeResourcesScoped(svc, docUrl, rr)
+	} else {
+		err = l.mergeResources(svc, rr.Resources)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -90,31 +108,63 @@ func (l *Loader) extractResources(svc *Service) error {
 	if err != nil {
 		return err
 	}
+	return l.mergeResources(svc, rscMap)
+}
 
+func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource) error {
 	for _, rsc := range rscMap {
-		for k, v := range rsc.Methods {
-			v.MethodKey = k
-			err := l.resolvePathItemRef(svc, v.PathItemRef)
-			if err != nil {
-				return err
-			}
-			err = l.resolveOperationRef(svc, v.OperationRef, v.PathItemRef.Ref)
-			if err != nil {
-				return err
-			}
-			err = l.resolveExpectedRequest(svc, v.OperationRef.Value, v.Request)
-			if err != nil {
-				return err
-			}
-			err = l.resolveExpectedResponse(svc, v.OperationRef.Value, v.Response)
-			if err != nil {
-				return err
-			}
-			v.Servers = &svc.Servers
-			rsc.Methods[k] = v
+		err := l.mergeResource(svc, rsc)
+		if err != nil {
+			return err
 		}
 	}
 	svc.rsc = rscMap
+	return nil
+}
+
+func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceRegister) error {
+	scopedMap := make(map[string]*Resource)
+	for k, rsc := range rr.Resources {
+		if rr.ObtainServiceDocUrl(k) == svcUrl {
+			err := l.mergeResource(svc, rsc)
+			if err != nil {
+				return err
+			}
+			scopedMap[k] = rsc
+		}
+	}
+	if svc.rsc == nil {
+		svc.rsc = scopedMap
+		return nil
+	}
+	for k, v := range scopedMap {
+		svc.rsc[k] = v
+	}
+	return nil
+}
+
+func (l *Loader) mergeResource(svc *Service, rsc *Resource) error {
+	for k, v := range rsc.Methods {
+		v.MethodKey = k
+		err := l.resolvePathItemRef(svc, v.PathItemRef)
+		if err != nil {
+			return err
+		}
+		err = l.resolveOperationRef(svc, v.OperationRef, v.PathItemRef.Ref)
+		if err != nil {
+			return err
+		}
+		err = l.resolveExpectedRequest(svc, v.OperationRef.Value, v.Request)
+		if err != nil {
+			return err
+		}
+		err = l.resolveExpectedResponse(svc, v.OperationRef.Value, v.Response)
+		if err != nil {
+			return err
+		}
+		v.Servers = &svc.Servers
+		rsc.Methods[k] = v
+	}
 	return nil
 }
 
@@ -327,6 +377,11 @@ func getProviderDoc(provider string) (string, error) {
 func loadServiceDocFromBytes(bytes []byte) (*Service, error) {
 	loader := NewLoader()
 	return loader.LoadFromBytes(bytes)
+}
+
+func LoadServiceSubsetDocFromBytes(rr *ResourceRegister, resourceKey string, bytes []byte) (*Service, error) {
+	loader := NewLoader()
+	return loader.LoadFromBytesAndResources(rr, resourceKey, bytes)
 }
 
 func loadProviderDocFromBytes(bytes []byte) (*Provider, error) {

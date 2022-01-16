@@ -12,8 +12,20 @@ type ResourceRegister struct {
 	Resources      map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
 }
 
-func NewResourceRegister() ResourceRegister {
-	return ResourceRegister{
+func (rr *ResourceRegister) ObtainServiceDocUrl(resourceKey string) string {
+	var rv string
+	if rr.ServiceDocPath != nil {
+		rv = rr.ServiceDocPath.Ref
+	}
+	rsc, ok := rr.Resources[resourceKey]
+	if ok && rsc.ServiceDocPath != nil && rsc.ServiceDocPath.Ref != "" {
+		rv = rsc.ServiceDocPath.Ref
+	}
+	return rv
+}
+
+func NewResourceRegister() *ResourceRegister {
+	return &ResourceRegister{
 		ServiceDocPath: &ServiceRef{},
 		Resources:      make(map[string]*Resource),
 	}
