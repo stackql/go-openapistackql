@@ -143,6 +143,33 @@ func (ps *ProviderService) GetService() (*Service, error) {
 	return ps.ServiceRef.Value, nil
 }
 
+func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, error) {
+	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
+		return ps.GetService()
+	}
+	rr, err := ps.GetResourcesShallow()
+	if err != nil {
+		return nil, err
+	}
+	rsc, ok := rr.Resources[resourceKey]
+	if !ok {
+		return nil, fmt.Errorf("cannot locate resource for key = '%s'", resourceKey)
+	}
+	if rsc.ServiceDocPath == nil || rsc.ServiceDocPath.Ref == "" {
+		return nil, fmt.Errorf("no service doc available for resourceKey = '%s'", resourceKey)
+	}
+	sb, err := getServiceDocBytes(rsc.ServiceDocPath.Ref)
+	if err != nil {
+		return nil, err
+	}
+	svc, err := LoadServiceSubsetDocFromBytes(rr, resourceKey, sb)
+	if err != nil {
+		return nil, err
+	}
+	ps.ServiceRef.Value = svc
+	return ps.ServiceRef.Value, nil
+}
+
 func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
 		return nil, fmt.Errorf("cannot resolve shallow resources")
