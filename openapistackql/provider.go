@@ -108,14 +108,30 @@ func (ps *ProviderService) GetKey(lhs string) (interface{}, error) {
 }
 
 func (pr *Provider) GetService(key string) (*Service, error) {
-	sh, ok := pr.ProviderServices[key]
-	if !ok {
-		return nil, fmt.Errorf("cannot resolve service with key = '%s'", key)
+	sh, err := pr.getProviderService(key)
+	if err != nil {
+		return nil, err
 	}
 	return sh.GetService()
 }
 
-func (ps ProviderService) GetService() (*Service, error) {
+func (pr *Provider) GetResourcesShallow(serviceKey string) (*ResourceRegister, error) {
+	sh, err := pr.getProviderService(serviceKey)
+	if err != nil {
+		return nil, err
+	}
+	return sh.GetResourcesShallow()
+}
+
+func (pr *Provider) getProviderService(key string) (*ProviderService, error) {
+	sh, ok := pr.ProviderServices[key]
+	if !ok {
+		return nil, fmt.Errorf("cannot resolve service with key = '%s'", key)
+	}
+	return &sh, nil
+}
+
+func (ps *ProviderService) GetService() (*Service, error) {
 	if ps.ServiceRef.Value != nil {
 		return ps.ServiceRef.Value, nil
 	}
@@ -127,7 +143,10 @@ func (ps ProviderService) GetService() (*Service, error) {
 	return ps.ServiceRef.Value, nil
 }
 
-func (ps ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
+func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
+	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
+		return nil, fmt.Errorf("cannot resolve shallow resources")
+	}
 	return getResourcesShallow(ps.ResourcesRef.Ref)
 }
 

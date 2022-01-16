@@ -192,3 +192,22 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed")
 }
+
+func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
+
+	pr, err := LoadProviderByName("google")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	rr, err := pr.GetResourcesShallow("compute")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, rr != nil)
+	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services/compute-v1.yaml")
+
+	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed")
+}
