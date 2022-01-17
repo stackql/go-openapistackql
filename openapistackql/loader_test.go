@@ -49,7 +49,7 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 
 	assert.NilError(t, err)
 
-	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed")
+	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
 }
 
 func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
@@ -86,7 +86,7 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 	f.WriteString(")\n\n")
 	f.WriteString("var Svc *openapistackql.Service = " + s)
 
-	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed")
+	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
 }
 
 func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
@@ -129,7 +129,7 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 
 	// assert.Assert(t, sv.Components.Schemas != nil)
 
-	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed")
+	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
 }
 
 func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
@@ -172,7 +172,7 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 
 	// assert.Assert(t, sv.Components.Schemas != nil)
 
-	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed")
+	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
 }
 
 func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
@@ -190,7 +190,7 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
 	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services/compute-v1.yaml")
 
-	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed")
+	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
 
 func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
@@ -209,7 +209,7 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
 	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services/compute-v1.yaml")
 
-	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed")
+	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
 
 func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
@@ -240,5 +240,39 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 	}
 	assert.Assert(t, sv != nil)
 
-	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed")
+	sn := sv.GetName()
+
+	assert.Equal(t, sn, "compute")
+
+	t.Logf("TestIndirectGoogleComputeServiceSubsetJsonRead passed\n")
+}
+
+func TestIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
+
+	pr, err := LoadProviderByName("google")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	sh, err := pr.GetProviderService("compute")
+
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, sh != nil)
+
+	sv, err := sh.GetServiceFragment("instances")
+
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, sv != nil)
+
+	sn := sv.GetName()
+
+	assert.Equal(t, sn, "compute")
+
+	t.Logf("TestIndirectGoogleComputeServiceSubsetAccess passed\n")
 }

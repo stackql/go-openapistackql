@@ -131,6 +131,10 @@ func (pr *Provider) getProviderService(key string) (*ProviderService, error) {
 	return &sh, nil
 }
 
+func (pr *Provider) GetProviderService(key string) (*ProviderService, error) {
+	return pr.getProviderService(key)
+}
+
 func (ps *ProviderService) GetService() (*Service, error) {
 	if ps.ServiceRef.Value != nil {
 		return ps.ServiceRef.Value, nil
@@ -141,6 +145,20 @@ func (ps *ProviderService) GetService() (*Service, error) {
 	}
 	ps.ServiceRef.Value = svc
 	return ps.ServiceRef.Value, nil
+}
+
+func (ps *ProviderService) getServiceDocRef(rr *ResourceRegister, rsc *Resource) string {
+	var rv string
+	if ps.ServiceRef != nil && ps.ServiceRef.Ref != "" {
+		rv = ps.ServiceRef.Ref
+	}
+	if rr.ServiceDocPath != nil && rr.ServiceDocPath.Ref != "" {
+		rv = rr.ServiceDocPath.Ref
+	}
+	if rsc.ServiceDocPath != nil && rsc.ServiceDocPath.Ref != "" {
+		rv = rsc.ServiceDocPath.Ref
+	}
+	return rv
 }
 
 func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, error) {
@@ -155,10 +173,11 @@ func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, err
 	if !ok {
 		return nil, fmt.Errorf("cannot locate resource for key = '%s'", resourceKey)
 	}
-	if rsc.ServiceDocPath == nil || rsc.ServiceDocPath.Ref == "" {
+	sdRef := ps.getServiceDocRef(rr, rsc)
+	if sdRef == "" {
 		return nil, fmt.Errorf("no service doc available for resourceKey = '%s'", resourceKey)
 	}
-	sb, err := getServiceDocBytes(rsc.ServiceDocPath.Ref)
+	sb, err := getServiceDocBytes(sdRef)
 	if err != nil {
 		return nil, err
 	}
