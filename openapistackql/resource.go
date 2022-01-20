@@ -91,7 +91,6 @@ func (rs *Resource) ToMap(extended bool) map[string]interface{} {
 	retVal["id"] = rs.ID
 	retVal["name"] = rs.Name
 	retVal["title"] = rs.Title
-	retVal["type"] = rs.GetSelectableObject()
 	retVal["description"] = rs.Description
 	return retVal
 }
