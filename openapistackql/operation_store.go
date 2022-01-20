@@ -444,7 +444,7 @@ func (op *OperationStore) IsRequiredRequestBodyProperty(key string) bool {
 }
 
 func (op *OperationStore) GetResponseBodySchema() (*Schema, error) {
-	if op.Response != nil {
+	if op.Response != nil && op.Response.Schema != nil {
 		return op.Response.Schema, nil
 	}
 	return nil, fmt.Errorf("no response body for operation =  %s", op.GetName())
