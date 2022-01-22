@@ -189,6 +189,13 @@ func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, err
 	return ps.ServiceRef.Value, nil
 }
 
+func (ps *ProviderService) PeekServiceFragment(resourceKey string) (*Service, bool) {
+	if ps.ServiceRef == nil || ps.ServiceRef.Value == nil {
+		return nil, false
+	}
+	return ps.ServiceRef.Value, true
+}
+
 func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
 		return nil, fmt.Errorf("cannot resolve shallow resources")
