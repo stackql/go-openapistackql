@@ -18,12 +18,12 @@ type ResponseKeys struct {
 type Provider struct {
 	openapi3.ExtensionProps
 	ResponseKeys
-	ID               string                     `json:"id" yaml:"id"`
-	Name             string                     `json:"name" yaml:"name"`
-	Title            string                     `json:"title" yaml:"title"`
-	Version          string                     `json:"version" yaml:"version"`
-	Description      string                     `json:"description,omitempty" yaml:"desription,omitempty"`
-	ProviderServices map[string]ProviderService `json:"providerServices,omitempty" yaml:"providerServices,omitempty"`
+	ID               string                      `json:"id" yaml:"id"`
+	Name             string                      `json:"name" yaml:"name"`
+	Title            string                      `json:"title" yaml:"title"`
+	Version          string                      `json:"version" yaml:"version"`
+	Description      string                      `json:"description,omitempty" yaml:"desription,omitempty"`
+	ProviderServices map[string]*ProviderService `json:"providerServices,omitempty" yaml:"providerServices,omitempty"`
 }
 
 type ProviderService struct {
@@ -128,7 +128,7 @@ func (pr *Provider) getProviderService(key string) (*ProviderService, error) {
 	if !ok {
 		return nil, fmt.Errorf("cannot resolve service with key = '%s'", key)
 	}
-	return &sh, nil
+	return sh, nil
 }
 
 func (pr *Provider) GetProviderService(key string) (*ProviderService, error) {
@@ -147,21 +147,22 @@ func (ps *ProviderService) GetService() (*Service, error) {
 	return ps.ServiceRef.Value, nil
 }
 
-func (ps *ProviderService) getServiceDocRef(rr *ResourceRegister, rsc *Resource) string {
-	var rv string
+func (ps *ProviderService) getServiceDocRef(rr *ResourceRegister, rsc *Resource) ServiceRef {
+	var rv ServiceRef
 	if ps.ServiceRef != nil && ps.ServiceRef.Ref != "" {
-		rv = ps.ServiceRef.Ref
+		rv = *ps.ServiceRef
 	}
 	if rr.ServiceDocPath != nil && rr.ServiceDocPath.Ref != "" {
-		rv = rr.ServiceDocPath.Ref
+		rv = *rr.ServiceDocPath
 	}
 	if rsc.ServiceDocPath != nil && rsc.ServiceDocPath.Ref != "" {
-		rv = rsc.ServiceDocPath.Ref
+		rv = *rsc.ServiceDocPath
 	}
 	return rv
 }
 
 func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, error) {
+
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
 		return ps.GetService()
 	}
@@ -174,10 +175,13 @@ func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, err
 		return nil, fmt.Errorf("cannot locate resource for key = '%s'", resourceKey)
 	}
 	sdRef := ps.getServiceDocRef(rr, rsc)
-	if sdRef == "" {
+	if sdRef.Ref == "" {
 		return nil, fmt.Errorf("no service doc available for resourceKey = '%s'", resourceKey)
 	}
-	sb, err := getServiceDocBytes(sdRef)
+	if sdRef.Value != nil {
+		return sdRef.Value, nil
+	}
+	sb, err := getServiceDocBytes(sdRef.Ref)
 	if err != nil {
 		return nil, err
 	}
@@ -199,6 +203,9 @@ func (ps *ProviderService) PeekServiceFragment(resourceKey string) (*Service, bo
 func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
 		return nil, fmt.Errorf("cannot resolve shallow resources")
+	}
+	if ps.ResourcesRef.Value != nil {
+		return ps.ResourcesRef.Value, nil
 	}
 	return getResourcesShallow(ps.ResourcesRef.Ref)
 }
