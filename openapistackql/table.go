@@ -34,6 +34,7 @@ func NewColumnDescriptor(alias string, name string, decoratedCol string, schema 
 }
 
 type Tabulation struct {
+	alias     string
 	columns   []ColumnDescriptor
 	name      string
 	arrayType string

@@ -217,7 +217,7 @@ func (s *Schema) IsArrayRef() bool {
 	return s.Items != nil && s.Items.Value != nil
 }
 
-func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
+func (s *Schema) Tabulate(alias string, omitColumns bool) *Tabulation {
 	if s.Type == "object" || (s.Properties != nil && len(s.Properties) > 0) {
 		var cols []ColumnDescriptor
 		if !omitColumns {
@@ -232,15 +232,15 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 				}
 			}
 		}
-		return &Tabulation{columns: cols, name: s.GetName()}
+		return &Tabulation{alias: alias, columns: cols, name: s.GetName()}
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			return NewSchema(items, "").Tabulate(false)
+			return NewSchema(items, "").Tabulate(alias, false)
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: "_", Schema: s}
-		return &Tabulation{columns: []ColumnDescriptor{cd}, name: s.Title}
+		return &Tabulation{alias: alias, columns: []ColumnDescriptor{cd}, name: s.Title}
 	}
 	return nil
 }
