@@ -7,13 +7,38 @@ import (
 	"vitess.io/vitess/go/sqltypes"
 )
 
+type ResourceRegister struct {
+	ServiceDocPath *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	Resources      map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
+}
+
+func (rr *ResourceRegister) ObtainServiceDocUrl(resourceKey string) string {
+	var rv string
+	if rr.ServiceDocPath != nil {
+		rv = rr.ServiceDocPath.Ref
+	}
+	rsc, ok := rr.Resources[resourceKey]
+	if ok && rsc.ServiceDocPath != nil && rsc.ServiceDocPath.Ref != "" {
+		rv = rsc.ServiceDocPath.Ref
+	}
+	return rv
+}
+
+func NewResourceRegister() *ResourceRegister {
+	return &ResourceRegister{
+		ServiceDocPath: &ServiceRef{},
+		Resources:      make(map[string]*Resource),
+	}
+}
+
 type Resource struct {
-	ID                string  `json:"id" yaml:"id"`       // Required
-	Name              string  `json:"name" yaml:"name"`   // Required
-	Title             string  `json:"title" yaml:"title"` // Required
-	Description       string  `json:"description,omitempty" yaml:"desription,omitempty"`
-	SelectorAlgorithm string  `json:"selectorAlgorithm,omitempty" yaml:"selectorAlgorithm,omitempty"`
-	Methods           Methods `json:"methods" yaml:"methods"`
+	ID                string      `json:"id" yaml:"id"`       // Required
+	Name              string      `json:"name" yaml:"name"`   // Required
+	Title             string      `json:"title" yaml:"title"` // Required
+	Description       string      `json:"description,omitempty" yaml:"desription,omitempty"`
+	SelectorAlgorithm string      `json:"selectorAlgorithm,omitempty" yaml:"selectorAlgorithm,omitempty"`
+	Methods           Methods     `json:"methods" yaml:"methods"`
+	ServiceDocPath    *ServiceRef `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 
 	// Hacks
 	BaseUrl string `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"`
@@ -66,7 +91,6 @@ func (rs *Resource) ToMap(extended bool) map[string]interface{} {
 	retVal["id"] = rs.ID
 	retVal["name"] = rs.Name
 	retVal["title"] = rs.Title
-	retVal["type"] = rs.GetSelectableObject()
 	retVal["description"] = rs.Description
 	return retVal
 }

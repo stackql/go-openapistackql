@@ -48,14 +48,12 @@ func GetResourcesHeader(extended bool) []string {
 		retVal = []string{
 			"name",
 			"id",
-			"type",
 			"description",
 		}
 	} else {
 		retVal = []string{
 			"name",
 			"id",
-			"type",
 		}
 	}
 	return retVal
