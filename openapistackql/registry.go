@@ -65,6 +65,25 @@ func (r *Registry) GetResourcesRegisterDocBytes(url string) ([]byte, error) {
 	return r.getDocBytes(url)
 }
 
+func (r *Registry) GetService(url string) (*Service, error) {
+	b, err := r.getDocBytes(url)
+	if err != nil {
+		return nil, err
+	}
+	return LoadServiceDocFromBytes(b)
+}
+
+func (r *Registry) GetResourcesShallow(url string) (*ResourceRegister, error) {
+	b, err := r.getDocBytes(url)
+	if err != nil {
+		return nil, err
+	}
+	if err != nil {
+		return nil, err
+	}
+	return loadResourcesShallow(b)
+}
+
 func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 	if r.isHttp() {
 		cl := &http.Client{}
