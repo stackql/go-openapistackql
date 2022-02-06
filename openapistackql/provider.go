@@ -115,12 +115,12 @@ func (pr *Provider) GetService(key string) (*Service, error) {
 	return sh.GetService()
 }
 
-func (pr *Provider) GetResourcesShallow(serviceKey string) (*ResourceRegister, error) {
+func (pr *Provider) GetResourcesShallow(registry *Registry, serviceKey string) (*ResourceRegister, error) {
 	sh, err := pr.getProviderService(serviceKey)
 	if err != nil {
 		return nil, err
 	}
-	return sh.GetResourcesShallow()
+	return sh.GetResourcesShallow(registry)
 }
 
 func (pr *Provider) getProviderService(key string) (*ProviderService, error) {
@@ -161,12 +161,12 @@ func (ps *ProviderService) getServiceDocRef(rr *ResourceRegister, rsc *Resource)
 	return rv
 }
 
-func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, error) {
+func (ps *ProviderService) GetServiceFragment(registry *Registry, resourceKey string) (*Service, error) {
 
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
 		return ps.GetService()
 	}
-	rr, err := ps.GetResourcesShallow()
+	rr, err := ps.GetResourcesShallow(registry)
 	if err != nil {
 		return nil, err
 	}
@@ -200,7 +200,7 @@ func (ps *ProviderService) PeekServiceFragment(resourceKey string) (*Service, bo
 	return ps.ServiceRef.Value, true
 }
 
-func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
+func (ps *ProviderService) GetResourcesShallow(registry *Registry) (*ResourceRegister, error) {
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
 		if ps.ServiceRef != nil || ps.ServiceRef.Ref != "" {
 			svc, err := ps.GetService()

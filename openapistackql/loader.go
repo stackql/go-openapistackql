@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path"
 	"sort"
@@ -22,8 +23,8 @@ const (
 )
 
 var (
-	OpenapiFileRoot string
 	IgnoreEmbedded  bool
+	OpenapiFileRoot string
 )
 
 func init() {
@@ -240,6 +241,17 @@ func LoadProviderDocFromFile(fileName string) (*Provider, error) {
 		return nil, err
 	}
 	return loadProviderDocFromBytes(bytes)
+}
+
+func GetProviderDocBytesFromRegistry(prov string, version string, registryUrl string, t *http.Transport) ([]byte, error) {
+	if IgnoreEmbedded {
+		r, err := newRegistry(registryUrl, t)
+		if err != nil {
+			return nil, err
+		}
+		return r.GetProviderDocBytes(prov, version)
+	}
+	return nil, fmt.Errorf("yuk")
 }
 
 func GetProviderDocBytes(prov string) ([]byte, error) {
