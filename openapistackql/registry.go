@@ -86,7 +86,14 @@ func (r *Registry) GetService(url string) (*Service, error) {
 	return LoadServiceDocFromBytes(b)
 }
 
-func (r *Registry) GetResourcesShallow(pr *ProviderService, serviceKey string) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallowFromProvider(pr *Provider, serviceKey string) (*ResourceRegister, error) {
+	if r.useEmbedded {
+		return pr.GetResourcesShallow(serviceKey)
+	}
+	return pr.getResourcesShallowWithRegistry(r, serviceKey)
+}
+
+func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService, serviceKey string) (*ResourceRegister, error) {
 	if r.useEmbedded {
 		return pr.GetResourcesShallow()
 	}
