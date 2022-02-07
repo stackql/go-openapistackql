@@ -41,7 +41,7 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "application")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Application.spew.raw.txt")
+	outFile, err := GetFilePathFromRepositoryRoot("test/_output/Application.spew.raw.txt")
 
 	assert.NilError(t, err)
 
@@ -67,7 +67,7 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "application")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Application.spew.go")
+	outFile, err := GetFilePathFromRepositoryRoot("test/_output/Application.spew.go")
 
 	assert.NilError(t, err)
 
@@ -104,7 +104,7 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "application")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Application.json")
+	outFile, err := GetFilePathFromRepositoryRoot("test/_output/Application.json")
 
 	assert.NilError(t, err)
 
@@ -147,7 +147,7 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "compute")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Compute.json")
+	outFile, err := GetFilePathFromRepositoryRoot("test/_output/Compute.json")
 
 	assert.NilError(t, err)
 

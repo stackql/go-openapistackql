@@ -20,14 +20,14 @@ var (
 
 type Registry struct {
 	regUrl    *url.URL
-	transport *http.Transport
+	transport http.RoundTripper
 }
 
-func NewRegistry(registryUrl string, transport *http.Transport) (*Registry, error) {
+func NewRegistry(registryUrl string, transport http.RoundTripper) (*Registry, error) {
 	return newRegistry(registryUrl, transport)
 }
 
-func newRegistry(registryUrl string, transport *http.Transport) (*Registry, error) {
+func newRegistry(registryUrl string, transport http.RoundTripper) (*Registry, error) {
 	if registryUrl == "" {
 		registryUrl = defaultRegistryUrlString
 	}
