@@ -5,10 +5,10 @@ import (
 	"fmt"
 )
 
-//go:embed embeddedproviders/googleapis.com/* embeddedproviders/googleapis.com/services/* embeddedproviders/googleapis.com/services-split/*/* embeddedproviders/googleapis.com/resources/*
+//go:embed embeddedproviders/googleapis.com/v1/* embeddedproviders/googleapis.com/v1/services/* embeddedproviders/googleapis.com/v1/services-split/*/* embeddedproviders/googleapis.com/v1/resources/*
 var googleProvider embed.FS
 
-//go:embed embeddedproviders/okta/* embeddedproviders/okta/*/*
+//go:embed embeddedproviders/okta/v1/* embeddedproviders/okta/v1/*/*
 var oktaProvider embed.FS
 
 func GetEmbeddedProvider(prov string) (embed.FS, error) {

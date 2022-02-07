@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"path"
 	"sort"
@@ -243,22 +242,11 @@ func LoadProviderDocFromFile(fileName string) (*Provider, error) {
 	return loadProviderDocFromBytes(bytes)
 }
 
-func GetProviderDocBytesFromRegistry(prov string, version string, registryUrl string, t *http.Transport) ([]byte, error) {
-	if IgnoreEmbedded {
-		r, err := newRegistry(registryUrl, t)
-		if err != nil {
-			return nil, err
-		}
-		return r.GetProviderDocBytes(prov, version)
-	}
-	return nil, fmt.Errorf("yuk")
-}
-
 func GetProviderDocBytes(prov string) ([]byte, error) {
 	if !IgnoreEmbedded {
 		switch prov {
 		case "google":
-			entries, err := googleProvider.ReadDir("embeddedproviders/googleapis.com")
+			entries, err := googleProvider.ReadDir("embeddedproviders/googleapis.com/v1")
 			if err != nil {
 				return nil, fmt.Errorf("wtf: %s", err.Error())
 			}
@@ -266,7 +254,7 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 			if err != nil {
 				return nil, fmt.Errorf("huh: %s", err.Error())
 			}
-			return googleProvider.ReadFile(path.Join("embeddedproviders/googleapis.com", fn))
+			return googleProvider.ReadFile(path.Join("embeddedproviders/googleapis.com/v1", fn))
 		case "okta":
 			entries, err := oktaProvider.ReadDir("embeddedproviders/okta")
 			if err != nil {
@@ -276,7 +264,7 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 			if err != nil {
 				return nil, fmt.Errorf("huh: %s", err.Error())
 			}
-			return oktaProvider.ReadFile(path.Join("embeddedproviders/okta", fn))
+			return oktaProvider.ReadFile(path.Join("embeddedproviders/okta/v1", fn))
 		}
 	}
 	fn, err := getProviderDoc(prov)

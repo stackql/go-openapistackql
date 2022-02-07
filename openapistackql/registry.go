@@ -19,15 +19,16 @@ var (
 )
 
 type Registry struct {
-	regUrl    *url.URL
-	transport http.RoundTripper
+	regUrl      *url.URL
+	transport   http.RoundTripper
+	useEmbedded bool
 }
 
-func NewRegistry(registryUrl string, transport http.RoundTripper) (*Registry, error) {
-	return newRegistry(registryUrl, transport)
+func NewRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (*Registry, error) {
+	return newRegistry(registryUrl, transport, useEmbedded)
 }
 
-func newRegistry(registryUrl string, transport http.RoundTripper) (*Registry, error) {
+func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (*Registry, error) {
 	if registryUrl == "" {
 		registryUrl = defaultRegistryUrlString
 	}
@@ -36,8 +37,9 @@ func newRegistry(registryUrl string, transport http.RoundTripper) (*Registry, er
 		return nil, err
 	}
 	return &Registry{
-		regUrl:    regUrl,
-		transport: transport,
+		regUrl:      regUrl,
+		transport:   transport,
+		useEmbedded: useEmbedded,
 	}, nil
 }
 
@@ -49,12 +51,23 @@ func (r *Registry) GetDocBytes(docPath string) ([]byte, error) {
 	return r.getDocBytes(docPath)
 }
 
-func (r *Registry) GetProviderDocBytes(prov string, version string) ([]byte, error) {
+func (r *Registry) getProviderDocBytes(prov string, version string) ([]byte, error) {
 	switch prov {
 	case "google":
 		prov = "googleapis.com"
 	}
 	return r.getDocBytes(path.Join(prov, version, "provider.yaml"))
+}
+
+func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
+	if r.useEmbedded {
+		return LoadProviderByName(prov)
+	}
+	b, err := r.getProviderDocBytes(prov, version)
+	if err != nil {
+		return nil, err
+	}
+	return LoadProviderDocFromBytes(b)
 }
 
 func (r *Registry) GetServiceDocBytes(url string) ([]byte, error) {
@@ -73,7 +86,14 @@ func (r *Registry) GetService(url string) (*Service, error) {
 	return LoadServiceDocFromBytes(b)
 }
 
-func (r *Registry) GetResourcesShallow(url string) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallow(pr *ProviderService, serviceKey string) (*ResourceRegister, error) {
+	if r.useEmbedded {
+		return pr.GetResourcesShallow()
+	}
+	return pr.getResourcesShallowWithRegistry(r)
+}
+
+func (r *Registry) GetResourcesShallowFromURL(url string) (*ResourceRegister, error) {
 	b, err := r.getDocBytes(url)
 	if err != nil {
 		return nil, err
@@ -85,6 +105,9 @@ func (r *Registry) GetResourcesShallow(url string) (*ResourceRegister, error) {
 }
 
 func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
+	if r.useEmbedded {
+		return getServiceDocBytes(docPath)
+	}
 	if r.isHttp() {
 		cl := &http.Client{}
 		if r.transport != nil {

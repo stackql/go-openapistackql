@@ -49,14 +49,26 @@ func getMockRoundTripper(registryUrl string) (http.RoundTripper, error) {
 	return NewSimpleMockRegistryRoundTripper("test/registry/src", u), nil
 }
 
-func getMockRegistry() (*Registry, error) {
+func getMockAnyRegistry(useEmbedded bool) (*Registry, error) {
 	rt, err := getMockRoundTripper(defaultRegistryUrlString)
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(defaultRegistryUrlString, rt)
+	return NewRegistry(defaultRegistryUrlString, rt, useEmbedded)
+}
+
+func getMockEmbeddedRegistry() (*Registry, error) {
+	return getMockAnyRegistry(true)
+}
+
+func getMockRemoteRegistry() (*Registry, error) {
+	return getMockAnyRegistry(false)
+}
+
+func GetMockEmbeddedRegistry() (*Registry, error) {
+	return getMockEmbeddedRegistry()
 }
 
 func GetMockRegistry() (*Registry, error) {
-	return getMockRegistry()
+	return getMockRemoteRegistry()
 }

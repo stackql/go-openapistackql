@@ -11,7 +11,7 @@ import (
 )
 
 func TestSimpleOktaApplicationServiceRead(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -27,7 +27,7 @@ func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 }
 
 func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -53,7 +53,7 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 }
 
 func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -90,7 +90,7 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 }
 
 func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -133,7 +133,7 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 }
 
 func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
-	b, err := GetServiceDocBytes("googleapis.com/services-split/compute/compute-v1.yaml")
+	b, err := GetServiceDocBytes("googleapis.com/v1/services-split/compute/compute-v1.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -176,7 +176,7 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 }
 
 func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
-	b, err := GetServiceDocBytes("googleapis.com/resources/compute-v1.yaml")
+	b, err := GetServiceDocBytes("googleapis.com/v1/resources/compute-v1.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -188,7 +188,7 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services-split/compute/compute-v1.yaml")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
@@ -207,7 +207,7 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services-split/compute/compute-v1.yaml")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
@@ -226,7 +226,7 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services-split/compute/compute-v1.yaml")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	sb, err := GetServiceDocBytes(rr.ServiceDocPath.Ref)
 	if err != nil {
