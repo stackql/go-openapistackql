@@ -45,3 +45,37 @@ func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
+
+func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
+
+	r, err := GetMockRegistry()
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	pr, err := r.LoadProviderByName("google", "v1")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	rr, err := r.GetResourcesShallowFromProvider(pr, "compute")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, rr != nil)
+	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
+
+	sv, err := r.GetService(rr.ServiceDocPath.Ref)
+
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	assert.Assert(t, sv != nil)
+
+	sn := sv.GetName()
+
+	assert.Equal(t, sn, "compute")
+
+	t.Logf("TestIndirectGoogleComputeServiceSubsetJsonRead passed\n")
+}
