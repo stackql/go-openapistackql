@@ -200,7 +200,7 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 		t.Fatalf("Test failed: %v", err)
 	}
 
-	rr, err := pr.GetResourcesShallow(nil, "compute")
+	rr, err := pr.GetResourcesShallow("compute")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -219,7 +219,7 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 		t.Fatalf("Test failed: %v", err)
 	}
 
-	rr, err := pr.GetResourcesShallow(nil, "compute")
+	rr, err := pr.GetResourcesShallow("compute")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -262,7 +262,7 @@ func TestIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 
 	assert.Assert(t, sh != nil)
 
-	sv, err := sh.GetServiceFragment(nil, "instances")
+	sv, err := sh.GetServiceFragment("instances")
 
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
