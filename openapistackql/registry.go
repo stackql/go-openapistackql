@@ -111,6 +111,13 @@ func (r *Registry) GetResourcesShallowFromURL(url string) (*ResourceRegister, er
 	return loadResourcesShallow(b)
 }
 
+func (r *Registry) GetServiceFromProviderService(ps *ProviderService) (*Service, error) {
+	if ps.ServiceRef == nil || ps.ServiceRef.Ref == "" {
+		return nil, fmt.Errorf("no service reachable for %s", ps.GetName())
+	}
+	return r.GetService(ps.ServiceRef.Ref)
+}
+
 func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (*Service, error) {
 
 	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
