@@ -79,3 +79,37 @@ func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
 	t.Logf("TestIndirectGoogleComputeServiceSubsetJsonRead passed\n")
 }
+
+func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
+
+	r, err := GetMockRegistry()
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	pr, err := r.LoadProviderByName("google", "v1")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	sh, err := pr.GetProviderService("compute")
+
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, sh != nil)
+
+	sv, err := r.GetServiceFragment(sh, "instances")
+
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Assert(t, sv != nil)
+
+	sn := sv.GetName()
+
+	assert.Equal(t, sn, "compute")
+
+	t.Logf("TestIndirectGoogleComputeServiceSubsetAccess passed\n")
+}

@@ -93,7 +93,7 @@ func (r *Registry) GetResourcesShallowFromProvider(pr *Provider, serviceKey stri
 	return pr.getResourcesShallowWithRegistry(r, serviceKey)
 }
 
-func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService, serviceKey string) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService) (*ResourceRegister, error) {
 	if r.useEmbedded {
 		return pr.GetResourcesShallow()
 	}
@@ -109,6 +109,41 @@ func (r *Registry) GetResourcesShallowFromURL(url string) (*ResourceRegister, er
 		return nil, err
 	}
 	return loadResourcesShallow(b)
+}
+
+func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (*Service, error) {
+
+	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
+		if ps.ServiceRef == nil || ps.ServiceRef.Ref == "" {
+			return nil, fmt.Errorf("no service or resources reachable for %s", ps.GetName())
+		}
+		return r.GetService(ps.ServiceRef.Ref)
+	}
+	rr, err := r.GetResourcesShallowFromProviderService(ps)
+	if err != nil {
+		return nil, err
+	}
+	rsc, ok := rr.Resources[resourceKey]
+	if !ok {
+		return nil, fmt.Errorf("cannot locate resource for key = '%s'", resourceKey)
+	}
+	sdRef := ps.getServiceDocRef(rr, rsc)
+	if sdRef.Ref == "" {
+		return nil, fmt.Errorf("no service doc available for resourceKey = '%s'", resourceKey)
+	}
+	if sdRef.Value != nil {
+		return sdRef.Value, nil
+	}
+	sb, err := r.getDocBytes(sdRef.Ref)
+	if err != nil {
+		return nil, err
+	}
+	svc, err := LoadServiceSubsetDocFromBytes(rr, resourceKey, sb)
+	if err != nil {
+		return nil, err
+	}
+	ps.ServiceRef.Value = svc
+	return ps.ServiceRef.Value, nil
 }
 
 func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
