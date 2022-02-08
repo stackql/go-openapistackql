@@ -256,7 +256,7 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 			}
 			return googleProvider.ReadFile(path.Join("embeddedproviders/googleapis.com/v1", fn))
 		case "okta":
-			entries, err := oktaProvider.ReadDir("embeddedproviders/okta")
+			entries, err := oktaProvider.ReadDir("embeddedproviders/okta/v1")
 			if err != nil {
 				return nil, fmt.Errorf("wtf: %s", err.Error())
 			}
