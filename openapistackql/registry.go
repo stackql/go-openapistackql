@@ -5,17 +5,21 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"regexp"
+	"strings"
 )
 
 const (
 	defaultRegistryUrlString string = "https://raw.githubusercontent.com/stackql/stackql-provider-registry/intial-devel/providers/src"
 	httpSchemeRegexpString   string = `(?i)^https?$`
+	fileSchemeRegexpString   string = `(?i)^file?$`
 )
 
 var (
 	httpSchemeRegexp *regexp.Regexp = regexp.MustCompile(httpSchemeRegexpString)
+	fileSchemeRegexp *regexp.Regexp = regexp.MustCompile(fileSchemeRegexpString)
 )
 
 type RegistryAPI interface {
@@ -58,6 +62,14 @@ func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bo
 
 func (r *Registry) isHttp() bool {
 	return httpSchemeRegexp.MatchString(r.regUrl.Scheme)
+}
+
+func (r *Registry) isFile() bool {
+	return fileSchemeRegexp.MatchString(r.regUrl.Scheme)
+}
+
+func (r *Registry) isLocalFile() bool {
+	return r.isFile() && strings.HasPrefix(r.regUrl.Path, "/")
 }
 
 func (r *Registry) GetDocBytes(docPath string) ([]byte, error) {
@@ -181,6 +193,13 @@ func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 		}
 		defer response.Body.Close()
 		return io.ReadAll(response.Body)
+	}
+	if r.isLocalFile() {
+		b, err := os.ReadFile(path.Join(r.regUrl.Path, docPath))
+		if err != nil {
+			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
+		}
+		return b, nil
 	}
 	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
 }
