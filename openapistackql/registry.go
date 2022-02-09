@@ -18,17 +18,30 @@ var (
 	httpSchemeRegexp *regexp.Regexp = regexp.MustCompile(httpSchemeRegexpString)
 )
 
+type RegistryAPI interface {
+	GetDocBytes(string) ([]byte, error)
+	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
+	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
+	GetResourcesShallowFromURL(string) (*ResourceRegister, error)
+	GetService(string) (*Service, error)
+	GetServiceFragment(*ProviderService, string) (*Service, error)
+	GetServiceFromProviderService(*ProviderService) (*Service, error)
+	GetServiceDocBytes(string) ([]byte, error)
+	GetResourcesRegisterDocBytes(string) ([]byte, error)
+	LoadProviderByName(string, string) (*Provider, error)
+}
+
 type Registry struct {
 	regUrl      *url.URL
 	transport   http.RoundTripper
 	useEmbedded bool
 }
 
-func NewRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (*Registry, error) {
+func NewRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
 	return newRegistry(registryUrl, transport, useEmbedded)
 }
 
-func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (*Registry, error) {
+func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
 	if registryUrl == "" {
 		registryUrl = defaultRegistryUrlString
 	}
