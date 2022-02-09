@@ -9,10 +9,41 @@ import (
 )
 
 func TestRegistrySimpleOktaApplicationServiceRead(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaApplicationServiceRead)
+}
+
+func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeResourcesJsonRead)
+}
+
+func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
+}
+
+func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
+}
+
+func TestLocalRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
+}
+
+func execLocalAndRemoteRegistryTests(t *testing.T, tf func(t *testing.T, r RegistryAPI)) {
+
 	r, err := GetMockRegistry()
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
+	tf(t, r)
+
+	r, err = GetMockLocalRegistry()
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	tf(t, r)
+}
+
+func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAPI) {
 	svc, err := r.GetService("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
@@ -23,12 +54,8 @@ func TestRegistrySimpleOktaApplicationServiceRead(t *testing.T) {
 	t.Logf("TestSimpleOktaServiceRead passed")
 }
 
-func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
+func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r RegistryAPI) {
 
-	r, err := GetMockRegistry()
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
 	pr, err := r.LoadProviderByName("google", "v1")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
@@ -46,12 +73,8 @@ func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
 
-func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
+func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r RegistryAPI) {
 
-	r, err := GetMockRegistry()
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
 	pr, err := r.LoadProviderByName("google", "v1")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
@@ -78,30 +101,6 @@ func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 	assert.Equal(t, sn, "compute")
 
 	t.Logf("TestIndirectGoogleComputeServiceSubsetJsonRead passed\n")
-}
-
-func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
-
-	r, err := GetMockRegistry()
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t, r)
-}
-
-func TestLocalRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
-
-	r, err := GetMockRegistry()
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t, r)
-
-	r, err = GetMockLocalRegistry()
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t, r)
 }
 
 func execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T, r RegistryAPI) {
