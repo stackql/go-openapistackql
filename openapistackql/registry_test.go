@@ -86,6 +86,26 @@ func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
+	execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t, r)
+}
+
+func TestLocalRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
+
+	r, err := GetMockRegistry()
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t, r)
+
+	r, err = GetMockLocalRegistry()
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+	execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t, r)
+}
+
+func execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T, r RegistryAPI) {
+
 	pr, err := r.LoadProviderByName("google", "v1")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)

@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"os"
@@ -49,7 +50,7 @@ func getMockRoundTripper(registryUrl string) (http.RoundTripper, error) {
 	return NewSimpleMockRegistryRoundTripper("test/registry/src", u), nil
 }
 
-func getMockAnyRegistry(useEmbedded bool) (RegistryAPI, error) {
+func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
 	rt, err := getMockRoundTripper(defaultRegistryUrlString)
 	if err != nil {
 		return nil, err
@@ -57,12 +58,24 @@ func getMockAnyRegistry(useEmbedded bool) (RegistryAPI, error) {
 	return NewRegistry(defaultRegistryUrlString, rt, useEmbedded)
 }
 
+func getMockFileRegistry(registryRoot string, useEmbedded bool) (RegistryAPI, error) {
+	return NewRegistry(registryRoot, nil, useEmbedded)
+}
+
 func getMockEmbeddedRegistry() (RegistryAPI, error) {
-	return getMockAnyRegistry(true)
+	return getMockHttpRegistry(true)
 }
 
 func getMockRemoteRegistry() (RegistryAPI, error) {
-	return getMockAnyRegistry(false)
+	return getMockHttpRegistry(false)
+}
+
+func getMockLocalRegistry() (RegistryAPI, error) {
+	localRegPath, err := GetFilePathFromRepositoryRoot("test/registry/src")
+	if err != nil {
+		return nil, err
+	}
+	return getMockFileRegistry(fmt.Sprintf("file://%s", localRegPath), false)
 }
 
 func GetMockEmbeddedRegistry() (RegistryAPI, error) {
@@ -71,4 +84,8 @@ func GetMockEmbeddedRegistry() (RegistryAPI, error) {
 
 func GetMockRegistry() (RegistryAPI, error) {
 	return getMockRemoteRegistry()
+}
+
+func GetMockLocalRegistry() (RegistryAPI, error) {
+	return getMockLocalRegistry()
 }
