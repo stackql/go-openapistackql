@@ -13,6 +13,7 @@ require (
 	github.com/spf13/viper v1.3.2
 	github.com/stackql/go-spew v1.1.3-alpha24
 	github.com/stretchr/testify v1.5.1
+	golang.org/x/crypto v0.0.0-20200220183623-bac4c82f6975
 	gopkg.in/yaml.v2 v2.4.0
 	gotest.tools v2.2.0+incompatible
 	vitess.io/vitess v0.0.9-alpha5
