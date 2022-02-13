@@ -335,7 +335,7 @@ func findLatestDoc(serviceDir string) (string, error) {
 func getLatestFile(entries []fs.DirEntry) (string, error) {
 	var fileNames []string
 	for _, entry := range entries {
-		if !entry.IsDir() {
+		if !entry.IsDir() && (strings.HasSuffix(entry.Name(), ".yaml") || strings.HasSuffix(entry.Name(), ".json")) {
 			fileNames = append(fileNames, entry.Name())
 		}
 	}

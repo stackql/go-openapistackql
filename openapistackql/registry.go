@@ -178,6 +178,13 @@ func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (
 	return ps.ServiceRef.Value, nil
 }
 
+func checkSignature(rawBytes, sigBytes []byte) error {
+	if sigBytes == nil {
+		return fmt.Errorf("nil signature")
+	}
+	return nil
+}
+
 func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 	if r.useEmbedded {
 		return getServiceDocBytes(docPath)
@@ -191,15 +198,40 @@ func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+		sigResponse, err := cl.Get(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
+		if err != nil {
+			return nil, err
+		}
 		defer response.Body.Close()
-		return io.ReadAll(response.Body)
+		defer sigResponse.Body.Close()
+		rb, err := io.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
+		sb, err := io.ReadAll(sigResponse.Body)
+		if err != nil {
+			return nil, err
+		}
+		err = checkSignature(rb, sb)
+		if err != nil {
+			return nil, err
+		}
+		return rb, nil
 	}
 	if r.isLocalFile() {
-		b, err := os.ReadFile(path.Join(r.regUrl.Path, docPath))
+		rb, err := os.ReadFile(path.Join(r.regUrl.Path, docPath))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
 		}
-		return b, nil
+		sb, err := os.ReadFile(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
+		if err != nil {
+			return nil, fmt.Errorf("cannot read local signature file: '%s'", err.Error())
+		}
+		err = checkSignature(rb, sb)
+		if err != nil {
+			return nil, err
+		}
+		return rb, nil
 	}
 	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
 }
