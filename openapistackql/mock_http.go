@@ -73,7 +73,7 @@ func getMockRemoteRegistry() (RegistryAPI, error) {
 }
 
 func getMockLocalRegistry() (RegistryAPI, error) {
-	localRegPath, err := fileutil.GetFilePathFromRepositoryRoot("test/registry/src")
+	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry/src")
 	if err != nil {
 		return nil, err
 	}
