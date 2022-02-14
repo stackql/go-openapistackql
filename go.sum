@@ -747,6 +747,8 @@ github.com/stackql/stackql-provider-registry v0.0.1-alpha3 h1:IbB5Bn1POYVsBKGMuY
 github.com/stackql/stackql-provider-registry v0.0.1-alpha3/go.mod h1:2Zw/OeEvFlDijJKcac26T3PjuouXfHOhgLXm+Sgg2/A=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha4 h1:sLYcyoBsyQiAHvR9OhcozulBjIoA4vt6aqnHXbVQdKc=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha4/go.mod h1:2Zw/OeEvFlDijJKcac26T3PjuouXfHOhgLXm+Sgg2/A=
+github.com/stackql/stackql-provider-registry v0.0.1-alpha6 h1:qWASLSivmDGZSTBEOi1LfTm1/7BOPBIDtY8wTbmiiYA=
+github.com/stackql/stackql-provider-registry v0.0.1-alpha6/go.mod h1:2Zw/OeEvFlDijJKcac26T3PjuouXfHOhgLXm+Sgg2/A=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.2.0/go.mod h1:qt09Ya8vawLte6SNmTgCsAVtYtaKzEcn8ATUoHMkEqE=
