@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"crypto/x509"
 	"fmt"
 	"io"
 	"net/http"
@@ -9,6 +10,8 @@ import (
 	"path"
 	"regexp"
 	"strings"
+
+	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
 )
 
 const (
@@ -39,6 +42,7 @@ type Registry struct {
 	regUrl      *url.URL
 	transport   http.RoundTripper
 	useEmbedded bool
+	verifier    *edcrypto.Verifier
 }
 
 func NewRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
@@ -53,10 +57,15 @@ func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bo
 	if err != nil {
 		return nil, err
 	}
+	ver, err := edcrypto.NewVerifier(edcrypto.NewVerifierConfig("", "", ""))
+	if err != nil {
+		return nil, err
+	}
 	return &Registry{
 		regUrl:      regUrl,
 		transport:   transport,
 		useEmbedded: useEmbedded,
+		verifier:    ver,
 	}, nil
 }
 
@@ -178,17 +187,20 @@ func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (
 	return ps.ServiceRef.Value, nil
 }
 
-func checkSignature(rawBytes, sigBytes []byte) error {
-	if sigBytes == nil {
-		return fmt.Errorf("nil signature")
+func (r *Registry) checkSignature(docUrl string, verFile, sigFile io.ReadCloser) (*edcrypto.VerifierResponse, error) {
+	if sigFile == nil {
+		return nil, fmt.Errorf("nil signature")
 	}
-	return nil
+	vc := edcrypto.NewVerifyContext(docUrl, sigFile, verFile, "base64", true, x509.VerifyOptions{})
+	vr, err := r.verifier.VerifyFileFromCertificateBytes(vc)
+	return &vr, err
 }
 
 func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 	if r.useEmbedded {
 		return getServiceDocBytes(docPath)
 	}
+	verifyUrl := path.Join(r.regUrl.String(), docPath)
 	if r.isHttp() {
 		cl := &http.Client{}
 		if r.transport != nil {
@@ -204,34 +216,32 @@ func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 		}
 		defer response.Body.Close()
 		defer sigResponse.Body.Close()
-		rb, err := io.ReadAll(response.Body)
+		vr, err := r.checkSignature(verifyUrl, response.Body, sigResponse.Body)
 		if err != nil {
 			return nil, err
 		}
-		sb, err := io.ReadAll(sigResponse.Body)
-		if err != nil {
-			return nil, err
+		if vr == nil || !vr.IsVerified {
+			return nil, fmt.Errorf("signature check failed for url = '%s'", verifyUrl)
 		}
-		err = checkSignature(rb, sb)
-		if err != nil {
-			return nil, err
-		}
-		return rb, nil
+		return io.ReadAll(vr.VerifyFile)
 	}
 	if r.isLocalFile() {
-		rb, err := os.ReadFile(path.Join(r.regUrl.Path, docPath))
+		rb, err := os.Open(path.Join(r.regUrl.Path, docPath))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
 		}
-		sb, err := os.ReadFile(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
+		sb, err := os.Open(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local signature file: '%s'", err.Error())
 		}
-		err = checkSignature(rb, sb)
+		vr, err := r.checkSignature(verifyUrl, rb, sb)
 		if err != nil {
 			return nil, err
 		}
-		return rb, nil
+		if vr == nil || !vr.IsVerified {
+			return nil, fmt.Errorf("signature check failed for url = '%s'", verifyUrl)
+		}
+		return io.ReadAll(vr.VerifyFile)
 	}
 	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
 }
