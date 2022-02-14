@@ -200,7 +200,12 @@ func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 	if r.useEmbedded {
 		return getServiceDocBytes(docPath)
 	}
-	verifyUrl := path.Join(r.regUrl.String(), docPath)
+	fullUrl, err := url.Parse(r.regUrl.String())
+	if err != nil {
+		return nil, err
+	}
+	fullUrl.Path = path.Join(fullUrl.Path, docPath)
+	verifyUrl := fullUrl.String()
 	if r.isHttp() {
 		cl := &http.Client{}
 		if r.transport != nil {
