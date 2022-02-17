@@ -57,11 +57,11 @@ func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(defaultRegistryUrlString, rt, useEmbedded)
+	return NewRegistry(defaultRegistryUrlString, "", rt, useEmbedded)
 }
 
 func getMockFileRegistry(registryRoot string, useEmbedded bool) (RegistryAPI, error) {
-	return NewRegistry(registryRoot, nil, useEmbedded)
+	return NewRegistry(registryRoot, "", nil, useEmbedded)
 }
 
 func getMockEmbeddedRegistry() (RegistryAPI, error) {

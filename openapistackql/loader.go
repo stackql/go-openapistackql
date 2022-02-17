@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"io/ioutil"
 	"os"
@@ -274,27 +275,28 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 	return os.ReadFile(fn)
 }
 
-func getServiceDocBytes(url string) ([]byte, error) {
+func getServiceDoc(url string) (io.ReadCloser, error) {
 	if !IgnoreEmbedded {
 		pathElems := strings.Split(url, "/")
 		prov := pathElems[0]
 		// svc := pathElems[1]
 		switch prov {
 		case "google", "googleapis.com":
-			// entries, err := googleProvider.ReadDir(path.Join("embeddedproviders/googleapis.com", svc))
-			// if err != nil {
-			// 	return nil, fmt.Errorf("wtf: %s", err.Error())
-			// }
-			// fn, err := getLatestFile(entries)
-			// if err != nil {
-			// 	return nil, fmt.Errorf("huh: %s", err.Error())
-			// }
-			return googleProvider.ReadFile(path.Join("embeddedproviders", strings.ReplaceAll(url, "/google/", "/googleapis.com/")))
+			return googleProvider.Open(path.Join("embeddedproviders", strings.ReplaceAll(url, "/google/", "/googleapis.com/")))
 		case "okta":
-			return oktaProvider.ReadFile(path.Join("embeddedproviders", url))
+			return oktaProvider.Open(path.Join("embeddedproviders", url))
 		}
 	}
-	return os.ReadFile(path.Join(OpenapiFileRoot, url))
+	return os.Open(path.Join(OpenapiFileRoot, url))
+}
+
+func getServiceDocBytes(url string) ([]byte, error) {
+	f, err := getServiceDoc(url)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	return io.ReadAll(f)
 }
 
 func GetResourcesRegisterDocBytes(url string) ([]byte, error) {

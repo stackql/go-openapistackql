@@ -26,6 +26,7 @@ var (
 )
 
 type RegistryAPI interface {
+	PullArchive(archivePath string) (io.ReadCloser, error)
 	GetDocBytes(string) ([]byte, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
@@ -39,17 +40,18 @@ type RegistryAPI interface {
 }
 
 type Registry struct {
-	regUrl      *url.URL
-	transport   http.RoundTripper
-	useEmbedded bool
-	verifier    *edcrypto.Verifier
+	regUrl       *url.URL
+	localDocRoot string
+	transport    http.RoundTripper
+	useEmbedded  bool
+	verifier     *edcrypto.Verifier
 }
 
-func NewRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
-	return newRegistry(registryUrl, transport, useEmbedded)
+func NewRegistry(registryUrl string, localDocRoot string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
+	return newRegistry(registryUrl, localDocRoot, transport, useEmbedded)
 }
 
-func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
+func newRegistry(registryUrl string, localDocRoot string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
 	if registryUrl == "" {
 		registryUrl = defaultRegistryUrlString
 	}
@@ -62,10 +64,11 @@ func newRegistry(registryUrl string, transport http.RoundTripper, useEmbedded bo
 		return nil, err
 	}
 	return &Registry{
-		regUrl:      regUrl,
-		transport:   transport,
-		useEmbedded: useEmbedded,
-		verifier:    ver,
+		regUrl:       regUrl,
+		localDocRoot: localDocRoot,
+		transport:    transport,
+		useEmbedded:  useEmbedded,
+		verifier:     ver,
 	}, nil
 }
 
@@ -82,7 +85,7 @@ func (r *Registry) isLocalFile() bool {
 }
 
 func (r *Registry) GetDocBytes(docPath string) ([]byte, error) {
-	return r.getDocBytes(docPath)
+	return r.getVerifiedDocBytes(docPath)
 }
 
 func (r *Registry) getProviderDocBytes(prov string, version string) ([]byte, error) {
@@ -90,7 +93,11 @@ func (r *Registry) getProviderDocBytes(prov string, version string) ([]byte, err
 	case "google":
 		prov = "googleapis.com"
 	}
-	return r.getDocBytes(path.Join(prov, version, "provider.yaml"))
+	return r.getVerifiedDocBytes(path.Join(prov, version, "provider.yaml"))
+}
+
+func (r *Registry) PullProviderArchive(prov string, version string) (io.ReadCloser, error) {
+	return nil, fmt.Errorf("")
 }
 
 func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
@@ -105,15 +112,15 @@ func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, e
 }
 
 func (r *Registry) GetServiceDocBytes(url string) ([]byte, error) {
-	return r.getDocBytes(url)
+	return r.getVerifiedDocBytes(url)
 }
 
 func (r *Registry) GetResourcesRegisterDocBytes(url string) ([]byte, error) {
-	return r.getDocBytes(url)
+	return r.getVerifiedDocBytes(url)
 }
 
 func (r *Registry) GetService(url string) (*Service, error) {
-	b, err := r.getDocBytes(url)
+	b, err := r.getVerifiedDocBytes(url)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +142,7 @@ func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService) (
 }
 
 func (r *Registry) GetResourcesShallowFromURL(url string) (*ResourceRegister, error) {
-	b, err := r.getDocBytes(url)
+	b, err := r.getVerifiedDocBytes(url)
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +182,7 @@ func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (
 	if sdRef.Value != nil {
 		return sdRef.Value, nil
 	}
-	sb, err := r.getDocBytes(sdRef.Ref)
+	sb, err := r.getVerifiedDocBytes(sdRef.Ref)
 	if err != nil {
 		return nil, err
 	}
@@ -196,9 +203,103 @@ func (r *Registry) checkSignature(docUrl string, verFile, sigFile io.ReadCloser)
 	return &vr, err
 }
 
-func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
+func (r *Registry) PullArchive(archivePath string) (io.ReadCloser, error) {
+	return r.pullArchive(archivePath)
+}
+
+func (r *Registry) pullArchive(archivePath string) (io.ReadCloser, error) {
+	return r.getUnVerifiedDoc(archivePath)
+}
+
+func (r *Registry) getRemoteDoc(docPath string) (io.ReadCloser, error) {
+	cl := &http.Client{}
+	if r.transport != nil {
+		cl.Transport = r.transport
+	}
+	response, err := cl.Get(path.Join(r.regUrl.Path, docPath))
+	if err != nil {
+		return nil, err
+	}
+	if response.Body == nil {
+		return nil, fmt.Errorf("no response body from remote")
+	}
+	return response.Body, nil
+}
+
+func (r *Registry) getLocalDoc(docPath string) (io.ReadCloser, error) {
+	localPath := path.Join(r.localDocRoot, docPath)
+	fi, err := os.Open(localPath)
+	if err != nil {
+		if fi != nil {
+			fi.Close()
+		}
+		return nil, err
+	}
+	if fi == nil {
+		return nil, fmt.Errorf("nil file")
+	}
+	return fi, nil
+}
+
+func (r *Registry) getUnVerifiedDoc(docPath string) (io.ReadCloser, error) {
 	if r.useEmbedded {
-		return getServiceDocBytes(docPath)
+		return getServiceDoc(docPath)
+	}
+	if r.isLocalFile() {
+		return os.Open(path.Join(r.regUrl.Path, docPath))
+	}
+	if r.localDocRoot != "" {
+		localPath := path.Join(r.localDocRoot, docPath)
+		lf, err := r.getLocalDoc(localPath)
+		if err == nil {
+			return lf, nil
+		}
+	}
+	if r.isHttp() {
+		cl := &http.Client{}
+		if r.transport != nil {
+			cl.Transport = r.transport
+		}
+		return r.getRemoteDoc(docPath)
+	}
+	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
+}
+
+func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierResponse, error) {
+	if r.useEmbedded {
+		lf, err := getServiceDoc(docPath)
+		if err != nil {
+			return nil, err
+		}
+		sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", docPath))
+		if err != nil {
+			lf.Close()
+			return nil, fmt.Errorf("embedded document present but signature file not present")
+		}
+		return r.checkSignature(docPath, lf, sf)
+	}
+	if r.isLocalFile() {
+		rb, err := os.Open(path.Join(r.regUrl.Path, docPath))
+		if err != nil {
+			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
+		}
+		sb, err := os.Open(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
+		if err != nil {
+			return nil, fmt.Errorf("cannot read local signature file: '%s'", err.Error())
+		}
+		return r.checkSignature(docPath, rb, sb)
+	}
+	if r.localDocRoot != "" {
+		localPath := path.Join(r.localDocRoot, docPath)
+		lf, err := r.getLocalDoc(localPath)
+		if err != nil {
+			sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", localPath))
+			if err != nil {
+				lf.Close()
+				return nil, fmt.Errorf("local document present but signature file not present")
+			}
+			return r.checkSignature(localPath, lf, sf)
+		}
 	}
 	fullUrl, err := url.Parse(r.regUrl.String())
 	if err != nil {
@@ -211,42 +312,30 @@ func (r *Registry) getDocBytes(docPath string) ([]byte, error) {
 		if r.transport != nil {
 			cl.Transport = r.transport
 		}
-		response, err := cl.Get(path.Join(r.regUrl.Path, docPath))
+		response, err := r.getRemoteDoc(docPath)
 		if err != nil {
 			return nil, err
 		}
-		sigResponse, err := cl.Get(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
+		if response == nil {
+			return nil, fmt.Errorf("no response body from remote")
+		}
+		sigResponse, err := r.getRemoteDoc(fmt.Sprintf("%s.sig", docPath))
 		if err != nil {
-			return nil, err
+			response.Close()
+			return nil, fmt.Errorf("remote document '%s' present but signature file not present", verifyUrl)
 		}
-		defer response.Body.Close()
-		defer sigResponse.Body.Close()
-		vr, err := r.checkSignature(verifyUrl, response.Body, sigResponse.Body)
-		if err != nil {
-			return nil, err
-		}
-		if vr == nil || !vr.IsVerified {
-			return nil, fmt.Errorf("signature check failed for url = '%s'", verifyUrl)
-		}
-		return io.ReadAll(vr.VerifyFile)
-	}
-	if r.isLocalFile() {
-		rb, err := os.Open(path.Join(r.regUrl.Path, docPath))
-		if err != nil {
-			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
-		}
-		sb, err := os.Open(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
-		if err != nil {
-			return nil, fmt.Errorf("cannot read local signature file: '%s'", err.Error())
-		}
-		vr, err := r.checkSignature(verifyUrl, rb, sb)
-		if err != nil {
-			return nil, err
-		}
-		if vr == nil || !vr.IsVerified {
-			return nil, fmt.Errorf("signature check failed for url = '%s'", verifyUrl)
-		}
-		return io.ReadAll(vr.VerifyFile)
+		return r.checkSignature(verifyUrl, response, sigResponse)
 	}
 	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
+}
+
+func (r *Registry) getVerifiedDocBytes(docPath string) ([]byte, error) {
+	if r.useEmbedded {
+		return getServiceDocBytes(docPath)
+	}
+	vr, err := r.getVerifiedDocResponse(docPath)
+	if err != nil {
+		return nil, err
+	}
+	return io.ReadAll(vr.VerifyFile)
 }
