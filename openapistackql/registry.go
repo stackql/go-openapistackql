@@ -15,7 +15,9 @@ import (
 )
 
 const (
-	defaultRegistryUrlString string = "https://raw.githubusercontent.com/stackql/stackql-provider-registry/intial-devel/providers/src"
+	defaultRegistryUrlString string = "https://raw.githubusercontent.com/stackql/stackql-provider-registry/intial-devel/providers"
+	defaultSrcPrefix         string = "src"
+	defaultDistPrefix        string = "dist"
 	httpSchemeRegexpString   string = `(?i)^https?$`
 	fileSchemeRegexpString   string = `(?i)^file?$`
 )
@@ -39,33 +41,85 @@ type RegistryAPI interface {
 	LoadProviderByName(string, string) (*Provider, error)
 }
 
+type RegistryConfig struct {
+	RegistryURL   string                   `json:"url" yaml:"url"`
+	SrcPrefix     *string                  `json:"srcPrefix" yaml:"srcPrefix"`
+	DistPrefix    *string                  `json:"distPrefix" yaml:"distPrefix"`
+	UseEmbedded   *bool                    `json:"useEmbedded" yaml:"useEmbedded"`
+	LocalDocRoot  string                   `json:"localDocRoot" yaml:"localDocRoot"`
+	VerfifyConfig *edcrypto.VerifierConfig `json:"verifyConfig" yaml:"verifyConfig"`
+}
+
 type Registry struct {
 	regUrl       *url.URL
+	srcUrl       *url.URL
+	distUrl      *url.URL
+	srcPrefix    string
 	localDocRoot string
 	transport    http.RoundTripper
 	useEmbedded  bool
 	verifier     *edcrypto.Verifier
 }
 
-func NewRegistry(registryUrl string, localDocRoot string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
-	return newRegistry(registryUrl, localDocRoot, transport, useEmbedded)
+func NewRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (RegistryAPI, error) {
+	return newRegistry(registryCfg, transport)
 }
 
-func newRegistry(registryUrl string, localDocRoot string, transport http.RoundTripper, useEmbedded bool) (RegistryAPI, error) {
+func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (RegistryAPI, error) {
+	registryUrl := registryCfg.RegistryURL
 	if registryUrl == "" {
 		registryUrl = defaultRegistryUrlString
+	}
+	useEmbedded := true // default
+	if registryCfg.UseEmbedded != nil {
+		useEmbedded = *registryCfg.UseEmbedded
+	}
+	srcUrlStr := registryUrl
+	srcPrefix := ""
+	if registryCfg.SrcPrefix == nil {
+		srcPrefix = defaultSrcPrefix
+	} else {
+		srcPrefix = *registryCfg.SrcPrefix
+	}
+	if srcPrefix != "" {
+		srcUrlStr = fmt.Sprintf("%s/%s", registryUrl, srcPrefix)
+	}
+	distUrlStr := registryUrl
+	distPrefix := ""
+	if registryCfg.DistPrefix == nil {
+		distPrefix = defaultDistPrefix
+	} else {
+		distPrefix = *registryCfg.DistPrefix
+	}
+	if distPrefix != "" {
+		distUrlStr = fmt.Sprintf("%s/%s", registryUrl, distPrefix)
 	}
 	regUrl, err := url.Parse(registryUrl)
 	if err != nil {
 		return nil, err
 	}
-	ver, err := edcrypto.NewVerifier(edcrypto.NewVerifierConfig("", "", ""))
+	srcUrl, err := url.Parse(srcUrlStr)
+	if err != nil {
+		return nil, err
+	}
+	distUrl, err := url.Parse(distUrlStr)
+	if err != nil {
+		return nil, err
+	}
+	var ver *edcrypto.Verifier
+	if registryCfg.VerfifyConfig == nil {
+		ver, err = edcrypto.NewVerifier(edcrypto.NewVerifierConfig("", "", ""))
+	} else {
+		ver, err = edcrypto.NewVerifier(*registryCfg.VerfifyConfig)
+	}
 	if err != nil {
 		return nil, err
 	}
 	return &Registry{
 		regUrl:       regUrl,
-		localDocRoot: localDocRoot,
+		srcUrl:       srcUrl,
+		distUrl:      distUrl,
+		localDocRoot: registryCfg.LocalDocRoot,
 		transport:    transport,
 		useEmbedded:  useEmbedded,
 		verifier:     ver,
@@ -97,7 +151,12 @@ func (r *Registry) getProviderDocBytes(prov string, version string) ([]byte, err
 }
 
 func (r *Registry) PullProviderArchive(prov string, version string) (io.ReadCloser, error) {
-	return nil, fmt.Errorf("")
+	switch prov {
+	case "google":
+		prov = "googleapis.com"
+	}
+	fp := path.Join("dist", prov, fmt.Sprintf("%s.tgz", version))
+	return r.pullArchive(fp)
 }
 
 func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
@@ -216,7 +275,7 @@ func (r *Registry) getRemoteDoc(docPath string) (io.ReadCloser, error) {
 	if r.transport != nil {
 		cl.Transport = r.transport
 	}
-	response, err := cl.Get(path.Join(r.regUrl.Path, docPath))
+	response, err := cl.Get(path.Join(r.srcUrl.Path, docPath))
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +305,7 @@ func (r *Registry) getUnVerifiedDoc(docPath string) (io.ReadCloser, error) {
 		return getServiceDoc(docPath)
 	}
 	if r.isLocalFile() {
-		return os.Open(path.Join(r.regUrl.Path, docPath))
+		return os.Open(path.Join(r.srcUrl.Path, docPath))
 	}
 	if r.localDocRoot != "" {
 		localPath := path.Join(r.localDocRoot, docPath)
@@ -279,11 +338,11 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 		return r.checkSignature(docPath, lf, sf)
 	}
 	if r.isLocalFile() {
-		rb, err := os.Open(path.Join(r.regUrl.Path, docPath))
+		rb, err := os.Open(path.Join(r.srcUrl.Path, docPath))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
 		}
-		sb, err := os.Open(path.Join(r.regUrl.Path, fmt.Sprintf("%s.sig", docPath)))
+		sb, err := os.Open(path.Join(r.srcUrl.Path, fmt.Sprintf("%s.sig", docPath)))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local signature file: '%s'", err.Error())
 		}

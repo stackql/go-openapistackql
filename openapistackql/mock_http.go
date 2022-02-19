@@ -49,7 +49,7 @@ func getMockRoundTripper(registryUrl string) (http.RoundTripper, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewSimpleMockRegistryRoundTripper("test/registry/src", u), nil
+	return NewSimpleMockRegistryRoundTripper("test/registry", u), nil
 }
 
 func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
@@ -57,11 +57,11 @@ func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(defaultRegistryUrlString, "", rt, useEmbedded)
+	return NewRegistry(RegistryConfig{RegistryURL: defaultRegistryUrlString, UseEmbedded: &useEmbedded}, rt)
 }
 
 func getMockFileRegistry(registryRoot string, useEmbedded bool) (RegistryAPI, error) {
-	return NewRegistry(registryRoot, "", nil, useEmbedded)
+	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, UseEmbedded: &useEmbedded}, nil)
 }
 
 func getMockEmbeddedRegistry() (RegistryAPI, error) {
@@ -73,7 +73,7 @@ func getMockRemoteRegistry() (RegistryAPI, error) {
 }
 
 func getMockLocalRegistry() (RegistryAPI, error) {
-	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry/src")
+	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry")
 	if err != nil {
 		return nil, err
 	}
