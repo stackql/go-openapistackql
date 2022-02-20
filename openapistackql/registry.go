@@ -54,7 +54,6 @@ type Registry struct {
 	regUrl       *url.URL
 	srcUrl       *url.URL
 	distUrl      *url.URL
-	srcPrefix    string
 	localDocRoot string
 	transport    http.RoundTripper
 	useEmbedded  bool
