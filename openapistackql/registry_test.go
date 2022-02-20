@@ -28,6 +28,10 @@ func TestLocalRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
 }
 
+func TestProviderPull(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaPull)
+}
+
 func execLocalAndRemoteRegistryTests(t *testing.T, tf func(t *testing.T, r RegistryAPI)) {
 
 	r, err := GetMockRegistry()
@@ -131,4 +135,13 @@ func execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T, r Re
 	assert.Equal(t, sn, "compute")
 
 	t.Logf("TestIndirectGoogleComputeServiceSubsetAccess passed\n")
+}
+
+func execTestRegistrySimpleOktaPull(t *testing.T, r RegistryAPI) {
+	arc, err := r.PullProviderArchive("okta", "v1")
+
+	assert.NilError(t, err)
+
+	assert.Assert(t, arc != nil)
+
 }
