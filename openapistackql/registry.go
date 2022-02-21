@@ -291,7 +291,7 @@ func (r *Registry) getRemoteDoc(docPath string) (io.ReadCloser, error) {
 	if r.transport != nil {
 		cl.Transport = r.transport
 	}
-	response, err := cl.Get(path.Join(r.srcUrl.Path, docPath))
+	response, err := cl.Get(fmt.Sprintf("%s/%s", r.srcUrl.String(), docPath))
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +306,7 @@ func (r *Registry) getRemoteArchive(docPath string) (io.ReadCloser, error) {
 	if r.transport != nil {
 		cl.Transport = r.transport
 	}
-	response, err := cl.Get(path.Join(r.distUrl.Path, docPath))
+	response, err := cl.Get(fmt.Sprintf("%s/%s", r.distUrl.String(), docPath))
 	if err != nil {
 		return nil, err
 	}
