@@ -164,4 +164,13 @@ func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
 
 	assert.NilError(t, err)
 
+	svc, err := r.GetService("okta/v1/services/Application.yaml")
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	assert.Equal(t, svc.GetName(), "application")
+
+	t.Logf("TestRegistrySimpleOktaPullAndPersist passed")
+
 }
