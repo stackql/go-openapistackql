@@ -741,6 +741,8 @@ github.com/stackql/go-spew v1.1.3-alpha24 h1:yNmgWU+OKU8SvlQ0umiQWWgWS6C5U1GuRMl
 github.com/stackql/go-spew v1.1.3-alpha24/go.mod h1:o2MPqg2ee1PN4SxAh9zQSJJmKKFJjpro9pejdK7dXWk=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha1 h1:/xrQsz8IePBaM81GqlqCnZf/ILv1V16mkreOK5Lc4yE=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha1/go.mod h1:2Zw/OeEvFlDijJKcac26T3PjuouXfHOhgLXm+Sgg2/A=
+github.com/stackql/stackql-provider-registry v0.0.1-alpha10 h1:Y/fBff+aGIHqCzUuW3u5tWi/dqJaK3Pi8H51RM95qV0=
+github.com/stackql/stackql-provider-registry v0.0.1-alpha10/go.mod h1:D0WFWa7HOXS+PQAmvN0Nm1E6dMdUkUFtAzRH8cXxg88=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha2 h1:eJZZ65vmEALAOdUPL1Q8D2V2a/tcIleCRuGTpwyGS2M=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha2/go.mod h1:2Zw/OeEvFlDijJKcac26T3PjuouXfHOhgLXm+Sgg2/A=
 github.com/stackql/stackql-provider-registry v0.0.1-alpha3 h1:IbB5Bn1POYVsBKGMuYAFojGdCx8s2hzIMGr9GQ8HCmg=

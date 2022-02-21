@@ -12,7 +12,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.10.1
 	github.com/stackql/go-spew v1.1.3-alpha24
-	github.com/stackql/stackql-provider-registry v0.0.1-alpha9
+	github.com/stackql/stackql-provider-registry v0.0.1-alpha10
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	gopkg.in/yaml.v2 v2.4.0
