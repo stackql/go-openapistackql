@@ -1,6 +1,7 @@
 package openapistackql_test
 
 import (
+	"encoding/json"
 	"testing"
 
 	. "github.com/stackql/go-openapistackql/openapistackql"
@@ -9,42 +10,50 @@ import (
 )
 
 func TestRegistrySimpleOktaApplicationServiceRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaApplicationServiceRead)
+	execLocalAndRemoteRegistryTests(t, "", execTestRegistrySimpleOktaApplicationServiceRead)
 }
 
 func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeResourcesJsonRead)
+	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeResourcesJsonRead)
 }
 
 func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
+	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
 }
 
 func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
+	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
 }
 
 func TestLocalRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
+	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
 }
 
 func TestProviderPull(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaPull)
+	execLocalAndRemoteRegistryTests(t, `{"srcPrefix": "test-src", "useEmbedded": false}`, execTestRegistrySimpleOktaPull)
 }
 
 func TestProviderPullAndPersist(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaPullAndPersist)
+	execLocalAndRemoteRegistryTests(t, `{"srcPrefix": "test-src", "useEmbedded": false}`, execTestRegistrySimpleOktaPullAndPersist)
 }
 
-func execLocalAndRemoteRegistryTests(t *testing.T, tf func(t *testing.T, r RegistryAPI)) {
+func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
 
-	r, err := GetMockRegistry()
+	var rc RegistryConfig
+	if registryConfigStr != "" {
+		err := json.Unmarshal([]byte(registryConfigStr), &rc)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+	}
+
+	r, err := GetMockRegistry(rc)
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
 	tf(t, r)
 
-	r, err = GetMockLocalRegistry()
+	r, err = GetMockLocalRegistry(rc)
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -151,8 +160,8 @@ func execTestRegistrySimpleOktaPull(t *testing.T, r RegistryAPI) {
 }
 
 func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
-	// err := r.PullAndPersistProviderArchive("okta", "v1")
+	err := r.PullAndPersistProviderArchive("okta", "v1")
 
-	// assert.NilError(t, err)
+	assert.NilError(t, err)
 
 }

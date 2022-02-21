@@ -52,7 +52,7 @@ func getMockRoundTripper(registryUrl string) (http.RoundTripper, error) {
 	return NewSimpleMockRegistryRoundTripper("test/registry", u), nil
 }
 
-func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
+func getMockHttpRegistry(vc RegistryConfig) (RegistryAPI, error) {
 	rt, err := getMockRoundTripper(defaultRegistryUrlString)
 	if err != nil {
 		return nil, err
@@ -61,41 +61,33 @@ func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(RegistryConfig{RegistryURL: defaultRegistryUrlString, UseEmbedded: &useEmbedded, LocalDocRoot: localRegPath}, rt)
+	return NewRegistry(RegistryConfig{RegistryURL: defaultRegistryUrlString, UseEmbedded: vc.UseEmbedded, LocalDocRoot: localRegPath, SrcPrefix: vc.SrcPrefix}, rt)
 }
 
-func getMockFileRegistry(registryRoot string, useEmbedded bool) (RegistryAPI, error) {
+func getMockFileRegistry(vc RegistryConfig, registryRoot string, useEmbedded bool) (RegistryAPI, error) {
 	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry")
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, UseEmbedded: &useEmbedded, LocalDocRoot: localRegPath}, nil)
+	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, UseEmbedded: &useEmbedded, LocalDocRoot: localRegPath, SrcPrefix: vc.SrcPrefix}, nil)
 }
 
-func getMockEmbeddedRegistry() (RegistryAPI, error) {
-	return getMockHttpRegistry(true)
+func getMockRemoteRegistry(vc RegistryConfig) (RegistryAPI, error) {
+	return getMockHttpRegistry(vc)
 }
 
-func getMockRemoteRegistry() (RegistryAPI, error) {
-	return getMockHttpRegistry(false)
-}
-
-func getMockLocalRegistry() (RegistryAPI, error) {
+func getMockLocalRegistry(vc RegistryConfig) (RegistryAPI, error) {
 	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry")
 	if err != nil {
 		return nil, err
 	}
-	return getMockFileRegistry(fmt.Sprintf("file://%s", localRegPath), false)
+	return getMockFileRegistry(vc, fmt.Sprintf("file://%s", localRegPath), false)
 }
 
-func GetMockEmbeddedRegistry() (RegistryAPI, error) {
-	return getMockEmbeddedRegistry()
+func GetMockRegistry(vc RegistryConfig) (RegistryAPI, error) {
+	return getMockRemoteRegistry(vc)
 }
 
-func GetMockRegistry() (RegistryAPI, error) {
-	return getMockRemoteRegistry()
-}
-
-func GetMockLocalRegistry() (RegistryAPI, error) {
-	return getMockLocalRegistry()
+func GetMockLocalRegistry(vc RegistryConfig) (RegistryAPI, error) {
+	return getMockLocalRegistry(vc)
 }
