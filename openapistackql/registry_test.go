@@ -9,32 +9,37 @@ import (
 	"gotest.tools/assert"
 )
 
+const (
+	individualDownloadAllowedRegistryCfgStr string = `{"allowSrcDownload": true, "useEmbedded": false}`
+	pullProvidersRegistryCfgStr             string = `{"srcPrefix": "test-src", "useEmbedded": false}`
+)
+
 func TestRegistrySimpleOktaApplicationServiceRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, "", execTestRegistrySimpleOktaApplicationServiceRead)
+	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistrySimpleOktaApplicationServiceRead)
 }
 
 func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeResourcesJsonRead)
+	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeResourcesJsonRead)
 }
 
 func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
+	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
 }
 
 func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
+	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
 }
 
 func TestLocalRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, "", execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
+	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
 }
 
 func TestProviderPull(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, `{"srcPrefix": "test-src", "useEmbedded": false}`, execTestRegistrySimpleOktaPull)
+	execLocalAndRemoteRegistryTests(t, pullProvidersRegistryCfgStr, execTestRegistrySimpleOktaPull)
 }
 
 func TestProviderPullAndPersist(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, `{"srcPrefix": "test-src", "useEmbedded": false}`, execTestRegistrySimpleOktaPullAndPersist)
+	execLocalAndRemoteRegistryTests(t, pullProvidersRegistryCfgStr, execTestRegistrySimpleOktaPullAndPersist)
 }
 
 func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {

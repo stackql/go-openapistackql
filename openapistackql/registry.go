@@ -44,24 +44,26 @@ type RegistryAPI interface {
 }
 
 type RegistryConfig struct {
-	RegistryURL   string                   `json:"url" yaml:"url"`
-	SrcPrefix     *string                  `json:"srcPrefix" yaml:"srcPrefix"`
-	DistPrefix    *string                  `json:"distPrefix" yaml:"distPrefix"`
-	UseEmbedded   *bool                    `json:"useEmbedded" yaml:"useEmbedded"`
-	LocalDocRoot  string                   `json:"localDocRoot" yaml:"localDocRoot"`
-	VerfifyConfig *edcrypto.VerifierConfig `json:"verifyConfig" yaml:"verifyConfig"`
+	RegistryURL      string                   `json:"url" yaml:"url"`
+	SrcPrefix        *string                  `json:"srcPrefix" yaml:"srcPrefix"`
+	DistPrefix       *string                  `json:"distPrefix" yaml:"distPrefix"`
+	UseEmbedded      *bool                    `json:"useEmbedded" yaml:"useEmbedded"`
+	AllowSrcDownload bool                     `json:"allowSrcDownload" yaml:"allowSrcDownload"`
+	LocalDocRoot     string                   `json:"localDocRoot" yaml:"localDocRoot"`
+	VerfifyConfig    *edcrypto.VerifierConfig `json:"verifyConfig" yaml:"verifyConfig"`
 }
 
 type Registry struct {
-	regUrl          *url.URL
-	srcUrl          *url.URL
-	distUrl         *url.URL
-	localDocRoot    string
-	localSrcPrefix  string
-	localDistPrefix string
-	transport       http.RoundTripper
-	useEmbedded     bool
-	verifier        *edcrypto.Verifier
+	allowSrcDownload bool
+	regUrl           *url.URL
+	srcUrl           *url.URL
+	distUrl          *url.URL
+	localDocRoot     string
+	localSrcPrefix   string
+	localDistPrefix  string
+	transport        http.RoundTripper
+	useEmbedded      bool
+	verifier         *edcrypto.Verifier
 }
 
 func NewRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (RegistryAPI, error) {
@@ -119,15 +121,16 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 		return nil, err
 	}
 	return &Registry{
-		regUrl:          regUrl,
-		srcUrl:          srcUrl,
-		distUrl:         distUrl,
-		localDocRoot:    registryCfg.LocalDocRoot,
-		localSrcPrefix:  srcPrefix,
-		localDistPrefix: distPrefix,
-		transport:       transport,
-		useEmbedded:     useEmbedded,
-		verifier:        ver,
+		allowSrcDownload: registryCfg.AllowSrcDownload,
+		regUrl:           regUrl,
+		srcUrl:           srcUrl,
+		distUrl:          distUrl,
+		localDocRoot:     registryCfg.LocalDocRoot,
+		localSrcPrefix:   srcPrefix,
+		localDistPrefix:  distPrefix,
+		transport:        transport,
+		useEmbedded:      useEmbedded,
+		verifier:         ver,
 	}, nil
 }
 
@@ -343,8 +346,8 @@ func (r *Registry) getLocalArchivePath(docPath string) string {
 }
 
 func (r *Registry) getLocalDoc(docPath string) (io.ReadCloser, error) {
-	localPath := r.getLocalDocPath(docPath)
-	fi, err := os.Open(localPath)
+	// localPath := r.getLocalDocPath(docPath)
+	fi, err := os.Open(docPath)
 	if err != nil {
 		if fi != nil {
 			fi.Close()
@@ -426,6 +429,9 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 	fullUrl.Path = path.Join(fullUrl.Path, docPath)
 	verifyUrl := fullUrl.String()
 	if r.isHttp() {
+		if !r.allowSrcDownload {
+			return nil, fmt.Errorf("download of individual docs disallowed; please attempt to pull provider docs")
+		}
 		cl := &http.Client{}
 		if r.transport != nil {
 			cl.Transport = r.transport
