@@ -14,6 +14,7 @@ func DecompressToPath(rdr io.ReadCloser, target string) error {
 		return err
 	}
 	tarReader := tar.NewReader(gr)
+	// os.Mkdir(target, 0666)
 	for {
 		header, err := tarReader.Next()
 		if err == io.EOF {

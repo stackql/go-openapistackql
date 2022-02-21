@@ -176,7 +176,7 @@ func (r *Registry) PullAndPersistProviderArchive(prov string, version string) er
 	if err != nil {
 		return err
 	}
-	return compression.DecompressToPath(rdr, r.getLocalDocRoot())
+	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), prov))
 }
 
 func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
