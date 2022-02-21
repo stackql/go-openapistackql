@@ -410,7 +410,7 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 		lf, err := r.getLocalDoc(localPath)
 		if err == nil {
 			sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", localPath))
-			if err != nil && lf != nil {
+			if err != nil {
 				if lf != nil {
 					lf.Close()
 				}
