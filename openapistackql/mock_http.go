@@ -57,11 +57,19 @@ func getMockHttpRegistry(useEmbedded bool) (RegistryAPI, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(RegistryConfig{RegistryURL: defaultRegistryUrlString, UseEmbedded: &useEmbedded}, rt)
+	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry")
+	if err != nil {
+		return nil, err
+	}
+	return NewRegistry(RegistryConfig{RegistryURL: defaultRegistryUrlString, UseEmbedded: &useEmbedded, LocalDocRoot: localRegPath}, rt)
 }
 
 func getMockFileRegistry(registryRoot string, useEmbedded bool) (RegistryAPI, error) {
-	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, UseEmbedded: &useEmbedded}, nil)
+	localRegPath, err := fileutil.GetForwardSlashFilePathFromRepositoryRoot("test/registry")
+	if err != nil {
+		return nil, err
+	}
+	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, UseEmbedded: &useEmbedded, LocalDocRoot: localRegPath}, nil)
 }
 
 func getMockEmbeddedRegistry() (RegistryAPI, error) {

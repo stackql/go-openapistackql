@@ -32,6 +32,10 @@ func TestProviderPull(t *testing.T) {
 	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaPull)
 }
 
+func TestProviderPullAndPersist(t *testing.T) {
+	execLocalAndRemoteRegistryTests(t, execTestRegistrySimpleOktaPullAndPersist)
+}
+
 func execLocalAndRemoteRegistryTests(t *testing.T, tf func(t *testing.T, r RegistryAPI)) {
 
 	r, err := GetMockRegistry()
@@ -143,5 +147,12 @@ func execTestRegistrySimpleOktaPull(t *testing.T, r RegistryAPI) {
 	assert.NilError(t, err)
 
 	assert.Assert(t, arc != nil)
+
+}
+
+func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
+	// err := r.PullAndPersistProviderArchive("okta", "v1")
+
+	// assert.NilError(t, err)
 
 }

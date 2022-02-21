@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/stackql/go-openapistackql/pkg/compression"
 	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
 )
 
@@ -28,6 +29,7 @@ var (
 )
 
 type RegistryAPI interface {
+	PullAndPersistProviderArchive(string, string) error
 	PullProviderArchive(string, string) (io.ReadCloser, error)
 	GetDocBytes(string) ([]byte, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
@@ -154,12 +156,27 @@ func (r *Registry) getProviderDocBytes(prov string, version string) ([]byte, err
 }
 
 func (r *Registry) PullProviderArchive(prov string, version string) (io.ReadCloser, error) {
+	return r.pullProviderArchive(prov, version)
+}
+
+func (r *Registry) pullProviderArchive(prov string, version string) (io.ReadCloser, error) {
 	switch prov {
 	case "google":
 		prov = "googleapis.com"
 	}
 	fp := path.Join(prov, fmt.Sprintf("%s.tgz", version))
 	return r.pullArchive(fp)
+}
+
+func (r *Registry) PullAndPersistProviderArchive(prov string, version string) error {
+	if r.localDocRoot == "" {
+		return fmt.Errorf("cannot pull provider without local doc location")
+	}
+	rdr, err := r.pullProviderArchive(prov, version)
+	if err != nil {
+		return err
+	}
+	return compression.DecompressToPath(rdr, r.getLocalDocRoot())
 }
 
 func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
@@ -299,22 +316,30 @@ func (r *Registry) getRemoteArchive(docPath string) (io.ReadCloser, error) {
 	return response.Body, nil
 }
 
-func (r *Registry) getLocalDocPath(docPath string) string {
+func (r *Registry) getLocalDocRoot() string {
 	switch r.localSrcPrefix {
 	case "":
-		return path.Join(r.localDocRoot, docPath)
+		return r.localDocRoot
 	default:
-		return path.Join(r.localDocRoot, r.localSrcPrefix, docPath)
+		return path.Join(r.localDocRoot, r.localSrcPrefix)
 	}
 }
 
-func (r *Registry) getLocalArchivePath(docPath string) string {
+func (r *Registry) getLocalArchiveRoot() string {
 	switch r.localDistPrefix {
 	case "":
-		return path.Join(r.localDocRoot, docPath)
+		return r.localDocRoot
 	default:
-		return path.Join(r.localDocRoot, r.localDistPrefix, docPath)
+		return path.Join(r.localDocRoot, r.localDistPrefix)
 	}
+}
+
+func (r *Registry) getLocalDocPath(docPath string) string {
+	return path.Join(r.getLocalDocRoot(), docPath)
+}
+
+func (r *Registry) getLocalArchivePath(docPath string) string {
+	return path.Join(r.getLocalArchiveRoot(), docPath)
 }
 
 func (r *Registry) getLocalDoc(docPath string) (io.ReadCloser, error) {
@@ -383,10 +408,12 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 	if r.localDocRoot != "" {
 		localPath := r.getLocalDocPath(docPath)
 		lf, err := r.getLocalDoc(localPath)
-		if err != nil {
+		if err == nil {
 			sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", localPath))
-			if err != nil {
-				lf.Close()
+			if err != nil && lf != nil {
+				if lf != nil {
+					lf.Close()
+				}
 				return nil, fmt.Errorf("local document present but signature file not present")
 			}
 			return r.checkSignature(localPath, lf, sf)
