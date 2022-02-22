@@ -388,18 +388,27 @@ func (r *Registry) getUnVerifiedArchive(docPath string) (io.ReadCloser, error) {
 	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
 }
 
+func (r *Registry) getEmbeddedVerifiedDocResponse(docPath string) (*edcrypto.VerifierResponse, error) {
+	lf, err := getServiceDoc(docPath)
+	if err != nil {
+		return nil, err
+	}
+	sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", docPath))
+	if err != nil {
+		lf.Close()
+		return nil, fmt.Errorf("embedded document present but signature file not present")
+	}
+	return r.checkSignature(docPath, lf, sf)
+}
+
 func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierResponse, error) {
+	var vr *edcrypto.VerifierResponse
+	var embeddedErr error
 	if r.useEmbedded {
-		lf, err := getServiceDoc(docPath)
-		if err != nil {
-			return nil, err
+		vr, embeddedErr = r.getEmbeddedVerifiedDocResponse(docPath)
+		if embeddedErr != nil {
+			return vr, embeddedErr
 		}
-		sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", docPath))
-		if err != nil {
-			lf.Close()
-			return nil, fmt.Errorf("embedded document present but signature file not present")
-		}
-		return r.checkSignature(docPath, lf, sf)
 	}
 	if r.isLocalFile() {
 		rb, err := os.Open(path.Join(r.srcUrl.Path, docPath))
@@ -453,6 +462,9 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 			return nil, fmt.Errorf("remote document '%s' present but signature file not present", verifyUrl)
 		}
 		return r.checkSignature(verifyUrl, response, sigResponse)
+	}
+	if embeddedErr != nil {
+		return nil, fmt.Errorf("error retrieving from embedded: %s", embeddedErr.Error())
 	}
 	return nil, fmt.Errorf("registry scheme '%s' currently not supported", r.regUrl.Scheme)
 }
