@@ -365,9 +365,9 @@ func (r *Registry) getLocalDoc(docPath string) (io.ReadCloser, error) {
 }
 
 func (r *Registry) getUnVerifiedArchive(docPath string) (io.ReadCloser, error) {
-	if r.useEmbedded {
-		return getServiceDoc(docPath)
-	}
+	// if r.useEmbedded {
+	// 	return getServiceDoc(docPath)
+	// }
 	if r.isLocalFile() {
 		return os.Open(path.Join(r.distUrl.Path, docPath))
 	}
