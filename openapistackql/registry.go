@@ -179,6 +179,10 @@ func (r *Registry) PullAndPersistProviderArchive(prov string, version string) er
 	if err != nil {
 		return err
 	}
+	err = os.RemoveAll(path.Join(r.getLocalDocRoot(), prov, version))
+	if err != nil {
+		return err
+	}
 	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), prov))
 }
 

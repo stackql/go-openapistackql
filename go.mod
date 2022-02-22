@@ -3,6 +3,7 @@ module github.com/stackql/go-openapistackql
 go 1.17
 
 require (
+	github.com/Masterminds/semver v1.4.2
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/jsonpointer v0.19.5
