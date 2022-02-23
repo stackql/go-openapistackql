@@ -136,11 +136,11 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 }
 
 func (r *Registry) ListLocallyAvailableProviders() map[string]struct{} {
-	var rv map[string]struct{}
+	rv := make(map[string]struct{})
 	if r.useEmbedded {
 		rv = listEmbeddedProviders()
 	}
-	for k, _ := range r.listLocalProviders() {
+	for k := range r.listLocalProviders() {
 		rv[k] = struct{}{}
 	}
 	return rv
@@ -348,11 +348,11 @@ func (r *Registry) listLocalProviders() map[string]struct{} {
 	dr := r.getLocalDocRoot()
 	switch dr {
 	case "":
-		return nil
+		return map[string]struct{}{}
 	default:
 		provs, err := os.ReadDir(dr)
 		if err != nil {
-			return nil
+			return map[string]struct{}{}
 		}
 		rv := make(map[string]struct{}, len(provs))
 		for _, p := range provs {
