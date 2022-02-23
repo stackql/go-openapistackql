@@ -356,7 +356,9 @@ func (r *Registry) listLocalProviders() map[string]struct{} {
 		}
 		rv := make(map[string]struct{}, len(provs))
 		for _, p := range provs {
-			rv[p.Name()] = struct{}{}
+			if !strings.HasPrefix(p.Name(), ".") {
+				rv[p.Name()] = struct{}{}
+			}
 		}
 		return rv
 	}
