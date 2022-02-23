@@ -31,6 +31,7 @@ var (
 type RegistryAPI interface {
 	PullAndPersistProviderArchive(string, string) error
 	PullProviderArchive(string, string) (io.ReadCloser, error)
+	ListLocallyAvailableProviders() map[string]struct{}
 	GetDocBytes(string) ([]byte, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
@@ -132,6 +133,17 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 		useEmbedded:      useEmbedded,
 		verifier:         ver,
 	}, nil
+}
+
+func (r *Registry) ListLocallyAvailableProviders() map[string]struct{} {
+	var rv map[string]struct{}
+	if r.useEmbedded {
+		rv = listEmbeddedProviders()
+	}
+	for k, _ := range r.listLocalProviders() {
+		rv[k] = struct{}{}
+	}
+	return rv
 }
 
 func (r *Registry) isHttp() bool {
@@ -329,6 +341,24 @@ func (r *Registry) getLocalDocRoot() string {
 		return r.localDocRoot
 	default:
 		return path.Join(r.localDocRoot, r.localSrcPrefix)
+	}
+}
+
+func (r *Registry) listLocalProviders() map[string]struct{} {
+	dr := r.getLocalDocRoot()
+	switch dr {
+	case "":
+		return nil
+	default:
+		provs, err := os.ReadDir(dr)
+		if err != nil {
+			return nil
+		}
+		rv := make(map[string]struct{}, len(provs))
+		for _, p := range provs {
+			rv[p.Name()] = struct{}{}
+		}
+		return rv
 	}
 }
 

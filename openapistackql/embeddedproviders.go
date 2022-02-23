@@ -21,9 +21,9 @@ func GetEmbeddedProvider(prov string) (embed.FS, error) {
 	return embed.FS{}, fmt.Errorf("no such embedded provider: '%s'", prov)
 }
 
-func ListEmbeddedProviders() []string {
-	return []string{
-		"google",
-		"okta",
+func listEmbeddedProviders() map[string]struct{} {
+	return map[string]struct{}{
+		"google": {},
+		"okta":   {},
 	}
 }
