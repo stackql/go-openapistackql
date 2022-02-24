@@ -83,6 +83,13 @@ func (op *OperationStore) GetParameterizedPath() string {
 	return op.parameterizedPath
 }
 
+func (op *OperationStore) GetOptimalResponseMediaType() string {
+	if op.Response != nil && op.Response.BodyMediaType != "" {
+		return op.Response.BodyMediaType
+	}
+	return MediaTypeJson
+}
+
 func (op *OperationStore) IsNullary() bool {
 	rbs, _ := op.GetResponseBodySchema()
 	return rbs == nil
