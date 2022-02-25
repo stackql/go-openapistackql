@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	defaultAnonymousColumnName string = "column"
+	defaultAnonymousColumnName string = "column_anon"
 )
 
 var (
