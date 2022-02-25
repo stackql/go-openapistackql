@@ -129,6 +129,13 @@ func (m *OperationStore) KeyExists(lhs string) bool {
 	return false
 }
 
+func (m *OperationStore) GetSelectItemsKey() string {
+	if m.Response != nil {
+		return m.Response.ObjectKey
+	}
+	return ""
+}
+
 func (m *OperationStore) GetKey(lhs string) (interface{}, error) {
 	val, ok := m.ToPresentationMap(true)[lhs]
 	if !ok {
