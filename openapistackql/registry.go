@@ -65,6 +65,7 @@ type Registry struct {
 	transport        http.RoundTripper
 	useEmbedded      bool
 	verifier         *edcrypto.Verifier
+	nopVerifier      bool
 }
 
 func NewRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (RegistryAPI, error) {
@@ -113,10 +114,12 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 		return nil, err
 	}
 	var ver *edcrypto.Verifier
+	nopVerify := false
 	if registryCfg.VerfifyConfig == nil {
 		ver, err = edcrypto.NewVerifier(edcrypto.NewVerifierConfig("", "", ""))
 	} else {
 		ver, err = edcrypto.NewVerifier(*registryCfg.VerfifyConfig)
+		nopVerify = registryCfg.VerfifyConfig.NopVerify
 	}
 	if err != nil {
 		return nil, err
@@ -132,6 +135,7 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 		transport:        transport,
 		useEmbedded:      useEmbedded,
 		verifier:         ver,
+		nopVerifier:      nopVerify,
 	}, nil
 }
 
@@ -447,6 +451,10 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
 		}
+		if r.nopVerifier {
+			rv := edcrypto.NewVerifierResponse(true, nil, rb, nil)
+			return &rv, nil
+		}
 		sb, err := os.Open(path.Join(r.srcUrl.Path, fmt.Sprintf("%s.sig", docPath)))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local signature file: '%s'", err.Error())
@@ -457,6 +465,10 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 		localPath := r.getLocalDocPath(docPath)
 		lf, err := r.getLocalDoc(localPath)
 		if err == nil {
+			if r.nopVerifier {
+				rv := edcrypto.NewVerifierResponse(true, nil, lf, nil)
+				return &rv, nil
+			}
 			sf, err := r.getLocalDoc(fmt.Sprintf("%s.sig", localPath))
 			if err != nil {
 				if lf != nil {
@@ -487,6 +499,10 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 		}
 		if response == nil {
 			return nil, fmt.Errorf("no response body from remote")
+		}
+		if r.nopVerifier {
+			rv := edcrypto.NewVerifierResponse(true, nil, response, nil)
+			return &rv, nil
 		}
 		sigResponse, err := r.getRemoteDoc(fmt.Sprintf("%s.sig", docPath))
 		if err != nil {
