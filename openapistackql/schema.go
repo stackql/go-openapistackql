@@ -240,6 +240,9 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: "_", Schema: s}
+		if omitColumns {
+			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title}
+		}
 		return &Tabulation{columns: []ColumnDescriptor{cd}, name: s.Title}
 	}
 	return nil
