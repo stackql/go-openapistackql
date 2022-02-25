@@ -267,11 +267,9 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 		}
 		return retVal
 	}
-	retVal["name"] = s.Title
-	retVal["type"] = s.Type
-	if extended {
-		retVal["description"] = s.Description
-	}
+	atomicMap := s.toFlatDescriptionMap(extended)
+	atomicMap["name"] = "_"
+	retVal["_"] = atomicMap
 	return retVal
 }
 
