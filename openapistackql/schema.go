@@ -9,6 +9,14 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const (
+	defaultAnonymousColumnName string = "column"
+)
+
+var (
+	AnonymousColumnName string = defaultAnonymousColumnName
+)
+
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(providerType, lhs, rhs)
 
@@ -239,7 +247,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 			return NewSchema(items, "").Tabulate(false)
 		}
 	} else if s.Type == "string" {
-		cd := ColumnDescriptor{Name: "_", Schema: s}
+		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
 		if omitColumns {
 			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title}
 		}
@@ -268,8 +276,8 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 		return retVal
 	}
 	atomicMap := s.toFlatDescriptionMap(extended)
-	atomicMap["name"] = "_"
-	retVal["_"] = atomicMap
+	atomicMap["name"] = AnonymousColumnName
+	retVal[AnonymousColumnName] = atomicMap
 	return retVal
 }
 
