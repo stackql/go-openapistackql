@@ -224,6 +224,10 @@ func (s *Schema) GetAllColumns() []string {
 			return iS.GetAllColumns()
 		}
 	}
+	switch s.Type {
+	case "string", "bool", "integer":
+		return []string{AnonymousColumnName}
+	}
 	return retVal
 }
 
