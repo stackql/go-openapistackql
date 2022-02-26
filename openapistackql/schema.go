@@ -158,6 +158,12 @@ func (schema *Schema) GetSelectListItems(key string) (*Schema, string) {
 }
 
 func (schema *Schema) GetSelectSchema(itemsKey string) (*Schema, string, error) {
+	if itemsKey == AnonymousColumnName {
+		switch schema.Type {
+		case "string", "integer":
+			return schema, AnonymousColumnName, nil
+		}
+	}
 	sc, str, err := schema.getSelectItemsSchema(itemsKey)
 	if err == nil {
 		return sc, str, err
