@@ -225,7 +225,7 @@ func (r *Registry) transferEmbeddedArchive(prov, version string) error {
 	if r.localDocRoot == "" {
 		return fmt.Errorf("cannot pull provider without local doc location")
 	}
-	rdr, err := getServiceDoc(fmt.Sprintf("%s/%s.tgz", prov, version))
+	rdr, err := getEmbeddedDist(prov, version)
 	if err != nil {
 		return err
 	}
