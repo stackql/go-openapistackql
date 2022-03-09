@@ -244,30 +244,6 @@ func LoadProviderDocFromFile(fileName string) (*Provider, error) {
 }
 
 func GetProviderDocBytes(prov string) ([]byte, error) {
-	if !IgnoreEmbedded {
-		switch prov {
-		case "google":
-			entries, err := googleProvider.ReadDir("embeddedproviders/googleapis.com/v1")
-			if err != nil {
-				return nil, fmt.Errorf("wtf: %s", err.Error())
-			}
-			fn, err := getLatestFile(entries)
-			if err != nil {
-				return nil, fmt.Errorf("huh: %s", err.Error())
-			}
-			return googleProvider.ReadFile(path.Join("embeddedproviders/googleapis.com/v1", fn))
-		case "okta":
-			entries, err := oktaProvider.ReadDir("embeddedproviders/okta/v1")
-			if err != nil {
-				return nil, fmt.Errorf("wtf: %s", err.Error())
-			}
-			fn, err := getLatestFile(entries)
-			if err != nil {
-				return nil, fmt.Errorf("huh: %s", err.Error())
-			}
-			return oktaProvider.ReadFile(path.Join("embeddedproviders/okta/v1", fn))
-		}
-	}
 	fn, err := getProviderDoc(prov)
 	if err != nil {
 		return nil, err
@@ -276,17 +252,6 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 }
 
 func getServiceDoc(url string) (io.ReadCloser, error) {
-	if !IgnoreEmbedded {
-		pathElems := strings.Split(url, "/")
-		prov := pathElems[0]
-		// svc := pathElems[1]
-		switch prov {
-		case "google", "googleapis.com":
-			return googleProvider.Open(path.Join("embeddedproviders", strings.ReplaceAll(url, "/google/", "/googleapis.com/")))
-		case "okta":
-			return oktaProvider.Open(path.Join("embeddedproviders", url))
-		}
-	}
 	return os.Open(path.Join(OpenapiFileRoot, url))
 }
 
@@ -307,8 +272,8 @@ func GetServiceDocBytes(url string) ([]byte, error) {
 	return getServiceDocBytes(url)
 }
 
-func LoadProviderByName(provider string) (*Provider, error) {
-	b, err := GetProviderDocBytes(provider)
+func LoadProviderByName(prov, version string) (*Provider, error) {
+	b, err := GetProviderDocBytes(path.Join(prov, version))
 	if err != nil {
 		return nil, err
 	}
@@ -322,7 +287,7 @@ func findLatestDoc(serviceDir string) (string, error) {
 	}
 	var fileNames []string
 	for _, entry := range entries {
-		if !entry.IsDir() {
+		if !entry.IsDir() && !strings.HasSuffix(entry.Name(), ".sig") {
 			fileNames = append(fileNames, entry.Name())
 		}
 	}

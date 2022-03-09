@@ -2,9 +2,11 @@ package openapistackql_test
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 
 	. "github.com/stackql/go-openapistackql/openapistackql"
+	"github.com/stackql/go-openapistackql/pkg/fileutil"
 
 	"gotest.tools/assert"
 )
@@ -13,6 +15,14 @@ const (
 	individualDownloadAllowedRegistryCfgStr string = `{"allowSrcDownload": true, "useEmbedded": false}`
 	pullProvidersRegistryCfgStr             string = `{"srcPrefix": "test-src", "useEmbedded": false}`
 )
+
+func init() {
+	var err error
+	OpenapiFileRoot, err = fileutil.GetFilePathFromRepositoryRoot("providers")
+	if err != nil {
+		os.Exit(1)
+	}
+}
 
 func TestRegistrySimpleOktaApplicationServiceRead(t *testing.T) {
 	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistrySimpleOktaApplicationServiceRead)

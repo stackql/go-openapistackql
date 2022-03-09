@@ -54,16 +54,16 @@ func (nr *BestProjectionFirstStrategy) getBestRequest(op *openapi3.Operation) *o
 	return op.RequestBody.Value.Content[k].Schema.Value
 }
 
-func (nr *BestProjectionFirstStrategy) GetResources(t *openapi3.T) (*openapistackql.ResourceRegister, error) {
-	var paths []EndpointDimensions
-	for k, p := range t.Paths {
-		if p.Delete != nil {
+// func (nr *BestProjectionFirstStrategy) GetResources(t *openapi3.T) (*openapistackql.ResourceRegister, error) {
+// 	var paths []EndpointDimensions
+// 	for k, p := range t.Paths {
+// 		if p.Delete != nil {
 
-		}
-		paths = append(paths, k)
-	}
-	return nil, nil
-}
+// 		}
+// 		paths = append(paths, k)
+// 	}
+// 	return nil, nil
+// }
 
 func GetDocs() {
 

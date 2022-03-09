@@ -124,7 +124,7 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 	if err != nil {
 		return nil, err
 	}
-	return &Registry{
+	rv := &Registry{
 		allowSrcDownload: registryCfg.AllowSrcDownload,
 		regUrl:           regUrl,
 		srcUrl:           srcUrl,
@@ -136,14 +136,18 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 		useEmbedded:      useEmbedded,
 		verifier:         ver,
 		nopVerifier:      nopVerify,
-	}, nil
+	}
+	if useEmbedded {
+		err = rv.copyAndPersistEmbeddedArchives()
+		if err != nil {
+			return nil, err
+		}
+	}
+	return rv, nil
 }
 
 func (r *Registry) ListLocallyAvailableProviders() map[string]struct{} {
 	rv := make(map[string]struct{})
-	if r.useEmbedded {
-		rv = listEmbeddedProviders()
-	}
 	for k := range r.listLocalProviders() {
 		rv[k] = struct{}{}
 	}
@@ -188,6 +192,10 @@ func (r *Registry) pullProviderArchive(prov string, version string) (io.ReadClos
 }
 
 func (r *Registry) PullAndPersistProviderArchive(prov string, version string) error {
+	return r.pullAndPersistProviderArchive(prov, version)
+}
+
+func (r *Registry) pullAndPersistProviderArchive(prov string, version string) error {
 	if r.localDocRoot == "" {
 		return fmt.Errorf("cannot pull provider without local doc location")
 	}
@@ -202,10 +210,33 @@ func (r *Registry) PullAndPersistProviderArchive(prov string, version string) er
 	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), prov))
 }
 
-func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
-	if r.useEmbedded {
-		return LoadProviderByName(prov)
+func (r *Registry) copyAndPersistEmbeddedArchives() error {
+	if r.localDocRoot == "" {
+		return fmt.Errorf("cannot pull provider without local doc location")
 	}
+	err := r.transferEmbeddedArchive("googleapis.com", "v1")
+	if err != nil {
+		return err
+	}
+	return r.transferEmbeddedArchive("okta", "v1")
+}
+
+func (r *Registry) transferEmbeddedArchive(prov, version string) error {
+	if r.localDocRoot == "" {
+		return fmt.Errorf("cannot pull provider without local doc location")
+	}
+	rdr, err := getServiceDoc(fmt.Sprintf("%s/%s.tgz", prov, version))
+	if err != nil {
+		return err
+	}
+	err = os.RemoveAll(path.Join(r.getLocalDocRoot(), prov, version))
+	if err != nil {
+		return err
+	}
+	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), prov))
+}
+
+func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
 	b, err := r.getProviderDocBytes(prov, version)
 	if err != nil {
 		return nil, err
@@ -230,16 +261,10 @@ func (r *Registry) GetService(url string) (*Service, error) {
 }
 
 func (r *Registry) GetResourcesShallowFromProvider(pr *Provider, serviceKey string) (*ResourceRegister, error) {
-	if r.useEmbedded {
-		return pr.GetResourcesShallow(serviceKey)
-	}
 	return pr.getResourcesShallowWithRegistry(r, serviceKey)
 }
 
 func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService) (*ResourceRegister, error) {
-	if r.useEmbedded {
-		return pr.GetResourcesShallow()
-	}
 	return pr.getResourcesShallowWithRegistry(r)
 }
 
@@ -348,6 +373,15 @@ func (r *Registry) getLocalDocRoot() string {
 	}
 }
 
+func (r *Registry) extractEmbeddedDocs() string {
+	switch r.localSrcPrefix {
+	case "":
+		return r.localDocRoot
+	default:
+		return path.Join(r.localDocRoot, r.localSrcPrefix)
+	}
+}
+
 func (r *Registry) listLocalProviders() map[string]struct{} {
 	dr := r.getLocalDocRoot()
 	switch dr {
@@ -401,9 +435,6 @@ func (r *Registry) getLocalDoc(docPath string) (io.ReadCloser, error) {
 }
 
 func (r *Registry) getUnVerifiedArchive(docPath string) (io.ReadCloser, error) {
-	// if r.useEmbedded {
-	// 	return getServiceDoc(docPath)
-	// }
 	if r.isLocalFile() {
 		return os.Open(path.Join(r.distUrl.Path, docPath))
 	}
@@ -438,15 +469,8 @@ func (r *Registry) getEmbeddedVerifiedDocResponse(docPath string) (*edcrypto.Ver
 }
 
 func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierResponse, error) {
-	var vr *edcrypto.VerifierResponse
 	var embeddedErr error
-	if r.useEmbedded {
-		vr, embeddedErr = r.getEmbeddedVerifiedDocResponse(docPath)
-		if embeddedErr != nil {
-			return vr, embeddedErr
-		}
-	}
-	if r.isLocalFile() {
+	if r.isLocalFile() || r.useEmbedded {
 		rb, err := os.Open(path.Join(r.srcUrl.Path, docPath))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
@@ -518,9 +542,6 @@ func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierRes
 }
 
 func (r *Registry) getVerifiedDocBytes(docPath string) ([]byte, error) {
-	if r.useEmbedded {
-		return getServiceDocBytes(docPath)
-	}
 	vr, err := r.getVerifiedDocResponse(docPath)
 	if err != nil {
 		return nil, err
