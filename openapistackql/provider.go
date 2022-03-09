@@ -262,7 +262,7 @@ func (ps *ProviderService) getResourcesShallowWithRegistry(registry *Registry) (
 		return ps.ResourcesRef.Value, nil
 	}
 	if registry != nil {
-		registry.GetResourcesShallowFromURL(ps.ResourcesRef.Ref)
+		return registry.GetResourcesShallowFromURL(ps.ResourcesRef.Ref)
 	}
 	return getResourcesShallow(ps.ResourcesRef.Ref)
 }

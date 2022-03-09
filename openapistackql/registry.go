@@ -273,9 +273,6 @@ func (r *Registry) GetResourcesShallowFromURL(url string) (*ResourceRegister, er
 	if err != nil {
 		return nil, err
 	}
-	if err != nil {
-		return nil, err
-	}
 	return loadResourcesShallow(b)
 }
 
