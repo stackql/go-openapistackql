@@ -296,3 +296,20 @@ func TestIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 
 	t.Logf("TestIndirectGoogleComputeServiceSubsetAccess passed\n")
 }
+
+func TestLoadEmbeddedProviders(t *testing.T) {
+
+	setupFileRoot(t)
+
+	gp, err := GetEmbeddedDist("googleapis.com", "v1")
+
+	assert.NilError(t, err)
+
+	assert.Assert(t, gp != nil)
+
+	op, err := GetEmbeddedDist("okta", "v1")
+
+	assert.NilError(t, err)
+
+	assert.Assert(t, op != nil)
+}
