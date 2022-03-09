@@ -39,5 +39,5 @@ func getEmbeddedDist(prov, version string) (io.ReadCloser, error) {
 	if prov == "google" {
 		prov = "googleapis.com"
 	}
-	return pr.Open(path.Join(prov, fmt.Sprintf("%s.tgz", version)))
+	return pr.Open(path.Join("embeddedproviders", prov, fmt.Sprintf("%s.tgz", version)))
 }
