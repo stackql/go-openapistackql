@@ -19,7 +19,7 @@ func GetEmbeddedProvider(prov string) (embed.FS, error) {
 
 func getEmbeddedProvider(prov string) (embed.FS, error) {
 	switch prov {
-	case "google":
+	case "google", "googleapis.com":
 		return googleProvider, nil
 	case "okta":
 		return oktaProvider, nil
