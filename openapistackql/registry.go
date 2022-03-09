@@ -467,7 +467,7 @@ func (r *Registry) getEmbeddedVerifiedDocResponse(docPath string) (*edcrypto.Ver
 
 func (r *Registry) getVerifiedDocResponse(docPath string) (*edcrypto.VerifierResponse, error) {
 	var embeddedErr error
-	if r.isLocalFile() || r.useEmbedded {
+	if r.isLocalFile() {
 		rb, err := os.Open(path.Join(r.srcUrl.Path, docPath))
 		if err != nil {
 			return nil, fmt.Errorf("cannot read local registry file: '%s'", err.Error())
