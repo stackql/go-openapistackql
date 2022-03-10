@@ -48,7 +48,6 @@ type RegistryConfig struct {
 	RegistryURL      string                   `json:"url" yaml:"url"`
 	SrcPrefix        *string                  `json:"srcPrefix" yaml:"srcPrefix"`
 	DistPrefix       *string                  `json:"distPrefix" yaml:"distPrefix"`
-	UseEmbedded      *bool                    `json:"useEmbedded" yaml:"useEmbedded"`
 	AllowSrcDownload bool                     `json:"allowSrcDownload" yaml:"allowSrcDownload"`
 	LocalDocRoot     string                   `json:"localDocRoot" yaml:"localDocRoot"`
 	VerfifyConfig    *edcrypto.VerifierConfig `json:"verifyConfig" yaml:"verifyConfig"`
@@ -76,10 +75,6 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 	registryUrl := registryCfg.RegistryURL
 	if registryUrl == "" {
 		registryUrl = defaultRegistryUrlString
-	}
-	useEmbedded := true // default
-	if registryCfg.UseEmbedded != nil {
-		useEmbedded = *registryCfg.UseEmbedded
 	}
 	srcUrlStr := registryUrl
 	srcPrefix := ""
@@ -133,15 +128,8 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 		localSrcPrefix:   srcPrefix,
 		localDistPrefix:  distPrefix,
 		transport:        transport,
-		useEmbedded:      useEmbedded,
 		verifier:         ver,
 		nopVerifier:      nopVerify,
-	}
-	if useEmbedded {
-		err = rv.copyAndPersistEmbeddedArchives()
-		if err != nil {
-			return nil, err
-		}
 	}
 	return rv, nil
 }
@@ -200,32 +188,6 @@ func (r *Registry) pullAndPersistProviderArchive(prov string, version string) er
 		return fmt.Errorf("cannot pull provider without local doc location")
 	}
 	rdr, err := r.pullProviderArchive(prov, version)
-	if err != nil {
-		return err
-	}
-	err = os.RemoveAll(path.Join(r.getLocalDocRoot(), prov, version))
-	if err != nil {
-		return err
-	}
-	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), prov))
-}
-
-func (r *Registry) copyAndPersistEmbeddedArchives() error {
-	if r.localDocRoot == "" {
-		return fmt.Errorf("cannot pull provider without local doc location")
-	}
-	err := r.transferEmbeddedArchive("googleapis.com", "v1")
-	if err != nil {
-		return err
-	}
-	return r.transferEmbeddedArchive("okta", "v1")
-}
-
-func (r *Registry) transferEmbeddedArchive(prov, version string) error {
-	if r.localDocRoot == "" {
-		return fmt.Errorf("cannot pull provider without local doc location")
-	}
-	rdr, err := getEmbeddedDist(prov, version)
 	if err != nil {
 		return err
 	}
