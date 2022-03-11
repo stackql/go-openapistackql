@@ -13,6 +13,7 @@ import (
 
 	"github.com/stackql/go-openapistackql/pkg/compression"
 	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
+	"gopkg.in/yaml.v2"
 )
 
 const (
@@ -21,6 +22,7 @@ const (
 	defaultDistPrefix        string = "dist"
 	httpSchemeRegexpString   string = `(?i)^https?$`
 	fileSchemeRegexpString   string = `(?i)^file$`
+	remoteProviderListPath   string = `providers.yaml`
 )
 
 var (
@@ -31,6 +33,7 @@ var (
 type RegistryAPI interface {
 	PullAndPersistProviderArchive(string, string) error
 	PullProviderArchive(string, string) (io.ReadCloser, error)
+	ListAllAvailableProviders() (map[string]ProviderDescription, error)
 	ListLocallyAvailableProviders() map[string]struct{}
 	GetDocBytes(string) ([]byte, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
@@ -140,6 +143,40 @@ func (r *Registry) ListLocallyAvailableProviders() map[string]struct{} {
 		rv[k] = struct{}{}
 	}
 	return rv
+}
+
+type ProviderDescription struct {
+	Versions []string `json:"versions" yaml: "versions"`
+}
+
+type ProvidersList struct {
+	Providers map[string]ProviderDescription `json:"providers" yaml: "providers"`
+}
+
+func NewProvidersList() ProvidersList {
+	return ProvidersList{
+		Providers: make(map[string]ProviderDescription),
+	}
+}
+
+func (r *Registry) ListAllAvailableProviders() (map[string]ProviderDescription, error) {
+	if r.isFile() {
+		return nil, fmt.Errorf("'registry list' is meaningless in local mode")
+	}
+	rv := NewProvidersList()
+	rc, err := r.getRemoteProviderList()
+	if err != nil {
+		return nil, err
+	}
+	b, err := io.ReadAll(rc)
+	if err != nil {
+		return nil, err
+	}
+	err = yaml.Unmarshal(b, rv)
+	if err != nil {
+		return nil, err
+	}
+	return rv.Providers, nil
 }
 
 func (r *Registry) isHttp() bool {
@@ -318,6 +355,22 @@ func (r *Registry) getRemoteArchive(docPath string) (io.ReadCloser, error) {
 		cl.Transport = r.transport
 	}
 	response, err := cl.Get(fmt.Sprintf("%s/%s", r.distUrl.String(), docPath))
+	if err != nil {
+		return nil, err
+	}
+	if response.Body == nil {
+		return nil, fmt.Errorf("no response body from remote")
+	}
+	return response.Body, nil
+}
+
+func (r *Registry) getRemoteProviderList() (io.ReadCloser, error) {
+
+	cl := &http.Client{}
+	if r.transport != nil {
+		cl.Transport = r.transport
+	}
+	response, err := cl.Get(fmt.Sprintf("%s/%s", r.distUrl.String(), remoteProviderListPath))
 	if err != nil {
 		return nil, err
 	}
