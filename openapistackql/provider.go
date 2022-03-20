@@ -237,7 +237,11 @@ func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, err
 }
 
 func (ps *ProviderService) PeekServiceFragment(resourceKey string) (*Service, bool) {
-	if ps.ServiceRef == nil || ps.ServiceRef.Value == nil {
+	if ps.ServiceRef == nil || ps.ServiceRef.Value == nil || ps.ServiceRef.Value.rsc == nil {
+		return nil, false
+	}
+	_, ok := ps.ServiceRef.Value.rsc[resourceKey]
+	if !ok {
 		return nil, false
 	}
 	return ps.ServiceRef.Value, true
