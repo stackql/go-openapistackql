@@ -13,12 +13,12 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.10.1
 	github.com/stackql/go-spew v1.1.3-alpha24
-	github.com/stackql/stackql-provider-registry v0.0.1-alpha903
+	github.com/stackql/stackql-provider-registry v0.0.1-rc01
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	gopkg.in/yaml.v2 v2.4.0
 	gotest.tools v2.2.0+incompatible
-	vitess.io/vitess v0.0.9-alpha5
+	vitess.io/vitess v0.0.10-rc01
 )
 
 require (
@@ -46,4 +46,4 @@ require (
 	gopkg.in/ini.v1 v1.66.2 // indirect
 )
 
-replace vitess.io/vitess => github.com/infraql/vitess v0.0.9-alpha5
+replace vitess.io/vitess => github.com/infraql/vitess v0.0.10-rc01
