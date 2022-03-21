@@ -3,15 +3,24 @@ package openapistackql_test
 import (
 	"encoding/json"
 	"os"
+	"path"
 	"testing"
 
 	. "github.com/stackql/go-openapistackql/openapistackql"
+	"github.com/stackql/go-openapistackql/pkg/fileutil"
 
 	"gotest.tools/assert"
 )
 
+func setupFileRoot(t *testing.T) {
+	var err error
+	OpenapiFileRoot, err = fileutil.GetFilePathFromRepositoryRoot(path.Join("providers", "src"))
+	assert.NilError(t, err)
+}
+
 func TestSimpleOktaApplicationServiceRead(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	setupFileRoot(t)
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -27,7 +36,8 @@ func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 }
 
 func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	setupFileRoot(t)
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -41,7 +51,7 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "application")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Application.spew.raw.txt")
+	outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Application.spew.raw.txt")
 
 	assert.NilError(t, err)
 
@@ -53,7 +63,8 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 }
 
 func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	setupFileRoot(t)
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -67,7 +78,7 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "application")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Application.spew.go")
+	outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Application.spew.go")
 
 	assert.NilError(t, err)
 
@@ -90,7 +101,8 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 }
 
 func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
-	b, err := GetServiceDocBytes("okta/services/Application.yaml")
+	setupFileRoot(t)
+	b, err := GetServiceDocBytes("okta/v1/services/Application.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -104,7 +116,7 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "application")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Application.json")
+	outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Application.json")
 
 	assert.NilError(t, err)
 
@@ -133,7 +145,8 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 }
 
 func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
-	b, err := GetServiceDocBytes("googleapis.com/services-split/compute/compute-v1.yaml")
+	setupFileRoot(t)
+	b, err := GetServiceDocBytes("googleapis.com/v1/services-split/compute/compute-v1.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -147,7 +160,7 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 
 	assert.Equal(t, svc.GetName(), "compute")
 
-	outFile, err := GetFilePathFromRepositoryRoot("../test/_output/Compute.json")
+	outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Compute.json")
 
 	assert.NilError(t, err)
 
@@ -176,7 +189,8 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 }
 
 func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
-	b, err := GetServiceDocBytes("googleapis.com/resources/compute-v1.yaml")
+	setupFileRoot(t)
+	b, err := GetServiceDocBytes("googleapis.com/v1/resources/compute-v1.yaml")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -188,14 +202,16 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services-split/compute/compute-v1.yaml")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
 
 func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 
-	pr, err := LoadProviderByName("google")
+	setupFileRoot(t)
+
+	pr, err := LoadProviderByName("googleapis.com", "v1")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -207,14 +223,16 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services-split/compute/compute-v1.yaml")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
 
 func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
-	pr, err := LoadProviderByName("google")
+	setupFileRoot(t)
+
+	pr, err := LoadProviderByName("googleapis.com", "v1")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}
@@ -226,7 +244,7 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/services-split/compute/compute-v1.yaml")
+	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	sb, err := GetServiceDocBytes(rr.ServiceDocPath.Ref)
 	if err != nil {
@@ -249,7 +267,9 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
 func TestIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 
-	pr, err := LoadProviderByName("google")
+	setupFileRoot(t)
+
+	pr, err := LoadProviderByName("googleapis.com", "v1")
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}

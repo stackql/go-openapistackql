@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"io/ioutil"
 	"os"
@@ -22,8 +23,8 @@ const (
 )
 
 var (
-	OpenapiFileRoot string
 	IgnoreEmbedded  bool
+	OpenapiFileRoot string
 )
 
 func init() {
@@ -243,30 +244,6 @@ func LoadProviderDocFromFile(fileName string) (*Provider, error) {
 }
 
 func GetProviderDocBytes(prov string) ([]byte, error) {
-	if !IgnoreEmbedded {
-		switch prov {
-		case "google":
-			entries, err := googleProvider.ReadDir("embeddedproviders/googleapis.com")
-			if err != nil {
-				return nil, fmt.Errorf("wtf: %s", err.Error())
-			}
-			fn, err := getLatestFile(entries)
-			if err != nil {
-				return nil, fmt.Errorf("huh: %s", err.Error())
-			}
-			return googleProvider.ReadFile(path.Join("embeddedproviders/googleapis.com", fn))
-		case "okta":
-			entries, err := oktaProvider.ReadDir("embeddedproviders/okta")
-			if err != nil {
-				return nil, fmt.Errorf("wtf: %s", err.Error())
-			}
-			fn, err := getLatestFile(entries)
-			if err != nil {
-				return nil, fmt.Errorf("huh: %s", err.Error())
-			}
-			return oktaProvider.ReadFile(path.Join("embeddedproviders/okta", fn))
-		}
-	}
 	fn, err := getProviderDoc(prov)
 	if err != nil {
 		return nil, err
@@ -274,27 +251,17 @@ func GetProviderDocBytes(prov string) ([]byte, error) {
 	return os.ReadFile(fn)
 }
 
+func getServiceDoc(url string) (io.ReadCloser, error) {
+	return os.Open(path.Join(OpenapiFileRoot, url))
+}
+
 func getServiceDocBytes(url string) ([]byte, error) {
-	if !IgnoreEmbedded {
-		pathElems := strings.Split(url, "/")
-		prov := pathElems[0]
-		// svc := pathElems[1]
-		switch prov {
-		case "google", "googleapis.com":
-			// entries, err := googleProvider.ReadDir(path.Join("embeddedproviders/googleapis.com", svc))
-			// if err != nil {
-			// 	return nil, fmt.Errorf("wtf: %s", err.Error())
-			// }
-			// fn, err := getLatestFile(entries)
-			// if err != nil {
-			// 	return nil, fmt.Errorf("huh: %s", err.Error())
-			// }
-			return googleProvider.ReadFile(path.Join("embeddedproviders", strings.ReplaceAll(url, "/google/", "/googleapis.com/")))
-		case "okta":
-			return oktaProvider.ReadFile(path.Join("embeddedproviders", url))
-		}
+	f, err := getServiceDoc(url)
+	if err != nil {
+		return nil, err
 	}
-	return os.ReadFile(path.Join(OpenapiFileRoot, url))
+	defer f.Close()
+	return io.ReadAll(f)
 }
 
 func GetResourcesRegisterDocBytes(url string) ([]byte, error) {
@@ -305,8 +272,8 @@ func GetServiceDocBytes(url string) ([]byte, error) {
 	return getServiceDocBytes(url)
 }
 
-func LoadProviderByName(provider string) (*Provider, error) {
-	b, err := GetProviderDocBytes(provider)
+func LoadProviderByName(prov, version string) (*Provider, error) {
+	b, err := GetProviderDocBytes(path.Join(prov, version))
 	if err != nil {
 		return nil, err
 	}
@@ -320,7 +287,7 @@ func findLatestDoc(serviceDir string) (string, error) {
 	}
 	var fileNames []string
 	for _, entry := range entries {
-		if !entry.IsDir() {
+		if !entry.IsDir() && !strings.HasSuffix(entry.Name(), ".sig") {
 			fileNames = append(fileNames, entry.Name())
 		}
 	}
@@ -335,7 +302,7 @@ func findLatestDoc(serviceDir string) (string, error) {
 func getLatestFile(entries []fs.DirEntry) (string, error) {
 	var fileNames []string
 	for _, entry := range entries {
-		if !entry.IsDir() {
+		if !entry.IsDir() && (strings.HasSuffix(entry.Name(), ".yaml") || strings.HasSuffix(entry.Name(), ".json")) {
 			fileNames = append(fileNames, entry.Name())
 		}
 	}

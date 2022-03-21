@@ -9,6 +9,14 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const (
+	defaultAnonymousColumnName string = "column_anon"
+)
+
+var (
+	AnonymousColumnName string = defaultAnonymousColumnName
+)
+
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(providerType, lhs, rhs)
 
@@ -150,6 +158,12 @@ func (schema *Schema) GetSelectListItems(key string) (*Schema, string) {
 }
 
 func (schema *Schema) GetSelectSchema(itemsKey string) (*Schema, string, error) {
+	if itemsKey == AnonymousColumnName {
+		switch schema.Type {
+		case "string", "integer":
+			return schema, AnonymousColumnName, nil
+		}
+	}
 	sc, str, err := schema.getSelectItemsSchema(itemsKey)
 	if err == nil {
 		return sc, str, err
@@ -210,6 +224,10 @@ func (s *Schema) GetAllColumns() []string {
 			return iS.GetAllColumns()
 		}
 	}
+	switch s.Type {
+	case "string", "bool", "integer":
+		return []string{AnonymousColumnName}
+	}
 	return retVal
 }
 
@@ -239,7 +257,10 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 			return NewSchema(items, "").Tabulate(false)
 		}
 	} else if s.Type == "string" {
-		cd := ColumnDescriptor{Name: "_", Schema: s}
+		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
+		if omitColumns {
+			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title}
+		}
 		return &Tabulation{columns: []ColumnDescriptor{cd}, name: s.Title}
 	}
 	return nil
@@ -264,11 +285,9 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 		}
 		return retVal
 	}
-	retVal["name"] = s.Title
-	retVal["type"] = s.Type
-	if extended {
-		retVal["description"] = s.Description
-	}
+	atomicMap := s.toFlatDescriptionMap(extended)
+	atomicMap["name"] = AnonymousColumnName
+	retVal[AnonymousColumnName] = atomicMap
 	return retVal
 }
 

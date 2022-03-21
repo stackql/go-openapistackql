@@ -83,6 +83,13 @@ func (op *OperationStore) GetParameterizedPath() string {
 	return op.parameterizedPath
 }
 
+func (op *OperationStore) GetOptimalResponseMediaType() string {
+	if op.Response != nil && op.Response.BodyMediaType != "" {
+		return op.Response.BodyMediaType
+	}
+	return MediaTypeJson
+}
+
 func (op *OperationStore) IsNullary() bool {
 	rbs, _ := op.GetResponseBodySchema()
 	return rbs == nil
@@ -120,6 +127,13 @@ func (m *OperationStore) KeyExists(lhs string) bool {
 		}
 	}
 	return false
+}
+
+func (m *OperationStore) GetSelectItemsKey() string {
+	if m.Response != nil {
+		return m.Response.ObjectKey
+	}
+	return ""
 }
 
 func (m *OperationStore) GetKey(lhs string) (interface{}, error) {

@@ -107,12 +107,28 @@ func (ps *ProviderService) GetKey(lhs string) (interface{}, error) {
 	return val, nil
 }
 
+func (pr *Provider) getServiceWithRegistry(registry *Registry, key string) (*Service, error) {
+	sh, err := pr.getProviderService(key)
+	if err != nil {
+		return nil, err
+	}
+	return sh.getServiceWithRegistry(registry)
+}
+
 func (pr *Provider) GetService(key string) (*Service, error) {
 	sh, err := pr.getProviderService(key)
 	if err != nil {
 		return nil, err
 	}
 	return sh.GetService()
+}
+
+func (pr *Provider) getResourcesShallowWithRegistry(registry *Registry, serviceKey string) (*ResourceRegister, error) {
+	sh, err := pr.getProviderService(serviceKey)
+	if err != nil {
+		return nil, err
+	}
+	return sh.getResourcesShallowWithRegistry(registry)
 }
 
 func (pr *Provider) GetResourcesShallow(serviceKey string) (*ResourceRegister, error) {
@@ -135,7 +151,34 @@ func (pr *Provider) GetProviderService(key string) (*ProviderService, error) {
 	return pr.getProviderService(key)
 }
 
+func (ps *ProviderService) getServiceWithRegistry(registry *Registry) (*Service, error) {
+	if ps.ServiceRef.Value != nil {
+		return ps.ServiceRef.Value, nil
+	}
+	if registry != nil {
+		return registry.GetService(ps.ServiceRef.Ref)
+	}
+	svc, err := getService(ps.ServiceRef.Ref)
+	if err != nil {
+		return nil, err
+	}
+	ps.ServiceRef.Value = svc
+	return ps.ServiceRef.Value, nil
+}
+
 func (ps *ProviderService) GetService() (*Service, error) {
+	if ps.ServiceRef.Value != nil {
+		return ps.ServiceRef.Value, nil
+	}
+	svc, err := getService(ps.ServiceRef.Ref)
+	if err != nil {
+		return nil, err
+	}
+	ps.ServiceRef.Value = svc
+	return ps.ServiceRef.Value, nil
+}
+
+func (ps *ProviderService) getService() (*Service, error) {
 	if ps.ServiceRef.Value != nil {
 		return ps.ServiceRef.Value, nil
 	}
@@ -194,10 +237,38 @@ func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, err
 }
 
 func (ps *ProviderService) PeekServiceFragment(resourceKey string) (*Service, bool) {
-	if ps.ServiceRef == nil || ps.ServiceRef.Value == nil {
+	if ps.ServiceRef == nil || ps.ServiceRef.Value == nil || ps.ServiceRef.Value.rsc == nil {
+		return nil, false
+	}
+	_, ok := ps.ServiceRef.Value.rsc[resourceKey]
+	if !ok {
 		return nil, false
 	}
 	return ps.ServiceRef.Value, true
+}
+
+func (ps *ProviderService) getResourcesShallowWithRegistry(registry *Registry) (*ResourceRegister, error) {
+	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
+		if ps.ServiceRef != nil || ps.ServiceRef.Ref != "" {
+			svc, err := ps.getServiceWithRegistry(registry)
+			if err != nil {
+				return nil, err
+			}
+			rv := &ResourceRegister{
+				ServiceDocPath: ps.ServiceRef,
+				Resources:      svc.rsc,
+			}
+			return rv, nil
+		}
+		return nil, fmt.Errorf("cannot resolve shallow resources")
+	}
+	if ps.ResourcesRef.Value != nil {
+		return ps.ResourcesRef.Value, nil
+	}
+	if registry != nil {
+		return registry.GetResourcesShallowFromURL(ps.ResourcesRef.Ref)
+	}
+	return getResourcesShallow(ps.ResourcesRef.Ref)
 }
 
 func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
