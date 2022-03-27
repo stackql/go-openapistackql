@@ -112,7 +112,6 @@ func (op *OperationStore) isParameterMatch(params map[string]interface{}) bool {
 			continue
 		}
 		log.Debugf("parameter '%s' unmatched for method '%s'\n", k, op.getName())
-		return false
 	}
 	if requiredParameters.Size() == 0 {
 		return true
