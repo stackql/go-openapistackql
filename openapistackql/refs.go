@@ -14,6 +14,11 @@ type OperationRef struct {
 	Value *openapi3.Operation
 }
 
+type OperationStoreRef struct {
+	Ref   string `json:"$ref" yaml:"$ref"`
+	Value *OperationStore
+}
+
 type PathItemRef struct {
 	Ref   string `json:"$ref" yaml:"$ref"`
 	Value *openapi3.PathItem

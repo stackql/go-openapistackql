@@ -16,6 +16,8 @@ import (
 
 	openapirouter "github.com/getkin/kin-openapi/routers/gorillamux"
 
+	log "github.com/sirupsen/logrus"
+
 	"vitess.io/vitess/go/sqltypes"
 )
 
@@ -77,6 +79,46 @@ type OperationStore struct {
 	ServiceDocPath *ServiceRef            `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	// private
 	parameterizedPath string `json:"-" yaml:"-"`
+}
+
+func (op *OperationStore) IsParameterMatch(params map[string]interface{}) bool {
+	return op.isParameterMatch(params)
+}
+
+func (op *OperationStore) isParameterMatch(params map[string]interface{}) bool {
+	requiredParameters := NewParameterSuffixMap()
+	optionalParameters := NewParameterSuffixMap()
+	for k, v := range op.getRequiredParameters() {
+		key := fmt.Sprintf("%s.%s", op.getName(), k)
+		_, keyExists := requiredParameters.Get(key)
+		if keyExists {
+			return false
+		}
+		requiredParameters.Put(key, v)
+	}
+	for k, vOpt := range op.getOptionalParameters() {
+		key := fmt.Sprintf("%s.%s", op.getName(), k)
+		_, keyExists := optionalParameters.Get(key)
+		if keyExists {
+			return false
+		}
+		optionalParameters.Put(key, vOpt)
+	}
+	for k := range params {
+		if requiredParameters.Delete(k) {
+			continue
+		}
+		if optionalParameters.Delete(k) {
+			continue
+		}
+		log.Debugf("parameter '%s' unmatched for method '%s'\n", k, op.getName())
+		return false
+	}
+	if requiredParameters.Size() == 0 {
+		return true
+	}
+	log.Debugf("unmatched **required** paramter count = %d for method '%s'\n", requiredParameters.Size(), op.getName())
+	return false
 }
 
 func (op *OperationStore) GetParameterizedPath() string {
@@ -177,6 +219,10 @@ func (m *OperationStore) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 }
 
 func (m *OperationStore) GetRequiredParameters() map[string]*Parameter {
+	return m.getRequiredParameters()
+}
+
+func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
 	retVal := make(map[string]*Parameter)
 	if m.OperationRef.Value == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
@@ -191,6 +237,10 @@ func (m *OperationStore) GetRequiredParameters() map[string]*Parameter {
 }
 
 func (m *OperationStore) GetOptionalParameters() map[string]*Parameter {
+	return m.getOptionalParameters()
+}
+
+func (m *OperationStore) getOptionalParameters() map[string]*Parameter {
 	retVal := make(map[string]*Parameter)
 	if m.OperationRef == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
@@ -225,6 +275,10 @@ func (m *OperationStore) GetParameter(paramKey string) (*Parameter, bool) {
 }
 
 func (m *OperationStore) GetName() string {
+	return m.getName()
+}
+
+func (m *OperationStore) getName() string {
 	if m.OperationRef != nil && m.OperationRef.Value != nil && m.OperationRef.Value.OperationID != "" {
 		return m.OperationRef.Value.OperationID
 	}

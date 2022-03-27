@@ -15,6 +15,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	yamlconv "github.com/ghodss/yaml"
+	"github.com/go-openapi/jsonpointer"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -41,6 +42,7 @@ type Loader struct {
 	visitedExpectedRequest  map[*Schema]struct{}
 	visitedExpectedResponse map[*Schema]struct{}
 	visitedOperation        map[*openapi3.Operation]struct{}
+	visitedOperationStore   map[*OperationStore]struct{}
 	visitedPathItem         map[*openapi3.PathItem]struct{}
 }
 
@@ -166,6 +168,16 @@ func (l *Loader) mergeResource(svc *Service, rsc *Resource) error {
 		v.Servers = &svc.Servers
 		rsc.Methods[k] = v
 	}
+	for sqlVerb, dir := range rsc.SQLVerbs {
+		for i, v := range dir {
+			cur := v
+			err := l.resolveSQLVerb(rsc, &cur)
+			if err != nil {
+				return err
+			}
+			rsc.SQLVerbs[sqlVerb][i] = cur
+		}
+	}
 	return nil
 }
 
@@ -215,6 +227,7 @@ func NewLoader() *Loader {
 		make(map[*Schema]struct{}),
 		make(map[*Schema]struct{}),
 		make(map[*openapi3.Operation]struct{}),
+		make(map[*OperationStore]struct{}),
 		make(map[*openapi3.PathItem]struct{}),
 	}
 }
@@ -441,6 +454,35 @@ func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operatio
 		s := NewSchema(sRef.Value, sRef.Ref)
 		component.Schema = s
 		return nil
+	}
+	return nil
+}
+
+func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef) (err error) {
+	if component != nil && component.Value != nil {
+		if loader.visitedOperationStore == nil {
+			loader.visitedOperationStore = make(map[*OperationStore]struct{})
+		}
+		if _, ok := loader.visitedOperationStore[component.Value]; ok {
+			return nil
+		}
+		loader.visitedOperationStore[component.Value] = struct{}{}
+	}
+
+	if component == nil {
+		return fmt.Errorf("operation store ref not supplied")
+	}
+	osv, _, err := jsonpointer.GetForToken(rsc, component.Ref)
+	if err != nil {
+		return err
+	}
+	resolved, ok := osv.(*OperationStore)
+	if !ok {
+		return fmt.Errorf("operation store ref type '%T' not supported", osv)
+	}
+	component.Value = resolved
+	if component.Value == nil {
+		return fmt.Errorf("operation store ref not resolved")
 	}
 	return nil
 }
