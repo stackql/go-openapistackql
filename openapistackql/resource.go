@@ -65,6 +65,18 @@ func (rs *Resource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	return rs.getDefaultMethodKeysForSQLVerb(sqlVerb)
 }
 
+func (rs *Resource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, bool) {
+	return rs.getFirstMethodMatchFromSQLVerb(sqlVerb, parameters)
+}
+
+func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, bool) {
+	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
+	if err != nil {
+		return nil, false
+	}
+	return ms.getFirstMatch(parameters)
+}
+
 func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	switch strings.ToLower(sqlVerb) {
 	case "insert":
