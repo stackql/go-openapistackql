@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/go-openapi/jsonpointer"
 	"vitess.io/vitess/go/sqltypes"
 )
 
@@ -44,6 +45,20 @@ type Resource struct {
 
 	// Hacks
 	BaseUrl string `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"`
+}
+
+var _ jsonpointer.JSONPointable = (Resource)(Resource{})
+
+func (rsc Resource) JSONLookup(token string) (interface{}, error) {
+	if rsc.Methods == nil {
+		return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
+	}
+	ss := strings.Split(token, "/")
+	m, ok := rsc.Methods[ss[len(ss)-1]]
+	if !ok {
+		return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
+	}
+	return &m, nil
 }
 
 type MethodSet []*OperationStore

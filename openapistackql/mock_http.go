@@ -69,7 +69,7 @@ func getMockFileRegistry(vc RegistryConfig, registryRoot string, useEmbedded boo
 	if err != nil {
 		return nil, err
 	}
-	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, LocalDocRoot: localRegPath, SrcPrefix: vc.SrcPrefix, AllowSrcDownload: vc.AllowSrcDownload}, nil)
+	return NewRegistry(RegistryConfig{RegistryURL: registryRoot, LocalDocRoot: localRegPath, SrcPrefix: vc.SrcPrefix, AllowSrcDownload: vc.AllowSrcDownload, VerfifyConfig: vc.VerfifyConfig}, nil)
 }
 
 func getMockRemoteRegistry(vc RegistryConfig) (RegistryAPI, error) {

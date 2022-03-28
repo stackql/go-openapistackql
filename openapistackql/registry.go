@@ -65,7 +65,6 @@ type Registry struct {
 	localSrcPrefix   string
 	localDistPrefix  string
 	transport        http.RoundTripper
-	useEmbedded      bool
 	verifier         *edcrypto.Verifier
 	nopVerifier      bool
 }
