@@ -202,7 +202,6 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
@@ -223,7 +222,6 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
@@ -244,9 +242,8 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
-	sb, err := GetServiceDocBytes(rr.ServiceDocPath.Ref)
+	sb, err := GetServiceDocBytes(rr.Resources["acceleratorTypes"].Methods["get"].OperationRef.ExtractServiceDocPath())
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)
 	}

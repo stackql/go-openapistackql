@@ -54,11 +54,14 @@ func (rsc Resource) JSONLookup(token string) (interface{}, error) {
 		return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
 	}
 	ss := strings.Split(token, "/")
-	m, ok := rsc.Methods[ss[len(ss)-1]]
-	if !ok {
-		return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
+	if len(ss) > 1 && ss[len(ss)-2] == "methods" {
+		m, ok := rsc.Methods[ss[len(ss)-1]]
+		if !ok {
+			return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
+		}
+		return &m, nil
 	}
-	return &m, nil
+	return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
 }
 
 type MethodSet []*OperationStore

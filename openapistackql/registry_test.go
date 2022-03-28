@@ -128,7 +128,6 @@ func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r Regi
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
@@ -147,9 +146,8 @@ func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r 
 
 	assert.Assert(t, rr != nil)
 	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-	assert.Equal(t, rr.ServiceDocPath.Ref, "googleapis.com/v1/services-split/compute/compute-v1.yaml")
 
-	sv, err := r.GetService(rr.ServiceDocPath.Ref)
+	sv, err := r.GetService(rr.Resources["acceleratorTypes"].Methods["get"].OperationRef.ExtractServiceDocPath())
 
 	if err != nil {
 		t.Fatalf("Test failed: %v", err)

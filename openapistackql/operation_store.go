@@ -69,14 +69,13 @@ type OperationStore struct {
 	MethodKey string `json:"-" yaml:"-"`
 	SQLVerb   string `json:"sqlVerb" yaml:"sqlVerb"` // Required
 	// Optional parameters.
-	Parameters     map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
-	PathItemRef    *PathItemRef           `json:"path" yaml:"path"`           // Required
-	APIMethod      string                 `json:"apiMethod" yaml:"apiMethod"` // Required
-	OperationRef   *OperationRef          `json:"operation" yaml:"operation"` // Required
-	Request        *ExpectedRequest       `json:"request" yaml:"request"`
-	Response       *ExpectedResponse      `json:"response" yaml:"response"`
-	Servers        *openapi3.Servers      `json:"servers" yaml:"servers"`
-	ServiceDocPath *ServiceRef            `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
+	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
+	APIMethod    string                 `json:"apiMethod" yaml:"apiMethod"` // Required
+	OperationRef *OperationRef          `json:"operation" yaml:"operation"` // Required
+	Request      *ExpectedRequest       `json:"request" yaml:"request"`
+	Response     *ExpectedResponse      `json:"response" yaml:"response"`
+	Servers      *openapi3.Servers      `json:"servers" yaml:"servers"`
 	// private
 	parameterizedPath string `json:"-" yaml:"-"`
 }
@@ -455,7 +454,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	}
 	// TODO: clean up
 	sv = strings.TrimSuffix(sv, "/")
-	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.PathItemRef.Ref), pathParams)
+	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.Ref), pathParams)
 	u, err := url.Parse(fmt.Sprintf("%s?%s", path, q.Encode()))
 	if err != nil {
 		return nil, err

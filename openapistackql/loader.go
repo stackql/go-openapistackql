@@ -78,12 +78,7 @@ func (l *Loader) LoadFromBytesAndResources(rr *ResourceRegister, resourceKey str
 		return nil, err
 	}
 	svc := NewService(doc)
-	docUrl := rr.ObtainServiceDocUrl(resourceKey)
-	if docUrl != "" {
-		err = l.mergeResourcesScoped(svc, docUrl, rr)
-	} else {
-		err = l.mergeResources(svc, rr.Resources)
-	}
+	err = l.mergeResources(svc, rr.Resources)
 	if err != nil {
 		return nil, err
 	}
@@ -128,13 +123,11 @@ func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource) error
 func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceRegister) error {
 	scopedMap := make(map[string]*Resource)
 	for k, rsc := range rr.Resources {
-		if rr.ObtainServiceDocUrl(k) == svcUrl {
-			err := l.mergeResource(svc, rsc)
-			if err != nil {
-				return err
-			}
-			scopedMap[k] = rsc
+		err := l.mergeResource(svc, rsc)
+		if err != nil {
+			return err
 		}
+		scopedMap[k] = rsc
 	}
 	if svc.rsc == nil {
 		svc.rsc = scopedMap
@@ -147,13 +140,10 @@ func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceR
 }
 
 func (l *Loader) mergeResource(svc *Service, rsc *Resource) error {
-	for k, v := range rsc.Methods {
+	for k, vOp := range rsc.Methods {
+		v := vOp
 		v.MethodKey = k
-		err := l.resolvePathItemRef(svc, v.PathItemRef)
-		if err != nil {
-			return err
-		}
-		err = l.resolveOperationRef(svc, v.OperationRef, v.PathItemRef.Ref)
+		err := l.resolveOperationRef(svc, rsc, &v)
 		if err != nil {
 			return err
 		}
@@ -373,36 +363,38 @@ func loadProviderDocFromBytes(bytes []byte) (*Provider, error) {
 	return &prov, nil
 }
 
-func (loader *Loader) resolveOperationRef(doc *Service, component *OperationRef, path string) (err error) {
-	if component != nil && component.Value != nil {
+func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component *OperationStore) (err error) {
+	if component.OperationRef != nil && component.OperationRef.Value != nil {
 		if loader.visitedOperation == nil {
 			loader.visitedOperation = make(map[*openapi3.Operation]struct{})
 		}
-		if _, ok := loader.visitedOperation[component.Value]; ok {
+		if _, ok := loader.visitedOperation[component.OperationRef.Value]; ok {
 			return nil
 		}
-		loader.visitedOperation[component.Value] = struct{}{}
+		loader.visitedOperation[component.OperationRef.Value] = struct{}{}
 	}
 
 	if component == nil {
 		return errors.New("invalid operation: value MUST be an object")
 	}
-	ref := component.Ref
-	if ref != "" {
-		p, ok := doc.Paths[path]
-		if !ok {
-			return fmt.Errorf("cannot find path = '%s'", path)
-		}
-		ops := p.Operations()
-		if ops == nil {
-			return fmt.Errorf("cannot find any operation for path = '%s'; nil operations", path)
-		}
-		op, ok := ops[strings.ToUpper(component.Ref)]
-		if !ok {
-			return fmt.Errorf("cannot find operation = '%s' for path = '%s'; missing operation", component.Ref, path)
-		}
-		component.Value = op
+	pk := component.OperationRef.ExtractPathItem()
+	pi, ok := doc.Paths[pk]
+	if !ok {
+		return fmt.Errorf("could not extract path for '%s'", pk)
 	}
+	mk := component.OperationRef.extractMethodItem()
+
+	ops := pi.Operations()
+	if ops == nil {
+		return fmt.Errorf("cannot find any operation for path = '%s'; nil operations", pk)
+	}
+	op, ok := ops[strings.ToUpper(mk)]
+	if !ok {
+		return fmt.Errorf("cannot find operation = '%s' for path = '%s'; missing operation", mk, pk)
+	}
+
+	component.OperationRef.Value = op
+	component.PathItem = pi
 	return nil
 }
 

@@ -18,6 +18,7 @@ type ResponseKeys struct {
 type Provider struct {
 	openapi3.ExtensionProps
 	ResponseKeys
+	FilePath         string                      `json:"-" yaml:"-"`
 	ID               string                      `json:"id" yaml:"id"`
 	Name             string                      `json:"name" yaml:"name"`
 	Title            string                      `json:"title" yaml:"title"`
