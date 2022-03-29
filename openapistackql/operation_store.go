@@ -73,6 +73,7 @@ type OperationStore struct {
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
 	APIMethod    string                 `json:"apiMethod" yaml:"apiMethod"` // Required
 	OperationRef *OperationRef          `json:"operation" yaml:"operation"` // Required
+	PathRef      *PathItemRef           `json:"path" yaml:"path"`           // Deprecated
 	Request      *ExpectedRequest       `json:"request" yaml:"request"`
 	Response     *ExpectedResponse      `json:"response" yaml:"response"`
 	Servers      *openapi3.Servers      `json:"servers" yaml:"servers"`
@@ -454,12 +455,12 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	}
 	// TODO: clean up
 	sv = strings.TrimSuffix(sv, "/")
-	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.Ref), pathParams)
+	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.extractMethodItem()), pathParams)
 	u, err := url.Parse(fmt.Sprintf("%s?%s", path, q.Encode()))
 	if err != nil {
 		return nil, err
 	}
-	httpReq, err := http.NewRequest(strings.ToUpper(op.OperationRef.Ref), u.String(), bodyReader)
+	httpReq, err := http.NewRequest(strings.ToUpper(op.OperationRef.extractMethodItem()), u.String(), bodyReader)
 	if err != nil {
 		return nil, err
 	}

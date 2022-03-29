@@ -14,6 +14,7 @@ import (
 
 const (
 	individualDownloadAllowedRegistryCfgStr string = `{"allowSrcDownload": true }`
+	deprecatedDocsRegistryCfgStr            string = `{"srcPrefix": "deprecated-src" }`
 	pullProvidersRegistryCfgStr             string = `{"srcPrefix": "test-src" }`
 	unsignedProvidersRegistryCfgStr         string = `{"srcPrefix": "unsigned-src",  "verifyConfig": { "nopVerify": true }  }`
 )
@@ -35,7 +36,7 @@ func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 }
 
 func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
-	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
+	execLocalAndRemoteRegistryTestsIndividualDownloadAllowed(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
 }
 
 func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
@@ -64,9 +65,40 @@ func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf 
 
 	assert.NilError(t, err)
 
+	deprecatedRc, err := getRegistryCfgFromString(deprecatedDocsRegistryCfgStr)
+
+	assert.NilError(t, err)
+
 	runRemote(t, rc, tf)
 
 	runLocal(t, rc, tf)
+
+	runRemote(t, deprecatedRc, tf)
+
+	runLocal(t, deprecatedRc, tf)
+}
+
+func execLocalAndRemoteRegistryTestsIndividualDownloadAllowed(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
+
+	rc, err := getRegistryCfgFromString(registryConfigStr)
+
+	rc.AllowSrcDownload = true
+
+	assert.NilError(t, err)
+
+	deprecatedRc, err := getRegistryCfgFromString(deprecatedDocsRegistryCfgStr)
+
+	deprecatedRc.AllowSrcDownload = true
+
+	assert.NilError(t, err)
+
+	runRemote(t, rc, tf)
+
+	runLocal(t, rc, tf)
+
+	runRemote(t, deprecatedRc, tf)
+
+	runLocal(t, deprecatedRc, tf)
 }
 
 func execLocalRegistryTestOnly(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
@@ -75,7 +107,13 @@ func execLocalRegistryTestOnly(t *testing.T, registryConfigStr string, tf func(t
 
 	assert.NilError(t, err)
 
+	deprecatedRc, err := getRegistryCfgFromString(deprecatedDocsRegistryCfgStr)
+
+	assert.NilError(t, err)
+
 	runLocal(t, rc, tf)
+
+	runLocal(t, deprecatedRc, tf)
 }
 
 func getRegistryCfgFromString(registryConfigStr string) (RegistryConfig, error) {

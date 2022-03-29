@@ -56,6 +56,7 @@ func loadResourcesShallow(bt []byte) (*ResourceRegister, error) {
 	if err != nil {
 		return nil, err
 	}
+	resourceregisterLoadBackwardsCompatibility(rv)
 	return rv, nil
 }
 
@@ -78,7 +79,7 @@ func (l *Loader) LoadFromBytesAndResources(rr *ResourceRegister, resourceKey str
 		return nil, err
 	}
 	svc := NewService(doc)
-	err = l.mergeResources(svc, rr.Resources)
+	err = l.mergeResources(svc, rr.Resources, rr.ServiceDocPath)
 	if err != nil {
 		return nil, err
 	}
@@ -106,12 +107,19 @@ func (l *Loader) extractResources(svc *Service) error {
 	if err != nil {
 		return err
 	}
-	return l.mergeResources(svc, rscMap)
+	return l.mergeResources(svc, rscMap, nil)
 }
 
-func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource) error {
+func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource, sdRef *ServiceRef) error {
 	for _, rsc := range rscMap {
-		err := l.mergeResource(svc, rsc)
+		var sr *ServiceRef
+		if sdRef != nil {
+			sr = sdRef
+		}
+		if rsc.ServiceDocPath != nil {
+			sr = rsc.ServiceDocPath
+		}
+		err := l.mergeResource(svc, rsc, sr)
 		if err != nil {
 			return err
 		}
@@ -120,30 +128,11 @@ func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource) error
 	return nil
 }
 
-func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceRegister) error {
-	scopedMap := make(map[string]*Resource)
-	for k, rsc := range rr.Resources {
-		err := l.mergeResource(svc, rsc)
-		if err != nil {
-			return err
-		}
-		scopedMap[k] = rsc
-	}
-	if svc.rsc == nil {
-		svc.rsc = scopedMap
-		return nil
-	}
-	for k, v := range scopedMap {
-		svc.rsc[k] = v
-	}
-	return nil
-}
-
-func (l *Loader) mergeResource(svc *Service, rsc *Resource) error {
+func (l *Loader) mergeResource(svc *Service, rsc *Resource, sr *ServiceRef) error {
 	for k, vOp := range rsc.Methods {
 		v := vOp
 		v.MethodKey = k
-		err := l.resolveOperationRef(svc, rsc, &v)
+		err := l.resolveOperationRef(svc, rsc, &v, v.PathRef, sr)
 		if err != nil {
 			return err
 		}
@@ -363,7 +352,35 @@ func loadProviderDocFromBytes(bytes []byte) (*Provider, error) {
 	return &prov, nil
 }
 
-func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component *OperationStore) (err error) {
+func resourceregisterLoadBackwardsCompatibility(rr *ResourceRegister) {
+	sr := rr.ServiceDocPath
+	for m, n := range rr.Resources {
+		if n.ServiceDocPath != nil {
+			sr = n.ServiceDocPath
+		}
+		for k, v := range n.Methods {
+			os := v
+			operationBackwardsCompatibility(&os, sr)
+			rr.Resources[m].Methods[k] = os
+		}
+	}
+}
+
+func operationBackwardsCompatibility(component *OperationStore, sr *ServiceRef) {
+	// backwards compatibility
+	if component.PathRef != nil {
+		stub := "#/paths/"
+		if sr != nil {
+			stub = sr.Ref + "#/paths/"
+		}
+		component.OperationRef = &OperationRef{
+			Ref: stub + strings.ReplaceAll(component.PathRef.Ref, "/", "~1") + "/" + component.OperationRef.Ref,
+		}
+	}
+	//
+}
+
+func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component *OperationStore, pir *PathItemRef, sr *ServiceRef) (err error) {
 	if component.OperationRef != nil && component.OperationRef.Value != nil {
 		if loader.visitedOperation == nil {
 			loader.visitedOperation = make(map[*openapi3.Operation]struct{})
@@ -377,6 +394,7 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 	if component == nil {
 		return errors.New("invalid operation: value MUST be an object")
 	}
+	operationBackwardsCompatibility(component, sr)
 	pk := component.OperationRef.ExtractPathItem()
 	pi, ok := doc.Paths[pk]
 	if !ok {
