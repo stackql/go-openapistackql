@@ -455,7 +455,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	}
 	// TODO: clean up
 	sv = strings.TrimSuffix(sv, "/")
-	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.extractMethodItem()), pathParams)
+	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.extractPathItem()), pathParams)
 	u, err := url.Parse(fmt.Sprintf("%s?%s", path, q.Encode()))
 	if err != nil {
 		return nil, err
