@@ -79,7 +79,12 @@ func (l *Loader) LoadFromBytesAndResources(rr *ResourceRegister, resourceKey str
 		return nil, err
 	}
 	svc := NewService(doc)
-	err = l.mergeResources(svc, rr.Resources, rr.ServiceDocPath)
+	docUrl := rr.ObtainServiceDocUrl(resourceKey)
+	if docUrl != "" {
+		err = l.mergeResourcesScoped(svc, docUrl, rr)
+	} else {
+		err = l.mergeResources(svc, rr.Resources, rr.ServiceDocPath)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -125,6 +130,27 @@ func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource, sdRef
 		}
 	}
 	svc.rsc = rscMap
+	return nil
+}
+
+func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceRegister) error {
+	scopedMap := make(map[string]*Resource)
+	for k, rsc := range rr.Resources {
+		if rr.ObtainServiceDocUrl(k) == svcUrl {
+			err := l.mergeResource(svc, rsc, &ServiceRef{Ref: svcUrl})
+			if err != nil {
+				return err
+			}
+			scopedMap[k] = rsc
+		}
+	}
+	if svc.rsc == nil {
+		svc.rsc = scopedMap
+		return nil
+	}
+	for k, v := range scopedMap {
+		svc.rsc[k] = v
+	}
 	return nil
 }
 
