@@ -182,32 +182,24 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/inlineHooks/{inlineHookId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1inlineHooks~1{inlineHookId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/inlineHooks/{inlineHookId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1inlineHooks~1{inlineHookId}~1lifecycle~1deactivate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/inlineHooks/{inlineHookId}
+            $ref: '#/paths/~1api~1v1~1inlineHooks~1{inlineHookId}/DELETE'
           response:
             openAPIDocKey: '204'
         execute:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/inlineHooks/{inlineHookId}/execute
+            $ref: '#/paths/~1api~1v1~1inlineHooks~1{inlineHookId}~1execute/POST'
           request:
             mediaType: application/json
           response:
@@ -215,17 +207,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/inlineHooks/{inlineHookId}
+            $ref: '#/paths/~1api~1v1~1inlineHooks~1{inlineHookId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/inlineHooks
+            $ref: '#/paths/~1api~1v1~1inlineHooks/POST'
           request:
             mediaType: application/json
           response:
@@ -233,17 +221,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/inlineHooks
+            $ref: '#/paths/~1api~1v1~1inlineHooks/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/inlineHooks/{inlineHookId}
+            $ref: '#/paths/~1api~1v1~1inlineHooks~1{inlineHookId}/PUT'
           request:
             mediaType: application/json
           response:

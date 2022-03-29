@@ -1464,9 +1464,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses
+            $ref: '#/paths/~1v1~1courses/post'
           request:
             mediaType: application/json
           response:
@@ -1474,33 +1472,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{id}
+            $ref: '#/paths/~1v1~1courses~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{id}
+            $ref: '#/paths/~1v1~1courses~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses
+            $ref: '#/paths/~1v1~1courses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/courses/{id}
+            $ref: '#/paths/~1v1~1courses~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -1508,9 +1498,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/courses/{id}
+            $ref: '#/paths/~1v1~1courses~1{id}/put'
           request:
             mediaType: application/json
           response:
@@ -1523,9 +1511,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/aliases
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1aliases/post'
           request:
             mediaType: application/json
           response:
@@ -1533,17 +1519,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/aliases/{alias}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1aliases~1{alias}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/aliases
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1aliases/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1554,9 +1536,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/announcements
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1announcements/post'
           request:
             mediaType: application/json
           response:
@@ -1564,33 +1544,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/announcements/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1announcements~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/announcements/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1announcements~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/announcements
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1announcements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         modifyAssignees:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/announcements/{id}:modifyAssignees
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1announcements~1{id}:modifyAssignees/post'
           request:
             mediaType: application/json
           response:
@@ -1598,9 +1570,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/courses/{courseId}/announcements/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1announcements~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -1613,9 +1583,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWork
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork/post'
           request:
             mediaType: application/json
           response:
@@ -1623,33 +1591,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/courseWork
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         modifyAssignees:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{id}:modifyAssignees
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{id}:modifyAssignees/post'
           request:
             mediaType: application/json
           response:
@@ -1657,9 +1617,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -1672,25 +1630,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         modifyAttachments:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:modifyAttachments
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions~1{id}:modifyAttachments/post'
           request:
             mediaType: application/json
           response:
@@ -1698,9 +1650,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -1708,9 +1658,7 @@ components:
             openAPIDocKey: '200'
         reclaim:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions~1{id}:reclaim/post'
           request:
             mediaType: application/json
           response:
@@ -1718,9 +1666,7 @@ components:
             openAPIDocKey: '200'
         return:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:return
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions~1{id}:return/post'
           request:
             mediaType: application/json
           response:
@@ -1728,9 +1674,7 @@ components:
             openAPIDocKey: '200'
         turnIn:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:turnIn
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWork~1{courseWorkId}~1studentSubmissions~1{id}:turnIn/post'
           request:
             mediaType: application/json
           response:
@@ -1743,9 +1687,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/courseWorkMaterials
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWorkMaterials/post'
           request:
             mediaType: application/json
           response:
@@ -1753,33 +1695,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/courseWorkMaterials/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWorkMaterials~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/courseWorkMaterials/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWorkMaterials~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/courseWorkMaterials
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWorkMaterials/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/courses/{courseId}/courseWorkMaterials/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1courseWorkMaterials~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -1792,9 +1726,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/students
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1students/post'
           request:
             mediaType: application/json
           response:
@@ -1802,25 +1734,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/students/{userId}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1students~1{userId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/students/{userId}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1students~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/students
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1students/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1831,9 +1757,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/teachers
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1teachers/post'
           request:
             mediaType: application/json
           response:
@@ -1841,25 +1765,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/teachers/{userId}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1teachers~1{userId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/teachers/{userId}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1teachers~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/teachers
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1teachers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1870,9 +1788,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/courses/{courseId}/topics
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1topics/post'
           request:
             mediaType: application/json
           response:
@@ -1880,33 +1796,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/courses/{courseId}/topics/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1topics~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/topics/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1topics~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/courses/{courseId}/topics
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1topics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/courses/{courseId}/topics/{id}
+            $ref: '#/paths/~1v1~1courses~1{courseId}~1topics~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -1919,17 +1827,13 @@ components:
       methods:
         accept:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/invitations/{id}:accept
+            $ref: '#/paths/~1v1~1invitations~1{id}:accept/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/invitations
+            $ref: '#/paths/~1v1~1invitations/post'
           request:
             mediaType: application/json
           response:
@@ -1937,25 +1841,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/invitations/{id}
+            $ref: '#/paths/~1v1~1invitations~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/invitations/{id}
+            $ref: '#/paths/~1v1~1invitations~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/invitations
+            $ref: '#/paths/~1v1~1invitations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1966,9 +1864,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/registrations
+            $ref: '#/paths/~1v1~1registrations/post'
           request:
             mediaType: application/json
           response:
@@ -1976,9 +1872,7 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/registrations/{registrationId}
+            $ref: '#/paths/~1v1~1registrations~1{registrationId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1989,9 +1883,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/userProfiles/{userId}
+            $ref: '#/paths/~1v1~1userProfiles~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2002,9 +1894,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardianInvitations
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardianInvitations/post'
           request:
             mediaType: application/json
           response:
@@ -2012,25 +1902,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardianInvitations/{invitationId}
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardianInvitations~1{invitationId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardianInvitations
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardianInvitations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardianInvitations/{invitationId}
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardianInvitations~1{invitationId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2043,25 +1927,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardians/{guardianId}
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardians~1{guardianId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardians/{guardianId}
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardians~1{guardianId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/userProfiles/{studentId}/guardians
+            $ref: '#/paths/~1v1~1userProfiles~1{studentId}~1guardians/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

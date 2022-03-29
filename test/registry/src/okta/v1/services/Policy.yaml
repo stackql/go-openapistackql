@@ -1209,38 +1209,28 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}~1lifecycle~1activate/POST'
           response:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '204'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/policies/{policyId}
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}/DELETE'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/policies/{policyId}
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/policies
+            $ref: '#/paths/~1api~1v1~1policies/POST'
           request:
             mediaType: application/json
           response:
@@ -1248,9 +1238,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/policies
+            $ref: '#/paths/~1api~1v1~1policies/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1261,38 +1249,28 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}~1lifecycle~1activate/POST'
           response:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '204'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/policies/{policyId}/rules
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules/POST'
           request:
             mediaType: application/json
           response:
@@ -1300,17 +1278,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/policies
+            $ref: '#/paths/~1api~1v1~1policies/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         put:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/policies/{policyId}/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1policies~1{policyId}~1rules~1{ruleId}/PUT'
           request:
             mediaType: application/json
           response:

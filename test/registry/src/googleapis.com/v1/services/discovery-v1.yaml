@@ -494,17 +494,13 @@ components:
       methods:
         getRest:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/{api}/{version}/rest
+            $ref: '#/paths/~1apis~1{api}~1{version}~1rest/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis
+            $ref: '#/paths/~1apis/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

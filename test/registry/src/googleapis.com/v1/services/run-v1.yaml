@@ -1901,9 +1901,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/domains.cloudrun.com/v1/namespaces/{namespacesId}/authorizeddomains
+            $ref: '#/paths/~1apis~1domains.cloudrun.com~1v1~1namespaces~1{namespacesId}~1authorizeddomains/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1914,17 +1912,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/configurations/{configurationsId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1configurations~1{configurationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/configurations
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1configurations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1935,9 +1929,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /apis/domains.cloudrun.com/v1/namespaces/{namespacesId}/domainmappings
+            $ref: '#/paths/~1apis~1domains.cloudrun.com~1v1~1namespaces~1{namespacesId}~1domainmappings/post'
           request:
             mediaType: application/json
           response:
@@ -1945,25 +1937,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /apis/domains.cloudrun.com/v1/namespaces/{namespacesId}/domainmappings/{domainmappingsId}
+            $ref: '#/paths/~1apis~1domains.cloudrun.com~1v1~1namespaces~1{namespacesId}~1domainmappings~1{domainmappingsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/domains.cloudrun.com/v1/namespaces/{namespacesId}/domainmappings/{domainmappingsId}
+            $ref: '#/paths/~1apis~1domains.cloudrun.com~1v1~1namespaces~1{namespacesId}~1domainmappings~1{domainmappingsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/domains.cloudrun.com/v1/namespaces/{namespacesId}/domainmappings
+            $ref: '#/paths/~1apis~1domains.cloudrun.com~1v1~1namespaces~1{namespacesId}~1domainmappings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1974,25 +1960,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/revisions/{revisionsId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1revisions~1{revisionsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/revisions/{revisionsId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1revisions~1{revisionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/revisions
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1revisions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2003,17 +1983,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/routes/{routesId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1routes~1{routesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/routes
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1routes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2024,9 +2000,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/services
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1services/post'
           request:
             mediaType: application/json
           response:
@@ -2034,33 +2008,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/services/{servicesId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1services~1{servicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/services/{servicesId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1services~1{servicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/services
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1services/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         replaceService:
           operation:
-            $ref: put
-          path:
-            $ref: /apis/serving.knative.dev/v1/namespaces/{namespacesId}/services/{servicesId}
+            $ref: '#/paths/~1apis~1serving.knative.dev~1v1~1namespaces~1{namespacesId}~1services~1{servicesId}/put'
           request:
             mediaType: application/json
           response:
@@ -2073,9 +2039,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -2088,9 +2052,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/authorizeddomains
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1authorizeddomains/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2101,9 +2063,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2114,9 +2074,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/authorizeddomains
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1authorizeddomains/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2127,17 +2085,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/configurations/{configurationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1configurations~1{configurationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/configurations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1configurations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2148,9 +2102,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/domainmappings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1domainmappings/post'
           request:
             mediaType: application/json
           response:
@@ -2158,25 +2110,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/domainmappings/{domainmappingsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1domainmappings~1{domainmappingsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/domainmappings/{domainmappingsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1domainmappings~1{domainmappingsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/domainmappings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1domainmappings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2187,25 +2133,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/revisions/{revisionsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1revisions~1{revisionsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/revisions/{revisionsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1revisions~1{revisionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/revisions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1revisions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2216,17 +2156,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/routes/{routesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1routes~1{routesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/routes
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1routes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2237,9 +2173,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services/post'
           request:
             mediaType: application/json
           response:
@@ -2247,41 +2181,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services~1{servicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services~1{servicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services~1{servicesId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         replaceService:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services~1{servicesId}/put'
           request:
             mediaType: application/json
           response:
@@ -2289,9 +2213,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services~1{servicesId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -2299,9 +2221,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1services~1{servicesId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:

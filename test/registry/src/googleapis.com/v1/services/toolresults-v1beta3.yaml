@@ -2130,17 +2130,13 @@ components:
       methods:
         getSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/settings
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1settings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         initializeSettings:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}:initializeSettings
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}:initializeSettings/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2151,9 +2147,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories/post'
           request:
             mediaType: application/json
           response:
@@ -2161,17 +2155,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2182,9 +2172,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions/post'
           request:
             mediaType: application/json
           response:
@@ -2192,25 +2180,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2223,17 +2205,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1clusters~1{clusterId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1clusters/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2244,17 +2222,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1environments~1{environmentId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1environments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2265,17 +2239,13 @@ components:
       methods:
         accessibilityClusters:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectsId}/histories/{historiesId}/executions/{executionsId}/steps/{stepsId}:accessibilityClusters
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectsId}~1histories~1{historiesId}~1executions~1{executionsId}~1steps~1{stepsId}:accessibilityClusters/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps/post'
           request:
             mediaType: application/json
           response:
@@ -2283,33 +2253,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getPerfMetricsSummary:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfMetricsSummary/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2317,9 +2279,7 @@ components:
             openAPIDocKey: '200'
         publishXunitXmlFiles:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}:publishXunitXmlFiles/post'
           request:
             mediaType: application/json
           response:
@@ -2332,9 +2292,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfMetricsSummary/post'
           request:
             mediaType: application/json
           response:
@@ -2347,9 +2305,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfSampleSeries/post'
           request:
             mediaType: application/json
           response:
@@ -2357,17 +2313,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfSampleSeries~1{sampleSeriesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfSampleSeries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2378,9 +2330,7 @@ components:
       methods:
         batchCreate:
           operation:
-            $ref: post
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples:batchCreate
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfSampleSeries~1{sampleSeriesId}~1samples:batchCreate/post'
           request:
             mediaType: application/json
           response:
@@ -2388,9 +2338,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1perfSampleSeries~1{sampleSeriesId}~1samples/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2401,17 +2349,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases/{testCaseId}
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1testCases~1{testCaseId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1testCases/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2422,9 +2366,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/thumbnails
+            $ref: '#/paths/~1toolresults~1v1beta3~1projects~1{projectId}~1histories~1{historyId}~1executions~1{executionId}~1steps~1{stepId}~1thumbnails/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

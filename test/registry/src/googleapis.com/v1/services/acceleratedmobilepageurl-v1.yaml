@@ -150,9 +150,7 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/ampUrls:batchGet
+            $ref: '#/paths/~1v1~1ampUrls:batchGet/post'
           request:
             mediaType: application/json
           response:

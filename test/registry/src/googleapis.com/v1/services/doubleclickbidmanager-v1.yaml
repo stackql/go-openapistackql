@@ -1950,9 +1950,7 @@ components:
       methods:
         createquery:
           operation:
-            $ref: post
-          path:
-            $ref: /query
+            $ref: '#/paths/~1query/post'
           request:
             mediaType: application/json
           response:
@@ -1960,32 +1958,24 @@ components:
             openAPIDocKey: '200'
         deletequery:
           operation:
-            $ref: delete
-          path:
-            $ref: /query/{queryId}
+            $ref: '#/paths/~1query~1{queryId}/delete'
           response:
             openAPIDocKey: '200'
         getquery:
           operation:
-            $ref: get
-          path:
-            $ref: /query/{queryId}
+            $ref: '#/paths/~1query~1{queryId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listqueries:
           operation:
-            $ref: get
-          path:
-            $ref: /queries
+            $ref: '#/paths/~1queries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         runquery:
           operation:
-            $ref: post
-          path:
-            $ref: /query/{queryId}
+            $ref: '#/paths/~1query~1{queryId}/post'
           request:
             mediaType: application/json
           response:
@@ -1997,9 +1987,7 @@ components:
       methods:
         listreports:
           operation:
-            $ref: get
-          path:
-            $ref: /queries/{queryId}/reports
+            $ref: '#/paths/~1queries~1{queryId}~1reports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

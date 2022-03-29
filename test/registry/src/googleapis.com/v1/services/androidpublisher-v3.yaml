@@ -1524,32 +1524,24 @@ components:
       methods:
         commit:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}:commit
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}:commit/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits/post'
           request:
             mediaType: application/json
           response:
@@ -1557,9 +1549,7 @@ components:
             openAPIDocKey: '200'
         validate:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}:validate
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}:validate/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1570,9 +1560,7 @@ components:
       methods:
         addexternallyhosted:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/externallyHosted
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks~1externallyHosted/post'
           request:
             mediaType: application/json
           response:
@@ -1580,17 +1568,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1601,17 +1585,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/bundles
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1bundles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/bundles
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1bundles/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1622,9 +1602,7 @@ components:
       methods:
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks~1{apkVersionCode}~1deobfuscationFiles~1{deobfuscationFileType}/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1635,17 +1613,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/details
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1details/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/details
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1details/patch'
           request:
             mediaType: application/json
           response:
@@ -1653,9 +1627,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/details
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1details/put'
           request:
             mediaType: application/json
           response:
@@ -1668,17 +1640,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks~1{apkVersionCode}~1expansionFiles~1{expansionFileType}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks~1{apkVersionCode}~1expansionFiles~1{expansionFileType}/patch'
           request:
             mediaType: application/json
           response:
@@ -1686,9 +1654,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks~1{apkVersionCode}~1expansionFiles~1{expansionFileType}/put'
           request:
             mediaType: application/json
           response:
@@ -1696,9 +1662,7 @@ components:
             openAPIDocKey: '200'
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1apks~1{apkVersionCode}~1expansionFiles~1{expansionFileType}/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1709,32 +1673,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}/{imageId}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}~1{imageType}~1{imageId}/delete'
           response:
             openAPIDocKey: '200'
         deleteall:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}~1{imageType}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}~1{imageType}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}~1{imageType}/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1745,39 +1701,29 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}/delete'
           response:
             openAPIDocKey: '200'
         deleteall:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}/patch'
           request:
             mediaType: application/json
           response:
@@ -1785,9 +1731,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1listings~1{language}/put'
           request:
             mediaType: application/json
           response:
@@ -1800,17 +1744,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1testers~1{track}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1testers~1{track}/patch'
           request:
             mediaType: application/json
           response:
@@ -1818,9 +1758,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/testers/{track}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1testers~1{track}/put'
           request:
             mediaType: application/json
           response:
@@ -1833,25 +1771,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks/{track}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1tracks~1{track}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1tracks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks/{track}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1tracks~1{track}/patch'
           request:
             mediaType: application/json
           response:
@@ -1859,9 +1791,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks/{track}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1edits~1{editId}~1tracks~1{track}/put'
           request:
             mediaType: application/json
           response:
@@ -1874,9 +1804,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users/{usersId}/grants
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users~1{usersId}~1grants/post'
           request:
             mediaType: application/json
           response:
@@ -1884,16 +1812,12 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users/{usersId}/grants/{grantsId}
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users~1{usersId}~1grants~1{grantsId}/delete'
           response:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users/{usersId}/grants/{grantsId}
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users~1{usersId}~1grants~1{grantsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1906,24 +1830,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/inappproducts/{sku}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1inappproducts~1{sku}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/inappproducts/{sku}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1inappproducts~1{sku}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/inappproducts
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1inappproducts/post'
           request:
             mediaType: application/json
           response:
@@ -1931,17 +1849,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/inappproducts
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1inappproducts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/inappproducts/{sku}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1inappproducts~1{sku}/patch'
           request:
             mediaType: application/json
           response:
@@ -1949,9 +1863,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/inappproducts/{sku}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1inappproducts~1{sku}/put'
           request:
             mediaType: application/json
           response:
@@ -1964,17 +1876,13 @@ components:
       methods:
         uploadapk:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/apk
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1internalappsharing~1{packageName}~1artifacts~1apk/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         uploadbundle:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/bundle
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1internalappsharing~1{packageName}~1artifacts~1bundle/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1985,9 +1893,7 @@ components:
       methods:
         convertRegionPrices:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/pricing:convertRegionPrices
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1pricing:convertRegionPrices/post'
           request:
             mediaType: application/json
           response:
@@ -2000,9 +1906,7 @@ components:
       methods:
         refund:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/orders/{orderId}:refund
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1orders~1{orderId}:refund/post'
           response:
             openAPIDocKey: '200'
       name: orders
@@ -2012,18 +1916,14 @@ components:
       methods:
         acknowledge:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/products/{productId}/tokens/{token}:acknowledge
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1products~1{productId}~1tokens~1{token}:acknowledge/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/products/{productId}/tokens/{token}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1products~1{productId}~1tokens~1{token}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2034,25 +1934,19 @@ components:
       methods:
         acknowledge:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:acknowledge
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1subscriptions~1{subscriptionId}~1tokens~1{token}:acknowledge/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:cancel
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1subscriptions~1{subscriptionId}~1tokens~1{token}:cancel/post'
           response:
             openAPIDocKey: '200'
         defer:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:defer
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1subscriptions~1{subscriptionId}~1tokens~1{token}:defer/post'
           request:
             mediaType: application/json
           response:
@@ -2060,24 +1954,18 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1subscriptions~1{subscriptionId}~1tokens~1{token}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         refund:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:refund
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1subscriptions~1{subscriptionId}~1tokens~1{token}:refund/post'
           response:
             openAPIDocKey: '200'
         revoke:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:revoke
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1subscriptions~1{subscriptionId}~1tokens~1{token}:revoke/post'
           response:
             openAPIDocKey: '200'
       name: purchases.subscriptions
@@ -2087,9 +1975,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/purchases/voidedpurchases
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1purchases~1voidedpurchases/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2100,25 +1986,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/reviews/{reviewId}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1reviews~1{reviewId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/reviews
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1reviews/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         reply:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/reviews/{reviewId}:reply
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1reviews~1{reviewId}:reply/post'
           request:
             mediaType: application/json
           response:
@@ -2131,9 +2011,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/systemApks/{versionCode}/variants
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1systemApks~1{versionCode}~1variants/post'
           request:
             mediaType: application/json
           response:
@@ -2141,24 +2019,18 @@ components:
             openAPIDocKey: '200'
         download:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/systemApks/{versionCode}/variants/{variantId}:download
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1systemApks~1{versionCode}~1variants~1{variantId}:download/get'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/systemApks/{versionCode}/variants/{variantId}
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1systemApks~1{versionCode}~1variants~1{variantId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/applications/{packageName}/systemApks/{versionCode}/variants
+            $ref: '#/paths/~1androidpublisher~1v3~1applications~1{packageName}~1systemApks~1{versionCode}~1variants/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2169,9 +2041,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users/post'
           request:
             mediaType: application/json
           response:
@@ -2179,24 +2049,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users/{usersId}
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users~1{usersId}/delete'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /androidpublisher/v3/developers/{developersId}/users/{usersId}
+            $ref: '#/paths/~1androidpublisher~1v3~1developers~1{developersId}~1users~1{usersId}/patch'
           request:
             mediaType: application/json
           response:

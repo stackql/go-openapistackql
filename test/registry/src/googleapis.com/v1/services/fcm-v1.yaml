@@ -580,9 +580,7 @@ components:
       methods:
         send:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/messages:send
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1messages:send/post'
           request:
             mediaType: application/json
           response:

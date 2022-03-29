@@ -534,9 +534,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/jobs
+            $ref: '#/paths/~1v1~1jobs/post'
           request:
             mediaType: application/json
           response:
@@ -544,25 +542,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/jobs/{jobId}
+            $ref: '#/paths/~1v1~1jobs~1{jobId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/jobs/{jobId}
+            $ref: '#/paths/~1v1~1jobs~1{jobId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/jobs
+            $ref: '#/paths/~1v1~1jobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -573,17 +565,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/jobs/{jobId}/reports/{reportId}
+            $ref: '#/paths/~1v1~1jobs~1{jobId}~1reports~1{reportId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/jobs/{jobId}/reports
+            $ref: '#/paths/~1v1~1jobs~1{jobId}~1reports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -594,9 +582,7 @@ components:
       methods:
         download:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/media/{mediaId}
+            $ref: '#/paths/~1v1~1media~1{mediaId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -607,9 +593,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/reportTypes
+            $ref: '#/paths/~1v1~1reportTypes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

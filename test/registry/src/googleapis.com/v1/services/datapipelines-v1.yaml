@@ -632,9 +632,7 @@ components:
       methods:
         listPipelines:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -645,9 +643,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/pipelines
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1pipelines/post'
           request:
             mediaType: application/json
           response:
@@ -655,25 +651,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1pipelines~1{pipelinesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1pipelines~1{pipelinesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1pipelines~1{pipelinesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -681,9 +671,7 @@ components:
             openAPIDocKey: '200'
         run:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}:run
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1pipelines~1{pipelinesId}:run/post'
           request:
             mediaType: application/json
           response:
@@ -691,9 +679,7 @@ components:
             openAPIDocKey: '200'
         stop:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/pipelines/{pipelinesId}:stop
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1pipelines~1{pipelinesId}:stop/post'
           request:
             mediaType: application/json
           response:

@@ -1538,9 +1538,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/achievements
+            $ref: '#/paths/~1games~1v1~1achievements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1551,49 +1549,37 @@ components:
       methods:
         increment:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/achievements/{achievementId}/increment
+            $ref: '#/paths/~1games~1v1~1achievements~1{achievementId}~1increment/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/players/{playerId}/achievements
+            $ref: '#/paths/~1games~1v1~1players~1{playerId}~1achievements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         reveal:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/achievements/{achievementId}/reveal
+            $ref: '#/paths/~1games~1v1~1achievements~1{achievementId}~1reveal/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setStepsAtLeast:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/achievements/{achievementId}/setStepsAtLeast
+            $ref: '#/paths/~1games~1v1~1achievements~1{achievementId}~1setStepsAtLeast/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         unlock:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/achievements/{achievementId}/unlock
+            $ref: '#/paths/~1games~1v1~1achievements~1{achievementId}~1unlock/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateMultiple:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/achievements/updateMultiple
+            $ref: '#/paths/~1games~1v1~1achievements~1updateMultiple/post'
           request:
             mediaType: application/json
           response:
@@ -1606,32 +1592,24 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/applications/{applicationId}
+            $ref: '#/paths/~1games~1v1~1applications~1{applicationId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getEndPoint:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/applications/getEndPoint
+            $ref: '#/paths/~1games~1v1~1applications~1getEndPoint/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         played:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/applications/played
+            $ref: '#/paths/~1games~1v1~1applications~1played/post'
           response:
             openAPIDocKey: '200'
         verify:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/applications/{applicationId}/verify
+            $ref: '#/paths/~1games~1v1~1applications~1{applicationId}~1verify/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1642,25 +1620,19 @@ components:
       methods:
         listByPlayer:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/events
+            $ref: '#/paths/~1games~1v1~1events/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listDefinitions:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/eventDefinitions
+            $ref: '#/paths/~1games~1v1~1eventDefinitions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         record:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/events
+            $ref: '#/paths/~1games~1v1~1events/post'
           request:
             mediaType: application/json
           response:
@@ -1673,17 +1645,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/leaderboards/{leaderboardId}
+            $ref: '#/paths/~1games~1v1~1leaderboards~1{leaderboardId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/leaderboards
+            $ref: '#/paths/~1games~1v1~1leaderboards/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1694,17 +1662,13 @@ components:
       methods:
         getMetagameConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/metagameConfig
+            $ref: '#/paths/~1games~1v1~1metagameConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listCategoriesByPlayer:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/players/{playerId}/categories/{collection}
+            $ref: '#/paths/~1games~1v1~1players~1{playerId}~1categories~1{collection}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1715,17 +1679,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/players/{playerId}
+            $ref: '#/paths/~1games~1v1~1players~1{playerId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/players/me/players/{collection}
+            $ref: '#/paths/~1games~1v1~1players~1me~1players~1{collection}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1736,9 +1696,7 @@ components:
       methods:
         check:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/revisions/check
+            $ref: '#/paths/~1games~1v1~1revisions~1check/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1749,41 +1707,31 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/players/{playerId}/leaderboards/{leaderboardId}/scores/{timeSpan}
+            $ref: '#/paths/~1games~1v1~1players~1{playerId}~1leaderboards~1{leaderboardId}~1scores~1{timeSpan}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/leaderboards/{leaderboardId}/scores/{collection}
+            $ref: '#/paths/~1games~1v1~1leaderboards~1{leaderboardId}~1scores~1{collection}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listWindow:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/leaderboards/{leaderboardId}/window/{collection}
+            $ref: '#/paths/~1games~1v1~1leaderboards~1{leaderboardId}~1window~1{collection}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         submit:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/leaderboards/{leaderboardId}/scores
+            $ref: '#/paths/~1games~1v1~1leaderboards~1{leaderboardId}~1scores/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         submitMultiple:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1/leaderboards/scores
+            $ref: '#/paths/~1games~1v1~1leaderboards~1scores/post'
           request:
             mediaType: application/json
           response:
@@ -1796,17 +1744,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/snapshots/{snapshotId}
+            $ref: '#/paths/~1games~1v1~1snapshots~1{snapshotId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/players/{playerId}/snapshots
+            $ref: '#/paths/~1games~1v1~1players~1{playerId}~1snapshots/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1817,9 +1761,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1/stats
+            $ref: '#/paths/~1games~1v1~1stats/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

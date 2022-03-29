@@ -1844,25 +1844,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts
+            $ref: '#/paths/~1tagmanager~1v2~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}/put'
           request:
             mediaType: application/json
           response:
@@ -1875,9 +1869,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers/post'
           request:
             mediaType: application/json
           response:
@@ -1885,32 +1877,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}/put'
           request:
             mediaType: application/json
           response:
@@ -1923,9 +1907,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/environments
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1environments/post'
           request:
             mediaType: application/json
           response:
@@ -1933,32 +1915,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/environments/{environmentsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1environments~1{environmentsId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/environments/{environmentsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1environments~1{environmentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/environments
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1environments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         reauthorize:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/environments/{environmentsId}:reauthorize
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1environments~1{environmentsId}:reauthorize/post'
           request:
             mediaType: application/json
           response:
@@ -1966,9 +1940,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/environments/{environmentsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1environments~1{environmentsId}/put'
           request:
             mediaType: application/json
           response:
@@ -1981,17 +1953,13 @@ components:
       methods:
         latest:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/version_headers:latest
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1version_headers:latest/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/version_headers
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1version_headers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2002,56 +1970,42 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions/{versionsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions~1{versionsId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions/{versionsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions~1{versionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         live:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions:live
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions:live/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         publish:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions/{versionsId}:publish
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions~1{versionsId}:publish/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         set_latest:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions/{versionsId}:set_latest
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions~1{versionsId}:set_latest/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         undelete:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions/{versionsId}:undelete
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions~1{versionsId}:undelete/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/versions/{versionsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1versions~1{versionsId}/put'
           request:
             mediaType: application/json
           response:
@@ -2064,9 +2018,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces/post'
           request:
             mediaType: application/json
           response:
@@ -2074,9 +2026,7 @@ components:
             openAPIDocKey: '200'
         create_version:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}:create_version
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}:create_version/post'
           request:
             mediaType: application/json
           response:
@@ -2084,65 +2034,49 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getStatus:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/status
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1status/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         quick_preview:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}:quick_preview
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}:quick_preview/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resolve_conflict:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}:resolve_conflict
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}:resolve_conflict/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         sync:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}:sync
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}:sync/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}/put'
           request:
             mediaType: application/json
           response:
@@ -2155,32 +2089,24 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/built_in_variables
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1built_in_variables/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/built_in_variables
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1built_in_variables/delete'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/built_in_variables
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1built_in_variables/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/built_in_variables:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1built_in_variables:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2191,9 +2117,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1clients/post'
           request:
             mediaType: application/json
           response:
@@ -2201,40 +2125,30 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1clients~1{clientsId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1clients~1{clientsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1clients/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1clients~1{clientsId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1clients~1{clientsId}/put'
           request:
             mediaType: application/json
           response:
@@ -2247,9 +2161,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders/post'
           request:
             mediaType: application/json
           response:
@@ -2257,57 +2169,43 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders/{foldersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders~1{foldersId}/delete'
           response:
             openAPIDocKey: '200'
         entities:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders/{foldersId}:entities
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders~1{foldersId}:entities/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders/{foldersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders~1{foldersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move_entities_to_folder:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders/{foldersId}:move_entities_to_folder
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders~1{foldersId}:move_entities_to_folder/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders/{foldersId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders~1{foldersId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/folders/{foldersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1folders~1{foldersId}/put'
           request:
             mediaType: application/json
           response:
@@ -2320,9 +2218,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/tags
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1tags/post'
           request:
             mediaType: application/json
           response:
@@ -2330,40 +2226,30 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/tags/{tagsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1tags~1{tagsId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/tags/{tagsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1tags~1{tagsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/tags
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1tags/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/tags/{tagsId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1tags~1{tagsId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/tags/{tagsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1tags~1{tagsId}/put'
           request:
             mediaType: application/json
           response:
@@ -2376,9 +2262,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/templates
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1templates/post'
           request:
             mediaType: application/json
           response:
@@ -2386,40 +2270,30 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/templates/{templatesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1templates~1{templatesId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/templates/{templatesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1templates~1{templatesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/templates
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1templates/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/templates/{templatesId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1templates~1{templatesId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/templates/{templatesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1templates~1{templatesId}/put'
           request:
             mediaType: application/json
           response:
@@ -2432,9 +2306,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/triggers
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1triggers/post'
           request:
             mediaType: application/json
           response:
@@ -2442,40 +2314,30 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/triggers/{triggersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1triggers~1{triggersId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/triggers/{triggersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1triggers~1{triggersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/triggers
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1triggers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/triggers/{triggersId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1triggers~1{triggersId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/triggers/{triggersId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1triggers~1{triggersId}/put'
           request:
             mediaType: application/json
           response:
@@ -2488,9 +2350,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/variables
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1variables/post'
           request:
             mediaType: application/json
           response:
@@ -2498,40 +2358,30 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/variables/{variablesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1variables~1{variablesId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/variables/{variablesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1variables~1{variablesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/variables
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1variables/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/variables/{variablesId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1variables~1{variablesId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/variables/{variablesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1variables~1{variablesId}/put'
           request:
             mediaType: application/json
           response:
@@ -2544,9 +2394,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/zones
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1zones/post'
           request:
             mediaType: application/json
           response:
@@ -2554,40 +2402,30 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/zones/{zonesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1zones~1{zonesId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/zones/{zonesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1zones~1{zonesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/zones
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1zones/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/zones/{zonesId}:revert
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1zones~1{zonesId}:revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/zones/{zonesId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1containers~1{containersId}~1workspaces~1{workspacesId}~1zones~1{zonesId}/put'
           request:
             mediaType: application/json
           response:
@@ -2600,9 +2438,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/user_permissions
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1user_permissions/post'
           request:
             mediaType: application/json
           response:
@@ -2610,32 +2446,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/user_permissions/{user_permissionsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1user_permissions~1{user_permissionsId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/user_permissions/{user_permissionsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1user_permissions~1{user_permissionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/user_permissions
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1user_permissions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tagmanager/v2/accounts/{accountsId}/user_permissions/{user_permissionsId}
+            $ref: '#/paths/~1tagmanager~1v2~1accounts~1{accountsId}~1user_permissions~1{user_permissionsId}/put'
           request:
             mediaType: application/json
           response:

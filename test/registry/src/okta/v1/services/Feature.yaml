@@ -92,41 +92,31 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/features/{featureId}
+            $ref: '#/paths/~1api~1v1~1features~1{featureId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/features
+            $ref: '#/paths/~1api~1v1~1features/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listFeatureDependencies:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/features/{featureId}/dependencies
+            $ref: '#/paths/~1api~1v1~1features~1{featureId}~1dependencies/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listFeatureDependents:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/features/{featureId}/dependents
+            $ref: '#/paths/~1api~1v1~1features~1{featureId}~1dependents/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateFeatureLifecycle:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/features/{featureId}/{lifecycle}
+            $ref: '#/paths/~1api~1v1~1features~1{featureId}~1{lifecycle}/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -1838,40 +1838,30 @@ components:
       methods:
         forceReportUpload:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/forceReportUpload
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1forceReportUpload/post'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getState:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1state/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setState:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1state/put'
           request:
             mediaType: application/json
           response:
@@ -1879,9 +1869,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}/put'
           request:
             mediaType: application/json
           response:
@@ -1894,24 +1882,18 @@ components:
       methods:
         acknowledgeNotificationSet:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/acknowledgeNotificationSet
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1acknowledgeNotificationSet/post'
           response:
             openAPIDocKey: '200'
         completeSignup:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/completeSignup
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1completeSignup/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         createWebToken:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/createWebToken
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1createWebToken/post'
           request:
             mediaType: application/json
           response:
@@ -1919,9 +1901,7 @@ components:
             openAPIDocKey: '200'
         enroll:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/enroll
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1enroll/post'
           request:
             mediaType: application/json
           response:
@@ -1929,65 +1909,49 @@ components:
             openAPIDocKey: '200'
         generateSignupUrl:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/signupUrl
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1signupUrl/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getServiceAccount:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/serviceAccount
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1serviceAccount/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getStoreLayout:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         pullNotificationSet:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/pullNotificationSet
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1pullNotificationSet/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         sendTestPushNotification:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/sendTestPushNotification
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1sendTestPushNotification/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setAccount:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/account
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1account/put'
           request:
             mediaType: application/json
           response:
@@ -1995,9 +1959,7 @@ components:
             openAPIDocKey: '200'
         setStoreLayout:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout/put'
           request:
             mediaType: application/json
           response:
@@ -2005,9 +1967,7 @@ components:
             openAPIDocKey: '200'
         unenroll:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/unenroll
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1unenroll/post'
           response:
             openAPIDocKey: '200'
       name: enterprises
@@ -2017,32 +1977,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1entitlements~1{entitlementId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1entitlements~1{entitlementId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1entitlements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1entitlements~1{entitlementId}/put'
           request:
             mediaType: application/json
           response:
@@ -2055,17 +2007,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1groupLicenses~1{groupLicenseId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1groupLicenses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2076,9 +2024,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1groupLicenses~1{groupLicenseId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2089,32 +2035,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1installs~1{installId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1installs~1{installId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1installs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1installs~1{installId}/put'
           request:
             mediaType: application/json
           response:
@@ -2127,32 +2065,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1managedConfigurationsForDevice~1{managedConfigurationForDeviceId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1managedConfigurationsForDevice~1{managedConfigurationForDeviceId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1managedConfigurationsForDevice/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1devices~1{deviceId}~1managedConfigurationsForDevice~1{managedConfigurationForDeviceId}/put'
           request:
             mediaType: application/json
           response:
@@ -2165,32 +2095,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1managedConfigurationsForUser~1{managedConfigurationForUserId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1managedConfigurationsForUser~1{managedConfigurationForUserId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1managedConfigurationsForUser/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1managedConfigurationsForUser~1{managedConfigurationForUserId}/put'
           request:
             mediaType: application/json
           response:
@@ -2203,9 +2125,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}~1managedConfigurationsSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2216,9 +2136,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/permissions/{permissionId}
+            $ref: '#/paths/~1androidenterprise~1v1~1permissions~1{permissionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2229,58 +2147,44 @@ components:
       methods:
         approve:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/approve
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}~1approve/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         generateApprovalUrl:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}~1generateApprovalUrl/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAppRestrictionsSchema:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}~1appRestrictionsSchema/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getPermissions:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/permissions
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}~1permissions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         unapprove:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/unapprove
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1products~1{productId}~1unapprove/post'
           response:
             openAPIDocKey: '200'
       name: products
@@ -2290,16 +2194,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys/{keyId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1serviceAccountKeys~1{keyId}/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1serviceAccountKeys/post'
           request:
             mediaType: application/json
           response:
@@ -2307,9 +2207,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1serviceAccountKeys/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2320,24 +2218,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}~1clusters~1{clusterId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}~1clusters~1{clusterId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}~1clusters/post'
           request:
             mediaType: application/json
           response:
@@ -2345,17 +2237,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}~1clusters/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}~1clusters~1{clusterId}/put'
           request:
             mediaType: application/json
           response:
@@ -2368,24 +2256,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages/post'
           request:
             mediaType: application/json
           response:
@@ -2393,17 +2275,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1storeLayout~1pages~1{pageId}/put'
           request:
             mediaType: application/json
           response:
@@ -2416,40 +2294,30 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}/delete'
           response:
             openAPIDocKey: '200'
         generateAuthenticationToken:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/authenticationToken
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1authenticationToken/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAvailableProductSet:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1availableProductSet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users/post'
           request:
             mediaType: application/json
           response:
@@ -2457,24 +2325,18 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revokeDeviceAccess:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/deviceAccess
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1deviceAccess/delete'
           response:
             openAPIDocKey: '200'
         setAvailableProductSet:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}~1availableProductSet/put'
           request:
             mediaType: application/json
           response:
@@ -2482,9 +2344,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1users~1{userId}/put'
           request:
             mediaType: application/json
           response:
@@ -2497,24 +2357,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1webApps~1{webAppId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1webApps~1{webAppId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/webApps
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1webApps/post'
           request:
             mediaType: application/json
           response:
@@ -2522,17 +2376,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/webApps
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1webApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}
+            $ref: '#/paths/~1androidenterprise~1v1~1enterprises~1{enterpriseId}~1webApps~1{webAppId}/put'
           request:
             mediaType: application/json
           response:

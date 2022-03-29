@@ -838,9 +838,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/availableProjects
+            $ref: '#/paths/~1v1beta1~1availableProjects/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -851,9 +849,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/operations/{operationsId}
+            $ref: '#/paths/~1v1beta1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -864,9 +860,7 @@ components:
       methods:
         addFirebase:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}:addFirebase
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}:addFirebase/post'
           request:
             mediaType: application/json
           response:
@@ -874,9 +868,7 @@ components:
             openAPIDocKey: '200'
         addGoogleAnalytics:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}:addGoogleAnalytics
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}:addGoogleAnalytics/post'
           request:
             mediaType: application/json
           response:
@@ -884,41 +876,31 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAdminSdkConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/adminSdkConfig
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1adminSdkConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAnalyticsDetails:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/analyticsDetails
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1analyticsDetails/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects
+            $ref: '#/paths/~1v1beta1~1projects/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -926,9 +908,7 @@ components:
             openAPIDocKey: '200'
         removeAnalytics:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}:removeAnalytics
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}:removeAnalytics/post'
           request:
             mediaType: application/json
           response:
@@ -936,9 +916,7 @@ components:
             openAPIDocKey: '200'
         searchApps:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}:searchApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}:searchApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -949,9 +927,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps/post'
           request:
             mediaType: application/json
           response:
@@ -959,33 +935,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}/config
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}~1config/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -998,9 +966,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}/sha
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}~1sha/post'
           request:
             mediaType: application/json
           response:
@@ -1008,17 +974,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}/sha/{shaId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}~1sha~1{shaId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}/sha
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}~1sha/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1029,9 +991,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/availableLocations
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1availableLocations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1042,9 +1002,7 @@ components:
       methods:
         finalize:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/defaultLocation:finalize
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1defaultLocation:finalize/post'
           request:
             mediaType: application/json
           response:
@@ -1057,9 +1015,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/iosApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1iosApps/post'
           request:
             mediaType: application/json
           response:
@@ -1067,33 +1023,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/iosApps/{iosAppsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1iosApps~1{iosAppsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/iosApps/{iosAppsId}/config
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1iosApps~1{iosAppsId}~1config/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/iosApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1iosApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}/iosApps/{iosAppsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1iosApps~1{iosAppsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1106,9 +1054,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/webApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1webApps/post'
           request:
             mediaType: application/json
           response:
@@ -1116,33 +1062,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/webApps/{webAppsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1webApps~1{webAppsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/webApps/{webAppsId}/config
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1webApps~1{webAppsId}~1config/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/webApps
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1webApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}/webApps/{webAppsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1webApps~1{webAppsId}/patch'
           request:
             mediaType: application/json
           response:

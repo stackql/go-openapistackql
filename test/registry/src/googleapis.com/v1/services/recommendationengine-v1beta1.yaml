@@ -1241,17 +1241,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1264,9 +1260,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1catalogItems/post'
           request:
             mediaType: application/json
           response:
@@ -1274,25 +1268,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems/{catalogItemsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1catalogItems~1{catalogItemsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems/{catalogItemsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1catalogItems~1{catalogItemsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems:import
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1catalogItems:import/post'
           request:
             mediaType: application/json
           response:
@@ -1300,17 +1288,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1catalogItems/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems/{catalogItemsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1catalogItems~1{catalogItemsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1323,17 +1307,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/operations/{operationsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/operations
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1344,9 +1324,7 @@ components:
       methods:
         predict:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/placements/{placementsId}:predict
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1placements~1{placementsId}:predict/post'
           request:
             mediaType: application/json
           response:
@@ -1359,9 +1337,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/predictionApiKeyRegistrations
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1predictionApiKeyRegistrations/post'
           request:
             mediaType: application/json
           response:
@@ -1369,17 +1345,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/predictionApiKeyRegistrations/{predictionApiKeyRegistrationsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1predictionApiKeyRegistrations~1{predictionApiKeyRegistrationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/predictionApiKeyRegistrations
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1predictionApiKeyRegistrations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1390,17 +1362,13 @@ components:
       methods:
         collect:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:collect
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1userEvents:collect/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:import
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1userEvents:import/post'
           request:
             mediaType: application/json
           response:
@@ -1408,17 +1376,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1userEvents/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         purge:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:purge
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1userEvents:purge/post'
           request:
             mediaType: application/json
           response:
@@ -1426,9 +1390,7 @@ components:
             openAPIDocKey: '200'
         rejoin:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:rejoin
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1userEvents:rejoin/post'
           request:
             mediaType: application/json
           response:
@@ -1436,9 +1398,7 @@ components:
             openAPIDocKey: '200'
         write:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:write
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1eventStores~1{eventStoresId}~1userEvents:write/post'
           request:
             mediaType: application/json
           response:
@@ -1451,17 +1411,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/operations
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1locations~1{locationsId}~1catalogs~1{catalogsId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

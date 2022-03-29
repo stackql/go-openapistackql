@@ -665,25 +665,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts
+            $ref: '#/paths/~1v2~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listChildAccounts:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}:listChildAccounts
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}:listChildAccounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -694,17 +688,13 @@ components:
       methods:
         getAdcode:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/adcode
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1adcode/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -715,33 +705,25 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1adunits~1{adunitsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAdcode:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}/adcode
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1adunits~1{adunitsId}~1adcode/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/adunits
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1adunits/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listLinkedCustomChannels:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}:listLinkedCustomChannels
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1adunits~1{adunitsId}:listLinkedCustomChannels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -752,25 +734,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels/{customchannelsId}
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1customchannels~1{customchannelsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1customchannels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listLinkedAdUnits:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels/{customchannelsId}:listLinkedAdUnits
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1customchannels~1{customchannelsId}:listLinkedAdUnits/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -781,9 +757,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/adclients/{adclientsId}/urlchannels
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1adclients~1{adclientsId}~1urlchannels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -794,9 +768,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/alerts
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1alerts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -807,9 +779,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/payments
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1payments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -820,17 +790,13 @@ components:
       methods:
         generate:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/reports:generate
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1reports:generate/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         generateCsv:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/reports:generateCsv
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1reports:generateCsv/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -841,25 +807,19 @@ components:
       methods:
         generate:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/reports/{reportsId}/saved:generate
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1reports~1{reportsId}~1saved:generate/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         generateCsv:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/reports/{reportsId}/saved:generateCsv
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1reports~1{reportsId}~1saved:generateCsv/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/reports/saved
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1reports~1saved/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -870,17 +830,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/sites/{sitesId}
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1sites~1{sitesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/accounts/{accountsId}/sites
+            $ref: '#/paths/~1v2~1accounts~1{accountsId}~1sites/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

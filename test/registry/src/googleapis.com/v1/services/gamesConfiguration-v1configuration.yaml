@@ -359,24 +359,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /games/v1configuration/achievements/{achievementId}
+            $ref: '#/paths/~1games~1v1configuration~1achievements~1{achievementId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1configuration/achievements/{achievementId}
+            $ref: '#/paths/~1games~1v1configuration~1achievements~1{achievementId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1configuration/applications/{applicationId}/achievements
+            $ref: '#/paths/~1games~1v1configuration~1applications~1{applicationId}~1achievements/post'
           request:
             mediaType: application/json
           response:
@@ -384,17 +378,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1configuration/applications/{applicationId}/achievements
+            $ref: '#/paths/~1games~1v1configuration~1applications~1{applicationId}~1achievements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /games/v1configuration/achievements/{achievementId}
+            $ref: '#/paths/~1games~1v1configuration~1achievements~1{achievementId}/put'
           request:
             mediaType: application/json
           response:
@@ -407,9 +397,7 @@ components:
       methods:
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1configuration/images/{resourceId}/imageType/{imageType}
+            $ref: '#/paths/~1games~1v1configuration~1images~1{resourceId}~1imageType~1{imageType}/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -420,24 +408,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /games/v1configuration/leaderboards/{leaderboardId}
+            $ref: '#/paths/~1games~1v1configuration~1leaderboards~1{leaderboardId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1configuration/leaderboards/{leaderboardId}
+            $ref: '#/paths/~1games~1v1configuration~1leaderboards~1{leaderboardId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1configuration/applications/{applicationId}/leaderboards
+            $ref: '#/paths/~1games~1v1configuration~1applications~1{applicationId}~1leaderboards/post'
           request:
             mediaType: application/json
           response:
@@ -445,17 +427,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1configuration/applications/{applicationId}/leaderboards
+            $ref: '#/paths/~1games~1v1configuration~1applications~1{applicationId}~1leaderboards/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /games/v1configuration/leaderboards/{leaderboardId}
+            $ref: '#/paths/~1games~1v1configuration~1leaderboards~1{leaderboardId}/put'
           request:
             mediaType: application/json
           response:

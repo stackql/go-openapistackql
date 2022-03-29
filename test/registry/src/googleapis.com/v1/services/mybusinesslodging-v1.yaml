@@ -4011,17 +4011,13 @@ components:
       methods:
         getLodging:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/lodging
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1lodging/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateLodging:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/locations/{locationsId}/lodging
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1lodging/patch'
           request:
             mediaType: application/json
           response:
@@ -4034,9 +4030,7 @@ components:
       methods:
         getGoogleUpdated:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/lodging:getGoogleUpdated
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1lodging:getGoogleUpdated/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

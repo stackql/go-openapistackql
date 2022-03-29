@@ -85,40 +85,30 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/trustedOrigins/{trustedOriginId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1trustedOrigins~1{trustedOriginId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/trustedOrigins/{trustedOriginId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1trustedOrigins~1{trustedOriginId}~1lifecycle~1deactivate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/trustedOrigins/{trustedOriginId}
+            $ref: '#/paths/~1api~1v1~1trustedOrigins~1{trustedOriginId}/DELETE'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/trustedOrigins/{trustedOriginId}
+            $ref: '#/paths/~1api~1v1~1trustedOrigins~1{trustedOriginId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/trustedOrigins
+            $ref: '#/paths/~1api~1v1~1trustedOrigins/POST'
           request:
             mediaType: application/json
           response:
@@ -126,17 +116,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/trustedOrigins
+            $ref: '#/paths/~1api~1v1~1trustedOrigins/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/trustedOrigins/{trustedOriginId}
+            $ref: '#/paths/~1api~1v1~1trustedOrigins~1{trustedOriginId}/PUT'
           request:
             mediaType: application/json
           response:

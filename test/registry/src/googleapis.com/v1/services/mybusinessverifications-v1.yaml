@@ -500,9 +500,7 @@ components:
       methods:
         fetchVerificationOptions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}:fetchVerificationOptions
+            $ref: '#/paths/~1v1~1locations~1{locationsId}:fetchVerificationOptions/post'
           request:
             mediaType: application/json
           response:
@@ -510,17 +508,13 @@ components:
             openAPIDocKey: '200'
         getVoiceOfMerchantState:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/VoiceOfMerchantState
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1VoiceOfMerchantState/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         verify:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}:verify
+            $ref: '#/paths/~1v1~1locations~1{locationsId}:verify/post'
           request:
             mediaType: application/json
           response:
@@ -533,9 +527,7 @@ components:
       methods:
         complete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}/verifications/{verificationsId}:complete
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1verifications~1{verificationsId}:complete/post'
           request:
             mediaType: application/json
           response:
@@ -543,9 +535,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/verifications
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1verifications/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -556,9 +546,7 @@ components:
       methods:
         generate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/verificationTokens:generate
+            $ref: '#/paths/~1v1~1verificationTokens:generate/post'
           request:
             mediaType: application/json
           response:

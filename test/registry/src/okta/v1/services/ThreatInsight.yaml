@@ -46,9 +46,7 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/threats/configuration
+            $ref: '#/paths/~1api~1v1~1threats~1configuration/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

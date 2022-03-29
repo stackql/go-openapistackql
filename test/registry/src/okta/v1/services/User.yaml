@@ -2331,23 +2331,17 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/catalog/apps/{appName}/{applicationId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}~1{applicationId}/DELETE'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/catalog/apps/{appName}/{applicationId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}~1{applicationId}/PUT'
           response:
             openAPIDocKey: '204'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/catalog/apps
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1catalog~1apps/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2358,9 +2352,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/catalog/apps
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1catalog~1apps/PUT'
           response:
             openAPIDocKey: '200'
       name: appadmintargetsall
@@ -2370,16 +2362,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/catalog/apps/{appName}/{applicationId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}~1{applicationId}/DELETE'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/catalog/apps/{appName}/{applicationId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}~1{applicationId}/PUT'
           response:
             openAPIDocKey: '204'
       name: appinstanceadmintargets
@@ -2389,9 +2377,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/appLinks
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1appLinks/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2402,16 +2388,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/clients/{clientId}/grants
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients~1{clientId}~1grants/DELETE'
           response:
             openAPIDocKey: '204'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/clients/{clientId}/grants
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients~1{clientId}~1grants/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2422,9 +2404,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/clients
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2435,31 +2415,23 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/clients/{clientId}/tokens/{tokenId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients~1{clientId}~1tokens~1{tokenId}/DELETE'
           response:
             openAPIDocKey: '204'
         deleteAll:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/clients/{clientId}/tokens
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients~1{clientId}~1tokens/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/clients/{clientId}/tokens/{tokenId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients~1{clientId}~1tokens~1{tokenId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/clients/{clientId}/tokens
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1clients~1{clientId}~1tokens/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2470,31 +2442,23 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/grants/{grantId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1grants~1{grantId}/DELETE'
           response:
             openAPIDocKey: '204'
         deleteAll:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/grants
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1grants/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/grants/{grantId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1grants~1{grantId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/grants
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1grants/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2505,23 +2469,17 @@ components:
       methods:
         delete:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/groups/{groupId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1groups~1{groupId}/PUT'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/groups/{groupId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1groups~1{groupId}/PUT'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}/targets/groups
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}~1targets~1groups/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2532,9 +2490,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/idps
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1idps/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2545,24 +2501,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/linkedObjects/{relationshipName}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1linkedObjects~1{relationshipName}/DELETE'
           response:
             openAPIDocKey: '204'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/linkedObjects/{relationshipName}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1linkedObjects~1{relationshipName}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{associatedUserId}/linkedObjects/{primaryRelationshipName}/{primaryUserId}
+            $ref: '#/paths/~1api~1v1~1users~1{associatedUserId}~1linkedObjects~1{primaryRelationshipName}~1{primaryUserId}/PUT'
           response:
             openAPIDocKey: '204'
       name: linkedobject
@@ -2572,24 +2522,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/roles/{roleId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles~1{roleId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/roles
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles/POST'
           request:
             mediaType: application/json
           response:
@@ -2597,9 +2541,7 @@ components:
             openAPIDocKey: '201'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/roles
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1roles/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2610,9 +2552,7 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/sessions
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1sessions/DELETE'
           response:
             openAPIDocKey: '204'
       name: sessions
@@ -2622,17 +2562,13 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         changePassword:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/credentials/change_password
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1credentials~1change_password/POST'
           request:
             mediaType: application/json
           response:
@@ -2640,9 +2576,7 @@ components:
             openAPIDocKey: '200'
         changeRecoveryQuestion:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/credentials/change_recovery_question
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1credentials~1change_recovery_question/POST'
           request:
             mediaType: application/json
           response:
@@ -2650,55 +2584,41 @@ components:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}/DELETE'
           response:
             openAPIDocKey: '202'
         expirePassword:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/expire_password?tempPassword=false
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1expire_password?tempPassword=false/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         expirePasswordTemp:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/expire_password?tempPassword=true
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1expire_password?tempPassword=true/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         forgotPassword:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/credentials/forgot_password
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1credentials~1forgot_password/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users
+            $ref: '#/paths/~1api~1v1~1users/POST'
           request:
             mediaType: application/json
           response:
@@ -2706,61 +2626,45 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users
+            $ref: '#/paths/~1api~1v1~1users/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         reactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/reactivate
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1reactivate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetFactors:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/reset_factors
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1reset_factors/POST'
           response:
             openAPIDocKey: '200'
         resetPassword:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/reset_password
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1reset_password/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         suspend:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/suspend
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1suspend/POST'
           response:
             openAPIDocKey: '200'
         unlock:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/unlock
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1unlock/POST'
           response:
             openAPIDocKey: '200'
         unsuspend:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/lifecycle/unsuspend
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1lifecycle~1unsuspend/POST'
           response:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/users/{userId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}/PUT'
           request:
             mediaType: application/json
           response:

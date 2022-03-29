@@ -337,39 +337,29 @@ components:
       methods:
         reset:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/achievements/{achievementId}/reset
+            $ref: '#/paths/~1games~1v1management~1achievements~1{achievementId}~1reset/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetAll:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/achievements/reset
+            $ref: '#/paths/~1games~1v1management~1achievements~1reset/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetAllForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/achievements/resetAllForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1achievements~1resetAllForAllPlayers/post'
           response:
             openAPIDocKey: '200'
         resetForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/achievements/{achievementId}/resetForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1achievements~1{achievementId}~1resetForAllPlayers/post'
           response:
             openAPIDocKey: '200'
         resetMultipleForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/achievements/resetMultipleForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1achievements~1resetMultipleForAllPlayers/post'
           request:
             mediaType: application/json
           response:
@@ -381,9 +371,7 @@ components:
       methods:
         listHidden:
           operation:
-            $ref: get
-          path:
-            $ref: /games/v1management/applications/{applicationId}/players/hidden
+            $ref: '#/paths/~1games~1v1management~1applications~1{applicationId}~1players~1hidden/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -394,37 +382,27 @@ components:
       methods:
         reset:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/events/{eventId}/reset
+            $ref: '#/paths/~1games~1v1management~1events~1{eventId}~1reset/post'
           response:
             openAPIDocKey: '200'
         resetAll:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/events/reset
+            $ref: '#/paths/~1games~1v1management~1events~1reset/post'
           response:
             openAPIDocKey: '200'
         resetAllForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/events/resetAllForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1events~1resetAllForAllPlayers/post'
           response:
             openAPIDocKey: '200'
         resetForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/events/{eventId}/resetForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1events~1{eventId}~1resetForAllPlayers/post'
           response:
             openAPIDocKey: '200'
         resetMultipleForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/events/resetMultipleForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1events~1resetMultipleForAllPlayers/post'
           request:
             mediaType: application/json
           response:
@@ -436,16 +414,12 @@ components:
       methods:
         hide:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/applications/{applicationId}/players/hidden/{playerId}
+            $ref: '#/paths/~1games~1v1management~1applications~1{applicationId}~1players~1hidden~1{playerId}/post'
           response:
             openAPIDocKey: '200'
         unhide:
           operation:
-            $ref: delete
-          path:
-            $ref: /games/v1management/applications/{applicationId}/players/hidden/{playerId}
+            $ref: '#/paths/~1games~1v1management~1applications~1{applicationId}~1players~1hidden~1{playerId}/delete'
           response:
             openAPIDocKey: '200'
       name: players
@@ -455,39 +429,29 @@ components:
       methods:
         reset:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/leaderboards/{leaderboardId}/scores/reset
+            $ref: '#/paths/~1games~1v1management~1leaderboards~1{leaderboardId}~1scores~1reset/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetAll:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/scores/reset
+            $ref: '#/paths/~1games~1v1management~1scores~1reset/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetAllForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/scores/resetAllForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1scores~1resetAllForAllPlayers/post'
           response:
             openAPIDocKey: '200'
         resetForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/leaderboards/{leaderboardId}/scores/resetForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1leaderboards~1{leaderboardId}~1scores~1resetForAllPlayers/post'
           response:
             openAPIDocKey: '200'
         resetMultipleForAllPlayers:
           operation:
-            $ref: post
-          path:
-            $ref: /games/v1management/scores/resetMultipleForAllPlayers
+            $ref: '#/paths/~1games~1v1management~1scores~1resetMultipleForAllPlayers/post'
           request:
             mediaType: application/json
           response:

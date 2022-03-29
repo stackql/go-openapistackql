@@ -335,9 +335,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/logs
+            $ref: '#/paths/~1api~1v1~1logs/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

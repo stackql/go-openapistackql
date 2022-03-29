@@ -161,17 +161,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/shelves/{shelvesId}
+            $ref: '#/paths/~1v1~1shelves~1{shelvesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/shelves
+            $ref: '#/paths/~1v1~1shelves/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -182,33 +178,25 @@ components:
       methods:
         borrow:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/shelves/{shelvesId}/books/{booksId}:borrow
+            $ref: '#/paths/~1v1~1shelves~1{shelvesId}~1books~1{booksId}:borrow/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/shelves/{shelvesId}/books/{booksId}
+            $ref: '#/paths/~1v1~1shelves~1{shelvesId}~1books~1{booksId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/shelves/{shelvesId}/books
+            $ref: '#/paths/~1v1~1shelves~1{shelvesId}~1books/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         return:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/shelves/{shelvesId}/books/{booksId}:return
+            $ref: '#/paths/~1v1~1shelves~1{shelvesId}~1books~1{booksId}:return/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

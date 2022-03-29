@@ -459,9 +459,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/photo
+            $ref: '#/paths/~1v1~1photo/post'
           request:
             mediaType: application/json
           response:
@@ -469,25 +467,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/photo/{photoId}
+            $ref: '#/paths/~1v1~1photo~1{photoId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/photo/{photoId}
+            $ref: '#/paths/~1v1~1photo~1{photoId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         startUpload:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/photo:startUpload
+            $ref: '#/paths/~1v1~1photo:startUpload/post'
           request:
             mediaType: application/json
           response:
@@ -495,9 +487,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/photo/{id}
+            $ref: '#/paths/~1v1~1photo~1{id}/put'
           request:
             mediaType: application/json
           response:
@@ -510,9 +500,7 @@ components:
       methods:
         batchDelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/photos:batchDelete
+            $ref: '#/paths/~1v1~1photos:batchDelete/post'
           request:
             mediaType: application/json
           response:
@@ -520,17 +508,13 @@ components:
             openAPIDocKey: '200'
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/photos:batchGet
+            $ref: '#/paths/~1v1~1photos:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/photos:batchUpdate
+            $ref: '#/paths/~1v1~1photos:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -538,9 +522,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/photos
+            $ref: '#/paths/~1v1~1photos/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -1174,38 +1174,28 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1lifecycle~1activate/POST'
           response:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers
+            $ref: '#/paths/~1api~1v1~1authorizationServers/POST'
           request:
             mediaType: application/json
           response:
@@ -1213,17 +1203,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers
+            $ref: '#/paths/~1api~1v1~1authorizationServers/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -1236,24 +1222,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/claims/{claimId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1claims~1{claimId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/claims/{claimId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1claims~1{claimId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/claims
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1claims/POST'
           request:
             mediaType: application/json
           response:
@@ -1261,17 +1241,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/claims
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1claims/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/claims/{claimId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1claims~1{claimId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -1284,9 +1260,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/clients
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1clients/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1297,17 +1271,13 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/credentials/keys
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1credentials~1keys/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         rotate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/credentials/lifecycle/keyRotate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1credentials~1lifecycle~1keyRotate/POST'
           request:
             mediaType: application/json
           response:
@@ -1320,38 +1290,28 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1lifecycle~1activate/POST'
           response:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies/POST'
           request:
             mediaType: application/json
           response:
@@ -1359,17 +1319,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -1382,38 +1338,28 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules/{ruleId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules~1{ruleId}~1lifecycle~1activate/POST'
           response:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules/{ruleId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules~1{ruleId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules~1{ruleId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules~1{ruleId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules/POST'
           request:
             mediaType: application/json
           response:
@@ -1421,17 +1367,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/policies/{policyId}/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1policies~1{policyId}~1rules~1{ruleId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -1444,24 +1386,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/scopes/{scopeId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1scopes~1{scopeId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/scopes/{scopeId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1scopes~1{scopeId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/scopes
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1scopes/POST'
           request:
             mediaType: application/json
           response:
@@ -1469,17 +1405,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/scopes
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1scopes/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/scopes/{scopeId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1scopes~1{scopeId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -1492,31 +1424,23 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/clients/{clientId}/tokens/{tokenId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1clients~1{clientId}~1tokens~1{tokenId}/DELETE'
           response:
             openAPIDocKey: '204'
         deleteall:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/clients/{clientId}/tokens
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1clients~1{clientId}~1tokens/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/clients/{clientId}/tokens/{tokenId}
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1clients~1{clientId}~1tokens~1{tokenId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authorizationServers/{authServerId}/clients/{clientId}/tokens
+            $ref: '#/paths/~1api~1v1~1authorizationServers~1{authServerId}~1clients~1{clientId}~1tokens/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

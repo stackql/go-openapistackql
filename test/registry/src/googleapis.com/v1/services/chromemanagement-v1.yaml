@@ -557,9 +557,7 @@ components:
       methods:
         countChromeAppRequests:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/apps:countChromeAppRequests
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1apps:countChromeAppRequests/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -570,9 +568,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/apps/android/{androidId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1apps~1android~1{androidId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -583,9 +579,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/apps/chrome/{chromeId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1apps~1chrome~1{chromeId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -596,9 +590,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/apps/web/{webId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1apps~1web~1{webId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -609,25 +601,19 @@ components:
       methods:
         countChromeVersions:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/reports:countChromeVersions
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1reports:countChromeVersions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         countInstalledApps:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/reports:countInstalledApps
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1reports:countInstalledApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         findInstalledAppDevices:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/reports:findInstalledAppDevices
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1reports:findInstalledAppDevices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

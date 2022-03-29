@@ -826,9 +826,7 @@ components:
       methods:
         client_status:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/discovery:client_status
+            $ref: '#/paths/~1v2~1discovery:client_status/post'
           request:
             mediaType: application/json
           response:

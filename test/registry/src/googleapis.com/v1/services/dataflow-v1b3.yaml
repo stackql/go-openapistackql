@@ -4017,17 +4017,13 @@ components:
       methods:
         deleteSnapshots:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1b3/projects/{projectId}/snapshots
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1snapshots/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         workerMessages:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/WorkerMessages
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1WorkerMessages/post'
           request:
             mediaType: application/json
           response:
@@ -4040,17 +4036,13 @@ components:
       methods:
         aggregated:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs:aggregated
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs:aggregated/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs/post'
           request:
             mediaType: application/json
           response:
@@ -4058,33 +4050,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getMetrics:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}/metrics
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}~1metrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         snapshot:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}:snapshot
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}:snapshot/post'
           request:
             mediaType: application/json
           response:
@@ -4092,9 +4076,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}/put'
           request:
             mediaType: application/json
           response:
@@ -4107,9 +4089,7 @@ components:
       methods:
         getConfig:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}/debug/getConfig
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}~1debug~1getConfig/post'
           request:
             mediaType: application/json
           response:
@@ -4117,9 +4097,7 @@ components:
             openAPIDocKey: '200'
         sendCapture:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}/debug/sendCapture
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}~1debug~1sendCapture/post'
           request:
             mediaType: application/json
           response:
@@ -4132,9 +4110,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}/messages
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}~1messages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4145,9 +4121,7 @@ components:
       methods:
         lease:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}/workItems:lease
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}~1workItems:lease/post'
           request:
             mediaType: application/json
           response:
@@ -4155,9 +4129,7 @@ components:
             openAPIDocKey: '200'
         reportStatus:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/jobs/{jobId}/workItems:reportStatus
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1jobs~1{jobId}~1workItems:reportStatus/post'
           request:
             mediaType: application/json
           response:
@@ -4170,9 +4142,7 @@ components:
       methods:
         workerMessages:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/WorkerMessages
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1WorkerMessages/post'
           request:
             mediaType: application/json
           response:
@@ -4185,9 +4155,7 @@ components:
       methods:
         launch:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/flexTemplates:launch
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1flexTemplates:launch/post'
           request:
             mediaType: application/json
           response:
@@ -4200,9 +4168,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs/post'
           request:
             mediaType: application/json
           response:
@@ -4210,41 +4176,31 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getExecutionDetails:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/executionDetails
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1executionDetails/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getMetrics:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/metrics
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1metrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         snapshot:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}:snapshot
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}:snapshot/post'
           request:
             mediaType: application/json
           response:
@@ -4252,9 +4208,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}/put'
           request:
             mediaType: application/json
           response:
@@ -4267,9 +4221,7 @@ components:
       methods:
         getConfig:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/debug/getConfig
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1debug~1getConfig/post'
           request:
             mediaType: application/json
           response:
@@ -4277,9 +4229,7 @@ components:
             openAPIDocKey: '200'
         sendCapture:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/debug/sendCapture
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1debug~1sendCapture/post'
           request:
             mediaType: application/json
           response:
@@ -4292,9 +4242,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/messages
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1messages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4305,9 +4253,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1snapshots/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4318,9 +4264,7 @@ components:
       methods:
         getExecutionDetails:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/stages/{stageId}/executionDetails
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1stages~1{stageId}~1executionDetails/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4331,9 +4275,7 @@ components:
       methods:
         lease:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/workItems:lease
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1workItems:lease/post'
           request:
             mediaType: application/json
           response:
@@ -4341,9 +4283,7 @@ components:
             openAPIDocKey: '200'
         reportStatus:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/workItems:reportStatus
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1jobs~1{jobId}~1workItems:reportStatus/post'
           request:
             mediaType: application/json
           response:
@@ -4356,25 +4296,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/snapshots/{snapshotId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1snapshots~1{snapshotId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/snapshots/{snapshotId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1snapshots~1{snapshotId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/snapshots
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1snapshots/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4385,9 +4319,7 @@ components:
       methods:
         validate:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/sql:validate
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1sql:validate/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4398,9 +4330,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/templates
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1templates/post'
           request:
             mediaType: application/json
           response:
@@ -4408,17 +4338,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/templates:get
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1templates:get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         launch:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/locations/{location}/templates:launch
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1locations~1{location}~1templates:launch/post'
           request:
             mediaType: application/json
           response:
@@ -4431,17 +4357,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/snapshots/{snapshotId}
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1snapshots~1{snapshotId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/snapshots
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1snapshots/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -4452,9 +4374,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/templates
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1templates/post'
           request:
             mediaType: application/json
           response:
@@ -4462,17 +4382,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1b3/projects/{projectId}/templates:get
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1templates:get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         launch:
           operation:
-            $ref: post
-          path:
-            $ref: /v1b3/projects/{projectId}/templates:launch
+            $ref: '#/paths/~1v1b3~1projects~1{projectId}~1templates:launch/post'
           request:
             mediaType: application/json
           response:

@@ -147,24 +147,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /webResource/{id}
+            $ref: '#/paths/~1webResource~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /webResource/{id}
+            $ref: '#/paths/~1webResource~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getToken:
           operation:
-            $ref: post
-          path:
-            $ref: /token
+            $ref: '#/paths/~1token/post'
           request:
             mediaType: application/json
           response:
@@ -172,9 +166,7 @@ components:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /webResource
+            $ref: '#/paths/~1webResource/post'
           request:
             mediaType: application/json
           response:
@@ -182,17 +174,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /webResource
+            $ref: '#/paths/~1webResource/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /webResource/{id}
+            $ref: '#/paths/~1webResource~1{id}/patch'
           request:
             mediaType: application/json
           response:
@@ -200,9 +188,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /webResource/{id}
+            $ref: '#/paths/~1webResource~1{id}/put'
           request:
             mediaType: application/json
           response:

@@ -2104,9 +2104,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/operations/{operationsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2117,17 +2115,13 @@ components:
       methods:
         completeQuery:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}:completeQuery
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}:completeQuery/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants/post'
           request:
             mediaType: application/json
           response:
@@ -2135,33 +2129,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2174,9 +2160,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/clientEvents
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1clientEvents/post'
           request:
             mediaType: application/json
           response:
@@ -2189,9 +2173,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/companies
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1companies/post'
           request:
             mediaType: application/json
           response:
@@ -2199,33 +2181,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/companies/{companiesId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1companies~1{companiesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/companies/{companiesId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1companies~1{companiesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/companies
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1companies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/companies/{companiesId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1companies~1{companiesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2238,9 +2212,7 @@ components:
       methods:
         batchCreate:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs:batchCreate
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs:batchCreate/post'
           request:
             mediaType: application/json
           response:
@@ -2248,9 +2220,7 @@ components:
             openAPIDocKey: '200'
         batchDelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs:batchDelete
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs:batchDelete/post'
           request:
             mediaType: application/json
           response:
@@ -2258,9 +2228,7 @@ components:
             openAPIDocKey: '200'
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs:batchUpdate
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -2268,9 +2236,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs/post'
           request:
             mediaType: application/json
           response:
@@ -2278,33 +2244,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs/{jobsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs~1{jobsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs/{jobsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs~1{jobsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs/{jobsId}
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs~1{jobsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2312,9 +2270,7 @@ components:
             openAPIDocKey: '200'
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs:search
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs:search/post'
           request:
             mediaType: application/json
           response:
@@ -2322,9 +2278,7 @@ components:
             openAPIDocKey: '200'
         searchForAlert:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/projects/{projectsId}/tenants/{tenantsId}/jobs:searchForAlert
+            $ref: '#/paths/~1v4~1projects~1{projectsId}~1tenants~1{tenantsId}~1jobs:searchForAlert/post'
           request:
             mediaType: application/json
           response:

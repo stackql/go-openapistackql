@@ -2866,9 +2866,7 @@ components:
       methods:
         checkAccess:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/debug/datasources/{datasourcesId}/items/{itemsId}:checkAccess
+            $ref: '#/paths/~1v1~1debug~1datasources~1{datasourcesId}~1items~1{itemsId}:checkAccess/post'
           request:
             mediaType: application/json
           response:
@@ -2876,9 +2874,7 @@ components:
             openAPIDocKey: '200'
         searchByViewUrl:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/debug/datasources/{datasourcesId}/items:searchByViewUrl
+            $ref: '#/paths/~1v1~1debug~1datasources~1{datasourcesId}~1items:searchByViewUrl/post'
           request:
             mediaType: application/json
           response:
@@ -2891,9 +2887,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/debug/datasources/{datasourcesId}/items/{itemsId}/unmappedids
+            $ref: '#/paths/~1v1~1debug~1datasources~1{datasourcesId}~1items~1{itemsId}~1unmappedids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2904,9 +2898,7 @@ components:
       methods:
         listForunmappedidentity:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/debug/identitysources/{identitysourcesId}/items:forunmappedidentity
+            $ref: '#/paths/~1v1~1debug~1identitysources~1{identitysourcesId}~1items:forunmappedidentity/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2917,9 +2909,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/debug/identitysources/{identitysourcesId}/unmappedids
+            $ref: '#/paths/~1v1~1debug~1identitysources~1{identitysourcesId}~1unmappedids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2930,25 +2920,19 @@ components:
       methods:
         deleteSchema:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/schema
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1schema/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getSchema:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/schema
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1schema/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateSchema:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/schema
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1schema/put'
           request:
             mediaType: application/json
           response:
@@ -2961,17 +2945,13 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items/{itemsId}
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items~1{itemsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deleteQueueItems:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items:deleteQueueItems
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items:deleteQueueItems/post'
           request:
             mediaType: application/json
           response:
@@ -2979,17 +2959,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items/{itemsId}
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items~1{itemsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         index:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items/{itemsId}:index
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items~1{itemsId}:index/post'
           request:
             mediaType: application/json
           response:
@@ -2997,17 +2973,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         poll:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items:poll
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items:poll/post'
           request:
             mediaType: application/json
           response:
@@ -3015,9 +2987,7 @@ components:
             openAPIDocKey: '200'
         push:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items/{itemsId}:push
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items~1{itemsId}:push/post'
           request:
             mediaType: application/json
           response:
@@ -3025,9 +2995,7 @@ components:
             openAPIDocKey: '200'
         unreserve:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items:unreserve
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items:unreserve/post'
           request:
             mediaType: application/json
           response:
@@ -3035,9 +3003,7 @@ components:
             openAPIDocKey: '200'
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/indexing/datasources/{datasourcesId}/items/{itemsId}:upload
+            $ref: '#/paths/~1v1~1indexing~1datasources~1{datasourcesId}~1items~1{itemsId}:upload/post'
           request:
             mediaType: application/json
           response:
@@ -3050,9 +3016,7 @@ components:
       methods:
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/media/{mediaId}
+            $ref: '#/paths/~1v1~1media~1{mediaId}/post'
           request:
             mediaType: application/octet-stream
           response:
@@ -3065,9 +3029,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3078,9 +3040,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}/lro
+            $ref: '#/paths/~1v1~1operations~1{operationsId}~1lro/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3091,9 +3051,7 @@ components:
       methods:
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/query/search
+            $ref: '#/paths/~1v1~1query~1search/post'
           request:
             mediaType: application/json
           response:
@@ -3101,9 +3059,7 @@ components:
             openAPIDocKey: '200'
         suggest:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/query/suggest
+            $ref: '#/paths/~1v1~1query~1suggest/post'
           request:
             mediaType: application/json
           response:
@@ -3116,9 +3072,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/query/sources
+            $ref: '#/paths/~1v1~1query~1sources/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3129,17 +3083,13 @@ components:
       methods:
         getCustomer:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/settings/customer
+            $ref: '#/paths/~1v1~1settings~1customer/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateCustomer:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/settings/customer
+            $ref: '#/paths/~1v1~1settings~1customer/patch'
           request:
             mediaType: application/json
           response:
@@ -3152,9 +3102,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/settings/datasources
+            $ref: '#/paths/~1v1~1settings~1datasources/post'
           request:
             mediaType: application/json
           response:
@@ -3162,33 +3110,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/settings/datasources/{datasourcesId}
+            $ref: '#/paths/~1v1~1settings~1datasources~1{datasourcesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/settings/datasources/{datasourcesId}
+            $ref: '#/paths/~1v1~1settings~1datasources~1{datasourcesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/settings/datasources
+            $ref: '#/paths/~1v1~1settings~1datasources/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/settings/datasources/{datasourcesId}
+            $ref: '#/paths/~1v1~1settings~1datasources~1{datasourcesId}/put'
           request:
             mediaType: application/json
           response:
@@ -3201,9 +3141,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/settings/searchapplications
+            $ref: '#/paths/~1v1~1settings~1searchapplications/post'
           request:
             mediaType: application/json
           response:
@@ -3211,33 +3149,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/settings/searchapplications/{searchapplicationsId}
+            $ref: '#/paths/~1v1~1settings~1searchapplications~1{searchapplicationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/settings/searchapplications/{searchapplicationsId}
+            $ref: '#/paths/~1v1~1settings~1searchapplications~1{searchapplicationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/settings/searchapplications
+            $ref: '#/paths/~1v1~1settings~1searchapplications/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         reset:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/settings/searchapplications/{searchapplicationsId}:reset
+            $ref: '#/paths/~1v1~1settings~1searchapplications~1{searchapplicationsId}:reset/post'
           request:
             mediaType: application/json
           response:
@@ -3245,9 +3175,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/settings/searchapplications/{searchapplicationsId}
+            $ref: '#/paths/~1v1~1settings~1searchapplications~1{searchapplicationsId}/put'
           request:
             mediaType: application/json
           response:
@@ -3260,33 +3188,25 @@ components:
       methods:
         getIndex:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/index
+            $ref: '#/paths/~1v1~1stats~1index/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getQuery:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/query
+            $ref: '#/paths/~1v1~1stats~1query/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getSession:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/session
+            $ref: '#/paths/~1v1~1stats~1session/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getUser:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/user
+            $ref: '#/paths/~1v1~1stats~1user/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3297,9 +3217,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/index/datasources/{datasourcesId}
+            $ref: '#/paths/~1v1~1stats~1index~1datasources~1{datasourcesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3310,9 +3228,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/query/searchapplications/{searchapplicationsId}
+            $ref: '#/paths/~1v1~1stats~1query~1searchapplications~1{searchapplicationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3323,9 +3239,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/session/searchapplications/{searchapplicationsId}
+            $ref: '#/paths/~1v1~1stats~1session~1searchapplications~1{searchapplicationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3336,9 +3250,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/stats/user/searchapplications/{searchapplicationsId}
+            $ref: '#/paths/~1v1~1stats~1user~1searchapplications~1{searchapplicationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3349,9 +3261,7 @@ components:
       methods:
         initializeCustomer:
           operation:
-            $ref: post
-          path:
-            $ref: /v1:initializeCustomer
+            $ref: '#/paths/~1v1:initializeCustomer/post'
           request:
             mediaType: application/json
           response:

@@ -447,9 +447,7 @@ components:
       methods:
         annotate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/assessments/{assessmentsId}:annotate
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1assessments~1{assessmentsId}:annotate/post'
           request:
             mediaType: application/json
           response:
@@ -457,9 +455,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/assessments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1assessments/post'
           request:
             mediaType: application/json
           response:
@@ -472,9 +468,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/keys
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys/post'
           request:
             mediaType: application/json
           response:
@@ -482,41 +476,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/keys/{keysId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys~1{keysId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/keys/{keysId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys~1{keysId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getMetrics:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/keys/{keysId}/metrics
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys~1{keysId}~1metrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/keys
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         migrate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/keys/{keysId}:migrate
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys~1{keysId}:migrate/post'
           request:
             mediaType: application/json
           response:
@@ -524,9 +508,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/keys/{keysId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1keys~1{keysId}/patch'
           request:
             mediaType: application/json
           response:

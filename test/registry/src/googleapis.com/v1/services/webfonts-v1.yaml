@@ -133,9 +133,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/webfonts
+            $ref: '#/paths/~1v1~1webfonts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

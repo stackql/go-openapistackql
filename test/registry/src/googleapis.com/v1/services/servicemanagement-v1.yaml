@@ -2608,17 +2608,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations
+            $ref: '#/paths/~1v1~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2629,9 +2625,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services
+            $ref: '#/paths/~1v1~1services/post'
           request:
             mediaType: application/json
           response:
@@ -2639,17 +2633,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/services/{serviceName}
+            $ref: '#/paths/~1v1~1services~1{serviceName}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         generateConfigReport:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services:generateConfigReport
+            $ref: '#/paths/~1v1~1services:generateConfigReport/post'
           request:
             mediaType: application/json
           response:
@@ -2657,25 +2647,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{serviceName}
+            $ref: '#/paths/~1v1~1services~1{serviceName}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{serviceName}/config
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1config/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{servicesId}:getIamPolicy
+            $ref: '#/paths/~1v1~1services~1{servicesId}:getIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -2683,17 +2667,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services
+            $ref: '#/paths/~1v1~1services/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{servicesId}:setIamPolicy
+            $ref: '#/paths/~1v1~1services~1{servicesId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -2701,9 +2681,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{servicesId}:testIamPermissions
+            $ref: '#/paths/~1v1~1services~1{servicesId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -2711,9 +2689,7 @@ components:
             openAPIDocKey: '200'
         undelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{serviceName}:undelete
+            $ref: '#/paths/~1v1~1services~1{serviceName}:undelete/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2724,9 +2700,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{serviceName}/configs
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1configs/post'
           request:
             mediaType: application/json
           response:
@@ -2734,25 +2708,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{serviceName}/configs/{configId}
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1configs~1{configId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{serviceName}/configs
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1configs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         submit:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{serviceName}/configs:submit
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1configs:submit/post'
           request:
             mediaType: application/json
           response:
@@ -2765,9 +2733,7 @@ components:
       methods:
         getIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{servicesId}/consumers/{consumersId}:getIamPolicy
+            $ref: '#/paths/~1v1~1services~1{servicesId}~1consumers~1{consumersId}:getIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -2775,9 +2741,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{servicesId}/consumers/{consumersId}:setIamPolicy
+            $ref: '#/paths/~1v1~1services~1{servicesId}~1consumers~1{consumersId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -2785,9 +2749,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{servicesId}/consumers/{consumersId}:testIamPermissions
+            $ref: '#/paths/~1v1~1services~1{servicesId}~1consumers~1{consumersId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -2800,9 +2762,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/services/{serviceName}/rollouts
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1rollouts/post'
           request:
             mediaType: application/json
           response:
@@ -2810,17 +2770,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{serviceName}/rollouts/{rolloutId}
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1rollouts~1{rolloutId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{serviceName}/rollouts
+            $ref: '#/paths/~1v1~1services~1{serviceName}~1rollouts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

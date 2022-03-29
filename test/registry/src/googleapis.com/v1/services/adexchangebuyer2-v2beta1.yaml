@@ -2811,9 +2811,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients/post'
           request:
             mediaType: application/json
           response:
@@ -2821,25 +2819,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}/put'
           request:
             mediaType: application/json
           response:
@@ -2852,9 +2844,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}~1invitations/post'
           request:
             mediaType: application/json
           response:
@@ -2862,17 +2852,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations/{invitationId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}~1invitations~1{invitationId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}~1invitations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2883,25 +2869,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}/users/{userId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}~1users~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}/users
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v2beta1/accounts/{accountId}/clients/{clientAccountId}/users/{userId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1clients~1{clientAccountId}~1users~1{userId}/put'
           request:
             mediaType: application/json
           response:
@@ -2914,9 +2894,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives/post'
           request:
             mediaType: application/json
           response:
@@ -2924,25 +2902,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         stopWatching:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}:stopWatching
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}:stopWatching/post'
           request:
             mediaType: application/json
           response:
@@ -2950,9 +2922,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}/put'
           request:
             mediaType: application/json
           response:
@@ -2960,9 +2930,7 @@ components:
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}:watch
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}:watch/post'
           request:
             mediaType: application/json
           response:
@@ -2975,9 +2943,7 @@ components:
       methods:
         add:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}/dealAssociations:add
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}~1dealAssociations:add/post'
           request:
             mediaType: application/json
           response:
@@ -2985,17 +2951,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}/dealAssociations
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}~1dealAssociations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         remove:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/creatives/{creativeId}/dealAssociations:remove
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1creatives~1{creativeId}~1dealAssociations:remove/post'
           request:
             mediaType: application/json
           response:
@@ -3008,17 +2970,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/finalizedProposals
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1finalizedProposals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         pause:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1finalizedProposals~1{proposalId}:pause/post'
           request:
             mediaType: application/json
           response:
@@ -3026,9 +2984,7 @@ components:
             openAPIDocKey: '200'
         resume:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1finalizedProposals~1{proposalId}:resume/post'
           request:
             mediaType: application/json
           response:
@@ -3041,17 +2997,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/products/{productId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1products~1{productId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/products
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1products/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3062,9 +3014,7 @@ components:
       methods:
         accept:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}:accept
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}:accept/post'
           request:
             mediaType: application/json
           response:
@@ -3072,9 +3022,7 @@ components:
             openAPIDocKey: '200'
         addNote:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}:addNote
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}:addNote/post'
           request:
             mediaType: application/json
           response:
@@ -3082,9 +3030,7 @@ components:
             openAPIDocKey: '200'
         cancelNegotiation:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}:cancelNegotiation
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}:cancelNegotiation/post'
           request:
             mediaType: application/json
           response:
@@ -3092,9 +3038,7 @@ components:
             openAPIDocKey: '200'
         completeSetup:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}:completeSetup
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}:completeSetup/post'
           request:
             mediaType: application/json
           response:
@@ -3102,9 +3046,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals/post'
           request:
             mediaType: application/json
           response:
@@ -3112,25 +3054,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         pause:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}:pause
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}:pause/post'
           request:
             mediaType: application/json
           response:
@@ -3138,9 +3074,7 @@ components:
             openAPIDocKey: '200'
         resume:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}:resume
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}:resume/post'
           request:
             mediaType: application/json
           response:
@@ -3148,9 +3082,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v2beta1/accounts/{accountId}/proposals/{proposalId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1proposals~1{proposalId}/put'
           request:
             mediaType: application/json
           response:
@@ -3163,17 +3095,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/publisherProfiles/{publisherProfileId}
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1publisherProfiles~1{publisherProfileId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/accounts/{accountId}/publisherProfiles
+            $ref: '#/paths/~1v2beta1~1accounts~1{accountId}~1publisherProfiles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3184,9 +3112,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets/post'
           request:
             mediaType: application/json
           response:
@@ -3194,25 +3120,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3223,9 +3143,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/bidMetrics
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1bidMetrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3236,9 +3154,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/bidResponseErrors
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1bidResponseErrors/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3249,9 +3165,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/bidResponsesWithoutBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1bidResponsesWithoutBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3262,9 +3176,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBidRequests
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1filteredBidRequests/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3275,9 +3187,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1filteredBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3288,9 +3198,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/creatives
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1filteredBids~1{creativeStatusId}~1creatives/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3301,9 +3209,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/details
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1filteredBids~1{creativeStatusId}~1details/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3314,9 +3220,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/impressionMetrics
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1impressionMetrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3327,9 +3231,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/losingBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1losingBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3340,9 +3242,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/nonBillableWinningBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1accounts~1{accountsId}~1filterSets~1{filterSetsId}~1nonBillableWinningBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3353,9 +3253,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets/post'
           request:
             mediaType: application/json
           response:
@@ -3363,25 +3261,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3392,9 +3284,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/bidMetrics
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1bidMetrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3405,9 +3295,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/bidResponseErrors
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1bidResponseErrors/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3418,9 +3306,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/bidResponsesWithoutBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1bidResponsesWithoutBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3431,9 +3317,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBidRequests
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1filteredBidRequests/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3444,9 +3328,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1filteredBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3457,9 +3339,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/creatives
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1filteredBids~1{creativeStatusId}~1creatives/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3470,9 +3350,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/details
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1filteredBids~1{creativeStatusId}~1details/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3483,9 +3361,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/impressionMetrics
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1impressionMetrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3496,9 +3372,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/losingBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1losingBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3509,9 +3383,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/nonBillableWinningBids
+            $ref: '#/paths/~1v2beta1~1bidders~1{biddersId}~1filterSets~1{filterSetsId}~1nonBillableWinningBids/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

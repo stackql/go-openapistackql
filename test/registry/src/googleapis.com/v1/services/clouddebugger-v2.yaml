@@ -707,9 +707,7 @@ components:
       methods:
         register:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/controller/debuggees/register
+            $ref: '#/paths/~1v2~1controller~1debuggees~1register/post'
           request:
             mediaType: application/json
           response:
@@ -722,17 +720,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/controller/debuggees/{debuggeeId}/breakpoints
+            $ref: '#/paths/~1v2~1controller~1debuggees~1{debuggeeId}~1breakpoints/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v2/controller/debuggees/{debuggeeId}/breakpoints/{id}
+            $ref: '#/paths/~1v2~1controller~1debuggees~1{debuggeeId}~1breakpoints~1{id}/put'
           request:
             mediaType: application/json
           response:
@@ -745,9 +739,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/debugger/debuggees
+            $ref: '#/paths/~1v2~1debugger~1debuggees/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -758,33 +750,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}
+            $ref: '#/paths/~1v2~1debugger~1debuggees~1{debuggeeId}~1breakpoints~1{breakpointId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}
+            $ref: '#/paths/~1v2~1debugger~1debuggees~1{debuggeeId}~1breakpoints~1{breakpointId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/debugger/debuggees/{debuggeeId}/breakpoints
+            $ref: '#/paths/~1v2~1debugger~1debuggees~1{debuggeeId}~1breakpoints/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         set:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/debugger/debuggees/{debuggeeId}/breakpoints/set
+            $ref: '#/paths/~1v2~1debugger~1debuggees~1{debuggeeId}~1breakpoints~1set/post'
           request:
             mediaType: application/json
           response:

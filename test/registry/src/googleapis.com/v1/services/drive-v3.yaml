@@ -1763,9 +1763,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /about
+            $ref: '#/paths/~1about/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1776,25 +1774,19 @@ components:
       methods:
         getStartPageToken:
           operation:
-            $ref: get
-          path:
-            $ref: /changes/startPageToken
+            $ref: '#/paths/~1changes~1startPageToken/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /changes
+            $ref: '#/paths/~1changes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /changes/watch
+            $ref: '#/paths/~1changes~1watch/post'
           request:
             mediaType: application/json
           response:
@@ -1807,9 +1799,7 @@ components:
       methods:
         stop:
           operation:
-            $ref: post
-          path:
-            $ref: /channels/stop
+            $ref: '#/paths/~1channels~1stop/post'
           request:
             mediaType: application/json
           response:
@@ -1821,9 +1811,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /files/{fileId}/comments
+            $ref: '#/paths/~1files~1{fileId}~1comments/post'
           request:
             mediaType: application/json
           response:
@@ -1831,32 +1819,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /files/{fileId}/comments/{commentId}
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/comments/{commentId}
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/comments
+            $ref: '#/paths/~1files~1{fileId}~1comments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /files/{fileId}/comments/{commentId}
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1869,9 +1849,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /drives
+            $ref: '#/paths/~1drives/post'
           request:
             mediaType: application/json
           response:
@@ -1879,48 +1857,36 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /drives/{driveId}
+            $ref: '#/paths/~1drives~1{driveId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /drives/{driveId}
+            $ref: '#/paths/~1drives~1{driveId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         hide:
           operation:
-            $ref: post
-          path:
-            $ref: /drives/{driveId}/hide
+            $ref: '#/paths/~1drives~1{driveId}~1hide/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /drives
+            $ref: '#/paths/~1drives/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         unhide:
           operation:
-            $ref: post
-          path:
-            $ref: /drives/{driveId}/unhide
+            $ref: '#/paths/~1drives~1{driveId}~1unhide/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /drives/{driveId}
+            $ref: '#/paths/~1drives~1{driveId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1933,9 +1899,7 @@ components:
       methods:
         copy:
           operation:
-            $ref: post
-          path:
-            $ref: /files/{fileId}/copy
+            $ref: '#/paths/~1files~1{fileId}~1copy/post'
           request:
             mediaType: application/json
           response:
@@ -1943,9 +1907,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /files
+            $ref: '#/paths/~1files/post'
           request:
             mediaType: application/octet-stream
           response:
@@ -1953,54 +1915,40 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /files/{fileId}
+            $ref: '#/paths/~1files~1{fileId}/delete'
           response:
             openAPIDocKey: '200'
         emptyTrash:
           operation:
-            $ref: delete
-          path:
-            $ref: /files/trash
+            $ref: '#/paths/~1files~1trash/delete'
           response:
             openAPIDocKey: '200'
         export:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/export
+            $ref: '#/paths/~1files~1{fileId}~1export/get'
           response:
             openAPIDocKey: '200'
         generateIds:
           operation:
-            $ref: get
-          path:
-            $ref: /files/generateIds
+            $ref: '#/paths/~1files~1generateIds/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}
+            $ref: '#/paths/~1files~1{fileId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /files
+            $ref: '#/paths/~1files/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /files/{fileId}
+            $ref: '#/paths/~1files~1{fileId}/patch'
           request:
             mediaType: application/octet-stream
           response:
@@ -2008,9 +1956,7 @@ components:
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /files/{fileId}/watch
+            $ref: '#/paths/~1files~1{fileId}~1watch/post'
           request:
             mediaType: application/json
           response:
@@ -2023,9 +1969,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /files/{fileId}/permissions
+            $ref: '#/paths/~1files~1{fileId}~1permissions/post'
           request:
             mediaType: application/json
           response:
@@ -2033,32 +1977,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /files/{fileId}/permissions/{permissionId}
+            $ref: '#/paths/~1files~1{fileId}~1permissions~1{permissionId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/permissions/{permissionId}
+            $ref: '#/paths/~1files~1{fileId}~1permissions~1{permissionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/permissions
+            $ref: '#/paths/~1files~1{fileId}~1permissions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /files/{fileId}/permissions/{permissionId}
+            $ref: '#/paths/~1files~1{fileId}~1permissions~1{permissionId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2071,9 +2007,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /files/{fileId}/comments/{commentId}/replies
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}~1replies/post'
           request:
             mediaType: application/json
           response:
@@ -2081,32 +2015,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /files/{fileId}/comments/{commentId}/replies/{replyId}
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}~1replies~1{replyId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/comments/{commentId}/replies/{replyId}
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}~1replies~1{replyId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/comments/{commentId}/replies
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}~1replies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /files/{fileId}/comments/{commentId}/replies/{replyId}
+            $ref: '#/paths/~1files~1{fileId}~1comments~1{commentId}~1replies~1{replyId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2119,32 +2045,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /files/{fileId}/revisions/{revisionId}
+            $ref: '#/paths/~1files~1{fileId}~1revisions~1{revisionId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/revisions/{revisionId}
+            $ref: '#/paths/~1files~1{fileId}~1revisions~1{revisionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /files/{fileId}/revisions
+            $ref: '#/paths/~1files~1{fileId}~1revisions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /files/{fileId}/revisions/{revisionId}
+            $ref: '#/paths/~1files~1{fileId}~1revisions~1{revisionId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2157,9 +2075,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /teamdrives
+            $ref: '#/paths/~1teamdrives/post'
           request:
             mediaType: application/json
           response:
@@ -2167,32 +2083,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /teamdrives/{teamDriveId}
+            $ref: '#/paths/~1teamdrives~1{teamDriveId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /teamdrives/{teamDriveId}
+            $ref: '#/paths/~1teamdrives~1{teamDriveId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /teamdrives
+            $ref: '#/paths/~1teamdrives/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /teamdrives/{teamDriveId}
+            $ref: '#/paths/~1teamdrives~1{teamDriveId}/patch'
           request:
             mediaType: application/json
           response:

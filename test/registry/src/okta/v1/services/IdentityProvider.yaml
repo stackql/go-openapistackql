@@ -1458,24 +1458,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/csrs/{csrId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1csrs~1{csrId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/csrs/{csrId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1csrs~1{csrId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/csrs
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1csrs/POST'
           request:
             mediaType: application/json
           response:
@@ -1483,9 +1477,7 @@ components:
             openAPIDocKey: '201'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/csrs
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1csrs/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1496,33 +1488,25 @@ components:
       methods:
         clone:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/keys/{keyId}/clone
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1keys~1{keyId}~1clone/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '201'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/keys/{keyId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1keys~1{keyId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/keys/generate
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1keys~1generate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/credentials/keys
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1credentials~1keys/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1533,40 +1517,30 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/{idpId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/{idpId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/idps/{idpId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps
+            $ref: '#/paths/~1api~1v1~1idps/POST'
           request:
             mediaType: application/json
           response:
@@ -1574,17 +1548,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps
+            $ref: '#/paths/~1api~1v1~1idps/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/idps/{idpId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -1597,24 +1567,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/idps/credentials/keys/{keyId}
+            $ref: '#/paths/~1api~1v1~1idps~1credentials~1keys~1{keyId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/credentials/keys/{keyId}
+            $ref: '#/paths/~1api~1v1~1idps~1credentials~1keys~1{keyId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/credentials/keys
+            $ref: '#/paths/~1api~1v1~1idps~1credentials~1keys/POST'
           request:
             mediaType: application/json
           response:
@@ -1622,9 +1586,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/credentials/keys
+            $ref: '#/paths/~1api~1v1~1idps~1credentials~1keys/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1635,24 +1597,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/idps/{idpId}/users/{userId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1users~1{userId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/users/{userId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1users~1{userId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/idps/{idpId}/users/{userId}
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1users~1{userId}/POST'
           request:
             mediaType: application/json
           response:
@@ -1660,9 +1616,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/users
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1users/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1673,9 +1627,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/idps/{idpId}/users/{userId}/credentials/tokens
+            $ref: '#/paths/~1api~1v1~1idps~1{idpId}~1users~1{userId}~1credentials~1tokens/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -1987,16 +1987,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/catalog/apps/{appName}/{applicationId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}~1{applicationId}/DELETE'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/catalog/apps/{appName}/{applicationId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}~1{applicationId}/PUT'
           response:
             openAPIDocKey: '204'
       name: appinstancetargets
@@ -2006,9 +2002,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}/apps
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1apps/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2019,23 +2013,17 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/catalog/apps/{appName}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}/DELETE'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/catalog/apps/{appName}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1catalog~1apps~1{appName}/PUT'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/catalog/apps
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1catalog~1apps/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2046,24 +2034,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/{groupId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/groups
+            $ref: '#/paths/~1api~1v1~1groups/POST'
           request:
             mediaType: application/json
           response:
@@ -2071,17 +2053,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups
+            $ref: '#/paths/~1api~1v1~1groups/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/groups/{groupId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -2094,23 +2072,17 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/groups/{targetGroupId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1groups~1{targetGroupId}/DELETE'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/groups/{targetGroupId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1groups~1{targetGroupId}/PUT'
           response:
             openAPIDocKey: '204'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}/targets/groups
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}~1targets~1groups/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2121,24 +2093,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}/roles/{roleId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles~1{roleId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/groups/{groupId}/roles
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles/POST'
           request:
             mediaType: application/json
           response:
@@ -2146,9 +2112,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}/roles
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1roles/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2159,16 +2123,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/groups/rules/{ruleId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1groups~1rules~1{ruleId}~1lifecycle~1deactivate/POST'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/groups/rules/{ruleId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1groups~1rules~1{ruleId}~1lifecycle~1activate/POST'
           response:
             openAPIDocKey: '204'
       name: ruleactivations
@@ -2178,24 +2138,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1groups~1rules~1{ruleId}/DELETE'
           response:
             openAPIDocKey: '202'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1groups~1rules~1{ruleId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/groups/rules
+            $ref: '#/paths/~1api~1v1~1groups~1rules/POST'
           request:
             mediaType: application/json
           response:
@@ -2203,17 +2157,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/rules
+            $ref: '#/paths/~1api~1v1~1groups~1rules/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/groups/rules/{ruleId}
+            $ref: '#/paths/~1api~1v1~1groups~1rules~1{ruleId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -2226,23 +2176,17 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/groups/{groupId}/users/{userId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1users~1{userId}/DELETE'
           response:
             openAPIDocKey: '204'
         insert:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/groups/{groupId}/users/{userId}
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1users~1{userId}/PUT'
           response:
             openAPIDocKey: '204'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/groups/{groupId}/users
+            $ref: '#/paths/~1api~1v1~1groups~1{groupId}~1users/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

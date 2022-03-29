@@ -3085,9 +3085,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /data/ga
+            $ref: '#/paths/~1data~1ga/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3098,9 +3096,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /data/mcf
+            $ref: '#/paths/~1data~1mcf/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3111,9 +3107,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /data/realtime
+            $ref: '#/paths/~1data~1realtime/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3124,9 +3118,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accountSummaries
+            $ref: '#/paths/~1management~1accountSummaries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3137,16 +3129,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/entityUserLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1entityUserLinks~1{linkId}/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/entityUserLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1entityUserLinks/post'
           request:
             mediaType: application/json
           response:
@@ -3154,17 +3142,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/entityUserLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1entityUserLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/entityUserLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1entityUserLinks~1{linkId}/put'
           request:
             mediaType: application/json
           response:
@@ -3177,9 +3161,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts
+            $ref: '#/paths/~1management~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3190,9 +3172,7 @@ components:
       methods:
         hashClientId:
           operation:
-            $ref: post
-          path:
-            $ref: /management/clientId:hashClientId
+            $ref: '#/paths/~1management~1clientId:hashClientId/post'
           request:
             mediaType: application/json
           response:
@@ -3205,9 +3185,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDataSources/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3218,17 +3196,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDimensions~1{customDimensionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDimensions/post'
           request:
             mediaType: application/json
           response:
@@ -3236,17 +3210,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDimensions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDimensions~1{customDimensionId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3254,9 +3224,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDimensions~1{customDimensionId}/put'
           request:
             mediaType: application/json
           response:
@@ -3269,17 +3237,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customMetrics~1{customMetricId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customMetrics/post'
           request:
             mediaType: application/json
           response:
@@ -3287,17 +3251,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customMetrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customMetrics~1{customMetricId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3305,9 +3265,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customMetrics~1{customMetricId}/put'
           request:
             mediaType: application/json
           response:
@@ -3320,24 +3278,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1experiments~1{experimentId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1experiments~1{experimentId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1experiments/post'
           request:
             mediaType: application/json
           response:
@@ -3345,17 +3297,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1experiments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1experiments~1{experimentId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3363,9 +3311,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1experiments~1{experimentId}/put'
           request:
             mediaType: application/json
           response:
@@ -3378,25 +3324,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/filters/{filterId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1filters~1{filterId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/filters/{filterId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1filters~1{filterId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/filters
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1filters/post'
           request:
             mediaType: application/json
           response:
@@ -3404,17 +3344,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/filters
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1filters/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/filters/{filterId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1filters~1{filterId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3422,9 +3358,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/filters/{filterId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1filters~1{filterId}/put'
           request:
             mediaType: application/json
           response:
@@ -3437,17 +3371,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1goals~1{goalId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1goals/post'
           request:
             mediaType: application/json
           response:
@@ -3455,17 +3385,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1goals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1goals~1{goalId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3473,9 +3399,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1goals~1{goalId}/put'
           request:
             mediaType: application/json
           response:
@@ -3488,24 +3412,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1profileFilterLinks~1{linkId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1profileFilterLinks~1{linkId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1profileFilterLinks/post'
           request:
             mediaType: application/json
           response:
@@ -3513,17 +3431,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1profileFilterLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1profileFilterLinks~1{linkId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3531,9 +3445,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1profileFilterLinks~1{linkId}/put'
           request:
             mediaType: application/json
           response:
@@ -3546,16 +3458,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1entityUserLinks~1{linkId}/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1entityUserLinks/post'
           request:
             mediaType: application/json
           response:
@@ -3563,17 +3471,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1entityUserLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1entityUserLinks~1{linkId}/put'
           request:
             mediaType: application/json
           response:
@@ -3586,24 +3490,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles/post'
           request:
             mediaType: application/json
           response:
@@ -3611,17 +3509,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3629,9 +3523,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}/put'
           request:
             mediaType: application/json
           response:
@@ -3644,24 +3536,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1remarketingAudiences~1{remarketingAudienceId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1remarketingAudiences~1{remarketingAudienceId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1remarketingAudiences/post'
           request:
             mediaType: application/json
           response:
@@ -3669,17 +3555,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1remarketingAudiences/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1remarketingAudiences~1{remarketingAudienceId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3687,9 +3569,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/remarketingAudiences/{remarketingAudienceId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1remarketingAudiences~1{remarketingAudienceId}/put'
           request:
             mediaType: application/json
           response:
@@ -3702,9 +3582,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/segments
+            $ref: '#/paths/~1management~1segments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3715,24 +3593,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1unsampledReports~1{unsampledReportId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1unsampledReports~1{unsampledReportId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1unsampledReports/post'
           request:
             mediaType: application/json
           response:
@@ -3740,9 +3612,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1profiles~1{profileId}~1unsampledReports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3753,34 +3623,26 @@ components:
       methods:
         deleteUploadData:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/deleteUploadData
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDataSources~1{customDataSourceId}~1deleteUploadData/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads/{uploadId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDataSources~1{customDataSourceId}~1uploads~1{uploadId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDataSources~1{customDataSourceId}~1uploads/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         uploadData:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1customDataSources~1{customDataSourceId}~1uploads/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3791,24 +3653,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityAdWordsLinks~1{webPropertyAdWordsLinkId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityAdWordsLinks~1{webPropertyAdWordsLinkId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityAdWordsLinks/post'
           request:
             mediaType: application/json
           response:
@@ -3816,17 +3672,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityAdWordsLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityAdWordsLinks~1{webPropertyAdWordsLinkId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3834,9 +3686,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityAdWordsLinks~1{webPropertyAdWordsLinkId}/put'
           request:
             mediaType: application/json
           response:
@@ -3849,17 +3699,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties/post'
           request:
             mediaType: application/json
           response:
@@ -3867,17 +3713,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3885,9 +3727,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}/put'
           request:
             mediaType: application/json
           response:
@@ -3900,16 +3740,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityUserLinks~1{linkId}/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityUserLinks/post'
           request:
             mediaType: application/json
           response:
@@ -3917,17 +3753,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityUserLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}
+            $ref: '#/paths/~1management~1accounts~1{accountId}~1webproperties~1{webPropertyId}~1entityUserLinks~1{linkId}/put'
           request:
             mediaType: application/json
           response:
@@ -3940,9 +3772,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /metadata/{reportType}/columns
+            $ref: '#/paths/~1metadata~1{reportType}~1columns/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3953,9 +3783,7 @@ components:
       methods:
         createAccountTicket:
           operation:
-            $ref: post
-          path:
-            $ref: /provisioning/createAccountTicket
+            $ref: '#/paths/~1provisioning~1createAccountTicket/post'
           request:
             mediaType: application/json
           response:
@@ -3963,9 +3791,7 @@ components:
             openAPIDocKey: '200'
         createAccountTree:
           operation:
-            $ref: post
-          path:
-            $ref: /provisioning/createAccountTree
+            $ref: '#/paths/~1provisioning~1createAccountTree/post'
           request:
             mediaType: application/json
           response:
@@ -3978,9 +3804,7 @@ components:
       methods:
         upsert:
           operation:
-            $ref: post
-          path:
-            $ref: /userDeletion/userDeletionRequests:upsert
+            $ref: '#/paths/~1userDeletion~1userDeletionRequests:upsert/post'
           request:
             mediaType: application/json
           response:

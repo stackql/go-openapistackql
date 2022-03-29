@@ -1843,17 +1843,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/users/{userId}/bookshelves/{shelf}
+            $ref: '#/paths/~1books~1v1~1users~1{userId}~1bookshelves~1{shelf}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/users/{userId}/bookshelves
+            $ref: '#/paths/~1books~1v1~1users~1{userId}~1bookshelves/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1864,9 +1860,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/users/{userId}/bookshelves/{shelf}/volumes
+            $ref: '#/paths/~1books~1v1~1users~1{userId}~1bookshelves~1{shelf}~1volumes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1877,25 +1871,19 @@ components:
       methods:
         addBook:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/cloudloading/addBook
+            $ref: '#/paths/~1books~1v1~1cloudloading~1addBook/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deleteBook:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/cloudloading/deleteBook
+            $ref: '#/paths/~1books~1v1~1cloudloading~1deleteBook/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateBook:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/cloudloading/updateBook
+            $ref: '#/paths/~1books~1v1~1cloudloading~1updateBook/post'
           request:
             mediaType: application/json
           response:
@@ -1908,9 +1896,7 @@ components:
       methods:
         listOfflineMetadata:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/dictionary/listOfflineMetadata
+            $ref: '#/paths/~1books~1v1~1dictionary~1listOfflineMetadata/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1921,25 +1907,19 @@ components:
       methods:
         getFamilyInfo:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/familysharing/getFamilyInfo
+            $ref: '#/paths/~1books~1v1~1familysharing~1getFamilyInfo/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         share:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/familysharing/share
+            $ref: '#/paths/~1books~1v1~1familysharing~1share/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         unshare:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/familysharing/unshare
+            $ref: '#/paths/~1books~1v1~1familysharing~1unshare/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1950,17 +1930,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/layersummary/{summaryId}
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1layersummary~1{summaryId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/layersummary
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1layersummary/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1971,17 +1947,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1layers~1{layerId}~1data~1{annotationDataId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/layers/{layerId}/data
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1layers~1{layerId}~1data/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1992,17 +1964,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1layers~1{layerId}~1annotations~1{annotationId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/layers/{layerId}
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1layers~1{layerId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2013,41 +1981,31 @@ components:
       methods:
         getUserSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/myconfig/getUserSettings
+            $ref: '#/paths/~1books~1v1~1myconfig~1getUserSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         releaseDownloadAccess:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/myconfig/releaseDownloadAccess
+            $ref: '#/paths/~1books~1v1~1myconfig~1releaseDownloadAccess/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         requestAccess:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/myconfig/requestAccess
+            $ref: '#/paths/~1books~1v1~1myconfig~1requestAccess/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         syncVolumeLicenses:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/myconfig/syncVolumeLicenses
+            $ref: '#/paths/~1books~1v1~1myconfig~1syncVolumeLicenses/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateUserSettings:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/myconfig/updateUserSettings
+            $ref: '#/paths/~1books~1v1~1myconfig~1updateUserSettings/post'
           request:
             mediaType: application/json
           response:
@@ -2060,17 +2018,13 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /books/v1/mylibrary/annotations/{annotationId}
+            $ref: '#/paths/~1books~1v1~1mylibrary~1annotations~1{annotationId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/annotations
+            $ref: '#/paths/~1books~1v1~1mylibrary~1annotations/post'
           request:
             mediaType: application/json
           response:
@@ -2078,25 +2032,19 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/mylibrary/annotations
+            $ref: '#/paths/~1books~1v1~1mylibrary~1annotations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         summary:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/annotations/summary
+            $ref: '#/paths/~1books~1v1~1mylibrary~1annotations~1summary/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /books/v1/mylibrary/annotations/{annotationId}
+            $ref: '#/paths/~1books~1v1~1mylibrary~1annotations~1{annotationId}/put'
           request:
             mediaType: application/json
           response:
@@ -2109,49 +2057,37 @@ components:
       methods:
         addVolume:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/bookshelves/{shelf}/addVolume
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves~1{shelf}~1addVolume/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         clearVolumes:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/bookshelves/{shelf}/clearVolumes
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves~1{shelf}~1clearVolumes/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/mylibrary/bookshelves/{shelf}
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves~1{shelf}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/mylibrary/bookshelves
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         moveVolume:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/bookshelves/{shelf}/moveVolume
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves~1{shelf}~1moveVolume/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removeVolume:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/bookshelves/{shelf}/removeVolume
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves~1{shelf}~1removeVolume/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2162,9 +2098,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/mylibrary/bookshelves/{shelf}/volumes
+            $ref: '#/paths/~1books~1v1~1mylibrary~1bookshelves~1{shelf}~1volumes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2175,17 +2109,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/mylibrary/readingpositions/{volumeId}
+            $ref: '#/paths/~1books~1v1~1mylibrary~1readingpositions~1{volumeId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setPosition:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/mylibrary/readingpositions/{volumeId}/setPosition
+            $ref: '#/paths/~1books~1v1~1mylibrary~1readingpositions~1{volumeId}~1setPosition/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2196,9 +2126,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/notification/get
+            $ref: '#/paths/~1books~1v1~1notification~1get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2209,17 +2137,13 @@ components:
       methods:
         listCategories:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/onboarding/listCategories
+            $ref: '#/paths/~1books~1v1~1onboarding~1listCategories/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listCategoryVolumes:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/onboarding/listCategoryVolumes
+            $ref: '#/paths/~1books~1v1~1onboarding~1listCategoryVolumes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2230,9 +2154,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/personalizedstream/get
+            $ref: '#/paths/~1books~1v1~1personalizedstream~1get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2243,25 +2165,19 @@ components:
       methods:
         accept:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/promooffer/accept
+            $ref: '#/paths/~1books~1v1~1promooffer~1accept/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         dismiss:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/promooffer/dismiss
+            $ref: '#/paths/~1books~1v1~1promooffer~1dismiss/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/promooffer/get
+            $ref: '#/paths/~1books~1v1~1promooffer~1get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2272,9 +2188,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/series/get
+            $ref: '#/paths/~1books~1v1~1series~1get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2285,9 +2199,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/series/membership/get
+            $ref: '#/paths/~1books~1v1~1series~1membership~1get/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2298,17 +2210,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes
+            $ref: '#/paths/~1books~1v1~1volumes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2319,9 +2227,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/{volumeId}/associated
+            $ref: '#/paths/~1books~1v1~1volumes~1{volumeId}~1associated/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2332,9 +2238,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/mybooks
+            $ref: '#/paths/~1books~1v1~1volumes~1mybooks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2345,17 +2249,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/recommended
+            $ref: '#/paths/~1books~1v1~1volumes~1recommended/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         rate:
           operation:
-            $ref: post
-          path:
-            $ref: /books/v1/volumes/recommended/rate
+            $ref: '#/paths/~1books~1v1~1volumes~1recommended~1rate/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2366,9 +2266,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /books/v1/volumes/useruploaded
+            $ref: '#/paths/~1books~1v1~1volumes~1useruploaded/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

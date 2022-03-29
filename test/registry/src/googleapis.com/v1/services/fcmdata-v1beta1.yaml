@@ -275,9 +275,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/androidApps/{androidAppsId}/deliveryData
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1androidApps~1{androidAppsId}~1deliveryData/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

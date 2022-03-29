@@ -693,9 +693,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/managedShortLinks:create
+            $ref: '#/paths/~1v1~1managedShortLinks:create/post'
           request:
             mediaType: application/json
           response:
@@ -708,9 +706,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/shortLinks
+            $ref: '#/paths/~1v1~1shortLinks/post'
           request:
             mediaType: application/json
           response:
@@ -723,17 +719,13 @@ components:
       methods:
         getLinkStats:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/{dynamicLink}/linkStats
+            $ref: '#/paths/~1v1~1{dynamicLink}~1linkStats/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         installAttribution:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/installAttribution
+            $ref: '#/paths/~1v1~1installAttribution/post'
           request:
             mediaType: application/json
           response:
@@ -741,9 +733,7 @@ components:
             openAPIDocKey: '200'
         reopenAttribution:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/reopenAttribution
+            $ref: '#/paths/~1v1~1reopenAttribution/post'
           request:
             mediaType: application/json
           response:

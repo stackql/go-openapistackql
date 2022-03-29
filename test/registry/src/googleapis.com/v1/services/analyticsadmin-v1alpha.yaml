@@ -1422,9 +1422,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accountSummaries
+            $ref: '#/paths/~1v1alpha~1accountSummaries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1435,41 +1433,31 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/accounts/{accountsId}
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accounts/{accountsId}
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getDataSharingSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/dataSharingSettings
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1dataSharingSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accounts
+            $ref: '#/paths/~1v1alpha~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/accounts/{accountsId}
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1477,9 +1465,7 @@ components:
             openAPIDocKey: '200'
         provisionAccountTicket:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts:provisionAccountTicket
+            $ref: '#/paths/~1v1alpha~1accounts:provisionAccountTicket/post'
           request:
             mediaType: application/json
           response:
@@ -1487,9 +1473,7 @@ components:
             openAPIDocKey: '200'
         searchChangeHistoryEvents:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts/{accountsId}:searchChangeHistoryEvents
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}:searchChangeHistoryEvents/post'
           request:
             mediaType: application/json
           response:
@@ -1502,9 +1486,7 @@ components:
       methods:
         audit:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks:audit
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks:audit/post'
           request:
             mediaType: application/json
           response:
@@ -1512,9 +1494,7 @@ components:
             openAPIDocKey: '200'
         batchCreate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks:batchCreate
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks:batchCreate/post'
           request:
             mediaType: application/json
           response:
@@ -1522,9 +1502,7 @@ components:
             openAPIDocKey: '200'
         batchDelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks:batchDelete
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks:batchDelete/post'
           request:
             mediaType: application/json
           response:
@@ -1532,17 +1510,13 @@ components:
             openAPIDocKey: '200'
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks:batchGet
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks:batchUpdate
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -1550,9 +1524,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks/post'
           request:
             mediaType: application/json
           response:
@@ -1560,33 +1532,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks/{userLinksId}
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks~1{userLinksId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks/{userLinksId}
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks~1{userLinksId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/accounts/{accountsId}/userLinks/{userLinksId}
+            $ref: '#/paths/~1v1alpha~1accounts~1{accountsId}~1userLinks~1{userLinksId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1599,9 +1563,7 @@ components:
       methods:
         acknowledgeUserDataCollection:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}:acknowledgeUserDataCollection
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}:acknowledgeUserDataCollection/post'
           request:
             mediaType: application/json
           response:
@@ -1609,9 +1571,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties
+            $ref: '#/paths/~1v1alpha~1properties/post'
           request:
             mediaType: application/json
           response:
@@ -1619,49 +1579,37 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getDataRetentionSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/dataRetentionSettings
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1dataRetentionSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getGoogleSignalsSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/googleSignalsSettings
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1googleSignalsSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties
+            $ref: '#/paths/~1v1alpha~1properties/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1669,9 +1617,7 @@ components:
             openAPIDocKey: '200'
         updateDataRetentionSettings:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/dataRetentionSettings
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1dataRetentionSettings/patch'
           request:
             mediaType: application/json
           response:
@@ -1679,9 +1625,7 @@ components:
             openAPIDocKey: '200'
         updateGoogleSignalsSettings:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/googleSignalsSettings
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1googleSignalsSettings/patch'
           request:
             mediaType: application/json
           response:
@@ -1694,33 +1638,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1733,9 +1669,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}~1measurementProtocolSecrets/post'
           request:
             mediaType: application/json
           response:
@@ -1743,33 +1677,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}~1measurementProtocolSecrets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/androidAppDataStreams/{androidAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1androidAppDataStreams~1{androidAppDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1782,9 +1708,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/conversionEvents
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1conversionEvents/post'
           request:
             mediaType: application/json
           response:
@@ -1792,25 +1716,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/conversionEvents/{conversionEventsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1conversionEvents~1{conversionEventsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/conversionEvents/{conversionEventsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1conversionEvents~1{conversionEventsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/conversionEvents
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1conversionEvents/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1821,9 +1739,7 @@ components:
       methods:
         archive:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customDimensions/{customDimensionsId}:archive
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customDimensions~1{customDimensionsId}:archive/post'
           request:
             mediaType: application/json
           response:
@@ -1831,9 +1747,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customDimensions
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customDimensions/post'
           request:
             mediaType: application/json
           response:
@@ -1841,25 +1755,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customDimensions/{customDimensionsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customDimensions~1{customDimensionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customDimensions
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customDimensions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customDimensions/{customDimensionsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customDimensions~1{customDimensionsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1872,9 +1780,7 @@ components:
       methods:
         archive:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customMetrics/{customMetricsId}:archive
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customMetrics~1{customMetricsId}:archive/post'
           request:
             mediaType: application/json
           response:
@@ -1882,9 +1788,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customMetrics
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customMetrics/post'
           request:
             mediaType: application/json
           response:
@@ -1892,25 +1796,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customMetrics/{customMetricsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customMetrics~1{customMetricsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customMetrics
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customMetrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/customMetrics/{customMetricsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1customMetrics~1{customMetricsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1923,25 +1821,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1dataStreams~1{dataStreamsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1dataStreams~1{dataStreamsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1dataStreams~1{dataStreamsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1954,9 +1846,7 @@ components:
       methods:
         approve:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinkProposals/{displayVideo360AdvertiserLinkProposalsId}:approve
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinkProposals~1{displayVideo360AdvertiserLinkProposalsId}:approve/post'
           request:
             mediaType: application/json
           response:
@@ -1964,9 +1854,7 @@ components:
             openAPIDocKey: '200'
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinkProposals/{displayVideo360AdvertiserLinkProposalsId}:cancel
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinkProposals~1{displayVideo360AdvertiserLinkProposalsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -1974,9 +1862,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinkProposals
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinkProposals/post'
           request:
             mediaType: application/json
           response:
@@ -1984,25 +1870,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinkProposals/{displayVideo360AdvertiserLinkProposalsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinkProposals~1{displayVideo360AdvertiserLinkProposalsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinkProposals/{displayVideo360AdvertiserLinkProposalsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinkProposals~1{displayVideo360AdvertiserLinkProposalsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinkProposals
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinkProposals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2013,9 +1893,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinks/post'
           request:
             mediaType: application/json
           response:
@@ -2023,33 +1901,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinks/{displayVideo360AdvertiserLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinks~1{displayVideo360AdvertiserLinksId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinks/{displayVideo360AdvertiserLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinks~1{displayVideo360AdvertiserLinksId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/displayVideo360AdvertiserLinks/{displayVideo360AdvertiserLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1displayVideo360AdvertiserLinks~1{displayVideo360AdvertiserLinksId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2062,9 +1932,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/firebaseLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1firebaseLinks/post'
           request:
             mediaType: application/json
           response:
@@ -2072,17 +1940,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/firebaseLinks/{firebaseLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1firebaseLinks~1{firebaseLinksId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/firebaseLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1firebaseLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2093,9 +1957,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/googleAdsLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1googleAdsLinks/post'
           request:
             mediaType: application/json
           response:
@@ -2103,25 +1965,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/googleAdsLinks/{googleAdsLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1googleAdsLinks~1{googleAdsLinksId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/googleAdsLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1googleAdsLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/googleAdsLinks/{googleAdsLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1googleAdsLinks~1{googleAdsLinksId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2134,33 +1990,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2173,9 +2021,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}~1measurementProtocolSecrets/post'
           request:
             mediaType: application/json
           response:
@@ -2183,33 +2029,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}~1measurementProtocolSecrets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/iosAppDataStreams/{iosAppDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1iosAppDataStreams~1{iosAppDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2222,9 +2060,7 @@ components:
       methods:
         audit:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks:audit
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks:audit/post'
           request:
             mediaType: application/json
           response:
@@ -2232,9 +2068,7 @@ components:
             openAPIDocKey: '200'
         batchCreate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks:batchCreate
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks:batchCreate/post'
           request:
             mediaType: application/json
           response:
@@ -2242,9 +2076,7 @@ components:
             openAPIDocKey: '200'
         batchDelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks:batchDelete
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks:batchDelete/post'
           request:
             mediaType: application/json
           response:
@@ -2252,17 +2084,13 @@ components:
             openAPIDocKey: '200'
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks:batchGet
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks:batchUpdate
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -2270,9 +2098,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks/post'
           request:
             mediaType: application/json
           response:
@@ -2280,33 +2106,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks/{userLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks~1{userLinksId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks/{userLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks~1{userLinksId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/userLinks/{userLinksId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1userLinks~1{userLinksId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2319,9 +2137,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams/post'
           request:
             mediaType: application/json
           response:
@@ -2329,41 +2145,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getGlobalSiteTag:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/globalSiteTag
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}~1globalSiteTag/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2376,9 +2182,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}~1measurementProtocolSecrets/post'
           request:
             mediaType: application/json
           response:
@@ -2386,33 +2190,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}~1measurementProtocolSecrets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha/properties/{propertiesId}/webDataStreams/{webDataStreamsId}/measurementProtocolSecrets/{measurementProtocolSecretsId}
+            $ref: '#/paths/~1v1alpha~1properties~1{propertiesId}~1webDataStreams~1{webDataStreamsId}~1measurementProtocolSecrets~1{measurementProtocolSecretsId}/patch'
           request:
             mediaType: application/json
           response:

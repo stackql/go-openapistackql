@@ -1322,24 +1322,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /calendars/{calendarId}/acl/{ruleId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl~1{ruleId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /calendars/{calendarId}/acl/{ruleId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl~1{ruleId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/acl
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl/post'
           request:
             mediaType: application/json
           response:
@@ -1347,17 +1341,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /calendars/{calendarId}/acl
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /calendars/{calendarId}/acl/{ruleId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl~1{ruleId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1365,9 +1355,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /calendars/{calendarId}/acl/{ruleId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl~1{ruleId}/put'
           request:
             mediaType: application/json
           response:
@@ -1375,9 +1363,7 @@ components:
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/acl/watch
+            $ref: '#/paths/~1calendars~1{calendarId}~1acl~1watch/post'
           request:
             mediaType: application/json
           response:
@@ -1390,24 +1376,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /users/me/calendarList/{calendarId}
+            $ref: '#/paths/~1users~1me~1calendarList~1{calendarId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /users/me/calendarList/{calendarId}
+            $ref: '#/paths/~1users~1me~1calendarList~1{calendarId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /users/me/calendarList
+            $ref: '#/paths/~1users~1me~1calendarList/post'
           request:
             mediaType: application/json
           response:
@@ -1415,17 +1395,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /users/me/calendarList
+            $ref: '#/paths/~1users~1me~1calendarList/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /users/me/calendarList/{calendarId}
+            $ref: '#/paths/~1users~1me~1calendarList~1{calendarId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1433,9 +1409,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /users/me/calendarList/{calendarId}
+            $ref: '#/paths/~1users~1me~1calendarList~1{calendarId}/put'
           request:
             mediaType: application/json
           response:
@@ -1443,9 +1417,7 @@ components:
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /users/me/calendarList/watch
+            $ref: '#/paths/~1users~1me~1calendarList~1watch/post'
           request:
             mediaType: application/json
           response:
@@ -1458,31 +1430,23 @@ components:
       methods:
         clear:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/clear
+            $ref: '#/paths/~1calendars~1{calendarId}~1clear/post'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /calendars/{calendarId}
+            $ref: '#/paths/~1calendars~1{calendarId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /calendars/{calendarId}
+            $ref: '#/paths/~1calendars~1{calendarId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars
+            $ref: '#/paths/~1calendars/post'
           request:
             mediaType: application/json
           response:
@@ -1490,9 +1454,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /calendars/{calendarId}
+            $ref: '#/paths/~1calendars~1{calendarId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1500,9 +1462,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /calendars/{calendarId}
+            $ref: '#/paths/~1calendars~1{calendarId}/put'
           request:
             mediaType: application/json
           response:
@@ -1515,9 +1475,7 @@ components:
       methods:
         stop:
           operation:
-            $ref: post
-          path:
-            $ref: /channels/stop
+            $ref: '#/paths/~1channels~1stop/post'
           request:
             mediaType: application/json
           response:
@@ -1529,9 +1487,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /colors
+            $ref: '#/paths/~1colors/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1542,24 +1498,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /calendars/{calendarId}/events/{eventId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1{eventId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /calendars/{calendarId}/events/{eventId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1{eventId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/events/import
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1import/post'
           request:
             mediaType: application/json
           response:
@@ -1567,9 +1517,7 @@ components:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/events
+            $ref: '#/paths/~1calendars~1{calendarId}~1events/post'
           request:
             mediaType: application/json
           response:
@@ -1577,33 +1525,25 @@ components:
             openAPIDocKey: '200'
         instances:
           operation:
-            $ref: get
-          path:
-            $ref: /calendars/{calendarId}/events/{eventId}/instances
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1{eventId}~1instances/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /calendars/{calendarId}/events
+            $ref: '#/paths/~1calendars~1{calendarId}~1events/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/events/{eventId}/move
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1{eventId}~1move/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /calendars/{calendarId}/events/{eventId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1{eventId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1611,17 +1551,13 @@ components:
             openAPIDocKey: '200'
         quickAdd:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/events/quickAdd
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1quickAdd/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /calendars/{calendarId}/events/{eventId}
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1{eventId}/put'
           request:
             mediaType: application/json
           response:
@@ -1629,9 +1565,7 @@ components:
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /calendars/{calendarId}/events/watch
+            $ref: '#/paths/~1calendars~1{calendarId}~1events~1watch/post'
           request:
             mediaType: application/json
           response:
@@ -1644,9 +1578,7 @@ components:
       methods:
         query:
           operation:
-            $ref: post
-          path:
-            $ref: /freeBusy
+            $ref: '#/paths/~1freeBusy/post'
           request:
             mediaType: application/json
           response:
@@ -1659,25 +1591,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /users/me/settings/{setting}
+            $ref: '#/paths/~1users~1me~1settings~1{setting}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /users/me/settings
+            $ref: '#/paths/~1users~1me~1settings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /users/me/settings/watch
+            $ref: '#/paths/~1users~1me~1settings~1watch/post'
           request:
             mediaType: application/json
           response:

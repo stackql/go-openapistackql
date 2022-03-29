@@ -1117,9 +1117,7 @@ components:
       methods:
         addPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}:addPermissions
+            $ref: '#/paths/~1v1~1matters~1{matterId}:addPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -1127,9 +1125,7 @@ components:
             openAPIDocKey: '200'
         close:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}:close
+            $ref: '#/paths/~1v1~1matters~1{matterId}:close/post'
           request:
             mediaType: application/json
           response:
@@ -1137,9 +1133,7 @@ components:
             openAPIDocKey: '200'
         count:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}:count
+            $ref: '#/paths/~1v1~1matters~1{matterId}:count/post'
           request:
             mediaType: application/json
           response:
@@ -1147,9 +1141,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters
+            $ref: '#/paths/~1v1~1matters/post'
           request:
             mediaType: application/json
           response:
@@ -1157,33 +1149,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/matters/{matterId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters
+            $ref: '#/paths/~1v1~1matters/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removePermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}:removePermissions
+            $ref: '#/paths/~1v1~1matters~1{matterId}:removePermissions/post'
           request:
             mediaType: application/json
           response:
@@ -1191,9 +1175,7 @@ components:
             openAPIDocKey: '200'
         reopen:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}:reopen
+            $ref: '#/paths/~1v1~1matters~1{matterId}:reopen/post'
           request:
             mediaType: application/json
           response:
@@ -1201,9 +1183,7 @@ components:
             openAPIDocKey: '200'
         undelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}:undelete
+            $ref: '#/paths/~1v1~1matters~1{matterId}:undelete/post'
           request:
             mediaType: application/json
           response:
@@ -1211,9 +1191,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/matters/{matterId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}/put'
           request:
             mediaType: application/json
           response:
@@ -1226,9 +1204,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}/exports
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1exports/post'
           request:
             mediaType: application/json
           response:
@@ -1236,25 +1212,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/matters/{matterId}/exports/{exportId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1exports~1{exportId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/exports/{exportId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1exports~1{exportId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/exports
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1exports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1265,9 +1235,7 @@ components:
       methods:
         addHeldAccounts:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}:addHeldAccounts
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}:addHeldAccounts/post'
           request:
             mediaType: application/json
           response:
@@ -1275,9 +1243,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}/holds
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds/post'
           request:
             mediaType: application/json
           response:
@@ -1285,33 +1251,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/holds
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removeHeldAccounts:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}:removeHeldAccounts
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}:removeHeldAccounts/post'
           request:
             mediaType: application/json
           response:
@@ -1319,9 +1277,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}/put'
           request:
             mediaType: application/json
           response:
@@ -1334,9 +1290,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}/accounts
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}~1accounts/post'
           request:
             mediaType: application/json
           response:
@@ -1344,17 +1298,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}/accounts/{accountId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}~1accounts~1{accountId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/holds/{holdId}/accounts
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1holds~1{holdId}~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1365,9 +1315,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/matters/{matterId}/savedQueries
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1savedQueries/post'
           request:
             mediaType: application/json
           response:
@@ -1375,25 +1323,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/matters/{matterId}/savedQueries/{savedQueryId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1savedQueries~1{savedQueryId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/savedQueries/{savedQueryId}
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1savedQueries~1{savedQueryId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/matters/{matterId}/savedQueries
+            $ref: '#/paths/~1v1~1matters~1{matterId}~1savedQueries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1404,9 +1346,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -1414,25 +1354,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations
+            $ref: '#/paths/~1v1~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

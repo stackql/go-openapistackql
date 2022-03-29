@@ -312,25 +312,19 @@ components:
       methods:
         deleteAccessApprovalSettings:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/folders/{foldersId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1accessApprovalSettings/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAccessApprovalSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1accessApprovalSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateAccessApprovalSettings:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/folders/{foldersId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1accessApprovalSettings/patch'
           request:
             mediaType: application/json
           response:
@@ -343,9 +337,7 @@ components:
       methods:
         approve:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}:approve
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1approvalRequests~1{approvalRequestsId}:approve/post'
           request:
             mediaType: application/json
           response:
@@ -353,9 +345,7 @@ components:
             openAPIDocKey: '200'
         dismiss:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}:dismiss
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1approvalRequests~1{approvalRequestsId}:dismiss/post'
           request:
             mediaType: application/json
           response:
@@ -363,17 +353,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1approvalRequests~1{approvalRequestsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/approvalRequests
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1approvalRequests/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -384,25 +370,19 @@ components:
       methods:
         deleteAccessApprovalSettings:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/organizations/{organizationsId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1accessApprovalSettings/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAccessApprovalSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1accessApprovalSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateAccessApprovalSettings:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/organizations/{organizationsId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1accessApprovalSettings/patch'
           request:
             mediaType: application/json
           response:
@@ -415,9 +395,7 @@ components:
       methods:
         approve:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}:approve
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1approvalRequests~1{approvalRequestsId}:approve/post'
           request:
             mediaType: application/json
           response:
@@ -425,9 +403,7 @@ components:
             openAPIDocKey: '200'
         dismiss:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}:dismiss
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1approvalRequests~1{approvalRequestsId}:dismiss/post'
           request:
             mediaType: application/json
           response:
@@ -435,17 +411,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1approvalRequests~1{approvalRequestsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/approvalRequests
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1approvalRequests/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -456,25 +428,19 @@ components:
       methods:
         deleteAccessApprovalSettings:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1accessApprovalSettings/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAccessApprovalSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1accessApprovalSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateAccessApprovalSettings:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/accessApprovalSettings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1accessApprovalSettings/patch'
           request:
             mediaType: application/json
           response:
@@ -487,9 +453,7 @@ components:
       methods:
         approve:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}:approve
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1approvalRequests~1{approvalRequestsId}:approve/post'
           request:
             mediaType: application/json
           response:
@@ -497,9 +461,7 @@ components:
             openAPIDocKey: '200'
         dismiss:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}:dismiss
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1approvalRequests~1{approvalRequestsId}:dismiss/post'
           request:
             mediaType: application/json
           response:
@@ -507,17 +469,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1approvalRequests~1{approvalRequestsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/approvalRequests
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1approvalRequests/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

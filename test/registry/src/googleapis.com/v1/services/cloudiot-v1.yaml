@@ -845,9 +845,7 @@ components:
       methods:
         bindDeviceToGateway:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:bindDeviceToGateway
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}:bindDeviceToGateway/post'
           request:
             mediaType: application/json
           response:
@@ -855,9 +853,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries/post'
           request:
             mediaType: application/json
           response:
@@ -865,25 +861,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}:getIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -891,17 +881,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -909,9 +895,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -919,9 +903,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -929,9 +911,7 @@ components:
             openAPIDocKey: '200'
         unbindDeviceFromGateway:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:unbindDeviceFromGateway
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}:unbindDeviceFromGateway/post'
           request:
             mediaType: application/json
           response:
@@ -944,9 +924,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -954,33 +932,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         modifyCloudToDeviceConfig:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}:modifyCloudToDeviceConfig
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}:modifyCloudToDeviceConfig/post'
           request:
             mediaType: application/json
           response:
@@ -988,9 +958,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -998,9 +966,7 @@ components:
             openAPIDocKey: '200'
         sendCommandToDevice:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}:sendCommandToDevice
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}:sendCommandToDevice/post'
           request:
             mediaType: application/json
           response:
@@ -1013,9 +979,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}/configVersions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}~1configVersions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1026,9 +990,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}/states
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1devices~1{devicesId}~1states/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1039,9 +1001,7 @@ components:
       methods:
         getIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1groups~1{groupsId}:getIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -1049,9 +1009,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1groups~1{groupsId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -1059,9 +1017,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1groups~1{groupsId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -1074,9 +1030,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}/devices
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1registries~1{registriesId}~1groups~1{groupsId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

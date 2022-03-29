@@ -242,25 +242,19 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/org/contacts/{contactType}
+            $ref: '#/paths/~1api~1v1~1org~1contacts~1{contactType}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/org/contacts
+            $ref: '#/paths/~1api~1v1~1org~1contacts/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/org/contacts/{contactType}
+            $ref: '#/paths/~1api~1v1~1org~1contacts~1{contactType}/PUT'
           request:
             mediaType: application/json
           response:
@@ -273,25 +267,19 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/org/privacy/oktaCommunication
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaCommunication/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         optIn:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/privacy/oktaCommunication/optIn
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaCommunication~1optIn/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         optOut:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/privacy/oktaCommunication/optOut
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaCommunication~1optOut/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -302,33 +290,25 @@ components:
       methods:
         extend:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/privacy/oktaSupport/extend
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaSupport~1extend/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/org/privacy/oktaSupport
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaSupport/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         grant:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/privacy/oktaSupport/grant
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaSupport~1grant/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revoke:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/privacy/oktaSupport/revoke
+            $ref: '#/paths/~1api~1v1~1org~1privacy~1oktaSupport~1revoke/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -339,17 +319,13 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/org
+            $ref: '#/paths/~1api~1v1~1org/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         partialUpdate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org
+            $ref: '#/paths/~1api~1v1~1org/POST'
           request:
             mediaType: application/json
           response:
@@ -357,9 +333,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/org
+            $ref: '#/paths/~1api~1v1~1org/PUT'
           request:
             mediaType: application/json
           response:
@@ -372,25 +346,19 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/org/preferences
+            $ref: '#/paths/~1api~1v1~1org~1preferences/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         hideEndUserFooter:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/preferences/hideEndUserFooter
+            $ref: '#/paths/~1api~1v1~1org~1preferences~1hideEndUserFooter/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         showEndUserFooter:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/org/preferences/showEndUserFooter
+            $ref: '#/paths/~1api~1v1~1org~1preferences~1showEndUserFooter/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

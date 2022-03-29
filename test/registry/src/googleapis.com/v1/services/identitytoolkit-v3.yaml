@@ -1417,9 +1417,7 @@ components:
       methods:
         createAuthUri:
           operation:
-            $ref: post
-          path:
-            $ref: /createAuthUri
+            $ref: '#/paths/~1createAuthUri/post'
           request:
             mediaType: application/json
           response:
@@ -1427,9 +1425,7 @@ components:
             openAPIDocKey: '200'
         deleteAccount:
           operation:
-            $ref: post
-          path:
-            $ref: /deleteAccount
+            $ref: '#/paths/~1deleteAccount/post'
           request:
             mediaType: application/json
           response:
@@ -1437,9 +1433,7 @@ components:
             openAPIDocKey: '200'
         downloadAccount:
           operation:
-            $ref: post
-          path:
-            $ref: /downloadAccount
+            $ref: '#/paths/~1downloadAccount/post'
           request:
             mediaType: application/json
           response:
@@ -1447,9 +1441,7 @@ components:
             openAPIDocKey: '200'
         emailLinkSignin:
           operation:
-            $ref: post
-          path:
-            $ref: /emailLinkSignin
+            $ref: '#/paths/~1emailLinkSignin/post'
           request:
             mediaType: application/json
           response:
@@ -1457,9 +1449,7 @@ components:
             openAPIDocKey: '200'
         getAccountInfo:
           operation:
-            $ref: post
-          path:
-            $ref: /getAccountInfo
+            $ref: '#/paths/~1getAccountInfo/post'
           request:
             mediaType: application/json
           response:
@@ -1467,9 +1457,7 @@ components:
             openAPIDocKey: '200'
         getOobConfirmationCode:
           operation:
-            $ref: post
-          path:
-            $ref: /getOobConfirmationCode
+            $ref: '#/paths/~1getOobConfirmationCode/post'
           request:
             mediaType: application/json
           response:
@@ -1477,33 +1465,25 @@ components:
             openAPIDocKey: '200'
         getProjectConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /getProjectConfig
+            $ref: '#/paths/~1getProjectConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getPublicKeys:
           operation:
-            $ref: get
-          path:
-            $ref: /publicKeys
+            $ref: '#/paths/~1publicKeys/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getRecaptchaParam:
           operation:
-            $ref: get
-          path:
-            $ref: /getRecaptchaParam
+            $ref: '#/paths/~1getRecaptchaParam/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetPassword:
           operation:
-            $ref: post
-          path:
-            $ref: /resetPassword
+            $ref: '#/paths/~1resetPassword/post'
           request:
             mediaType: application/json
           response:
@@ -1511,9 +1491,7 @@ components:
             openAPIDocKey: '200'
         sendVerificationCode:
           operation:
-            $ref: post
-          path:
-            $ref: /sendVerificationCode
+            $ref: '#/paths/~1sendVerificationCode/post'
           request:
             mediaType: application/json
           response:
@@ -1521,9 +1499,7 @@ components:
             openAPIDocKey: '200'
         setAccountInfo:
           operation:
-            $ref: post
-          path:
-            $ref: /setAccountInfo
+            $ref: '#/paths/~1setAccountInfo/post'
           request:
             mediaType: application/json
           response:
@@ -1531,9 +1507,7 @@ components:
             openAPIDocKey: '200'
         setProjectConfig:
           operation:
-            $ref: post
-          path:
-            $ref: /setProjectConfig
+            $ref: '#/paths/~1setProjectConfig/post'
           request:
             mediaType: application/json
           response:
@@ -1541,9 +1515,7 @@ components:
             openAPIDocKey: '200'
         signOutUser:
           operation:
-            $ref: post
-          path:
-            $ref: /signOutUser
+            $ref: '#/paths/~1signOutUser/post'
           request:
             mediaType: application/json
           response:
@@ -1551,9 +1523,7 @@ components:
             openAPIDocKey: '200'
         signupNewUser:
           operation:
-            $ref: post
-          path:
-            $ref: /signupNewUser
+            $ref: '#/paths/~1signupNewUser/post'
           request:
             mediaType: application/json
           response:
@@ -1561,9 +1531,7 @@ components:
             openAPIDocKey: '200'
         uploadAccount:
           operation:
-            $ref: post
-          path:
-            $ref: /uploadAccount
+            $ref: '#/paths/~1uploadAccount/post'
           request:
             mediaType: application/json
           response:
@@ -1571,9 +1539,7 @@ components:
             openAPIDocKey: '200'
         verifyAssertion:
           operation:
-            $ref: post
-          path:
-            $ref: /verifyAssertion
+            $ref: '#/paths/~1verifyAssertion/post'
           request:
             mediaType: application/json
           response:
@@ -1581,9 +1547,7 @@ components:
             openAPIDocKey: '200'
         verifyCustomToken:
           operation:
-            $ref: post
-          path:
-            $ref: /verifyCustomToken
+            $ref: '#/paths/~1verifyCustomToken/post'
           request:
             mediaType: application/json
           response:
@@ -1591,9 +1555,7 @@ components:
             openAPIDocKey: '200'
         verifyPassword:
           operation:
-            $ref: post
-          path:
-            $ref: /verifyPassword
+            $ref: '#/paths/~1verifyPassword/post'
           request:
             mediaType: application/json
           response:
@@ -1601,9 +1563,7 @@ components:
             openAPIDocKey: '200'
         verifyPhoneNumber:
           operation:
-            $ref: post
-          path:
-            $ref: /verifyPhoneNumber
+            $ref: '#/paths/~1verifyPhoneNumber/post'
           request:
             mediaType: application/json
           response:

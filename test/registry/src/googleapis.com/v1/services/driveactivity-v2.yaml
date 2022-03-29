@@ -851,9 +851,7 @@ components:
       methods:
         query:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/activity:query
+            $ref: '#/paths/~1v2~1activity:query/post'
           request:
             mediaType: application/json
           response:

@@ -620,9 +620,7 @@ components:
       methods:
         resolve:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/policies:resolve
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1policies:resolve/post'
           request:
             mediaType: application/json
           response:
@@ -635,9 +633,7 @@ components:
       methods:
         batchInherit:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/policies/orgunits:batchInherit
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1policies~1orgunits:batchInherit/post'
           request:
             mediaType: application/json
           response:
@@ -645,9 +641,7 @@ components:
             openAPIDocKey: '200'
         batchModify:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/policies/orgunits:batchModify
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1policies~1orgunits:batchModify/post'
           request:
             mediaType: application/json
           response:
@@ -660,17 +654,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/policySchemas/{policySchemasId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1policySchemas~1{policySchemasId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/policySchemas
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1policySchemas/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -681,9 +671,7 @@ components:
       methods:
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/policies/files:uploadPolicyFile
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1policies~1files:uploadPolicyFile/post'
           request:
             mediaType: application/octet-stream
           response:

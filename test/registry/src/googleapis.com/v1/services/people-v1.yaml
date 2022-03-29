@@ -1810,17 +1810,13 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/contactGroups:batchGet
+            $ref: '#/paths/~1v1~1contactGroups:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/contactGroups
+            $ref: '#/paths/~1v1~1contactGroups/post'
           request:
             mediaType: application/json
           response:
@@ -1828,33 +1824,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/contactGroups/{contactGroupsId}
+            $ref: '#/paths/~1v1~1contactGroups~1{contactGroupsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/contactGroups/{contactGroupsId}
+            $ref: '#/paths/~1v1~1contactGroups~1{contactGroupsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/contactGroups
+            $ref: '#/paths/~1v1~1contactGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/contactGroups/{contactGroupsId}
+            $ref: '#/paths/~1v1~1contactGroups~1{contactGroupsId}/put'
           request:
             mediaType: application/json
           response:
@@ -1867,9 +1855,7 @@ components:
       methods:
         modify:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/contactGroups/{contactGroupsId}/members:modify
+            $ref: '#/paths/~1v1~1contactGroups~1{contactGroupsId}~1members:modify/post'
           request:
             mediaType: application/json
           response:
@@ -1882,9 +1868,7 @@ components:
       methods:
         copyOtherContactToMyContactsGroup:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/otherContacts/{otherContactsId}:copyOtherContactToMyContactsGroup
+            $ref: '#/paths/~1v1~1otherContacts~1{otherContactsId}:copyOtherContactToMyContactsGroup/post'
           request:
             mediaType: application/json
           response:
@@ -1892,17 +1876,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/otherContacts
+            $ref: '#/paths/~1v1~1otherContacts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/otherContacts:search
+            $ref: '#/paths/~1v1~1otherContacts:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1913,9 +1893,7 @@ components:
       methods:
         batchCreateContacts:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/people:batchCreateContacts
+            $ref: '#/paths/~1v1~1people:batchCreateContacts/post'
           request:
             mediaType: application/json
           response:
@@ -1923,9 +1901,7 @@ components:
             openAPIDocKey: '200'
         batchDeleteContacts:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/people:batchDeleteContacts
+            $ref: '#/paths/~1v1~1people:batchDeleteContacts/post'
           request:
             mediaType: application/json
           response:
@@ -1933,9 +1909,7 @@ components:
             openAPIDocKey: '200'
         batchUpdateContacts:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/people:batchUpdateContacts
+            $ref: '#/paths/~1v1~1people:batchUpdateContacts/post'
           request:
             mediaType: application/json
           response:
@@ -1943,9 +1917,7 @@ components:
             openAPIDocKey: '200'
         createContact:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/people:createContact
+            $ref: '#/paths/~1v1~1people:createContact/post'
           request:
             mediaType: application/json
           response:
@@ -1953,65 +1925,49 @@ components:
             openAPIDocKey: '200'
         deleteContact:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/people/{peopleId}:deleteContact
+            $ref: '#/paths/~1v1~1people~1{peopleId}:deleteContact/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deleteContactPhoto:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/people/{peopleId}:deleteContactPhoto
+            $ref: '#/paths/~1v1~1people~1{peopleId}:deleteContactPhoto/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/people/{peopleId}
+            $ref: '#/paths/~1v1~1people~1{peopleId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getBatchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/people:batchGet
+            $ref: '#/paths/~1v1~1people:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listDirectoryPeople:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/people:listDirectoryPeople
+            $ref: '#/paths/~1v1~1people:listDirectoryPeople/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         searchContacts:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/people:searchContacts
+            $ref: '#/paths/~1v1~1people:searchContacts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         searchDirectoryPeople:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/people:searchDirectoryPeople
+            $ref: '#/paths/~1v1~1people:searchDirectoryPeople/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateContact:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/people/{peopleId}:updateContact
+            $ref: '#/paths/~1v1~1people~1{peopleId}:updateContact/patch'
           request:
             mediaType: application/json
           response:
@@ -2019,9 +1975,7 @@ components:
             openAPIDocKey: '200'
         updateContactPhoto:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/people/{peopleId}:updateContactPhoto
+            $ref: '#/paths/~1v1~1people~1{peopleId}:updateContactPhoto/patch'
           request:
             mediaType: application/json
           response:
@@ -2034,9 +1988,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/people/{peopleId}/connections
+            $ref: '#/paths/~1v1~1people~1{peopleId}~1connections/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -450,9 +450,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/products
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1products/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -463,9 +461,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/promotions
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1promotions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -476,9 +472,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions/{subscriptionsId}:cancel
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions~1{subscriptionsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -486,9 +480,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions/post'
           request:
             mediaType: application/json
           response:
@@ -496,9 +488,7 @@ components:
             openAPIDocKey: '200'
         entitle:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions/{subscriptionsId}:entitle
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions~1{subscriptionsId}:entitle/post'
           request:
             mediaType: application/json
           response:
@@ -506,9 +496,7 @@ components:
             openAPIDocKey: '200'
         extend:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions/{subscriptionsId}:extend
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions~1{subscriptionsId}:extend/post'
           request:
             mediaType: application/json
           response:
@@ -516,17 +504,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions/{subscriptionsId}
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions~1{subscriptionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         provision:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions:provision
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions:provision/post'
           request:
             mediaType: application/json
           response:
@@ -534,9 +518,7 @@ components:
             openAPIDocKey: '200'
         undoCancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/subscriptions/{subscriptionsId}:undoCancel
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1subscriptions~1{subscriptionsId}:undoCancel/post'
           request:
             mediaType: application/json
           response:

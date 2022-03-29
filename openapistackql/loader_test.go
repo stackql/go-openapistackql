@@ -14,7 +14,7 @@ import (
 
 func setupFileRoot(t *testing.T) {
 	var err error
-	OpenapiFileRoot, err = fileutil.GetFilePathFromRepositoryRoot(path.Join("providers", "src"))
+	OpenapiFileRoot, err = fileutil.GetFilePathFromRepositoryRoot(path.Join("test", "registry", "src"))
 	assert.NilError(t, err)
 }
 

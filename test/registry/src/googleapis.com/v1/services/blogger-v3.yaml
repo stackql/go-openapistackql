@@ -670,9 +670,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/users/{userId}/blogs/{blogId}
+            $ref: '#/paths/~1v3~1users~1{userId}~1blogs~1{blogId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -683,25 +681,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getByUrl:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/byurl
+            $ref: '#/paths/~1v3~1blogs~1byurl/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listByUser:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/users/{userId}/blogs
+            $ref: '#/paths/~1v3~1users~1{userId}~1blogs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -712,56 +704,42 @@ components:
       methods:
         approve:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1comments~1{commentId}~1approve/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/comments/{commentId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1comments~1{commentId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/comments/{commentId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1comments~1{commentId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/comments
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1comments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listByBlog:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/comments
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1comments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         markAsSpam:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1comments~1{commentId}~1spam/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removeContent:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1comments~1{commentId}~1removecontent/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -772,9 +750,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/pageviews
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pageviews/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -785,24 +761,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v3/blogs/{blogId}/pages/{pageId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages~1{pageId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/pages/{pageId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages~1{pageId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/pages
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages/post'
           request:
             mediaType: application/json
           response:
@@ -810,17 +780,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/pages
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v3/blogs/{blogId}/pages/{pageId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages~1{pageId}/patch'
           request:
             mediaType: application/json
           response:
@@ -828,25 +794,19 @@ components:
             openAPIDocKey: '200'
         publish:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/pages/{pageId}/publish
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages~1{pageId}~1publish/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/pages/{pageId}/revert
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages~1{pageId}~1revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v3/blogs/{blogId}/pages/{pageId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1pages~1{pageId}/put'
           request:
             mediaType: application/json
           response:
@@ -859,17 +819,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/users/{userId}/blogs/{blogId}/posts/{postId}
+            $ref: '#/paths/~1v3~1users~1{userId}~1blogs~1{blogId}~1posts~1{postId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/users/{userId}/blogs/{blogId}/posts
+            $ref: '#/paths/~1v3~1users~1{userId}~1blogs~1{blogId}~1posts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -880,32 +836,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getByPath:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/posts/bypath
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1bypath/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/posts
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts/post'
           request:
             mediaType: application/json
           response:
@@ -913,17 +861,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/posts
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}/patch'
           request:
             mediaType: application/json
           response:
@@ -931,33 +875,25 @@ components:
             openAPIDocKey: '200'
         publish:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/publish
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1publish/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         revert:
           operation:
-            $ref: post
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}/revert
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}~1revert/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/blogs/{blogId}/posts/search
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v3/blogs/{blogId}/posts/{postId}
+            $ref: '#/paths/~1v3~1blogs~1{blogId}~1posts~1{postId}/put'
           request:
             mediaType: application/json
           response:
@@ -970,9 +906,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v3/users/{userId}
+            $ref: '#/paths/~1v3~1users~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

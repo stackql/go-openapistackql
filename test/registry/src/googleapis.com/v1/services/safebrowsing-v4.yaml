@@ -778,9 +778,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/encodedFullHashes/{encodedRequest}
+            $ref: '#/paths/~1v4~1encodedFullHashes~1{encodedRequest}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -791,9 +789,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/encodedUpdates/{encodedRequest}
+            $ref: '#/paths/~1v4~1encodedUpdates~1{encodedRequest}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -804,9 +800,7 @@ components:
       methods:
         find:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/fullHashes:find
+            $ref: '#/paths/~1v4~1fullHashes:find/post'
           request:
             mediaType: application/json
           response:
@@ -819,9 +813,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/threatHits
+            $ref: '#/paths/~1v4~1threatHits/post'
           request:
             mediaType: application/json
           response:
@@ -834,9 +826,7 @@ components:
       methods:
         fetch:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/threatListUpdates:fetch
+            $ref: '#/paths/~1v4~1threatListUpdates:fetch/post'
           request:
             mediaType: application/json
           response:
@@ -849,9 +839,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/threatLists
+            $ref: '#/paths/~1v4~1threatLists/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -862,9 +850,7 @@ components:
       methods:
         find:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/threatMatches:find
+            $ref: '#/paths/~1v4~1threatMatches:find/post'
           request:
             mediaType: application/json
           response:

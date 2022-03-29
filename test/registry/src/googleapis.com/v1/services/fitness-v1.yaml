@@ -812,9 +812,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{userId}/dataSources
+            $ref: '#/paths/~1{userId}~1dataSources/post'
           request:
             mediaType: application/json
           response:
@@ -822,33 +820,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{userId}/dataSources
+            $ref: '#/paths/~1{userId}~1dataSources/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}/put'
           request:
             mediaType: application/json
           response:
@@ -861,9 +851,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}/dataPointChanges
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}~1dataPointChanges/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -874,24 +862,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}/datasets/{datasetId}
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}~1datasets~1{datasetId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}/datasets/{datasetId}
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}~1datasets~1{datasetId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /{userId}/dataSources/{dataSourceId}/datasets/{datasetId}
+            $ref: '#/paths/~1{userId}~1dataSources~1{dataSourceId}~1datasets~1{datasetId}/patch'
           request:
             mediaType: application/json
           response:
@@ -904,9 +886,7 @@ components:
       methods:
         aggregate:
           operation:
-            $ref: post
-          path:
-            $ref: /{userId}/dataset:aggregate
+            $ref: '#/paths/~1{userId}~1dataset:aggregate/post'
           request:
             mediaType: application/json
           response:
@@ -919,24 +899,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{userId}/sessions/{sessionId}
+            $ref: '#/paths/~1{userId}~1sessions~1{sessionId}/delete'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{userId}/sessions
+            $ref: '#/paths/~1{userId}~1sessions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{userId}/sessions/{sessionId}
+            $ref: '#/paths/~1{userId}~1sessions~1{sessionId}/put'
           request:
             mediaType: application/json
           response:

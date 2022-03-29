@@ -885,9 +885,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers
+            $ref: '#/paths/~1v1~1customers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -898,9 +896,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/configurations
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1configurations/post'
           request:
             mediaType: application/json
           response:
@@ -908,33 +904,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/customers/{customersId}/configurations/{configurationsId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1configurations~1{configurationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/configurations/{configurationsId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1configurations~1{configurationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/configurations
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1configurations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/customers/{customersId}/configurations/{configurationsId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1configurations~1{configurationsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -947,9 +935,7 @@ components:
       methods:
         applyConfiguration:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/devices:applyConfiguration
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1devices:applyConfiguration/post'
           request:
             mediaType: application/json
           response:
@@ -957,25 +943,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/devices
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removeConfiguration:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/devices:removeConfiguration
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1devices:removeConfiguration/post'
           request:
             mediaType: application/json
           response:
@@ -983,9 +963,7 @@ components:
             openAPIDocKey: '200'
         unclaim:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/customers/{customersId}/devices:unclaim
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1devices:unclaim/post'
           request:
             mediaType: application/json
           response:
@@ -998,9 +976,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/customers/{customersId}/dpcs
+            $ref: '#/paths/~1v1~1customers~1{customersId}~1dpcs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1011,9 +987,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1024,9 +998,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/customers
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1customers/post'
           request:
             mediaType: application/json
           response:
@@ -1034,9 +1006,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/customers
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1customers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1047,9 +1017,7 @@ components:
       methods:
         claim:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:claim
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:claim/post'
           request:
             mediaType: application/json
           response:
@@ -1057,9 +1025,7 @@ components:
             openAPIDocKey: '200'
         claimAsync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:claimAsync
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:claimAsync/post'
           request:
             mediaType: application/json
           response:
@@ -1067,9 +1033,7 @@ components:
             openAPIDocKey: '200'
         findByIdentifier:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:findByIdentifier
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:findByIdentifier/post'
           request:
             mediaType: application/json
           response:
@@ -1077,9 +1041,7 @@ components:
             openAPIDocKey: '200'
         findByOwner:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:findByOwner
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:findByOwner/post'
           request:
             mediaType: application/json
           response:
@@ -1087,17 +1049,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         metadata:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices/{devicesId}/metadata
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices~1{devicesId}~1metadata/post'
           request:
             mediaType: application/json
           response:
@@ -1105,9 +1063,7 @@ components:
             openAPIDocKey: '200'
         unclaim:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:unclaim
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:unclaim/post'
           request:
             mediaType: application/json
           response:
@@ -1115,9 +1071,7 @@ components:
             openAPIDocKey: '200'
         unclaimAsync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:unclaimAsync
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:unclaimAsync/post'
           request:
             mediaType: application/json
           response:
@@ -1125,9 +1079,7 @@ components:
             openAPIDocKey: '200'
         updateMetadataAsync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/partners/{partnersId}/devices:updateMetadataAsync
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1devices:updateMetadataAsync/post'
           request:
             mediaType: application/json
           response:
@@ -1140,9 +1092,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/vendors
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1vendors/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1153,9 +1103,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/partners/{partnersId}/vendors/{vendorsId}/customers
+            $ref: '#/paths/~1v1~1partners~1{partnersId}~1vendors~1{vendorsId}~1customers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

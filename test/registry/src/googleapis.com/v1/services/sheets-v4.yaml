@@ -5706,9 +5706,7 @@ components:
       methods:
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}:batchUpdate
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -5716,9 +5714,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets
+            $ref: '#/paths/~1v4~1spreadsheets/post'
           request:
             mediaType: application/json
           response:
@@ -5726,17 +5722,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getByDataFilter:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}:getByDataFilter
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}:getByDataFilter/post'
           request:
             mediaType: application/json
           response:
@@ -5749,17 +5741,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/developerMetadata/{metadataId}
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1developerMetadata~1{metadataId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/developerMetadata:search
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1developerMetadata:search/post'
           request:
             mediaType: application/json
           response:
@@ -5772,9 +5760,7 @@ components:
       methods:
         copyTo:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/sheets/{sheetId}:copyTo
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1sheets~1{sheetId}:copyTo/post'
           request:
             mediaType: application/json
           response:
@@ -5787,9 +5773,7 @@ components:
       methods:
         append:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values/{range}:append
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values~1{range}:append/post'
           request:
             mediaType: application/json
           response:
@@ -5797,9 +5781,7 @@ components:
             openAPIDocKey: '200'
         batchClear:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values:batchClear
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values:batchClear/post'
           request:
             mediaType: application/json
           response:
@@ -5807,9 +5789,7 @@ components:
             openAPIDocKey: '200'
         batchClearByDataFilter:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values:batchClearByDataFilter
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values:batchClearByDataFilter/post'
           request:
             mediaType: application/json
           response:
@@ -5817,17 +5797,13 @@ components:
             openAPIDocKey: '200'
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values:batchGet
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         batchGetByDataFilter:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values:batchGetByDataFilter
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values:batchGetByDataFilter/post'
           request:
             mediaType: application/json
           response:
@@ -5835,9 +5811,7 @@ components:
             openAPIDocKey: '200'
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values:batchUpdate
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -5845,9 +5819,7 @@ components:
             openAPIDocKey: '200'
         batchUpdateByDataFilter:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values:batchUpdateByDataFilter
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values:batchUpdateByDataFilter/post'
           request:
             mediaType: application/json
           response:
@@ -5855,9 +5827,7 @@ components:
             openAPIDocKey: '200'
         clear:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values/{range}:clear
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values~1{range}:clear/post'
           request:
             mediaType: application/json
           response:
@@ -5865,17 +5835,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values/{range}
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values~1{range}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v4/spreadsheets/{spreadsheetId}/values/{range}
+            $ref: '#/paths/~1v4~1spreadsheets~1{spreadsheetId}~1values~1{range}/put'
           request:
             mediaType: application/json
           response:

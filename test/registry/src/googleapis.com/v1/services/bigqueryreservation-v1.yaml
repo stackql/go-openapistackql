@@ -394,33 +394,25 @@ components:
       methods:
         getBiReservation:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/biReservation
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1biReservation/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         searchAllAssignments:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}:searchAllAssignments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}:searchAllAssignments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         searchAssignments:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}:searchAssignments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}:searchAssignments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateBiReservation:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/biReservation
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1biReservation/patch'
           request:
             mediaType: application/json
           response:
@@ -433,9 +425,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments/post'
           request:
             mediaType: application/json
           response:
@@ -443,33 +433,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments~1{capacityCommitmentsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments~1{capacityCommitmentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         merge:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments:merge
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments:merge/post'
           request:
             mediaType: application/json
           response:
@@ -477,9 +459,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments~1{capacityCommitmentsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -487,9 +467,7 @@ components:
             openAPIDocKey: '200'
         split:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:split
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1capacityCommitments~1{capacityCommitmentsId}:split/post'
           request:
             mediaType: application/json
           response:
@@ -502,9 +480,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations/post'
           request:
             mediaType: application/json
           response:
@@ -512,33 +488,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -551,9 +519,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}~1assignments/post'
           request:
             mediaType: application/json
           response:
@@ -561,25 +527,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments/{assignmentsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}~1assignments~1{assignmentsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}~1assignments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments/{assignmentsId}:move
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1reservations~1{reservationsId}~1assignments~1{assignmentsId}:move/post'
           request:
             mediaType: application/json
           response:

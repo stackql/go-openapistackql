@@ -556,9 +556,7 @@ components:
       methods:
         test:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}:test
+            $ref: '#/paths/~1v1~1projects~1{projectsId}:test/post'
           request:
             mediaType: application/json
           response:
@@ -571,9 +569,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/releases
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1releases/post'
           request:
             mediaType: application/json
           response:
@@ -581,41 +577,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/releases/{releasesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1releases~1{releasesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/releases/{releasesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1releases~1{releasesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getExecutable:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/releases/{releasesId}:getExecutable
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1releases~1{releasesId}:getExecutable/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/releases
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1releases/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/releases/{releasesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1releases~1{releasesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -628,9 +614,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/rulesets
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1rulesets/post'
           request:
             mediaType: application/json
           response:
@@ -638,25 +622,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/rulesets/{rulesetsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1rulesets~1{rulesetsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/rulesets/{rulesetsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1rulesets~1{rulesetsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/rulesets
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1rulesets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

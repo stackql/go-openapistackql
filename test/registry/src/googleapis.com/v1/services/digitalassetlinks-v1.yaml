@@ -259,9 +259,7 @@ components:
       methods:
         check:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/assetlinks:check
+            $ref: '#/paths/~1v1~1assetlinks:check/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -272,9 +270,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/statements:list
+            $ref: '#/paths/~1v1~1statements:list/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

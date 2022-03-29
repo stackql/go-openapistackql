@@ -803,25 +803,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers
+            $ref: '#/paths/~1v1alpha1~1customers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/customers/{customersId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}/patch'
           request:
             mediaType: application/json
           response:
@@ -834,9 +828,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments/post'
           request:
             mediaType: application/json
           response:
@@ -844,33 +836,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}:move
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}:move/post'
           request:
             mediaType: application/json
           response:
@@ -878,9 +862,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -893,9 +875,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}/devices
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -903,9 +883,7 @@ components:
             openAPIDocKey: '200'
         createSigned:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}/devices:createSigned
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}~1devices:createSigned/post'
           request:
             mediaType: application/json
           response:
@@ -913,9 +891,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/deployments/{deploymentsId}/devices
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1deployments~1{deploymentsId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -926,9 +902,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -936,9 +910,7 @@ components:
             openAPIDocKey: '200'
         createSigned:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices:createSigned
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices:createSigned/post'
           request:
             mediaType: application/json
           response:
@@ -946,33 +918,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices~1{devicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices/{devicesId}:move
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices~1{devicesId}:move/post'
           request:
             mediaType: application/json
           response:
@@ -980,9 +944,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices~1{devicesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -990,9 +952,7 @@ components:
             openAPIDocKey: '200'
         signDevice:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices/{devicesId}:signDevice
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices~1{devicesId}:signDevice/post'
           request:
             mediaType: application/json
           response:
@@ -1000,9 +960,7 @@ components:
             openAPIDocKey: '200'
         updateSigned:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/customers/{customersId}/devices/{devicesId}:updateSigned
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1devices~1{devicesId}:updateSigned/patch'
           request:
             mediaType: application/json
           response:
@@ -1015,9 +973,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes/post'
           request:
             mediaType: application/json
           response:
@@ -1025,33 +981,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}:move
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}:move/post'
           request:
             mediaType: application/json
           response:
@@ -1059,9 +1007,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1074,9 +1020,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/deployments
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1deployments/post'
           request:
             mediaType: application/json
           response:
@@ -1084,9 +1028,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/deployments
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1deployments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1097,9 +1039,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/devices
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -1107,9 +1047,7 @@ components:
             openAPIDocKey: '200'
         createSigned:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/devices:createSigned
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1devices:createSigned/post'
           request:
             mediaType: application/json
           response:
@@ -1117,9 +1055,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/devices
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1130,9 +1066,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/nodes
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1nodes/post'
           request:
             mediaType: application/json
           response:
@@ -1140,9 +1074,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/customers/{customersId}/nodes/{nodesId}/nodes
+            $ref: '#/paths/~1v1alpha1~1customers~1{customersId}~1nodes~1{nodesId}~1nodes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1153,9 +1085,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1166,25 +1096,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}~1devices~1{devicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}/devices/{devicesId}:move
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}~1devices~1{devicesId}:move/post'
           request:
             mediaType: application/json
           response:
@@ -1192,9 +1116,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}~1devices~1{devicesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1202,9 +1124,7 @@ components:
             openAPIDocKey: '200'
         signDevice:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}/devices/{devicesId}:signDevice
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}~1devices~1{devicesId}:signDevice/post'
           request:
             mediaType: application/json
           response:
@@ -1212,9 +1132,7 @@ components:
             openAPIDocKey: '200'
         updateSigned:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/deployments/{deploymentsId}/devices/{devicesId}:updateSigned
+            $ref: '#/paths/~1v1alpha1~1deployments~1{deploymentsId}~1devices~1{devicesId}:updateSigned/patch'
           request:
             mediaType: application/json
           response:
@@ -1227,9 +1145,7 @@ components:
       methods:
         generateSecret:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/installer:generateSecret
+            $ref: '#/paths/~1v1alpha1~1installer:generateSecret/post'
           request:
             mediaType: application/json
           response:
@@ -1237,9 +1153,7 @@ components:
             openAPIDocKey: '200'
         validate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/installer:validate
+            $ref: '#/paths/~1v1alpha1~1installer:validate/post'
           request:
             mediaType: application/json
           response:
@@ -1252,9 +1166,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1265,33 +1177,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}:move
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}:move/post'
           request:
             mediaType: application/json
           response:
@@ -1299,9 +1203,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1314,9 +1216,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}/devices
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -1324,9 +1224,7 @@ components:
             openAPIDocKey: '200'
         createSigned:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}/devices:createSigned
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}~1devices:createSigned/post'
           request:
             mediaType: application/json
           response:
@@ -1334,9 +1232,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}/devices
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1deployments~1{deploymentsId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1347,9 +1243,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -1357,9 +1251,7 @@ components:
             openAPIDocKey: '200'
         createSigned:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices:createSigned
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices:createSigned/post'
           request:
             mediaType: application/json
           response:
@@ -1367,33 +1259,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices~1{devicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices/{devicesId}:move
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices~1{devicesId}:move/post'
           request:
             mediaType: application/json
           response:
@@ -1401,9 +1285,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices~1{devicesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1411,9 +1293,7 @@ components:
             openAPIDocKey: '200'
         signDevice:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices/{devicesId}:signDevice
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices~1{devicesId}:signDevice/post'
           request:
             mediaType: application/json
           response:
@@ -1421,9 +1301,7 @@ components:
             openAPIDocKey: '200'
         updateSigned:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/devices/{devicesId}:updateSigned
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1devices~1{devicesId}:updateSigned/patch'
           request:
             mediaType: application/json
           response:
@@ -1436,9 +1314,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes/post'
           request:
             mediaType: application/json
           response:
@@ -1446,33 +1322,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}:move
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}:move/post'
           request:
             mediaType: application/json
           response:
@@ -1480,9 +1348,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}/patch'
           request:
             mediaType: application/json
           response:
@@ -1495,9 +1361,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/deployments
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1deployments/post'
           request:
             mediaType: application/json
           response:
@@ -1505,9 +1369,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/deployments
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1deployments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1518,9 +1380,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/devices
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1devices/post'
           request:
             mediaType: application/json
           response:
@@ -1528,9 +1388,7 @@ components:
             openAPIDocKey: '200'
         createSigned:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/devices:createSigned
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1devices:createSigned/post'
           request:
             mediaType: application/json
           response:
@@ -1538,9 +1396,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/devices
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1551,9 +1407,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/nodes
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1nodes/post'
           request:
             mediaType: application/json
           response:
@@ -1561,9 +1415,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/nodes
+            $ref: '#/paths/~1v1alpha1~1nodes~1{nodesId}~1nodes~1{nodesId1}~1nodes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1574,9 +1426,7 @@ components:
       methods:
         get:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/policies:get
+            $ref: '#/paths/~1v1alpha1~1policies:get/post'
           request:
             mediaType: application/json
           response:
@@ -1584,9 +1434,7 @@ components:
             openAPIDocKey: '200'
         set:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/policies:set
+            $ref: '#/paths/~1v1alpha1~1policies:set/post'
           request:
             mediaType: application/json
           response:
@@ -1594,9 +1442,7 @@ components:
             openAPIDocKey: '200'
         test:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/policies:test
+            $ref: '#/paths/~1v1alpha1~1policies:test/post'
           request:
             mediaType: application/json
           response:

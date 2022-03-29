@@ -491,17 +491,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /admin/reports/v1/activity/users/{userKey}/applications/{applicationName}
+            $ref: '#/paths/~1admin~1reports~1v1~1activity~1users~1{userKey}~1applications~1{applicationName}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         watch:
           operation:
-            $ref: post
-          path:
-            $ref: /admin/reports/v1/activity/users/{userKey}/applications/{applicationName}/watch
+            $ref: '#/paths/~1admin~1reports~1v1~1activity~1users~1{userKey}~1applications~1{applicationName}~1watch/post'
           request:
             mediaType: application/json
           response:
@@ -514,9 +510,7 @@ components:
       methods:
         stop:
           operation:
-            $ref: post
-          path:
-            $ref: /admin/reports_v1/channels/stop
+            $ref: '#/paths/~1admin~1reports_v1~1channels~1stop/post'
           request:
             mediaType: application/json
           response:
@@ -528,9 +522,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /admin/reports/v1/usage/dates/{date}
+            $ref: '#/paths/~1admin~1reports~1v1~1usage~1dates~1{date}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -541,9 +533,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /admin/reports/v1/usage/{entityType}/{entityKey}/dates/{date}
+            $ref: '#/paths/~1admin~1reports~1v1~1usage~1{entityType}~1{entityKey}~1dates~1{date}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -554,9 +544,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /admin/reports/v1/usage/users/{userKey}/dates/{date}
+            $ref: '#/paths/~1admin~1reports~1v1~1usage~1users~1{userKey}~1dates~1{date}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

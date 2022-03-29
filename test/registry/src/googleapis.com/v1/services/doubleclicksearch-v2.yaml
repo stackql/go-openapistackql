@@ -630,17 +630,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion
+            $ref: '#/paths/~1doubleclicksearch~1v2~1agency~1{agencyId}~1advertiser~1{advertiserId}~1engine~1{engineAccountId}~1conversion/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /doubleclicksearch/v2/conversion
+            $ref: '#/paths/~1doubleclicksearch~1v2~1conversion/post'
           request:
             mediaType: application/json
           response:
@@ -648,9 +644,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /doubleclicksearch/v2/conversion
+            $ref: '#/paths/~1doubleclicksearch~1v2~1conversion/put'
           request:
             mediaType: application/json
           response:
@@ -658,9 +652,7 @@ components:
             openAPIDocKey: '200'
         updateAvailability:
           operation:
-            $ref: post
-          path:
-            $ref: /doubleclicksearch/v2/conversion/updateAvailability
+            $ref: '#/paths/~1doubleclicksearch~1v2~1conversion~1updateAvailability/post'
           request:
             mediaType: application/json
           response:
@@ -673,9 +665,7 @@ components:
       methods:
         generate:
           operation:
-            $ref: post
-          path:
-            $ref: /doubleclicksearch/v2/reports/generate
+            $ref: '#/paths/~1doubleclicksearch~1v2~1reports~1generate/post'
           request:
             mediaType: application/json
           response:
@@ -683,24 +673,18 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /doubleclicksearch/v2/reports/{reportId}
+            $ref: '#/paths/~1doubleclicksearch~1v2~1reports~1{reportId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getFile:
           operation:
-            $ref: get
-          path:
-            $ref: /doubleclicksearch/v2/reports/{reportId}/files/{reportFragment}
+            $ref: '#/paths/~1doubleclicksearch~1v2~1reports~1{reportId}~1files~1{reportFragment}/get'
           response:
             openAPIDocKey: '200'
         request:
           operation:
-            $ref: post
-          path:
-            $ref: /doubleclicksearch/v2/reports
+            $ref: '#/paths/~1doubleclicksearch~1v2~1reports/post'
           request:
             mediaType: application/json
           response:
@@ -713,9 +697,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/savedcolumns
+            $ref: '#/paths/~1doubleclicksearch~1v2~1agency~1{agencyId}~1advertiser~1{advertiserId}~1savedcolumns/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

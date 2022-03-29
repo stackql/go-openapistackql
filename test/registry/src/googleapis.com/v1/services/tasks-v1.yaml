@@ -237,24 +237,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tasks/v1/users/@me/lists/{tasklist}
+            $ref: '#/paths/~1tasks~1v1~1users~1@me~1lists~1{tasklist}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tasks/v1/users/@me/lists/{tasklist}
+            $ref: '#/paths/~1tasks~1v1~1users~1@me~1lists~1{tasklist}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /tasks/v1/users/@me/lists
+            $ref: '#/paths/~1tasks~1v1~1users~1@me~1lists/post'
           request:
             mediaType: application/json
           response:
@@ -262,17 +256,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tasks/v1/users/@me/lists
+            $ref: '#/paths/~1tasks~1v1~1users~1@me~1lists/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /tasks/v1/users/@me/lists/{tasklist}
+            $ref: '#/paths/~1tasks~1v1~1users~1@me~1lists~1{tasklist}/patch'
           request:
             mediaType: application/json
           response:
@@ -280,9 +270,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tasks/v1/users/@me/lists/{tasklist}
+            $ref: '#/paths/~1tasks~1v1~1users~1@me~1lists~1{tasklist}/put'
           request:
             mediaType: application/json
           response:
@@ -295,31 +283,23 @@ components:
       methods:
         clear:
           operation:
-            $ref: post
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/clear
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1clear/post'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks/{task}
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks~1{task}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks/{task}
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks~1{task}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks/post'
           request:
             mediaType: application/json
           response:
@@ -327,25 +307,19 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         move:
           operation:
-            $ref: post
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks/{task}/move
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks~1{task}~1move/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks/{task}
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks~1{task}/patch'
           request:
             mediaType: application/json
           response:
@@ -353,9 +327,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /tasks/v1/lists/{tasklist}/tasks/{task}
+            $ref: '#/paths/~1tasks~1v1~1lists~1{tasklist}~1tasks~1{task}/put'
           request:
             mediaType: application/json
           response:

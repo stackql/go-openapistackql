@@ -118,17 +118,13 @@ components:
       methods:
         getNotificationSetting:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/notificationSetting
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1notificationSetting/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateNotificationSetting:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/accounts/{accountsId}/notificationSetting
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1notificationSetting/patch'
           request:
             mediaType: application/json
           response:

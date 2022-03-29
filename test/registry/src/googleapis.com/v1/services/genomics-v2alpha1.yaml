@@ -988,9 +988,7 @@ components:
       methods:
         run:
           operation:
-            $ref: post
-          path:
-            $ref: /v2alpha1/pipelines:run
+            $ref: '#/paths/~1v2alpha1~1pipelines:run/post'
           request:
             mediaType: application/json
           response:
@@ -1003,9 +1001,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v2alpha1/projects/{projectsId}/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v2alpha1~1projects~1{projectsId}~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -1013,17 +1009,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2alpha1/projects/{projectsId}/operations/{operationsId}
+            $ref: '#/paths/~1v2alpha1~1projects~1{projectsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2alpha1/projects/{projectsId}/operations
+            $ref: '#/paths/~1v2alpha1~1projects~1{projectsId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1034,9 +1026,7 @@ components:
       methods:
         checkIn:
           operation:
-            $ref: post
-          path:
-            $ref: /v2alpha1/projects/{projectsId}/workers/{workersId}:checkIn
+            $ref: '#/paths/~1v2alpha1~1projects~1{projectsId}~1workers~1{workersId}:checkIn/post'
           request:
             mediaType: application/json
           response:
@@ -1049,9 +1039,7 @@ components:
       methods:
         checkIn:
           operation:
-            $ref: post
-          path:
-            $ref: /v2alpha1/workers/{id}:checkIn
+            $ref: '#/paths/~1v2alpha1~1workers~1{id}:checkIn/post'
           request:
             mediaType: application/json
           response:

@@ -97,9 +97,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/entities:search
+            $ref: '#/paths/~1v1~1entities:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

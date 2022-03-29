@@ -1177,9 +1177,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/locations
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1locations/post'
           request:
             mediaType: application/json
           response:
@@ -1187,9 +1185,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/locations
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1locations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1200,9 +1196,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/attributes
+            $ref: '#/paths/~1v1~1attributes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1213,17 +1207,13 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/categories:batchGet
+            $ref: '#/paths/~1v1~1categories:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/categories
+            $ref: '#/paths/~1v1~1categories/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1234,17 +1224,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/chains/{chainsId}
+            $ref: '#/paths/~1v1~1chains~1{chainsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/chains:search
+            $ref: '#/paths/~1v1~1chains:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1255,9 +1241,7 @@ components:
       methods:
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/googleLocations:search
+            $ref: '#/paths/~1v1~1googleLocations:search/post'
           request:
             mediaType: application/json
           response:
@@ -1270,9 +1254,7 @@ components:
       methods:
         associate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}:associate
+            $ref: '#/paths/~1v1~1locations~1{locationsId}:associate/post'
           request:
             mediaType: application/json
           response:
@@ -1280,9 +1262,7 @@ components:
             openAPIDocKey: '200'
         clearLocationAssociation:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}:clearLocationAssociation
+            $ref: '#/paths/~1v1~1locations~1{locationsId}:clearLocationAssociation/post'
           request:
             mediaType: application/json
           response:
@@ -1290,41 +1270,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/locations/{locationsId}
+            $ref: '#/paths/~1v1~1locations~1{locationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}
+            $ref: '#/paths/~1v1~1locations~1{locationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAttributes:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/attributes
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1attributes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getGoogleUpdated:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}:getGoogleUpdated
+            $ref: '#/paths/~1v1~1locations~1{locationsId}:getGoogleUpdated/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/locations/{locationsId}
+            $ref: '#/paths/~1v1~1locations~1{locationsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1332,9 +1302,7 @@ components:
             openAPIDocKey: '200'
         updateAttributes:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/locations/{locationsId}/attributes
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1attributes/patch'
           request:
             mediaType: application/json
           response:
@@ -1347,9 +1315,7 @@ components:
       methods:
         getGoogleUpdated:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/attributes:getGoogleUpdated
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1attributes:getGoogleUpdated/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -134,9 +134,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/sites/{sitesId}
+            $ref: '#/paths/~1v1~1sites~1{sitesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -147,9 +145,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/violatingSites
+            $ref: '#/paths/~1v1~1violatingSites/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

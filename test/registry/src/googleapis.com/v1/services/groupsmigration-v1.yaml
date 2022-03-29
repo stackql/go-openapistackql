@@ -113,9 +113,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /groups/v1/groups/{groupId}/archive
+            $ref: '#/paths/~1groups~1v1~1groups~1{groupId}~1archive/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

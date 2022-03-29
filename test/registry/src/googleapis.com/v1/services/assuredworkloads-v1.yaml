@@ -580,17 +580,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/operations
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -601,9 +597,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/workloads
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1workloads/post'
           request:
             mediaType: application/json
           response:
@@ -611,33 +605,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1workloads~1{workloadsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1workloads~1{workloadsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/workloads
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1workloads/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1locations~1{locationsId}~1workloads~1{workloadsId}/patch'
           request:
             mediaType: application/json
           response:

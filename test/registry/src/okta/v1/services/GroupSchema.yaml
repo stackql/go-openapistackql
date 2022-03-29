@@ -254,17 +254,13 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/meta/schemas/group/default
+            $ref: '#/paths/~1api~1v1~1meta~1schemas~1group~1default/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/meta/schemas/group/default
+            $ref: '#/paths/~1api~1v1~1meta~1schemas~1group~1default/POST'
           request:
             mediaType: application/json
           response:

@@ -487,9 +487,7 @@ components:
       methods:
         query:
           operation:
-            $ref: post
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}/searchAnalytics/query
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}~1searchAnalytics~1query/post'
           request:
             mediaType: application/json
           response:
@@ -502,32 +500,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}~1sitemaps~1{feedpath}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}~1sitemaps~1{feedpath}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}/sitemaps
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}~1sitemaps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         submit:
           operation:
-            $ref: put
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}~1sitemaps~1{feedpath}/put'
           response:
             openAPIDocKey: '200'
       name: sitemaps
@@ -537,31 +527,23 @@ components:
       methods:
         add:
           operation:
-            $ref: put
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}/put'
           response:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /webmasters/v3/sites/{siteUrl}
+            $ref: '#/paths/~1webmasters~1v3~1sites~1{siteUrl}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /webmasters/v3/sites
+            $ref: '#/paths/~1webmasters~1v3~1sites/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -572,9 +554,7 @@ components:
       methods:
         run:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/urlTestingTools/mobileFriendlyTest:run
+            $ref: '#/paths/~1v1~1urlTestingTools~1mobileFriendlyTest:run/post'
           request:
             mediaType: application/json
           response:

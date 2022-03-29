@@ -199,9 +199,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/autnum/{autnumId}
+            $ref: '#/paths/~1v1~1autnum~1{autnumId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -212,9 +210,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/domain/{domainId}
+            $ref: '#/paths/~1v1~1domain~1{domainId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -225,9 +221,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/entity/{entityId}
+            $ref: '#/paths/~1v1~1entity~1{entityId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -238,9 +232,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/ip/{ipId}/{ipId1}
+            $ref: '#/paths/~1v1~1ip~1{ipId}~1{ipId1}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -251,9 +243,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/nameserver/{nameserverId}
+            $ref: '#/paths/~1v1~1nameserver~1{nameserverId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -264,41 +254,31 @@ components:
       methods:
         getDomains:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/domains
+            $ref: '#/paths/~1v1~1domains/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getEntities:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/entities
+            $ref: '#/paths/~1v1~1entities/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getHelp:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/help
+            $ref: '#/paths/~1v1~1help/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIp:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/ip
+            $ref: '#/paths/~1v1~1ip/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getNameservers:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/nameservers
+            $ref: '#/paths/~1v1~1nameservers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

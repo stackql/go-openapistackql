@@ -8451,25 +8451,19 @@ components:
       methods:
         authinfo:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/authinfo
+            $ref: '#/paths/~1accounts~1authinfo/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         claimwebsite:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/accounts/{accountId}/claimwebsite
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}~1claimwebsite/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /accounts/batch
+            $ref: '#/paths/~1accounts~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -8477,24 +8471,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/accounts/{accountId}
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accounts/{accountId}
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/accounts
+            $ref: '#/paths/~1{merchantId}~1accounts/post'
           request:
             mediaType: application/json
           response:
@@ -8502,9 +8490,7 @@ components:
             openAPIDocKey: '200'
         link:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/accounts/{accountId}/link
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}~1link/post'
           request:
             mediaType: application/json
           response:
@@ -8512,25 +8498,19 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accounts
+            $ref: '#/paths/~1{merchantId}~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listlinks:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accounts/{accountId}/listlinks
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}~1listlinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         requestphoneverification:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/accounts/{accountId}/requestphoneverification
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}~1requestphoneverification/post'
           request:
             mediaType: application/json
           response:
@@ -8538,9 +8518,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{merchantId}/accounts/{accountId}
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}/put'
           request:
             mediaType: application/json
           response:
@@ -8548,9 +8526,7 @@ components:
             openAPIDocKey: '200'
         updatelabels:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/accounts/{accountId}/updatelabels
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}~1updatelabels/post'
           request:
             mediaType: application/json
           response:
@@ -8558,9 +8534,7 @@ components:
             openAPIDocKey: '200'
         verifyphonenumber:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/accounts/{accountId}/verifyphonenumber
+            $ref: '#/paths/~1{merchantId}~1accounts~1{accountId}~1verifyphonenumber/post'
           request:
             mediaType: application/json
           response:
@@ -8573,9 +8547,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /accounts/{accountId}/credentials
+            $ref: '#/paths/~1accounts~1{accountId}~1credentials/post'
           request:
             mediaType: application/json
           response:
@@ -8588,9 +8560,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /accounts/{accountId}/labels
+            $ref: '#/paths/~1accounts~1{accountId}~1labels/post'
           request:
             mediaType: application/json
           response:
@@ -8598,24 +8568,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /accounts/{accountId}/labels/{labelId}
+            $ref: '#/paths/~1accounts~1{accountId}~1labels~1{labelId}/delete'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/labels
+            $ref: '#/paths/~1accounts~1{accountId}~1labels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /accounts/{accountId}/labels/{labelId}
+            $ref: '#/paths/~1accounts~1{accountId}~1labels~1{labelId}/patch'
           request:
             mediaType: application/json
           response:
@@ -8628,9 +8592,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /accounts/{accountId}/returncarrier
+            $ref: '#/paths/~1accounts~1{accountId}~1returncarrier/post'
           request:
             mediaType: application/json
           response:
@@ -8638,24 +8600,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /accounts/{accountId}/returncarrier/{carrierAccountId}
+            $ref: '#/paths/~1accounts~1{accountId}~1returncarrier~1{carrierAccountId}/delete'
           response:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/returncarrier
+            $ref: '#/paths/~1accounts~1{accountId}~1returncarrier/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /accounts/{accountId}/returncarrier/{carrierAccountId}
+            $ref: '#/paths/~1accounts~1{accountId}~1returncarrier~1{carrierAccountId}/patch'
           request:
             mediaType: application/json
           response:
@@ -8668,9 +8624,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /accountstatuses/batch
+            $ref: '#/paths/~1accountstatuses~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -8678,17 +8632,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accountstatuses/{accountId}
+            $ref: '#/paths/~1{merchantId}~1accountstatuses~1{accountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accountstatuses
+            $ref: '#/paths/~1{merchantId}~1accountstatuses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8699,9 +8649,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /accounttax/batch
+            $ref: '#/paths/~1accounttax~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -8709,25 +8657,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accounttax/{accountId}
+            $ref: '#/paths/~1{merchantId}~1accounttax~1{accountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/accounttax
+            $ref: '#/paths/~1{merchantId}~1accounttax/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{merchantId}/accounttax/{accountId}
+            $ref: '#/paths/~1{merchantId}~1accounttax~1{accountId}/put'
           request:
             mediaType: application/json
           response:
@@ -8740,35 +8682,27 @@ components:
       methods:
         activate:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/buyongoogleprograms/{regionCode}/activate
+            $ref: '#/paths/~1{merchantId}~1buyongoogleprograms~1{regionCode}~1activate/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/buyongoogleprograms/{regionCode}
+            $ref: '#/paths/~1{merchantId}~1buyongoogleprograms~1{regionCode}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         onboard:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/buyongoogleprograms/{regionCode}/onboard
+            $ref: '#/paths/~1{merchantId}~1buyongoogleprograms~1{regionCode}~1onboard/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /{merchantId}/buyongoogleprograms/{regionCode}
+            $ref: '#/paths/~1{merchantId}~1buyongoogleprograms~1{regionCode}/patch'
           request:
             mediaType: application/json
           response:
@@ -8776,18 +8710,14 @@ components:
             openAPIDocKey: '200'
         pause:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/buyongoogleprograms/{regionCode}/pause
+            $ref: '#/paths/~1{merchantId}~1buyongoogleprograms~1{regionCode}~1pause/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         requestreview:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/buyongoogleprograms/{regionCode}/requestreview
+            $ref: '#/paths/~1{merchantId}~1buyongoogleprograms~1{regionCode}~1requestreview/post'
           request:
             mediaType: application/json
           response:
@@ -8799,9 +8729,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/collections
+            $ref: '#/paths/~1{merchantId}~1collections/post'
           request:
             mediaType: application/json
           response:
@@ -8809,24 +8737,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/collections/{collectionId}
+            $ref: '#/paths/~1{merchantId}~1collections~1{collectionId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/collections/{collectionId}
+            $ref: '#/paths/~1{merchantId}~1collections~1{collectionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/collections
+            $ref: '#/paths/~1{merchantId}~1collections/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8837,17 +8759,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/collectionstatuses/{collectionId}
+            $ref: '#/paths/~1{merchantId}~1collectionstatuses~1{collectionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/collectionstatuses
+            $ref: '#/paths/~1{merchantId}~1collectionstatuses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8858,25 +8776,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{cssGroupId}/csses/{cssDomainId}
+            $ref: '#/paths/~1{cssGroupId}~1csses~1{cssDomainId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{cssGroupId}/csses
+            $ref: '#/paths/~1{cssGroupId}~1csses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updatelabels:
           operation:
-            $ref: post
-          path:
-            $ref: /{cssGroupId}/csses/{cssDomainId}/updatelabels
+            $ref: '#/paths/~1{cssGroupId}~1csses~1{cssDomainId}~1updatelabels/post'
           request:
             mediaType: application/json
           response:
@@ -8889,9 +8801,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /datafeeds/batch
+            $ref: '#/paths/~1datafeeds~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -8899,32 +8809,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/datafeeds/{datafeedId}
+            $ref: '#/paths/~1{merchantId}~1datafeeds~1{datafeedId}/delete'
           response:
             openAPIDocKey: '200'
         fetchnow:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/datafeeds/{datafeedId}/fetchNow
+            $ref: '#/paths/~1{merchantId}~1datafeeds~1{datafeedId}~1fetchNow/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/datafeeds/{datafeedId}
+            $ref: '#/paths/~1{merchantId}~1datafeeds~1{datafeedId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/datafeeds
+            $ref: '#/paths/~1{merchantId}~1datafeeds/post'
           request:
             mediaType: application/json
           response:
@@ -8932,17 +8834,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/datafeeds
+            $ref: '#/paths/~1{merchantId}~1datafeeds/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{merchantId}/datafeeds/{datafeedId}
+            $ref: '#/paths/~1{merchantId}~1datafeeds~1{datafeedId}/put'
           request:
             mediaType: application/json
           response:
@@ -8955,9 +8853,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /datafeedstatuses/batch
+            $ref: '#/paths/~1datafeedstatuses~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -8965,17 +8861,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/datafeedstatuses/{datafeedId}
+            $ref: '#/paths/~1{merchantId}~1datafeedstatuses~1{datafeedId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/datafeedstatuses
+            $ref: '#/paths/~1{merchantId}~1datafeedstatuses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8986,17 +8878,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/freelistingsprogram
+            $ref: '#/paths/~1{merchantId}~1freelistingsprogram/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         requestreview:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/freelistingsprogram/requestreview
+            $ref: '#/paths/~1{merchantId}~1freelistingsprogram~1requestreview/post'
           request:
             mediaType: application/json
           response:
@@ -9008,9 +8896,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /liasettings/batch
+            $ref: '#/paths/~1liasettings~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9018,73 +8904,55 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getaccessiblegmbaccounts:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}/accessiblegmbaccounts
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}~1accessiblegmbaccounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/liasettings
+            $ref: '#/paths/~1{merchantId}~1liasettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listposdataproviders:
           operation:
-            $ref: get
-          path:
-            $ref: /liasettings/posdataproviders
+            $ref: '#/paths/~1liasettings~1posdataproviders/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         requestgmbaccess:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}/requestgmbaccess
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}~1requestgmbaccess/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         requestinventoryverification:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}/requestinventoryverification/{country}
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}~1requestinventoryverification~1{country}/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setinventoryverificationcontact:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}/setinventoryverificationcontact
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}~1setinventoryverificationcontact/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setposdataprovider:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}/setposdataprovider
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}~1setposdataprovider/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{merchantId}/liasettings/{accountId}
+            $ref: '#/paths/~1{merchantId}~1liasettings~1{accountId}/put'
           request:
             mediaType: application/json
           response:
@@ -9097,9 +8965,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /localinventory/batch
+            $ref: '#/paths/~1localinventory~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9107,9 +8973,7 @@ components:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/products/{productId}/localinventory
+            $ref: '#/paths/~1{merchantId}~1products~1{productId}~1localinventory/post'
           request:
             mediaType: application/json
           response:
@@ -9122,9 +8986,7 @@ components:
       methods:
         createchargeinvoice:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orderinvoices/{orderId}/createChargeInvoice
+            $ref: '#/paths/~1{merchantId}~1orderinvoices~1{orderId}~1createChargeInvoice/post'
           request:
             mediaType: application/json
           response:
@@ -9132,9 +8994,7 @@ components:
             openAPIDocKey: '200'
         createrefundinvoice:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orderinvoices/{orderId}/createRefundInvoice
+            $ref: '#/paths/~1{merchantId}~1orderinvoices~1{orderId}~1createRefundInvoice/post'
           request:
             mediaType: application/json
           response:
@@ -9147,17 +9007,13 @@ components:
       methods:
         listdisbursements:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/orderreports/disbursements
+            $ref: '#/paths/~1{merchantId}~1orderreports~1disbursements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listtransactions:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/orderreports/disbursements/{disbursementId}/transactions
+            $ref: '#/paths/~1{merchantId}~1orderreports~1disbursements~1{disbursementId}~1transactions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9168,9 +9024,7 @@ components:
       methods:
         acknowledge:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orderreturns/{returnId}/acknowledge
+            $ref: '#/paths/~1{merchantId}~1orderreturns~1{returnId}~1acknowledge/post'
           request:
             mediaType: application/json
           response:
@@ -9178,9 +9032,7 @@ components:
             openAPIDocKey: '200'
         createorderreturn:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orderreturns/createOrderReturn
+            $ref: '#/paths/~1{merchantId}~1orderreturns~1createOrderReturn/post'
           request:
             mediaType: application/json
           response:
@@ -9188,25 +9040,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/orderreturns/{returnId}
+            $ref: '#/paths/~1{merchantId}~1orderreturns~1{returnId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/orderreturns
+            $ref: '#/paths/~1{merchantId}~1orderreturns/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         process:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orderreturns/{returnId}/process
+            $ref: '#/paths/~1{merchantId}~1orderreturns~1{returnId}~1process/post'
           request:
             mediaType: application/json
           response:
@@ -9219,9 +9065,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orderreturns/{returnId}/labels
+            $ref: '#/paths/~1{merchantId}~1orderreturns~1{returnId}~1labels/post'
           request:
             mediaType: application/json
           response:
@@ -9234,9 +9078,7 @@ components:
       methods:
         acknowledge:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/acknowledge
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1acknowledge/post'
           request:
             mediaType: application/json
           response:
@@ -9244,17 +9086,13 @@ components:
             openAPIDocKey: '200'
         advancetestorder:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/testorders/{orderId}/advance
+            $ref: '#/paths/~1{merchantId}~1testorders~1{orderId}~1advance/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/cancel
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1cancel/post'
           request:
             mediaType: application/json
           response:
@@ -9262,9 +9100,7 @@ components:
             openAPIDocKey: '200'
         cancellineitem:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/cancelLineItem
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1cancelLineItem/post'
           request:
             mediaType: application/json
           response:
@@ -9272,9 +9108,7 @@ components:
             openAPIDocKey: '200'
         canceltestorderbycustomer:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/testorders/{orderId}/cancelByCustomer
+            $ref: '#/paths/~1{merchantId}~1testorders~1{orderId}~1cancelByCustomer/post'
           request:
             mediaType: application/json
           response:
@@ -9282,9 +9116,7 @@ components:
             openAPIDocKey: '200'
         captureOrder:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/captureOrder
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1captureOrder/post'
           request:
             mediaType: application/json
           response:
@@ -9292,9 +9124,7 @@ components:
             openAPIDocKey: '200'
         createtestorder:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/testorders
+            $ref: '#/paths/~1{merchantId}~1testorders/post'
           request:
             mediaType: application/json
           response:
@@ -9302,9 +9132,7 @@ components:
             openAPIDocKey: '200'
         createtestreturn:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/testreturn
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1testreturn/post'
           request:
             mediaType: application/json
           response:
@@ -9312,33 +9140,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/orders/{orderId}
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getbymerchantorderid:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/ordersbymerchantid/{merchantOrderId}
+            $ref: '#/paths/~1{merchantId}~1ordersbymerchantid~1{merchantOrderId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         gettestordertemplate:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/testordertemplates/{templateName}
+            $ref: '#/paths/~1{merchantId}~1testordertemplates~1{templateName}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         instorerefundlineitem:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/inStoreRefundLineItem
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1inStoreRefundLineItem/post'
           request:
             mediaType: application/json
           response:
@@ -9346,17 +9166,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/orders
+            $ref: '#/paths/~1{merchantId}~1orders/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         refunditem:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/refunditem
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1refunditem/post'
           request:
             mediaType: application/json
           response:
@@ -9364,9 +9180,7 @@ components:
             openAPIDocKey: '200'
         refundorder:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/refundorder
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1refundorder/post'
           request:
             mediaType: application/json
           response:
@@ -9374,9 +9188,7 @@ components:
             openAPIDocKey: '200'
         rejectreturnlineitem:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/rejectReturnLineItem
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1rejectReturnLineItem/post'
           request:
             mediaType: application/json
           response:
@@ -9384,9 +9196,7 @@ components:
             openAPIDocKey: '200'
         returnrefundlineitem:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/returnRefundLineItem
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1returnRefundLineItem/post'
           request:
             mediaType: application/json
           response:
@@ -9394,9 +9204,7 @@ components:
             openAPIDocKey: '200'
         setlineitemmetadata:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/setLineItemMetadata
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1setLineItemMetadata/post'
           request:
             mediaType: application/json
           response:
@@ -9404,9 +9212,7 @@ components:
             openAPIDocKey: '200'
         shiplineitems:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/shipLineItems
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1shipLineItems/post'
           request:
             mediaType: application/json
           response:
@@ -9414,9 +9220,7 @@ components:
             openAPIDocKey: '200'
         updatelineitemshippingdetails:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/updateLineItemShippingDetails
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1updateLineItemShippingDetails/post'
           request:
             mediaType: application/json
           response:
@@ -9424,9 +9228,7 @@ components:
             openAPIDocKey: '200'
         updatemerchantorderid:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/updateMerchantOrderId
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1updateMerchantOrderId/post'
           request:
             mediaType: application/json
           response:
@@ -9434,9 +9236,7 @@ components:
             openAPIDocKey: '200'
         updateshipment:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/orders/{orderId}/updateShipment
+            $ref: '#/paths/~1{merchantId}~1orders~1{orderId}~1updateShipment/post'
           request:
             mediaType: application/json
           response:
@@ -9449,9 +9249,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/ordertrackingsignals
+            $ref: '#/paths/~1{merchantId}~1ordertrackingsignals/post'
           request:
             mediaType: application/json
           response:
@@ -9464,9 +9262,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /pos/batch
+            $ref: '#/paths/~1pos~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9474,24 +9270,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/pos/{targetMerchantId}/store/{storeCode}
+            $ref: '#/paths/~1{merchantId}~1pos~1{targetMerchantId}~1store~1{storeCode}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/pos/{targetMerchantId}/store/{storeCode}
+            $ref: '#/paths/~1{merchantId}~1pos~1{targetMerchantId}~1store~1{storeCode}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/pos/{targetMerchantId}/store
+            $ref: '#/paths/~1{merchantId}~1pos~1{targetMerchantId}~1store/post'
           request:
             mediaType: application/json
           response:
@@ -9499,9 +9289,7 @@ components:
             openAPIDocKey: '200'
         inventory:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/pos/{targetMerchantId}/inventory
+            $ref: '#/paths/~1{merchantId}~1pos~1{targetMerchantId}~1inventory/post'
           request:
             mediaType: application/json
           response:
@@ -9509,17 +9297,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/pos/{targetMerchantId}/store
+            $ref: '#/paths/~1{merchantId}~1pos~1{targetMerchantId}~1store/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         sale:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/pos/{targetMerchantId}/sale
+            $ref: '#/paths/~1{merchantId}~1pos~1{targetMerchantId}~1sale/post'
           request:
             mediaType: application/json
           response:
@@ -9532,9 +9316,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /products/batch
+            $ref: '#/paths/~1products~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9542,24 +9324,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/products/{productId}
+            $ref: '#/paths/~1{merchantId}~1products~1{productId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/products/{productId}
+            $ref: '#/paths/~1{merchantId}~1products~1{productId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/products
+            $ref: '#/paths/~1{merchantId}~1products/post'
           request:
             mediaType: application/json
           response:
@@ -9567,17 +9343,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/products
+            $ref: '#/paths/~1{merchantId}~1products/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: patch
-          path:
-            $ref: /{merchantId}/products/{productId}
+            $ref: '#/paths/~1{merchantId}~1products~1{productId}/patch'
           request:
             mediaType: application/json
           response:
@@ -9590,9 +9362,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /productstatuses/batch
+            $ref: '#/paths/~1productstatuses~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9600,17 +9370,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/productstatuses/{productId}
+            $ref: '#/paths/~1{merchantId}~1productstatuses~1{productId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/productstatuses
+            $ref: '#/paths/~1{merchantId}~1productstatuses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9621,9 +9387,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/productstatuses/{productId}/repricingreports
+            $ref: '#/paths/~1{merchantId}~1productstatuses~1{productId}~1repricingreports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9634,9 +9398,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/promotions
+            $ref: '#/paths/~1{merchantId}~1promotions/post'
           request:
             mediaType: application/json
           response:
@@ -9644,9 +9406,7 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/promotions/{id}
+            $ref: '#/paths/~1{merchantId}~1promotions~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9657,17 +9417,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/pubsubnotificationsettings
+            $ref: '#/paths/~1{merchantId}~1pubsubnotificationsettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{merchantId}/pubsubnotificationsettings
+            $ref: '#/paths/~1{merchantId}~1pubsubnotificationsettings/put'
           request:
             mediaType: application/json
           response:
@@ -9680,9 +9436,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /regionalinventory/batch
+            $ref: '#/paths/~1regionalinventory~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9690,9 +9444,7 @@ components:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/products/{productId}/regionalinventory
+            $ref: '#/paths/~1{merchantId}~1products~1{productId}~1regionalinventory/post'
           request:
             mediaType: application/json
           response:
@@ -9705,9 +9457,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/regions
+            $ref: '#/paths/~1{merchantId}~1regions/post'
           request:
             mediaType: application/json
           response:
@@ -9715,32 +9465,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/regions/{regionId}
+            $ref: '#/paths/~1{merchantId}~1regions~1{regionId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/regions/{regionId}
+            $ref: '#/paths/~1{merchantId}~1regions~1{regionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/regions
+            $ref: '#/paths/~1{merchantId}~1regions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /{merchantId}/regions/{regionId}
+            $ref: '#/paths/~1{merchantId}~1regions~1{regionId}/patch'
           request:
             mediaType: application/json
           response:
@@ -9753,9 +9495,7 @@ components:
       methods:
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/reports/search
+            $ref: '#/paths/~1{merchantId}~1reports~1search/post'
           request:
             mediaType: application/json
           response:
@@ -9768,9 +9508,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/repricingrules
+            $ref: '#/paths/~1{merchantId}~1repricingrules/post'
           request:
             mediaType: application/json
           response:
@@ -9778,32 +9516,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/repricingrules/{ruleId}
+            $ref: '#/paths/~1{merchantId}~1repricingrules~1{ruleId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/repricingrules/{ruleId}
+            $ref: '#/paths/~1{merchantId}~1repricingrules~1{ruleId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/repricingrules
+            $ref: '#/paths/~1{merchantId}~1repricingrules/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /{merchantId}/repricingrules/{ruleId}
+            $ref: '#/paths/~1{merchantId}~1repricingrules~1{ruleId}/patch'
           request:
             mediaType: application/json
           response:
@@ -9816,9 +9546,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/repricingrules/{ruleId}/repricingreports
+            $ref: '#/paths/~1{merchantId}~1repricingrules~1{ruleId}~1repricingreports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9829,9 +9557,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /returnaddress/batch
+            $ref: '#/paths/~1returnaddress~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9839,24 +9565,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/returnaddress/{returnAddressId}
+            $ref: '#/paths/~1{merchantId}~1returnaddress~1{returnAddressId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/returnaddress/{returnAddressId}
+            $ref: '#/paths/~1{merchantId}~1returnaddress~1{returnAddressId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/returnaddress
+            $ref: '#/paths/~1{merchantId}~1returnaddress/post'
           request:
             mediaType: application/json
           response:
@@ -9864,9 +9584,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/returnaddress
+            $ref: '#/paths/~1{merchantId}~1returnaddress/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9877,9 +9595,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /returnpolicy/batch
+            $ref: '#/paths/~1returnpolicy~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -9887,24 +9603,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/returnpolicy/{returnPolicyId}
+            $ref: '#/paths/~1{merchantId}~1returnpolicy~1{returnPolicyId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/returnpolicy/{returnPolicyId}
+            $ref: '#/paths/~1{merchantId}~1returnpolicy~1{returnPolicyId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/returnpolicy
+            $ref: '#/paths/~1{merchantId}~1returnpolicy/post'
           request:
             mediaType: application/json
           response:
@@ -9912,9 +9622,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/returnpolicy
+            $ref: '#/paths/~1{merchantId}~1returnpolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9925,9 +9633,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/returnpolicyonline
+            $ref: '#/paths/~1{merchantId}~1returnpolicyonline/post'
           request:
             mediaType: application/json
           response:
@@ -9935,32 +9641,24 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /{merchantId}/returnpolicyonline/{returnPolicyId}
+            $ref: '#/paths/~1{merchantId}~1returnpolicyonline~1{returnPolicyId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/returnpolicyonline/{returnPolicyId}
+            $ref: '#/paths/~1{merchantId}~1returnpolicyonline~1{returnPolicyId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/returnpolicyonline
+            $ref: '#/paths/~1{merchantId}~1returnpolicyonline/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /{merchantId}/returnpolicyonline/{returnPolicyId}
+            $ref: '#/paths/~1{merchantId}~1returnpolicyonline~1{returnPolicyId}/patch'
           request:
             mediaType: application/json
           response:
@@ -9973,17 +9671,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/settlementreports/{settlementId}
+            $ref: '#/paths/~1{merchantId}~1settlementreports~1{settlementId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/settlementreports
+            $ref: '#/paths/~1{merchantId}~1settlementreports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9994,9 +9688,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/settlementreports/{settlementId}/transactions
+            $ref: '#/paths/~1{merchantId}~1settlementreports~1{settlementId}~1transactions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10007,9 +9699,7 @@ components:
       methods:
         custombatch:
           operation:
-            $ref: post
-          path:
-            $ref: /shippingsettings/batch
+            $ref: '#/paths/~1shippingsettings~1batch/post'
           request:
             mediaType: application/json
           response:
@@ -10017,49 +9707,37 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/shippingsettings/{accountId}
+            $ref: '#/paths/~1{merchantId}~1shippingsettings~1{accountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getsupportedcarriers:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/supportedCarriers
+            $ref: '#/paths/~1{merchantId}~1supportedCarriers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getsupportedholidays:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/supportedHolidays
+            $ref: '#/paths/~1{merchantId}~1supportedHolidays/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getsupportedpickupservices:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/supportedPickupServices
+            $ref: '#/paths/~1{merchantId}~1supportedPickupServices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/shippingsettings
+            $ref: '#/paths/~1{merchantId}~1shippingsettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{merchantId}/shippingsettings/{accountId}
+            $ref: '#/paths/~1{merchantId}~1shippingsettings~1{accountId}/put'
           request:
             mediaType: application/json
           response:
@@ -10072,17 +9750,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{merchantId}/shoppingadsprogram
+            $ref: '#/paths/~1{merchantId}~1shoppingadsprogram/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         requestreview:
           operation:
-            $ref: post
-          path:
-            $ref: /{merchantId}/shoppingadsprogram/requestreview
+            $ref: '#/paths/~1{merchantId}~1shoppingadsprogram~1requestreview/post'
           request:
             mediaType: application/json
           response:

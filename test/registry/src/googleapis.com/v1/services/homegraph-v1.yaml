@@ -399,9 +399,7 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/agentUsers/{agentUsersId}
+            $ref: '#/paths/~1v1~1agentUsers~1{agentUsersId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -412,9 +410,7 @@ components:
       methods:
         query:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/devices:query
+            $ref: '#/paths/~1v1~1devices:query/post'
           request:
             mediaType: application/json
           response:
@@ -422,9 +418,7 @@ components:
             openAPIDocKey: '200'
         reportStateAndNotification:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/devices:reportStateAndNotification
+            $ref: '#/paths/~1v1~1devices:reportStateAndNotification/post'
           request:
             mediaType: application/json
           response:
@@ -432,9 +426,7 @@ components:
             openAPIDocKey: '200'
         requestSync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/devices:requestSync
+            $ref: '#/paths/~1v1~1devices:requestSync/post'
           request:
             mediaType: application/json
           response:
@@ -442,9 +434,7 @@ components:
             openAPIDocKey: '200'
         sync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/devices:sync
+            $ref: '#/paths/~1v1~1devices:sync/post'
           request:
             mediaType: application/json
           response:

@@ -417,9 +417,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts
+            $ref: '#/paths/~1v1~1accounts/post'
           request:
             mediaType: application/json
           response:
@@ -427,25 +425,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts
+            $ref: '#/paths/~1v1~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/accounts/{accountsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -458,9 +450,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/admins
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1admins/post'
           request:
             mediaType: application/json
           response:
@@ -468,25 +458,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/accounts/{accountsId}/admins/{adminsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1admins~1{adminsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/admins
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1admins/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/accounts/{accountsId}/admins/{adminsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1admins~1{adminsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -499,9 +483,7 @@ components:
       methods:
         accept:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/invitations/{invitationsId}:accept
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1invitations~1{invitationsId}:accept/post'
           request:
             mediaType: application/json
           response:
@@ -509,9 +491,7 @@ components:
             openAPIDocKey: '200'
         decline:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/invitations/{invitationsId}:decline
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1invitations~1{invitationsId}:decline/post'
           request:
             mediaType: application/json
           response:
@@ -519,9 +499,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/invitations
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1invitations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -532,9 +510,7 @@ components:
       methods:
         transfer:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}:transfer
+            $ref: '#/paths/~1v1~1locations~1{locationsId}:transfer/post'
           request:
             mediaType: application/json
           response:
@@ -547,9 +523,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/locations/{locationsId}/admins
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1admins/post'
           request:
             mediaType: application/json
           response:
@@ -557,25 +531,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/locations/{locationsId}/admins/{adminsId}
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1admins~1{adminsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/locations/{locationsId}/admins
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1admins/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/locations/{locationsId}/admins/{adminsId}
+            $ref: '#/paths/~1v1~1locations~1{locationsId}~1admins~1{adminsId}/patch'
           request:
             mediaType: application/json
           response:

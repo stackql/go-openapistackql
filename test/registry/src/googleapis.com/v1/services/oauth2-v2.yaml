@@ -146,9 +146,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /oauth2/v2/userinfo
+            $ref: '#/paths/~1oauth2~1v2~1userinfo/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -159,9 +157,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /userinfo/v2/me
+            $ref: '#/paths/~1userinfo~1v2~1me/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

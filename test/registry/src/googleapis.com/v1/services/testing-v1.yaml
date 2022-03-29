@@ -1580,9 +1580,7 @@ components:
       methods:
         getApkDetails:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/applicationDetailService/getApkDetails
+            $ref: '#/paths/~1v1~1applicationDetailService~1getApkDetails/post'
           request:
             mediaType: application/json
           response:
@@ -1595,17 +1593,13 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectId}/testMatrices/{testMatrixId}:cancel
+            $ref: '#/paths/~1v1~1projects~1{projectId}~1testMatrices~1{testMatrixId}:cancel/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectId}/testMatrices
+            $ref: '#/paths/~1v1~1projects~1{projectId}~1testMatrices/post'
           request:
             mediaType: application/json
           response:
@@ -1613,9 +1607,7 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectId}/testMatrices/{testMatrixId}
+            $ref: '#/paths/~1v1~1projects~1{projectId}~1testMatrices~1{testMatrixId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1626,9 +1618,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/testEnvironmentCatalog/{environmentType}
+            $ref: '#/paths/~1v1~1testEnvironmentCatalog~1{environmentType}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

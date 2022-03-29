@@ -223,7 +223,6 @@ func (nr *BestProjectionFirstStrategy) schemasToEmptyResourcesPass(t *openapi3.T
 
 func (nr *BestProjectionFirstStrategy) getOpStore(s EndpointDimensions) openapistackql.OperationStore {
 	opStore := openapistackql.OperationStore{
-		PathItemRef: &openapistackql.PathItemRef{Ref: s.PathUrl},
 		Request: &openapistackql.ExpectedRequest{
 			BodyMediaType: s.ResponseBody.MediaType,
 			Schema:        openapistackql.NewSchema(s.ResponseBody.BodySchema.Value, getSchemaName(s.ResponseBody.BodySchema)),

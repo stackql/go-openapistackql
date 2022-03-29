@@ -238,9 +238,7 @@ components:
       methods:
         executeCommand:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}:executeCommand
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}:executeCommand/post'
           request:
             mediaType: application/json
           response:
@@ -248,17 +246,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -269,17 +263,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/structures/{structuresId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1structures~1{structuresId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/structures
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1structures/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -290,17 +280,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/structures/{structuresId}/rooms/{roomsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1structures~1{structuresId}~1rooms~1{roomsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/structures/{structuresId}/rooms
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1structures~1{structuresId}~1rooms/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

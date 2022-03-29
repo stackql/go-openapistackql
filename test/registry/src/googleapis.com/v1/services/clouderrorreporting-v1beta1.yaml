@@ -434,9 +434,7 @@ components:
       methods:
         deleteEvents:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/events
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1events/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -447,17 +445,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/events
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1events/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         report:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/events:report
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1events:report/post'
           request:
             mediaType: application/json
           response:
@@ -470,9 +464,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/groupStats
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1groupStats/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -483,17 +475,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/groups/{groupsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1groups~1{groupsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1beta1/projects/{projectsId}/groups/{groupsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1groups~1{groupsId}/put'
           request:
             mediaType: application/json
           response:

@@ -246,9 +246,7 @@ components:
       methods:
         queryRecord:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/records:queryRecord
+            $ref: '#/paths/~1v1~1records:queryRecord/post'
           request:
             mediaType: application/json
           response:

@@ -537,9 +537,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/jwks
+            $ref: '#/paths/~1v1beta~1jwks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -550,9 +548,7 @@ components:
       methods:
         exchangeAppAttestAssertion:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAssertion
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeAppAttestAssertion/post'
           request:
             mediaType: application/json
           response:
@@ -560,9 +556,7 @@ components:
             openAPIDocKey: '200'
         exchangeAppAttestAttestation:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAttestation
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeAppAttestAttestation/post'
           request:
             mediaType: application/json
           response:
@@ -570,9 +564,7 @@ components:
             openAPIDocKey: '200'
         exchangeCustomToken:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeCustomToken
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeCustomToken/post'
           request:
             mediaType: application/json
           response:
@@ -580,9 +572,7 @@ components:
             openAPIDocKey: '200'
         exchangeDebugToken:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeDebugToken
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeDebugToken/post'
           request:
             mediaType: application/json
           response:
@@ -590,9 +580,7 @@ components:
             openAPIDocKey: '200'
         exchangeDeviceCheckToken:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeDeviceCheckToken
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeDeviceCheckToken/post'
           request:
             mediaType: application/json
           response:
@@ -600,9 +588,7 @@ components:
             openAPIDocKey: '200'
         exchangeRecaptchaToken:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaToken
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeRecaptchaToken/post'
           request:
             mediaType: application/json
           response:
@@ -610,9 +596,7 @@ components:
             openAPIDocKey: '200'
         exchangeSafetyNetToken:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:exchangeSafetyNetToken
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:exchangeSafetyNetToken/post'
           request:
             mediaType: application/json
           response:
@@ -620,9 +604,7 @@ components:
             openAPIDocKey: '200'
         generateAppAttestChallenge:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}:generateAppAttestChallenge
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}:generateAppAttestChallenge/post'
           request:
             mediaType: application/json
           response:
@@ -635,25 +617,19 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/-/appAttestConfig:batchGet
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1-~1appAttestConfig:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/appAttestConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1appAttestConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/appAttestConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1appAttestConfig/patch'
           request:
             mediaType: application/json
           response:
@@ -666,9 +642,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/debugTokens
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1debugTokens/post'
           request:
             mediaType: application/json
           response:
@@ -676,33 +650,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1debugTokens~1{debugTokensId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1debugTokens~1{debugTokensId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/debugTokens
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1debugTokens/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1debugTokens~1{debugTokensId}/patch'
           request:
             mediaType: application/json
           response:
@@ -715,25 +681,19 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/-/deviceCheckConfig:batchGet
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1-~1deviceCheckConfig:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/deviceCheckConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1deviceCheckConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/deviceCheckConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1deviceCheckConfig/patch'
           request:
             mediaType: application/json
           response:
@@ -746,25 +706,19 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/-/recaptchaConfig:batchGet
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1-~1recaptchaConfig:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1recaptchaConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1recaptchaConfig/patch'
           request:
             mediaType: application/json
           response:
@@ -777,17 +731,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1recaptchaEnterpriseConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1recaptchaEnterpriseConfig/patch'
           request:
             mediaType: application/json
           response:
@@ -800,25 +750,19 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/-/safetyNetConfig:batchGet
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1-~1safetyNetConfig:batchGet/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1safetyNetConfig/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1apps~1{appsId}~1safetyNetConfig/patch'
           request:
             mediaType: application/json
           response:
@@ -831,9 +775,7 @@ components:
       methods:
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/services:batchUpdate
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1services:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -841,25 +783,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/services/{servicesId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1services~1{servicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/services
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1services/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta/projects/{projectsId}/services/{servicesId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1services~1{servicesId}/patch'
           request:
             mediaType: application/json
           response:

@@ -211,9 +211,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/projects/{projectsId}/profiles
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1profiles/post'
           request:
             mediaType: application/json
           response:
@@ -221,9 +219,7 @@ components:
             openAPIDocKey: '200'
         createOffline:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/projects/{projectsId}/profiles:createOffline
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1profiles:createOffline/post'
           request:
             mediaType: application/json
           response:
@@ -231,9 +227,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v2/projects/{projectsId}/profiles/{profilesId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1profiles~1{profilesId}/patch'
           request:
             mediaType: application/json
           response:

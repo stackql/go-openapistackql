@@ -212,9 +212,7 @@ components:
       methods:
         addFirebase:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/buckets/{bucketsId}:addFirebase
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1buckets~1{bucketsId}:addFirebase/post'
           request:
             mediaType: application/json
           response:
@@ -222,25 +220,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/buckets/{bucketsId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1buckets~1{bucketsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/buckets
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1buckets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removeFirebase:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/buckets/{bucketsId}:removeFirebase
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1buckets~1{bucketsId}:removeFirebase/post'
           request:
             mediaType: application/json
           response:

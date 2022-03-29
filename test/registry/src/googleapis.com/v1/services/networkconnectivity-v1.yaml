@@ -736,17 +736,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -757,9 +753,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs/post'
           request:
             mediaType: application/json
           response:
@@ -767,41 +761,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs/{hubsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs~1{hubsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs/{hubsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs~1{hubsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs/{hubsId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs~1{hubsId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs/{hubsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs~1{hubsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -809,9 +793,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs/{hubsId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs~1{hubsId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -819,9 +801,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/hubs/{hubsId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1hubs~1{hubsId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -834,17 +814,13 @@ components:
       methods:
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1policyBasedRoutes~1{policyBasedRoutesId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1policyBasedRoutes~1{policyBasedRoutesId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -852,9 +828,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1global~1policyBasedRoutes~1{policyBasedRoutesId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -867,9 +841,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -877,25 +849,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/operations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -906,9 +872,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes/post'
           request:
             mediaType: application/json
           response:
@@ -916,41 +880,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes~1{spokesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes~1{spokesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes~1{spokesId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes~1{spokesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -958,9 +912,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes~1{spokesId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -968,9 +920,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/spokes/{spokesId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1spokes~1{spokesId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:

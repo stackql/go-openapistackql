@@ -441,9 +441,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/hashes:search
+            $ref: '#/paths/~1v1~1hashes:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -454,9 +452,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -464,25 +460,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/operations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -493,9 +483,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/submissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1submissions/post'
           request:
             mediaType: application/json
           response:
@@ -508,9 +496,7 @@ components:
       methods:
         submit:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/uris:submit
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1uris:submit/post'
           request:
             mediaType: application/json
           response:
@@ -523,9 +509,7 @@ components:
       methods:
         computeDiff:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/threatLists:computeDiff
+            $ref: '#/paths/~1v1~1threatLists:computeDiff/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -536,9 +520,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/uris:search
+            $ref: '#/paths/~1v1~1uris:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

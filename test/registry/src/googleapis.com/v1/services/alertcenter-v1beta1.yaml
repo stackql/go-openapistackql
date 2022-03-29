@@ -1046,9 +1046,7 @@ components:
       methods:
         batchDelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/alerts:batchDelete
+            $ref: '#/paths/~1v1beta1~1alerts:batchDelete/post'
           request:
             mediaType: application/json
           response:
@@ -1056,9 +1054,7 @@ components:
             openAPIDocKey: '200'
         batchUndelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/alerts:batchUndelete
+            $ref: '#/paths/~1v1beta1~1alerts:batchUndelete/post'
           request:
             mediaType: application/json
           response:
@@ -1066,41 +1062,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/alerts/{alertId}
+            $ref: '#/paths/~1v1beta1~1alerts~1{alertId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/alerts/{alertId}
+            $ref: '#/paths/~1v1beta1~1alerts~1{alertId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getMetadata:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/alerts/{alertId}/metadata
+            $ref: '#/paths/~1v1beta1~1alerts~1{alertId}~1metadata/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/alerts
+            $ref: '#/paths/~1v1beta1~1alerts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         undelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/alerts/{alertId}:undelete
+            $ref: '#/paths/~1v1beta1~1alerts~1{alertId}:undelete/post'
           request:
             mediaType: application/json
           response:
@@ -1113,9 +1099,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/alerts/{alertId}/feedback
+            $ref: '#/paths/~1v1beta1~1alerts~1{alertId}~1feedback/post'
           request:
             mediaType: application/json
           response:
@@ -1123,9 +1107,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/alerts/{alertId}/feedback
+            $ref: '#/paths/~1v1beta1~1alerts~1{alertId}~1feedback/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1136,17 +1118,13 @@ components:
       methods:
         getSettings:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/settings
+            $ref: '#/paths/~1v1beta1~1settings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateSettings:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/settings
+            $ref: '#/paths/~1v1beta1~1settings/patch'
           request:
             mediaType: application/json
           response:

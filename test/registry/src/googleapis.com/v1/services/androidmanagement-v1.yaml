@@ -2806,9 +2806,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises
+            $ref: '#/paths/~1v1~1enterprises/post'
           request:
             mediaType: application/json
           response:
@@ -2816,33 +2814,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/enterprises/{enterprisesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises
+            $ref: '#/paths/~1v1~1enterprises/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/enterprises/{enterprisesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2855,9 +2845,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/applications/{applicationsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1applications~1{applicationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2868,25 +2856,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         issueCommand:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}:issueCommand
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}:issueCommand/post'
           request:
             mediaType: application/json
           response:
@@ -2894,17 +2876,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2917,33 +2895,25 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}~1operations~1{operationsId}:cancel/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}/operations/{operationsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/devices/{devicesId}/operations
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1devices~1{devicesId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2954,9 +2924,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/enrollmentTokens
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1enrollmentTokens/post'
           request:
             mediaType: application/json
           response:
@@ -2964,9 +2932,7 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/enrollmentTokens/{enrollmentTokensId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1enrollmentTokens~1{enrollmentTokensId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2977,33 +2943,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/policies/{policiesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1policies~1{policiesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/policies/{policiesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1policies~1{policiesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/policies
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1policies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/policies/{policiesId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1policies~1{policiesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3016,9 +2974,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/webApps
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1webApps/post'
           request:
             mediaType: application/json
           response:
@@ -3026,33 +2982,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/webApps/{webAppsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1webApps~1{webAppsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/webApps/{webAppsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1webApps~1{webAppsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/webApps
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1webApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/webApps/{webAppsId}
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1webApps~1{webAppsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3065,9 +3013,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/enterprises/{enterprisesId}/webTokens
+            $ref: '#/paths/~1v1~1enterprises~1{enterprisesId}~1webTokens/post'
           request:
             mediaType: application/json
           response:
@@ -3080,9 +3026,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/signupUrls
+            $ref: '#/paths/~1v1~1signupUrls/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

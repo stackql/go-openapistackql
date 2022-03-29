@@ -358,9 +358,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/folders/{foldersId}/constraints
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1constraints/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -371,9 +369,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/folders/{foldersId}/policies
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1policies/post'
           request:
             mediaType: application/json
           response:
@@ -381,41 +377,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2/folders/{foldersId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1policies~1{policiesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/folders/{foldersId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1policies~1{policiesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getEffectivePolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/folders/{foldersId}/policies/{policiesId}:getEffectivePolicy
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1policies~1{policiesId}:getEffectivePolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/folders/{foldersId}/policies
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1policies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v2/folders/{foldersId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1folders~1{foldersId}~1policies~1{policiesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -428,9 +414,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/organizations/{organizationsId}/constraints
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1constraints/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -441,9 +425,7 @@ components:
       methods:
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v2/organizations/{organizationsId}/customConstraints/{customConstraintsId}
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1customConstraints~1{customConstraintsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -456,9 +438,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/organizations/{organizationsId}/policies
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1policies/post'
           request:
             mediaType: application/json
           response:
@@ -466,41 +446,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2/organizations/{organizationsId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1policies~1{policiesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/organizations/{organizationsId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1policies~1{policiesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getEffectivePolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/organizations/{organizationsId}/policies/{policiesId}:getEffectivePolicy
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1policies~1{policiesId}:getEffectivePolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/organizations/{organizationsId}/policies
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1policies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v2/organizations/{organizationsId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1organizations~1{organizationsId}~1policies~1{policiesId}/patch'
           request:
             mediaType: application/json
           response:
@@ -513,9 +483,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/constraints
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1constraints/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -526,9 +494,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/projects/{projectsId}/policies
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1policies/post'
           request:
             mediaType: application/json
           response:
@@ -536,41 +502,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2/projects/{projectsId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1policies~1{policiesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1policies~1{policiesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getEffectivePolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/policies/{policiesId}:getEffectivePolicy
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1policies~1{policiesId}:getEffectivePolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/policies
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1policies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v2/projects/{projectsId}/policies/{policiesId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1policies~1{policiesId}/patch'
           request:
             mediaType: application/json
           response:

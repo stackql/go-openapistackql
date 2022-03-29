@@ -1430,9 +1430,7 @@ components:
       methods:
         batchRunPivotReports:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/properties/{propertiesId}:batchRunPivotReports
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}:batchRunPivotReports/post'
           request:
             mediaType: application/json
           response:
@@ -1440,9 +1438,7 @@ components:
             openAPIDocKey: '200'
         batchRunReports:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/properties/{propertiesId}:batchRunReports
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}:batchRunReports/post'
           request:
             mediaType: application/json
           response:
@@ -1450,9 +1446,7 @@ components:
             openAPIDocKey: '200'
         checkCompatibility:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/properties/{propertiesId}:checkCompatibility
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}:checkCompatibility/post'
           request:
             mediaType: application/json
           response:
@@ -1460,17 +1454,13 @@ components:
             openAPIDocKey: '200'
         getMetadata:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/properties/{propertiesId}/metadata
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}~1metadata/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         runPivotReport:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/properties/{propertiesId}:runPivotReport
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}:runPivotReport/post'
           request:
             mediaType: application/json
           response:
@@ -1478,9 +1468,7 @@ components:
             openAPIDocKey: '200'
         runRealtimeReport:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/properties/{propertiesId}:runRealtimeReport
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}:runRealtimeReport/post'
           request:
             mediaType: application/json
           response:
@@ -1488,9 +1476,7 @@ components:
             openAPIDocKey: '200'
         runReport:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/properties/{propertiesId}:runReport
+            $ref: '#/paths/~1v1beta~1properties~1{propertiesId}:runReport/post'
           request:
             mediaType: application/json
           response:

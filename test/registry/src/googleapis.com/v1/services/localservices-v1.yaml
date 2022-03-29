@@ -357,9 +357,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accountReports:search
+            $ref: '#/paths/~1v1~1accountReports:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -370,9 +368,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/detailedLeadReports:search
+            $ref: '#/paths/~1v1~1detailedLeadReports:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

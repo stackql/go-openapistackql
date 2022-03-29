@@ -700,9 +700,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/billingAccounts
+            $ref: '#/paths/~1v1~1billingAccounts/post'
           request:
             mediaType: application/json
           response:
@@ -710,33 +708,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/billingAccounts/{billingAccountsId}
+            $ref: '#/paths/~1v1~1billingAccounts~1{billingAccountsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/billingAccounts/{billingAccountsId}:getIamPolicy
+            $ref: '#/paths/~1v1~1billingAccounts~1{billingAccountsId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/billingAccounts
+            $ref: '#/paths/~1v1~1billingAccounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/billingAccounts/{billingAccountsId}
+            $ref: '#/paths/~1v1~1billingAccounts~1{billingAccountsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -744,9 +734,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/billingAccounts/{billingAccountsId}:setIamPolicy
+            $ref: '#/paths/~1v1~1billingAccounts~1{billingAccountsId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -754,9 +742,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/billingAccounts/{billingAccountsId}:testIamPermissions
+            $ref: '#/paths/~1v1~1billingAccounts~1{billingAccountsId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -769,9 +755,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/billingAccounts/{billingAccountsId}/projects
+            $ref: '#/paths/~1v1~1billingAccounts~1{billingAccountsId}~1projects/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -782,17 +766,13 @@ components:
       methods:
         getBillingInfo:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/billingInfo
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1billingInfo/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateBillingInfo:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{projectsId}/billingInfo
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1billingInfo/put'
           request:
             mediaType: application/json
           response:
@@ -805,9 +785,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services
+            $ref: '#/paths/~1v1~1services/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -818,9 +796,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/services/{servicesId}/skus
+            $ref: '#/paths/~1v1~1services~1{servicesId}~1skus/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

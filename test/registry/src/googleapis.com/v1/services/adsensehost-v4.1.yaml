@@ -475,17 +475,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}
+            $ref: '#/paths/~1accounts~1{accountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts
+            $ref: '#/paths/~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -496,17 +492,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/adclients
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -517,33 +509,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits~1{adUnitId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits~1{adUnitId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getAdCode:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits~1{adUnitId}~1adcode/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits/post'
           request:
             mediaType: application/json
           response:
@@ -551,17 +535,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits/patch'
           request:
             mediaType: application/json
           response:
@@ -569,9 +549,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /accounts/{accountId}/adclients/{adClientId}/adunits
+            $ref: '#/paths/~1accounts~1{accountId}~1adclients~1{adClientId}~1adunits/put'
           request:
             mediaType: application/json
           response:
@@ -584,9 +562,7 @@ components:
       methods:
         generate:
           operation:
-            $ref: get
-          path:
-            $ref: /accounts/{accountId}/reports
+            $ref: '#/paths/~1accounts~1{accountId}~1reports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -597,17 +573,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /adclients/{adClientId}
+            $ref: '#/paths/~1adclients~1{adClientId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /adclients
+            $ref: '#/paths/~1adclients/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -618,17 +590,13 @@ components:
       methods:
         start:
           operation:
-            $ref: get
-          path:
-            $ref: /associationsessions/start
+            $ref: '#/paths/~1associationsessions~1start/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         verify:
           operation:
-            $ref: get
-          path:
-            $ref: /associationsessions/verify
+            $ref: '#/paths/~1associationsessions~1verify/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -639,25 +607,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /adclients/{adClientId}/customchannels/{customChannelId}
+            $ref: '#/paths/~1adclients~1{adClientId}~1customchannels~1{customChannelId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /adclients/{adClientId}/customchannels/{customChannelId}
+            $ref: '#/paths/~1adclients~1{adClientId}~1customchannels~1{customChannelId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /adclients/{adClientId}/customchannels
+            $ref: '#/paths/~1adclients~1{adClientId}~1customchannels/post'
           request:
             mediaType: application/json
           response:
@@ -665,17 +627,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /adclients/{adClientId}/customchannels
+            $ref: '#/paths/~1adclients~1{adClientId}~1customchannels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /adclients/{adClientId}/customchannels
+            $ref: '#/paths/~1adclients~1{adClientId}~1customchannels/patch'
           request:
             mediaType: application/json
           response:
@@ -683,9 +641,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /adclients/{adClientId}/customchannels
+            $ref: '#/paths/~1adclients~1{adClientId}~1customchannels/put'
           request:
             mediaType: application/json
           response:
@@ -698,9 +654,7 @@ components:
       methods:
         generate:
           operation:
-            $ref: get
-          path:
-            $ref: /reports
+            $ref: '#/paths/~1reports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -711,17 +665,13 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /adclients/{adClientId}/urlchannels/{urlChannelId}
+            $ref: '#/paths/~1adclients~1{adClientId}~1urlchannels~1{urlChannelId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /adclients/{adClientId}/urlchannels
+            $ref: '#/paths/~1adclients~1{adClientId}~1urlchannels/post'
           request:
             mediaType: application/json
           response:
@@ -729,9 +679,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /adclients/{adClientId}/urlchannels
+            $ref: '#/paths/~1adclients~1{adClientId}~1urlchannels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

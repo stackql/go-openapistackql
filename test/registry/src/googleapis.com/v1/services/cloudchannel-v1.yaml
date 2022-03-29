@@ -2022,9 +2022,7 @@ components:
       methods:
         checkCloudIdentityAccountsExist:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}:checkCloudIdentityAccountsExist
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}:checkCloudIdentityAccountsExist/post'
           request:
             mediaType: application/json
           response:
@@ -2032,17 +2030,13 @@ components:
             openAPIDocKey: '200'
         listSubscribers:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}:listSubscribers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}:listSubscribers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listTransferableOffers:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}:listTransferableOffers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}:listTransferableOffers/post'
           request:
             mediaType: application/json
           response:
@@ -2050,9 +2044,7 @@ components:
             openAPIDocKey: '200'
         listTransferableSkus:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}:listTransferableSkus
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}:listTransferableSkus/post'
           request:
             mediaType: application/json
           response:
@@ -2060,9 +2052,7 @@ components:
             openAPIDocKey: '200'
         register:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}:register
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}:register/post'
           request:
             mediaType: application/json
           response:
@@ -2070,9 +2060,7 @@ components:
             openAPIDocKey: '200'
         unregister:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}:unregister
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}:unregister/post'
           request:
             mediaType: application/json
           response:
@@ -2085,9 +2073,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks/post'
           request:
             mediaType: application/json
           response:
@@ -2095,25 +2081,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2126,9 +2106,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}~1customers/post'
           request:
             mediaType: application/json
           response:
@@ -2136,25 +2114,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}~1customers~1{customersId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}~1customers~1{customersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers:import
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}~1customers:import/post'
           request:
             mediaType: application/json
           response:
@@ -2162,17 +2134,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}~1customers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1channelPartnerLinks~1{channelPartnerLinksId}~1customers~1{customersId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2185,9 +2153,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers/post'
           request:
             mediaType: application/json
           response:
@@ -2195,25 +2161,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers:import
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers:import/post'
           request:
             mediaType: application/json
           response:
@@ -2221,33 +2181,25 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listPurchasableOffers:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}:listPurchasableOffers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}:listPurchasableOffers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listPurchasableSkus:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}:listPurchasableSkus
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}:listPurchasableSkus/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}/patch'
           request:
             mediaType: application/json
           response:
@@ -2255,9 +2207,7 @@ components:
             openAPIDocKey: '200'
         provisionCloudIdentity:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}:provisionCloudIdentity
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}:provisionCloudIdentity/post'
           request:
             mediaType: application/json
           response:
@@ -2265,9 +2215,7 @@ components:
             openAPIDocKey: '200'
         transferEntitlements:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}:transferEntitlements
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}:transferEntitlements/post'
           request:
             mediaType: application/json
           response:
@@ -2275,9 +2223,7 @@ components:
             openAPIDocKey: '200'
         transferEntitlementsToGoogle:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}:transferEntitlementsToGoogle
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}:transferEntitlementsToGoogle/post'
           request:
             mediaType: application/json
           response:
@@ -2290,9 +2236,7 @@ components:
       methods:
         activate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:activate
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:activate/post'
           request:
             mediaType: application/json
           response:
@@ -2300,9 +2244,7 @@ components:
             openAPIDocKey: '200'
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:cancel
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -2310,9 +2252,7 @@ components:
             openAPIDocKey: '200'
         changeOffer:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeOffer
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:changeOffer/post'
           request:
             mediaType: application/json
           response:
@@ -2320,9 +2260,7 @@ components:
             openAPIDocKey: '200'
         changeParameters:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeParameters
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:changeParameters/post'
           request:
             mediaType: application/json
           response:
@@ -2330,9 +2268,7 @@ components:
             openAPIDocKey: '200'
         changeRenewalSettings:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:changeRenewalSettings
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:changeRenewalSettings/post'
           request:
             mediaType: application/json
           response:
@@ -2340,9 +2276,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements/post'
           request:
             mediaType: application/json
           response:
@@ -2350,33 +2284,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         lookupOffer:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:lookupOffer
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:lookupOffer/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         startPaidService:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:startPaidService
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:startPaidService/post'
           request:
             mediaType: application/json
           response:
@@ -2384,9 +2310,7 @@ components:
             openAPIDocKey: '200'
         suspend:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:suspend
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1customers~1{customersId}~1entitlements~1{entitlementsId}:suspend/post'
           request:
             mediaType: application/json
           response:
@@ -2399,9 +2323,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/offers
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1offers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2412,9 +2334,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -2422,25 +2342,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations
+            $ref: '#/paths/~1v1~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2451,9 +2365,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/products
+            $ref: '#/paths/~1v1~1products/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2464,9 +2376,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/products/{productsId}/skus
+            $ref: '#/paths/~1v1~1products~1{productsId}~1skus/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

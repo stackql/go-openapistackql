@@ -174,25 +174,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1sku~1{skuId}~1user~1{userId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1sku~1{skuId}~1user~1{userId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/sku/{skuId}/user
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1sku~1{skuId}~1user/post'
           request:
             mediaType: application/json
           response:
@@ -200,25 +194,19 @@ components:
             openAPIDocKey: '200'
         listForProduct:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/users
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listForProductAndSku:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/sku/{skuId}/users
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1sku~1{skuId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1sku~1{skuId}~1user~1{userId}/patch'
           request:
             mediaType: application/json
           response:
@@ -226,9 +214,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}
+            $ref: '#/paths/~1apps~1licensing~1v1~1product~1{productId}~1sku~1{skuId}~1user~1{userId}/put'
           request:
             mediaType: application/json
           response:

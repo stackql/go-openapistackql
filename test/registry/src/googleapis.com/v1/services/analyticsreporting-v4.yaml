@@ -1383,9 +1383,7 @@ components:
       methods:
         batchGet:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/reports:batchGet
+            $ref: '#/paths/~1v4~1reports:batchGet/post'
           request:
             mediaType: application/json
           response:
@@ -1398,9 +1396,7 @@ components:
       methods:
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /v4/userActivity:search
+            $ref: '#/paths/~1v4~1userActivity:search/post'
           request:
             mediaType: application/json
           response:

@@ -668,9 +668,7 @@ components:
       methods:
         runpagespeed:
           operation:
-            $ref: get
-          path:
-            $ref: /pagespeedonline/v5/runPagespeed
+            $ref: '#/paths/~1pagespeedonline~1v5~1runPagespeed/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

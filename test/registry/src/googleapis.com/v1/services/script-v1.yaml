@@ -834,17 +834,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/processes
+            $ref: '#/paths/~1v1~1processes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listScriptProcesses:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/processes:listScriptProcesses
+            $ref: '#/paths/~1v1~1processes:listScriptProcesses/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -855,9 +851,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects
+            $ref: '#/paths/~1v1~1projects/post'
           request:
             mediaType: application/json
           response:
@@ -865,33 +859,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}
+            $ref: '#/paths/~1v1~1projects~1{scriptId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getContent:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}/content
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1content/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getMetrics:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}/metrics
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1metrics/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateContent:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{scriptId}/content
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1content/put'
           request:
             mediaType: application/json
           response:
@@ -904,9 +890,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{scriptId}/deployments
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1deployments/post'
           request:
             mediaType: application/json
           response:
@@ -914,33 +898,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{scriptId}/deployments/{deploymentId}
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1deployments~1{deploymentId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}/deployments/{deploymentId}
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1deployments~1{deploymentId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}/deployments
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1deployments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{scriptId}/deployments/{deploymentId}
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1deployments~1{deploymentId}/put'
           request:
             mediaType: application/json
           response:
@@ -953,9 +929,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{scriptId}/versions
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1versions/post'
           request:
             mediaType: application/json
           response:
@@ -963,17 +937,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}/versions/{versionNumber}
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1versions~1{versionNumber}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{scriptId}/versions
+            $ref: '#/paths/~1v1~1projects~1{scriptId}~1versions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -984,9 +954,7 @@ components:
       methods:
         run:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/scripts/{scriptId}:run
+            $ref: '#/paths/~1v1~1scripts~1{scriptId}:run/post'
           request:
             mediaType: application/json
           response:

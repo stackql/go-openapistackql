@@ -433,9 +433,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/factors/catalog
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1catalog/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -446,9 +444,7 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/factors/{factorId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1{factorId}~1lifecycle~1activate/POST'
           request:
             mediaType: application/json
           response:
@@ -456,24 +452,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/users/{userId}/factors/{factorId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1{factorId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/factors/{factorId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1{factorId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/factors
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors/POST'
           request:
             mediaType: application/json
           response:
@@ -481,17 +471,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/factors
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         verify:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/users/{userId}/factors/{factorId}/verify
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1{factorId}~1verify/POST'
           request:
             mediaType: application/json
           response:
@@ -504,9 +490,7 @@ components:
       methods:
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/factors/questions
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1questions/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -517,9 +501,7 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/users/{userId}/factors/{factorId}/transactions/{transactionId}
+            $ref: '#/paths/~1api~1v1~1users~1{userId}~1factors~1{factorId}~1transactions~1{transactionId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -913,9 +913,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /customsearch/v1
+            $ref: '#/paths/~1customsearch~1v1/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -926,9 +924,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /customsearch/v1/siterestrict
+            $ref: '#/paths/~1customsearch~1v1~1siterestrict/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

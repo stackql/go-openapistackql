@@ -82,17 +82,13 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/mappings/{mappingId}
+            $ref: '#/paths/~1api~1v1~1mappings~1{mappingId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/mappings/{mappingId}
+            $ref: '#/paths/~1api~1v1~1mappings~1{mappingId}/POST'
           request:
             mediaType: application/json
           response:
@@ -100,9 +96,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/mappings
+            $ref: '#/paths/~1api~1v1~1mappings/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

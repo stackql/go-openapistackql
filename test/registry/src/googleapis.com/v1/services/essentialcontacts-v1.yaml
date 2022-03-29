@@ -216,17 +216,13 @@ components:
       methods:
         compute:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/contacts:compute
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts:compute/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/folders/{foldersId}/contacts
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts/post'
           request:
             mediaType: application/json
           response:
@@ -234,33 +230,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/folders/{foldersId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts~1{contactsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts~1{contactsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/contacts
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/folders/{foldersId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts~1{contactsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -268,9 +256,7 @@ components:
             openAPIDocKey: '200'
         sendTestMessage:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/folders/{foldersId}/contacts:sendTestMessage
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1contacts:sendTestMessage/post'
           request:
             mediaType: application/json
           response:
@@ -283,17 +269,13 @@ components:
       methods:
         compute:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts:compute
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts:compute/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts/post'
           request:
             mediaType: application/json
           response:
@@ -301,33 +283,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts~1{contactsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts~1{contactsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts~1{contactsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -335,9 +309,7 @@ components:
             openAPIDocKey: '200'
         sendTestMessage:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/organizations/{organizationsId}/contacts:sendTestMessage
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1contacts:sendTestMessage/post'
           request:
             mediaType: application/json
           response:
@@ -350,17 +322,13 @@ components:
       methods:
         compute:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/contacts:compute
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts:compute/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/contacts
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts/post'
           request:
             mediaType: application/json
           response:
@@ -368,33 +336,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts~1{contactsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts~1{contactsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/contacts
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/contacts/{contactsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts~1{contactsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -402,9 +362,7 @@ components:
             openAPIDocKey: '200'
         sendTestMessage:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/contacts:sendTestMessage
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1contacts:sendTestMessage/post'
           request:
             mediaType: application/json
           response:

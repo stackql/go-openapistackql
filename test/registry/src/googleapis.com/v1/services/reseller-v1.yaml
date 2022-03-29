@@ -518,17 +518,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers/post'
           request:
             mediaType: application/json
           response:
@@ -536,9 +532,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}/patch'
           request:
             mediaType: application/json
           response:
@@ -546,9 +540,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}/put'
           request:
             mediaType: application/json
           response:
@@ -561,25 +553,19 @@ components:
       methods:
         getwatchdetails:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/reseller/v1/resellernotify/getwatchdetails
+            $ref: '#/paths/~1apps~1reseller~1v1~1resellernotify~1getwatchdetails/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         register:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/resellernotify/register
+            $ref: '#/paths/~1apps~1reseller~1v1~1resellernotify~1register/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         unregister:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/resellernotify/unregister
+            $ref: '#/paths/~1apps~1reseller~1v1~1resellernotify~1unregister/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -590,17 +576,13 @@ components:
       methods:
         activate:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}~1activate/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         changePlan:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}~1changePlan/post'
           request:
             mediaType: application/json
           response:
@@ -608,9 +590,7 @@ components:
             openAPIDocKey: '200'
         changeRenewalSettings:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}~1changeRenewalSettings/post'
           request:
             mediaType: application/json
           response:
@@ -618,9 +598,7 @@ components:
             openAPIDocKey: '200'
         changeSeats:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}~1changeSeats/post'
           request:
             mediaType: application/json
           response:
@@ -628,24 +606,18 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions/post'
           request:
             mediaType: application/json
           response:
@@ -653,25 +625,19 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /apps/reseller/v1/subscriptions
+            $ref: '#/paths/~1apps~1reseller~1v1~1subscriptions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         startPaidService:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}~1startPaidService/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         suspend:
           operation:
-            $ref: post
-          path:
-            $ref: /apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend
+            $ref: '#/paths/~1apps~1reseller~1v1~1customers~1{customerId}~1subscriptions~1{subscriptionId}~1suspend/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

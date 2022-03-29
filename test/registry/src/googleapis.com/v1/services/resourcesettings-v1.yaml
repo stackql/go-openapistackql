@@ -237,25 +237,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/settings/{settingsId}
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1settings~1{settingsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/folders/{foldersId}/settings
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1settings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/folders/{foldersId}/settings/{settingsId}
+            $ref: '#/paths/~1v1~1folders~1{foldersId}~1settings~1{settingsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -268,25 +262,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/settings/{settingsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1settings~1{settingsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/organizations/{organizationsId}/settings
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1settings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/organizations/{organizationsId}/settings/{settingsId}
+            $ref: '#/paths/~1v1~1organizations~1{organizationsId}~1settings~1{settingsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -299,25 +287,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/settings/{settingsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1settings~1{settingsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/settings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1settings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/settings/{settingsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1settings~1{settingsId}/patch'
           request:
             mediaType: application/json
           response:

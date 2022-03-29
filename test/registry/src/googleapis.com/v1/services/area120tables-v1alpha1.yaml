@@ -426,17 +426,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/tables/{tablesId}
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/tables
+            $ref: '#/paths/~1v1alpha1~1tables/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -447,9 +443,7 @@ components:
       methods:
         batchCreate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows:batchCreate
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows:batchCreate/post'
           request:
             mediaType: application/json
           response:
@@ -457,9 +451,7 @@ components:
             openAPIDocKey: '200'
         batchDelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows:batchDelete
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows:batchDelete/post'
           request:
             mediaType: application/json
           response:
@@ -467,9 +459,7 @@ components:
             openAPIDocKey: '200'
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows:batchUpdate
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -477,9 +467,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows/post'
           request:
             mediaType: application/json
           response:
@@ -487,33 +475,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows/{rowsId}
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows~1{rowsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows/{rowsId}
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows~1{rowsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1alpha1/tables/{tablesId}/rows/{rowsId}
+            $ref: '#/paths/~1v1alpha1~1tables~1{tablesId}~1rows~1{rowsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -526,17 +506,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/workspaces/{workspacesId}
+            $ref: '#/paths/~1v1alpha1~1workspaces~1{workspacesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/workspaces
+            $ref: '#/paths/~1v1alpha1~1workspaces/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

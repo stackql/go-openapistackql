@@ -3228,9 +3228,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/annotationSpecSets
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1annotationSpecSets/post'
           request:
             mediaType: application/json
           response:
@@ -3238,25 +3236,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/annotationSpecSets/{annotationSpecSetsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1annotationSpecSets~1{annotationSpecSetsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/annotationSpecSets/{annotationSpecSetsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1annotationSpecSets~1{annotationSpecSetsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/annotationSpecSets
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1annotationSpecSets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3267,9 +3259,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets/post'
           request:
             mediaType: application/json
           response:
@@ -3277,17 +3267,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         exportData:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}:exportData
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}:exportData/post'
           request:
             mediaType: application/json
           response:
@@ -3295,17 +3281,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         importData:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}:importData
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}:importData/post'
           request:
             mediaType: application/json
           response:
@@ -3313,9 +3295,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3326,25 +3306,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3355,17 +3329,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/dataItems/{dataItemsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1dataItems~1{dataItemsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/dataItems
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1dataItems/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3376,17 +3346,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/examples/{examplesId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1examples~1{examplesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/examples
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1examples/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3397,25 +3363,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads~1{feedbackThreadsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads~1{feedbackThreadsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3426,9 +3386,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads~1{feedbackThreadsId}~1feedbackMessages/post'
           request:
             mediaType: application/json
           response:
@@ -3436,25 +3394,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages/{feedbackMessagesId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads~1{feedbackThreadsId}~1feedbackMessages~1{feedbackMessagesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages/{feedbackMessagesId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads~1{feedbackThreadsId}~1feedbackMessages~1{feedbackMessagesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/annotatedDatasets/{annotatedDatasetsId}/feedbackThreads/{feedbackThreadsId}/feedbackMessages
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1annotatedDatasets~1{annotatedDatasetsId}~1feedbackThreads~1{feedbackThreadsId}~1feedbackMessages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3465,17 +3417,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/dataItems/{dataItemsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1dataItems~1{dataItemsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/dataItems
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1dataItems/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3486,9 +3434,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/evaluations/{evaluationsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1evaluations~1{evaluationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3499,9 +3445,7 @@ components:
       methods:
         search:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/evaluations/{evaluationsId}/exampleComparisons:search
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1evaluations~1{evaluationsId}~1exampleComparisons:search/post'
           request:
             mediaType: application/json
           response:
@@ -3514,9 +3458,7 @@ components:
       methods:
         label:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/image:label
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1image:label/post'
           request:
             mediaType: application/json
           response:
@@ -3529,9 +3471,7 @@ components:
       methods:
         label:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/text:label
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1text:label/post'
           request:
             mediaType: application/json
           response:
@@ -3544,9 +3484,7 @@ components:
       methods:
         label:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/datasets/{datasetsId}/video:label
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1datasets~1{datasetsId}~1video:label/post'
           request:
             mediaType: application/json
           response:
@@ -3559,9 +3497,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs/post'
           request:
             mediaType: application/json
           response:
@@ -3569,33 +3505,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs~1{evaluationJobsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs~1{evaluationJobsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs~1{evaluationJobsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -3603,9 +3531,7 @@ components:
             openAPIDocKey: '200'
         pause:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}:pause
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs~1{evaluationJobsId}:pause/post'
           request:
             mediaType: application/json
           response:
@@ -3613,9 +3539,7 @@ components:
             openAPIDocKey: '200'
         resume:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluationJobs/{evaluationJobsId}:resume
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluationJobs~1{evaluationJobsId}:resume/post'
           request:
             mediaType: application/json
           response:
@@ -3628,9 +3552,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/evaluations:search
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1evaluations:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3641,9 +3563,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta1/projects/{projectsId}/instructions
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1instructions/post'
           request:
             mediaType: application/json
           response:
@@ -3651,25 +3571,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/instructions/{instructionsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1instructions~1{instructionsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/instructions/{instructionsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1instructions~1{instructionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/instructions
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1instructions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3680,33 +3594,25 @@ components:
       methods:
         cancel:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1operations~1{operationsId}:cancel/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta1/projects/{projectsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/operations/{operationsId}
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta1/projects/{projectsId}/operations
+            $ref: '#/paths/~1v1beta1~1projects~1{projectsId}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

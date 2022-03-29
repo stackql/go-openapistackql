@@ -176,9 +176,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/locations/{locationsId}/instances
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1locations~1{locationsId}~1instances/post'
           request:
             mediaType: application/json
           response:
@@ -186,17 +184,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1locations~1{locationsId}~1instances~1{instancesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         disable:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:disable
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1locations~1{locationsId}~1instances~1{instancesId}:disable/post'
           request:
             mediaType: application/json
           response:
@@ -204,25 +198,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1locations~1{locationsId}~1instances~1{instancesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1beta/projects/{projectsId}/locations/{locationsId}/instances
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1locations~1{locationsId}~1instances/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         reenable:
           operation:
-            $ref: post
-          path:
-            $ref: /v1beta/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:reenable
+            $ref: '#/paths/~1v1beta~1projects~1{projectsId}~1locations~1{locationsId}~1instances~1{instancesId}:reenable/post'
           request:
             mediaType: application/json
           response:

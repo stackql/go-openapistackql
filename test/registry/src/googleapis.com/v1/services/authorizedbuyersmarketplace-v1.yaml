@@ -1447,9 +1447,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/bidders/{biddersId}/finalizedDeals
+            $ref: '#/paths/~1v1~1bidders~1{biddersId}~1finalizedDeals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1460,25 +1458,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/auctionPackages/{auctionPackagesId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1auctionPackages~1{auctionPackagesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/auctionPackages
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1auctionPackages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         subscribe:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/auctionPackages/{auctionPackagesId}:subscribe
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1auctionPackages~1{auctionPackagesId}:subscribe/post'
           request:
             mediaType: application/json
           response:
@@ -1486,9 +1478,7 @@ components:
             openAPIDocKey: '200'
         subscribeClients:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/auctionPackages/{auctionPackagesId}:subscribeClients
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1auctionPackages~1{auctionPackagesId}:subscribeClients/post'
           request:
             mediaType: application/json
           response:
@@ -1496,9 +1486,7 @@ components:
             openAPIDocKey: '200'
         unsubscribe:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/auctionPackages/{auctionPackagesId}:unsubscribe
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1auctionPackages~1{auctionPackagesId}:unsubscribe/post'
           request:
             mediaType: application/json
           response:
@@ -1506,9 +1494,7 @@ components:
             openAPIDocKey: '200'
         unsubscribeClients:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/auctionPackages/{auctionPackagesId}:unsubscribeClients
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1auctionPackages~1{auctionPackagesId}:unsubscribeClients/post'
           request:
             mediaType: application/json
           response:
@@ -1521,9 +1507,7 @@ components:
       methods:
         activate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}:activate
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}:activate/post'
           request:
             mediaType: application/json
           response:
@@ -1531,9 +1515,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/clients
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients/post'
           request:
             mediaType: application/json
           response:
@@ -1541,9 +1523,7 @@ components:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}:deactivate
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}:deactivate/post'
           request:
             mediaType: application/json
           response:
@@ -1551,25 +1531,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/clients
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1582,9 +1556,7 @@ components:
       methods:
         activate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}/users/{usersId}:activate
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}~1users~1{usersId}:activate/post'
           request:
             mediaType: application/json
           response:
@@ -1592,9 +1564,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}/users
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}~1users/post'
           request:
             mediaType: application/json
           response:
@@ -1602,9 +1572,7 @@ components:
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}/users/{usersId}:deactivate
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}~1users~1{usersId}:deactivate/post'
           request:
             mediaType: application/json
           response:
@@ -1612,25 +1580,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}/users/{usersId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}~1users~1{usersId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}/users/{usersId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}~1users~1{usersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/clients/{clientsId}/users
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1clients~1{clientsId}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1641,9 +1603,7 @@ components:
       methods:
         addCreative:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/finalizedDeals/{finalizedDealsId}:addCreative
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1finalizedDeals~1{finalizedDealsId}:addCreative/post'
           request:
             mediaType: application/json
           response:
@@ -1651,25 +1611,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/finalizedDeals/{finalizedDealsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1finalizedDeals~1{finalizedDealsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/finalizedDeals
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1finalizedDeals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         pause:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/finalizedDeals/{finalizedDealsId}:pause
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1finalizedDeals~1{finalizedDealsId}:pause/post'
           request:
             mediaType: application/json
           response:
@@ -1677,9 +1631,7 @@ components:
             openAPIDocKey: '200'
         resume:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/finalizedDeals/{finalizedDealsId}:resume
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1finalizedDeals~1{finalizedDealsId}:resume/post'
           request:
             mediaType: application/json
           response:
@@ -1687,9 +1639,7 @@ components:
             openAPIDocKey: '200'
         setReadyToServe:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/finalizedDeals/{finalizedDealsId}:setReadyToServe
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1finalizedDeals~1{finalizedDealsId}:setReadyToServe/post'
           request:
             mediaType: application/json
           response:
@@ -1702,9 +1652,7 @@ components:
       methods:
         accept:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}:accept
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}:accept/post'
           request:
             mediaType: application/json
           response:
@@ -1712,9 +1660,7 @@ components:
             openAPIDocKey: '200'
         addNote:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}:addNote
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}:addNote/post'
           request:
             mediaType: application/json
           response:
@@ -1722,9 +1668,7 @@ components:
             openAPIDocKey: '200'
         cancelNegotiation:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}:cancelNegotiation
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}:cancelNegotiation/post'
           request:
             mediaType: application/json
           response:
@@ -1732,25 +1676,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1758,9 +1696,7 @@ components:
             openAPIDocKey: '200'
         sendRfp:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals:sendRfp
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals:sendRfp/post'
           request:
             mediaType: application/json
           response:
@@ -1773,9 +1709,7 @@ components:
       methods:
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}/deals:batchUpdate
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}~1deals:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -1783,25 +1717,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}/deals/{dealsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}~1deals~1{dealsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}/deals
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}~1deals/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/buyers/{buyersId}/proposals/{proposalsId}/deals/{dealsId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1proposals~1{proposalsId}~1deals~1{dealsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1814,17 +1742,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/publisherProfiles/{publisherProfilesId}
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1publisherProfiles~1{publisherProfilesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/buyers/{buyersId}/publisherProfiles
+            $ref: '#/paths/~1v1~1buyers~1{buyersId}~1publisherProfiles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

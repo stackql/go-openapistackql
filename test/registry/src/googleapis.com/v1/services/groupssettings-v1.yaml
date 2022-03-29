@@ -482,17 +482,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /{groupUniqueId}
+            $ref: '#/paths/~1{groupUniqueId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /{groupUniqueId}
+            $ref: '#/paths/~1{groupUniqueId}/patch'
           request:
             mediaType: application/json
           response:
@@ -500,9 +496,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /{groupUniqueId}
+            $ref: '#/paths/~1{groupUniqueId}/put'
           request:
             mediaType: application/json
           response:

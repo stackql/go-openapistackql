@@ -984,9 +984,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/googleServiceAccounts/{projectId}
+            $ref: '#/paths/~1v1~1googleServiceAccounts~1{projectId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -997,9 +995,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/agentPools
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1agentPools/post'
           request:
             mediaType: application/json
           response:
@@ -1007,33 +1003,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/agentPools/{agentPoolsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1agentPools~1{agentPoolsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/agentPools/{agentPoolsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1agentPools~1{agentPoolsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/agentPools
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1agentPools/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/agentPools/{agentPoolsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1agentPools~1{agentPoolsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1046,9 +1034,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/transferJobs
+            $ref: '#/paths/~1v1~1transferJobs/post'
           request:
             mediaType: application/json
           response:
@@ -1056,25 +1042,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/transferJobs/{transferJobsId}
+            $ref: '#/paths/~1v1~1transferJobs~1{transferJobsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/transferJobs
+            $ref: '#/paths/~1v1~1transferJobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/transferJobs/{transferJobsId}
+            $ref: '#/paths/~1v1~1transferJobs~1{transferJobsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1082,9 +1062,7 @@ components:
             openAPIDocKey: '200'
         run:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/transferJobs/{transferJobsId}:run
+            $ref: '#/paths/~1v1~1transferJobs~1{transferJobsId}:run/post'
           request:
             mediaType: application/json
           response:
@@ -1097,9 +1075,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/transferOperations/{transferOperationsId}:cancel
+            $ref: '#/paths/~1v1~1transferOperations~1{transferOperationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -1107,25 +1083,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/transferOperations/{transferOperationsId}
+            $ref: '#/paths/~1v1~1transferOperations~1{transferOperationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/transferOperations
+            $ref: '#/paths/~1v1~1transferOperations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         pause:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/transferOperations/{transferOperationsId}:pause
+            $ref: '#/paths/~1v1~1transferOperations~1{transferOperationsId}:pause/post'
           request:
             mediaType: application/json
           response:
@@ -1133,9 +1103,7 @@ components:
             openAPIDocKey: '200'
         resume:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/transferOperations/{transferOperationsId}:resume
+            $ref: '#/paths/~1v1~1transferOperations~1{transferOperationsId}:resume/post'
           request:
             mediaType: application/json
           response:

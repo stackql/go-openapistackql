@@ -8549,9 +8549,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountActiveAdSummaries~1{summaryAccountId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8562,17 +8560,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountPermissionGroups~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountPermissionGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountPermissionGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8583,17 +8577,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountPermissions/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountPermissions~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountPermissions
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountPermissions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8604,17 +8594,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountUserProfiles~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountUserProfiles/post'
           request:
             mediaType: application/json
           response:
@@ -8622,17 +8608,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountUserProfiles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountUserProfiles/patch'
           request:
             mediaType: application/json
           response:
@@ -8640,9 +8622,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accountUserProfiles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accountUserProfiles/put'
           request:
             mediaType: application/json
           response:
@@ -8655,25 +8635,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accounts/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accounts~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accounts/patch'
           request:
             mediaType: application/json
           response:
@@ -8681,9 +8655,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/accounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1accounts/put'
           request:
             mediaType: application/json
           response:
@@ -8696,17 +8668,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/ads/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1ads~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/ads
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1ads/post'
           request:
             mediaType: application/json
           response:
@@ -8714,17 +8682,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/ads
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1ads/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/ads
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1ads/patch'
           request:
             mediaType: application/json
           response:
@@ -8732,9 +8696,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/ads
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1ads/put'
           request:
             mediaType: application/json
           response:
@@ -8747,24 +8709,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserGroups~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserGroups~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserGroups/post'
           request:
             mediaType: application/json
           response:
@@ -8772,17 +8728,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserGroups/patch'
           request:
             mediaType: application/json
           response:
@@ -8790,9 +8742,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserGroups/put'
           request:
             mediaType: application/json
           response:
@@ -8805,17 +8755,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserLandingPages~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserLandingPages/post'
           request:
             mediaType: application/json
           response:
@@ -8823,17 +8769,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserLandingPages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserLandingPages/patch'
           request:
             mediaType: application/json
           response:
@@ -8841,9 +8783,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertiserLandingPages
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertiserLandingPages/put'
           request:
             mediaType: application/json
           response:
@@ -8856,17 +8796,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertisers/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertisers~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertisers
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertisers/post'
           request:
             mediaType: application/json
           response:
@@ -8874,17 +8810,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertisers
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertisers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertisers
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertisers/patch'
           request:
             mediaType: application/json
           response:
@@ -8892,9 +8824,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/advertisers
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1advertisers/put'
           request:
             mediaType: application/json
           response:
@@ -8907,9 +8837,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/browsers
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1browsers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8920,9 +8848,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns~1{campaignId}~1campaignCreativeAssociations/post'
           request:
             mediaType: application/json
           response:
@@ -8930,9 +8856,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns~1{campaignId}~1campaignCreativeAssociations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -8943,17 +8867,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns/post'
           request:
             mediaType: application/json
           response:
@@ -8961,17 +8881,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns/patch'
           request:
             mediaType: application/json
           response:
@@ -8979,9 +8895,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/campaigns
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1campaigns/put'
           request:
             mediaType: application/json
           response:
@@ -8994,17 +8908,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/changeLogs/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1changeLogs~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/changeLogs
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1changeLogs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9015,9 +8925,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/cities
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1cities/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9028,17 +8936,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/connectionTypes/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1connectionTypes~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/connectionTypes
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1connectionTypes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9049,24 +8953,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1contentCategories~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/contentCategories/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1contentCategories~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/contentCategories
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1contentCategories/post'
           request:
             mediaType: application/json
           response:
@@ -9074,17 +8972,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/contentCategories
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1contentCategories/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/contentCategories
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1contentCategories/patch'
           request:
             mediaType: application/json
           response:
@@ -9092,9 +8986,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/contentCategories
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1contentCategories/put'
           request:
             mediaType: application/json
           response:
@@ -9107,9 +8999,7 @@ components:
       methods:
         batchinsert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/conversions/batchinsert
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1conversions~1batchinsert/post'
           request:
             mediaType: application/json
           response:
@@ -9117,9 +9007,7 @@ components:
             openAPIDocKey: '200'
         batchupdate:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/conversions/batchupdate
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1conversions~1batchupdate/post'
           request:
             mediaType: application/json
           response:
@@ -9132,17 +9020,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/countries/{dartId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1countries~1{dartId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/countries
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1countries/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9153,9 +9037,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeAssets~1{advertiserId}~1creativeAssets/post'
           request:
             mediaType: application/octet-stream
           response:
@@ -9168,24 +9050,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{creativeFieldId}~1creativeFieldValues~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{creativeFieldId}~1creativeFieldValues~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{creativeFieldId}~1creativeFieldValues/post'
           request:
             mediaType: application/json
           response:
@@ -9193,17 +9069,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{creativeFieldId}~1creativeFieldValues/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{creativeFieldId}~1creativeFieldValues/patch'
           request:
             mediaType: application/json
           response:
@@ -9211,9 +9083,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{creativeFieldId}~1creativeFieldValues/put'
           request:
             mediaType: application/json
           response:
@@ -9226,24 +9096,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields/post'
           request:
             mediaType: application/json
           response:
@@ -9251,17 +9115,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields/patch'
           request:
             mediaType: application/json
           response:
@@ -9269,9 +9129,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeFields
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeFields/put'
           request:
             mediaType: application/json
           response:
@@ -9284,17 +9142,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeGroups~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeGroups/post'
           request:
             mediaType: application/json
           response:
@@ -9302,17 +9156,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeGroups/patch'
           request:
             mediaType: application/json
           response:
@@ -9320,9 +9170,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creativeGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creativeGroups/put'
           request:
             mediaType: application/json
           response:
@@ -9335,17 +9183,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creatives/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creatives~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creatives
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creatives/post'
           request:
             mediaType: application/json
           response:
@@ -9353,17 +9197,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creatives
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creatives/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creatives
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creatives/patch'
           request:
             mediaType: application/json
           response:
@@ -9371,9 +9211,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/creatives
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1creatives/put'
           request:
             mediaType: application/json
           response:
@@ -9386,9 +9224,7 @@ components:
       methods:
         query:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/dimensionvalues/query
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1dimensionvalues~1query/post'
           request:
             mediaType: application/json
           response:
@@ -9401,17 +9237,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/directorySites/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1directorySites~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/directorySites
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1directorySites/post'
           request:
             mediaType: application/json
           response:
@@ -9419,9 +9251,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/directorySites
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1directorySites/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9432,16 +9262,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys/{objectId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1dynamicTargetingKeys~1{objectId}/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1dynamicTargetingKeys/post'
           request:
             mediaType: application/json
           response:
@@ -9449,9 +9275,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/dynamicTargetingKeys
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1dynamicTargetingKeys/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9462,24 +9286,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1eventTags~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/eventTags/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1eventTags~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/eventTags
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1eventTags/post'
           request:
             mediaType: application/json
           response:
@@ -9487,17 +9305,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/eventTags
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1eventTags/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/eventTags
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1eventTags/patch'
           request:
             mediaType: application/json
           response:
@@ -9505,9 +9319,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/eventTags
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1eventTags/put'
           request:
             mediaType: application/json
           response:
@@ -9520,17 +9332,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/reports/{reportId}/files/{fileId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1reports~1{reportId}~1files~1{fileId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/files
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1files/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9541,32 +9349,24 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities~1{id}/delete'
           response:
             openAPIDocKey: '200'
         generatetag:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/generatetag
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities~1generatetag/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities/post'
           request:
             mediaType: application/json
           response:
@@ -9574,17 +9374,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities/patch'
           request:
             mediaType: application/json
           response:
@@ -9592,9 +9388,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivities
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivities/put'
           request:
             mediaType: application/json
           response:
@@ -9607,17 +9401,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivityGroups~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivityGroups/post'
           request:
             mediaType: application/json
           response:
@@ -9625,17 +9415,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivityGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivityGroups/patch'
           request:
             mediaType: application/json
           response:
@@ -9643,9 +9429,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightActivityGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightActivityGroups/put'
           request:
             mediaType: application/json
           response:
@@ -9658,25 +9442,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightConfigurations~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightConfigurations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightConfigurations/patch'
           request:
             mediaType: application/json
           response:
@@ -9684,9 +9462,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/floodlightConfigurations
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1floodlightConfigurations/put'
           request:
             mediaType: application/json
           response:
@@ -9699,17 +9475,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{projectId}~1inventoryItems~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/inventoryItems
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{projectId}~1inventoryItems/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9720,9 +9492,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/languages
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1languages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9733,9 +9503,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/metros
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1metros/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9746,17 +9514,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/mobileApps/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1mobileApps~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/mobileApps
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1mobileApps/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9767,17 +9531,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1mobileCarriers~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/mobileCarriers
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1mobileCarriers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9788,17 +9548,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1operatingSystemVersions~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/operatingSystemVersions
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1operatingSystemVersions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9809,17 +9565,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/operatingSystems/{dartId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1operatingSystems~1{dartId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/operatingSystems
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1operatingSystems/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9830,17 +9582,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{projectId}~1orderDocuments~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orderDocuments
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{projectId}~1orderDocuments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9851,17 +9599,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{projectId}~1orders~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{projectId}/orders
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{projectId}~1orders/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -9872,17 +9616,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementGroups~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementGroups/post'
           request:
             mediaType: application/json
           response:
@@ -9890,17 +9630,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementGroups/patch'
           request:
             mediaType: application/json
           response:
@@ -9908,9 +9644,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementGroups/put'
           request:
             mediaType: application/json
           response:
@@ -9923,24 +9657,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementStrategies~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementStrategies/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementStrategies~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementStrategies
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementStrategies/post'
           request:
             mediaType: application/json
           response:
@@ -9948,17 +9676,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementStrategies
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementStrategies/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementStrategies
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementStrategies/patch'
           request:
             mediaType: application/json
           response:
@@ -9966,9 +9690,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placementStrategies
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placementStrategies/put'
           request:
             mediaType: application/json
           response:
@@ -9981,25 +9703,19 @@ components:
       methods:
         generatetags:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placements/generatetags
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placements~1generatetags/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placements/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placements~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placements
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placements/post'
           request:
             mediaType: application/json
           response:
@@ -10007,17 +9723,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placements
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placements/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placements
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placements/patch'
           request:
             mediaType: application/json
           response:
@@ -10025,9 +9737,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/placements
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1placements/put'
           request:
             mediaType: application/json
           response:
@@ -10040,17 +9750,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/platformTypes/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1platformTypes~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/platformTypes
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1platformTypes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10061,17 +9767,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/postalCodes/{code}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1postalCodes~1{code}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/postalCodes
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1postalCodes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10082,17 +9784,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/projects
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1projects/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10103,9 +9801,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/regions
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1regions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10116,17 +9812,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares/{remarketingListId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingListShares~1{remarketingListId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingListShares/patch'
           request:
             mediaType: application/json
           response:
@@ -10134,9 +9826,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingListShares
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingListShares/put'
           request:
             mediaType: application/json
           response:
@@ -10149,17 +9839,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingLists/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingLists~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingLists
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingLists/post'
           request:
             mediaType: application/json
           response:
@@ -10167,17 +9853,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingLists
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingLists/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingLists
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingLists/patch'
           request:
             mediaType: application/json
           response:
@@ -10185,9 +9867,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/remarketingLists
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1remarketingLists/put'
           request:
             mediaType: application/json
           response:
@@ -10200,24 +9880,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports/post'
           request:
             mediaType: application/json
           response:
@@ -10225,17 +9899,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}/patch'
           request:
             mediaType: application/json
           response:
@@ -10243,17 +9913,13 @@ components:
             openAPIDocKey: '200'
         run:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/run
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}~1run/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}/put'
           request:
             mediaType: application/json
           response:
@@ -10266,9 +9932,7 @@ components:
       methods:
         query:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/compatiblefields/query
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1compatiblefields~1query/post'
           request:
             mediaType: application/json
           response:
@@ -10281,17 +9945,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files/{fileId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}~1files~1{fileId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/reports/{reportId}/files
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1reports~1{reportId}~1files/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10302,17 +9962,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sites/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sites~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sites
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sites/post'
           request:
             mediaType: application/json
           response:
@@ -10320,17 +9976,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sites
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sites/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sites
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sites/patch'
           request:
             mediaType: application/json
           response:
@@ -10338,9 +9990,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sites
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sites/put'
           request:
             mediaType: application/json
           response:
@@ -10353,17 +10003,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sizes/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sizes~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sizes
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sizes/post'
           request:
             mediaType: application/json
           response:
@@ -10371,9 +10017,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/sizes
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1sizes/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10384,17 +10028,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/subaccounts/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1subaccounts~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/subaccounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1subaccounts/post'
           request:
             mediaType: application/json
           response:
@@ -10402,17 +10042,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/subaccounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1subaccounts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/subaccounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1subaccounts/patch'
           request:
             mediaType: application/json
           response:
@@ -10420,9 +10056,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/subaccounts
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1subaccounts/put'
           request:
             mediaType: application/json
           response:
@@ -10435,17 +10069,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetableRemarketingLists~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetableRemarketingLists
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetableRemarketingLists/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10456,17 +10086,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetingTemplates~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetingTemplates/post'
           request:
             mediaType: application/json
           response:
@@ -10474,17 +10100,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetingTemplates/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetingTemplates/patch'
           request:
             mediaType: application/json
           response:
@@ -10492,9 +10114,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/targetingTemplates
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1targetingTemplates/put'
           request:
             mediaType: application/json
           response:
@@ -10507,17 +10127,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10528,17 +10144,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRolePermissionGroups~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRolePermissionGroups
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRolePermissionGroups/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10549,17 +10161,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRolePermissions~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRolePermissions
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRolePermissions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -10570,24 +10178,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRoles~1{id}/delete'
           response:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRoles/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRoles~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRoles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRoles/post'
           request:
             mediaType: application/json
           response:
@@ -10595,17 +10197,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRoles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRoles/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRoles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRoles/patch'
           request:
             mediaType: application/json
           response:
@@ -10613,9 +10211,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/userRoles
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1userRoles/put'
           request:
             mediaType: application/json
           response:
@@ -10628,17 +10224,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/videoFormats/{id}
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1videoFormats~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /dfareporting/v3.5/userprofiles/{profileId}/videoFormats
+            $ref: '#/paths/~1dfareporting~1v3.5~1userprofiles~1{profileId}~1videoFormats/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

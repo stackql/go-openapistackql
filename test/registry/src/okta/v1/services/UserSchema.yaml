@@ -312,9 +312,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/meta/schemas/apps/{appInstanceId}/default
+            $ref: '#/paths/~1api~1v1~1meta~1schemas~1apps~1{appInstanceId}~1default/POST'
           request:
             mediaType: application/json
           response:
@@ -322,9 +320,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/meta/schemas/apps/{appInstanceId}/default
+            $ref: '#/paths/~1api~1v1~1meta~1schemas~1apps~1{appInstanceId}~1default/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -335,17 +331,13 @@ components:
       methods:
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/meta/schemas/user/{schemaId}
+            $ref: '#/paths/~1api~1v1~1meta~1schemas~1user~1{schemaId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         partialUpdate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/meta/schemas/user/{schemaId}
+            $ref: '#/paths/~1api~1v1~1meta~1schemas~1user~1{schemaId}/POST'
           request:
             mediaType: application/json
           response:

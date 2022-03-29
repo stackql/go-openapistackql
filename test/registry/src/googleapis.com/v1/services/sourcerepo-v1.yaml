@@ -584,17 +584,13 @@ components:
       methods:
         getConfig:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/config
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1config/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         updateConfig:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/config
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1config/patch'
           request:
             mediaType: application/json
           response:
@@ -607,9 +603,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/repos
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos/post'
           request:
             mediaType: application/json
           response:
@@ -617,41 +611,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/repos
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}/patch'
           request:
             mediaType: application/json
           response:
@@ -659,9 +643,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -669,9 +651,7 @@ components:
             openAPIDocKey: '200'
         sync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}:sync
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}:sync/post'
           request:
             mediaType: application/json
           response:
@@ -679,9 +659,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/repos/{reposId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1repos~1{reposId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:

@@ -157,40 +157,30 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/eventHooks/{eventHookId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1eventHooks~1{eventHookId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/eventHooks/{eventHookId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1eventHooks~1{eventHookId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/eventHooks/{eventHookId}
+            $ref: '#/paths/~1api~1v1~1eventHooks~1{eventHookId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/eventHooks/{eventHookId}
+            $ref: '#/paths/~1api~1v1~1eventHooks~1{eventHookId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/eventHooks
+            $ref: '#/paths/~1api~1v1~1eventHooks/POST'
           request:
             mediaType: application/json
           response:
@@ -198,17 +188,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/eventHooks
+            $ref: '#/paths/~1api~1v1~1eventHooks/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/eventHooks/{eventHookId}
+            $ref: '#/paths/~1api~1v1~1eventHooks~1{eventHookId}/PUT'
           request:
             mediaType: application/json
           response:
@@ -216,9 +202,7 @@ components:
             openAPIDocKey: '200'
         verify:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/eventHooks/{eventHookId}/lifecycle/verify
+            $ref: '#/paths/~1api~1v1~1eventHooks~1{eventHookId}~1lifecycle~1verify/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

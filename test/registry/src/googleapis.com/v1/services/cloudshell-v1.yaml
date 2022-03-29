@@ -370,9 +370,7 @@ components:
       methods:
         cancel:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/operations/{operationsId}:cancel
+            $ref: '#/paths/~1v1~1operations~1{operationsId}:cancel/post'
           request:
             mediaType: application/json
           response:
@@ -380,25 +378,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations/{operationsId}
+            $ref: '#/paths/~1v1~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/operations
+            $ref: '#/paths/~1v1~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -409,9 +401,7 @@ components:
       methods:
         addPublicKey:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/users/{usersId}/environments/{environmentsId}:addPublicKey
+            $ref: '#/paths/~1v1~1users~1{usersId}~1environments~1{environmentsId}:addPublicKey/post'
           request:
             mediaType: application/json
           response:
@@ -419,9 +409,7 @@ components:
             openAPIDocKey: '200'
         authorize:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/users/{usersId}/environments/{environmentsId}:authorize
+            $ref: '#/paths/~1v1~1users~1{usersId}~1environments~1{environmentsId}:authorize/post'
           request:
             mediaType: application/json
           response:
@@ -429,17 +417,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/users/{usersId}/environments/{environmentsId}
+            $ref: '#/paths/~1v1~1users~1{usersId}~1environments~1{environmentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         removePublicKey:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/users/{usersId}/environments/{environmentsId}:removePublicKey
+            $ref: '#/paths/~1v1~1users~1{usersId}~1environments~1{environmentsId}:removePublicKey/post'
           request:
             mediaType: application/json
           response:
@@ -447,9 +431,7 @@ components:
             openAPIDocKey: '200'
         start:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/users/{usersId}/environments/{environmentsId}:start
+            $ref: '#/paths/~1v1~1users~1{usersId}~1environments~1{environmentsId}:start/post'
           request:
             mediaType: application/json
           response:

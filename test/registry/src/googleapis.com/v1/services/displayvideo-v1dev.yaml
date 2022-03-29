@@ -180,17 +180,13 @@ components:
       methods:
         download:
           operation:
-            $ref: get
-          path:
-            $ref: /download/{downloadId}
+            $ref: '#/paths/~1download~1{downloadId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         upload:
           operation:
-            $ref: post
-          path:
-            $ref: /media/{mediaId}
+            $ref: '#/paths/~1media~1{mediaId}/post'
           request:
             mediaType: application/octet-stream
           response:

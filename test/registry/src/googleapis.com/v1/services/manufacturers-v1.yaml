@@ -463,33 +463,25 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/accounts/{accountsId}/products/{productsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1products~1{productsId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/products/{productsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1products~1{productsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/accounts/{accountsId}/products
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1products/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/accounts/{accountsId}/products/{productsId}
+            $ref: '#/paths/~1v1~1accounts~1{accountsId}~1products~1{productsId}/put'
           request:
             mediaType: application/json
           response:

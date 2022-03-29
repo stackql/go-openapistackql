@@ -3548,9 +3548,7 @@ components:
       methods:
         batchUpdate:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/presentations/{presentationId}:batchUpdate
+            $ref: '#/paths/~1v1~1presentations~1{presentationId}:batchUpdate/post'
           request:
             mediaType: application/json
           response:
@@ -3558,9 +3556,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/presentations
+            $ref: '#/paths/~1v1~1presentations/post'
           request:
             mediaType: application/json
           response:
@@ -3568,9 +3564,7 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/presentations/{presentationsId}
+            $ref: '#/paths/~1v1~1presentations~1{presentationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -3581,17 +3575,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/presentations/{presentationId}/pages/{pageObjectId}
+            $ref: '#/paths/~1v1~1presentations~1{presentationId}~1pages~1{pageObjectId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getThumbnail:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/presentations/{presentationId}/pages/{pageObjectId}/thumbnail
+            $ref: '#/paths/~1v1~1presentations~1{presentationId}~1pages~1{pageObjectId}~1thumbnail/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

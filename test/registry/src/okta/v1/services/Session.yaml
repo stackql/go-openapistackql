@@ -124,24 +124,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/sessions/{sessionId}
+            $ref: '#/paths/~1api~1v1~1sessions~1{sessionId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/sessions/{sessionId}
+            $ref: '#/paths/~1api~1v1~1sessions~1{sessionId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/sessions
+            $ref: '#/paths/~1api~1v1~1sessions/POST'
           request:
             mediaType: application/json
           response:
@@ -149,9 +143,7 @@ components:
             openAPIDocKey: '200'
         refresh:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/sessions/{sessionId}/lifecycle/refresh
+            $ref: '#/paths/~1api~1v1~1sessions~1{sessionId}~1lifecycle~1refresh/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

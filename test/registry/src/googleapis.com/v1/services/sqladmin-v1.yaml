@@ -2176,25 +2176,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/backupRuns/{id}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1backupRuns~1{id}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/backupRuns/{id}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1backupRuns~1{id}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/backupRuns
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1backupRuns/post'
           request:
             mediaType: application/json
           response:
@@ -2202,9 +2196,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/backupRuns
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1backupRuns/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2215,9 +2207,7 @@ components:
       methods:
         generateEphemeralCert:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}:generateEphemeralCert
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}:generateEphemeralCert/post'
           request:
             mediaType: application/json
           response:
@@ -2225,9 +2215,7 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/connectSettings
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1connectSettings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2238,25 +2226,19 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/databases/{database}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1databases~1{database}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/databases/{database}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1databases~1{database}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/databases
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1databases/post'
           request:
             mediaType: application/json
           response:
@@ -2264,17 +2246,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/databases
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1databases/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/databases/{database}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1databases~1{database}/patch'
           request:
             mediaType: application/json
           response:
@@ -2282,9 +2260,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/databases/{database}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1databases~1{database}/put'
           request:
             mediaType: application/json
           response:
@@ -2297,9 +2273,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/flags
+            $ref: '#/paths/~1v1~1flags/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2310,17 +2284,13 @@ components:
       methods:
         addServerCa:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/addServerCa
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1addServerCa/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         clone:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/clone
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1clone/post'
           request:
             mediaType: application/json
           response:
@@ -2328,17 +2298,13 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         demoteMaster:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/demoteMaster
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1demoteMaster/post'
           request:
             mediaType: application/json
           response:
@@ -2346,9 +2312,7 @@ components:
             openAPIDocKey: '200'
         export:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/export
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1export/post'
           request:
             mediaType: application/json
           response:
@@ -2356,9 +2320,7 @@ components:
             openAPIDocKey: '200'
         failover:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/failover
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1failover/post'
           request:
             mediaType: application/json
           response:
@@ -2366,17 +2328,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/import
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1import/post'
           request:
             mediaType: application/json
           response:
@@ -2384,9 +2342,7 @@ components:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances/post'
           request:
             mediaType: application/json
           response:
@@ -2394,25 +2350,19 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         listServerCas:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/listServerCas
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1listServerCas/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}/patch'
           request:
             mediaType: application/json
           response:
@@ -2420,33 +2370,25 @@ components:
             openAPIDocKey: '200'
         promoteReplica:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/promoteReplica
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1promoteReplica/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         resetSslConfig:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/resetSslConfig
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1resetSslConfig/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         restart:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/restart
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1restart/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         restoreBackup:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/restoreBackup
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1restoreBackup/post'
           request:
             mediaType: application/json
           response:
@@ -2454,9 +2396,7 @@ components:
             openAPIDocKey: '200'
         rotateServerCa:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/rotateServerCa
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1rotateServerCa/post'
           request:
             mediaType: application/json
           response:
@@ -2464,25 +2404,19 @@ components:
             openAPIDocKey: '200'
         startReplica:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/startReplica
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1startReplica/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         stopReplica:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/stopReplica
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1stopReplica/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         truncateLog:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/truncateLog
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1truncateLog/post'
           request:
             mediaType: application/json
           response:
@@ -2490,9 +2424,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}/put'
           request:
             mediaType: application/json
           response:
@@ -2505,17 +2437,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/operations/{operation}
+            $ref: '#/paths/~1v1~1projects~1{project}~1operations~1{operation}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/operations
+            $ref: '#/paths/~1v1~1projects~1{project}~1operations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2526,9 +2454,7 @@ components:
       methods:
         rescheduleMaintenance:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/rescheduleMaintenance
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1rescheduleMaintenance/post'
           request:
             mediaType: application/json
           response:
@@ -2536,9 +2462,7 @@ components:
             openAPIDocKey: '200'
         startExternalSync:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/startExternalSync
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1startExternalSync/post'
           request:
             mediaType: application/json
           response:
@@ -2546,9 +2470,7 @@ components:
             openAPIDocKey: '200'
         verifyExternalSyncSettings:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/verifyExternalSyncSettings
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1verifyExternalSyncSettings/post'
           request:
             mediaType: application/json
           response:
@@ -2561,9 +2483,7 @@ components:
       methods:
         createEphemeral:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/createEphemeral
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1createEphemeral/post'
           request:
             mediaType: application/json
           response:
@@ -2571,25 +2491,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1sslCerts~1{sha1Fingerprint}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1sslCerts~1{sha1Fingerprint}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/sslCerts
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1sslCerts/post'
           request:
             mediaType: application/json
           response:
@@ -2597,9 +2511,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/sslCerts
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1sslCerts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2610,9 +2522,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/tiers
+            $ref: '#/paths/~1v1~1projects~1{project}~1tiers/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -2623,17 +2533,13 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/users
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1users/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/users
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1users/post'
           request:
             mediaType: application/json
           response:
@@ -2641,17 +2547,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/users
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1users/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/projects/{project}/instances/{instance}/users
+            $ref: '#/paths/~1v1~1projects~1{project}~1instances~1{instance}~1users/put'
           request:
             mediaType: application/json
           response:

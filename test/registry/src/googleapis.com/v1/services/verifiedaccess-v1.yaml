@@ -172,9 +172,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/challenge
+            $ref: '#/paths/~1v1~1challenge/post'
           request:
             mediaType: application/json
           response:
@@ -182,9 +180,7 @@ components:
             openAPIDocKey: '200'
         verify:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/challenge:verify
+            $ref: '#/paths/~1v1~1challenge:verify/post'
           request:
             mediaType: application/json
           response:

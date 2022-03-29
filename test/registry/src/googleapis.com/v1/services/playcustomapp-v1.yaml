@@ -139,9 +139,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /playcustomapp/v1/accounts/{account}/customApps
+            $ref: '#/paths/~1playcustomapp~1v1~1accounts~1{account}~1customApps/post'
           request:
             mediaType: application/octet-stream
           response:

@@ -1554,9 +1554,7 @@ components:
       methods:
         generateRandomBytes:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}:generateRandomBytes
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}:generateRandomBytes/post'
           request:
             mediaType: application/json
           response:
@@ -1564,17 +1562,13 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1585,17 +1579,13 @@ components:
       methods:
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/ekmConnections/{ekmConnectionsId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1ekmConnections~1{ekmConnectionsId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/ekmConnections/{ekmConnectionsId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1ekmConnections~1{ekmConnectionsId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -1603,9 +1593,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/ekmConnections/{ekmConnectionsId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1ekmConnections~1{ekmConnectionsId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -1618,9 +1606,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings/post'
           request:
             mediaType: application/json
           response:
@@ -1628,33 +1614,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -1662,9 +1640,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -1677,9 +1653,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys/post'
           request:
             mediaType: application/json
           response:
@@ -1687,9 +1661,7 @@ components:
             openAPIDocKey: '200'
         decrypt:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:decrypt
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}:decrypt/post'
           request:
             mediaType: application/json
           response:
@@ -1697,9 +1669,7 @@ components:
             openAPIDocKey: '200'
         encrypt:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:encrypt
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}:encrypt/post'
           request:
             mediaType: application/json
           response:
@@ -1707,33 +1677,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1741,9 +1703,7 @@ components:
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -1751,9 +1711,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:
@@ -1761,9 +1719,7 @@ components:
             openAPIDocKey: '200'
         updatePrimaryVersion:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:updatePrimaryVersion
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}:updatePrimaryVersion/post'
           request:
             mediaType: application/json
           response:
@@ -1776,9 +1732,7 @@ components:
       methods:
         asymmetricDecrypt:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:asymmetricDecrypt
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}:asymmetricDecrypt/post'
           request:
             mediaType: application/json
           response:
@@ -1786,9 +1740,7 @@ components:
             openAPIDocKey: '200'
         asymmetricSign:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:asymmetricSign
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}:asymmetricSign/post'
           request:
             mediaType: application/json
           response:
@@ -1796,9 +1748,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions/post'
           request:
             mediaType: application/json
           response:
@@ -1806,9 +1756,7 @@ components:
             openAPIDocKey: '200'
         destroy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:destroy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}:destroy/post'
           request:
             mediaType: application/json
           response:
@@ -1816,25 +1764,19 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getPublicKey:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}/publicKey
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}~1publicKey/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         import:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions:import
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions:import/post'
           request:
             mediaType: application/json
           response:
@@ -1842,17 +1784,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         macSign:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:macSign
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}:macSign/post'
           request:
             mediaType: application/json
           response:
@@ -1860,9 +1798,7 @@ components:
             openAPIDocKey: '200'
         macVerify:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:macVerify
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}:macVerify/post'
           request:
             mediaType: application/json
           response:
@@ -1870,9 +1806,7 @@ components:
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}/patch'
           request:
             mediaType: application/json
           response:
@@ -1880,9 +1814,7 @@ components:
             openAPIDocKey: '200'
         restore:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:restore
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1cryptoKeys~1{cryptoKeysId}~1cryptoKeyVersions~1{cryptoKeyVersionsId}:restore/post'
           request:
             mediaType: application/json
           response:
@@ -1895,9 +1827,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/importJobs
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1importJobs/post'
           request:
             mediaType: application/json
           response:
@@ -1905,33 +1835,25 @@ components:
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/importJobs/{importJobsId}
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1importJobs~1{importJobsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getIamPolicy:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/importJobs/{importJobsId}:getIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1importJobs~1{importJobsId}:getIamPolicy/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/importJobs
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1importJobs/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         setIamPolicy:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/importJobs/{importJobsId}:setIamPolicy
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1importJobs~1{importJobsId}:setIamPolicy/post'
           request:
             mediaType: application/json
           response:
@@ -1939,9 +1861,7 @@ components:
             openAPIDocKey: '200'
         testIamPermissions:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/importJobs/{importJobsId}:testIamPermissions
+            $ref: '#/paths/~1v1~1projects~1{projectsId}~1locations~1{locationsId}~1keyRings~1{keyRingsId}~1importJobs~1{importJobsId}:testIamPermissions/post'
           request:
             mediaType: application/json
           response:

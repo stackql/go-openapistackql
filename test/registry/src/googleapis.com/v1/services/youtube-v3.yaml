@@ -5627,9 +5627,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/abuseReports
+            $ref: '#/paths/~1youtube~1v3~1abuseReports/post'
           request:
             mediaType: application/json
           response:
@@ -5642,9 +5640,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/activities
+            $ref: '#/paths/~1youtube~1v3~1activities/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -5655,23 +5651,17 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/captions
+            $ref: '#/paths/~1youtube~1v3~1captions/delete'
           response:
             openAPIDocKey: '200'
         download:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/captions/{id}
+            $ref: '#/paths/~1youtube~1v3~1captions~1{id}/get'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/captions
+            $ref: '#/paths/~1youtube~1v3~1captions/post'
           request:
             mediaType: application/octet-stream
           response:
@@ -5679,17 +5669,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/captions
+            $ref: '#/paths/~1youtube~1v3~1captions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/captions
+            $ref: '#/paths/~1youtube~1v3~1captions/put'
           request:
             mediaType: application/octet-stream
           response:
@@ -5702,9 +5688,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/channelBanners/insert
+            $ref: '#/paths/~1youtube~1v3~1channelBanners~1insert/post'
           request:
             mediaType: application/octet-stream
           response:
@@ -5717,16 +5701,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/channelSections
+            $ref: '#/paths/~1youtube~1v3~1channelSections/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/channelSections
+            $ref: '#/paths/~1youtube~1v3~1channelSections/post'
           request:
             mediaType: application/json
           response:
@@ -5734,17 +5714,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/channelSections
+            $ref: '#/paths/~1youtube~1v3~1channelSections/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/channelSections
+            $ref: '#/paths/~1youtube~1v3~1channelSections/put'
           request:
             mediaType: application/json
           response:
@@ -5757,17 +5733,13 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/channels
+            $ref: '#/paths/~1youtube~1v3~1channels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/channels
+            $ref: '#/paths/~1youtube~1v3~1channels/put'
           request:
             mediaType: application/json
           response:
@@ -5780,9 +5752,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/commentThreads
+            $ref: '#/paths/~1youtube~1v3~1commentThreads/post'
           request:
             mediaType: application/json
           response:
@@ -5790,9 +5760,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/commentThreads
+            $ref: '#/paths/~1youtube~1v3~1commentThreads/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -5803,16 +5771,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/comments
+            $ref: '#/paths/~1youtube~1v3~1comments/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/comments
+            $ref: '#/paths/~1youtube~1v3~1comments/post'
           request:
             mediaType: application/json
           response:
@@ -5820,31 +5784,23 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/comments
+            $ref: '#/paths/~1youtube~1v3~1comments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         markAsSpam:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/comments/markAsSpam
+            $ref: '#/paths/~1youtube~1v3~1comments~1markAsSpam/post'
           response:
             openAPIDocKey: '200'
         setModerationStatus:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/comments/setModerationStatus
+            $ref: '#/paths/~1youtube~1v3~1comments~1setModerationStatus/post'
           response:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/comments
+            $ref: '#/paths/~1youtube~1v3~1comments/put'
           request:
             mediaType: application/json
           response:
@@ -5857,9 +5813,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/i18nLanguages
+            $ref: '#/paths/~1youtube~1v3~1i18nLanguages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -5870,9 +5824,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/i18nRegions
+            $ref: '#/paths/~1youtube~1v3~1i18nRegions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -5883,24 +5835,18 @@ components:
       methods:
         bind:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveBroadcasts/bind
+            $ref: '#/paths/~1youtube~1v3~1liveBroadcasts~1bind/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/liveBroadcasts
+            $ref: '#/paths/~1youtube~1v3~1liveBroadcasts/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveBroadcasts
+            $ref: '#/paths/~1youtube~1v3~1liveBroadcasts/post'
           request:
             mediaType: application/json
           response:
@@ -5908,25 +5854,19 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/liveBroadcasts
+            $ref: '#/paths/~1youtube~1v3~1liveBroadcasts/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         transition:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveBroadcasts/transition
+            $ref: '#/paths/~1youtube~1v3~1liveBroadcasts~1transition/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/liveBroadcasts
+            $ref: '#/paths/~1youtube~1v3~1liveBroadcasts/put'
           request:
             mediaType: application/json
           response:
@@ -5939,16 +5879,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/liveChat/bans
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1bans/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveChat/bans
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1bans/post'
           request:
             mediaType: application/json
           response:
@@ -5961,16 +5897,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/liveChat/messages
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1messages/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveChat/messages
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1messages/post'
           request:
             mediaType: application/json
           response:
@@ -5978,9 +5910,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/liveChat/messages
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1messages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -5991,16 +5921,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/liveChat/moderators
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1moderators/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveChat/moderators
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1moderators/post'
           request:
             mediaType: application/json
           response:
@@ -6008,9 +5934,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/liveChat/moderators
+            $ref: '#/paths/~1youtube~1v3~1liveChat~1moderators/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6021,16 +5945,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/liveStreams
+            $ref: '#/paths/~1youtube~1v3~1liveStreams/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/liveStreams
+            $ref: '#/paths/~1youtube~1v3~1liveStreams/post'
           request:
             mediaType: application/json
           response:
@@ -6038,17 +5958,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/liveStreams
+            $ref: '#/paths/~1youtube~1v3~1liveStreams/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/liveStreams
+            $ref: '#/paths/~1youtube~1v3~1liveStreams/put'
           request:
             mediaType: application/json
           response:
@@ -6061,9 +5977,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/members
+            $ref: '#/paths/~1youtube~1v3~1members/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6074,9 +5988,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/membershipsLevels
+            $ref: '#/paths/~1youtube~1v3~1membershipsLevels/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6087,16 +5999,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/playlistItems
+            $ref: '#/paths/~1youtube~1v3~1playlistItems/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/playlistItems
+            $ref: '#/paths/~1youtube~1v3~1playlistItems/post'
           request:
             mediaType: application/json
           response:
@@ -6104,17 +6012,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/playlistItems
+            $ref: '#/paths/~1youtube~1v3~1playlistItems/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/playlistItems
+            $ref: '#/paths/~1youtube~1v3~1playlistItems/put'
           request:
             mediaType: application/json
           response:
@@ -6127,16 +6031,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/playlists
+            $ref: '#/paths/~1youtube~1v3~1playlists/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/playlists
+            $ref: '#/paths/~1youtube~1v3~1playlists/post'
           request:
             mediaType: application/json
           response:
@@ -6144,17 +6044,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/playlists
+            $ref: '#/paths/~1youtube~1v3~1playlists/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/playlists
+            $ref: '#/paths/~1youtube~1v3~1playlists/put'
           request:
             mediaType: application/json
           response:
@@ -6167,9 +6063,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/search
+            $ref: '#/paths/~1youtube~1v3~1search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6180,16 +6074,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/subscriptions
+            $ref: '#/paths/~1youtube~1v3~1subscriptions/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/subscriptions
+            $ref: '#/paths/~1youtube~1v3~1subscriptions/post'
           request:
             mediaType: application/json
           response:
@@ -6197,9 +6087,7 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/subscriptions
+            $ref: '#/paths/~1youtube~1v3~1subscriptions/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6210,9 +6098,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/superChatEvents
+            $ref: '#/paths/~1youtube~1v3~1superChatEvents/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6223,9 +6109,7 @@ components:
       methods:
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/tests
+            $ref: '#/paths/~1youtube~1v3~1tests/post'
           request:
             mediaType: application/json
           response:
@@ -6238,16 +6122,12 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/thirdPartyLinks
+            $ref: '#/paths/~1youtube~1v3~1thirdPartyLinks/delete'
           response:
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/thirdPartyLinks
+            $ref: '#/paths/~1youtube~1v3~1thirdPartyLinks/post'
           request:
             mediaType: application/json
           response:
@@ -6255,17 +6135,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/thirdPartyLinks
+            $ref: '#/paths/~1youtube~1v3~1thirdPartyLinks/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/thirdPartyLinks
+            $ref: '#/paths/~1youtube~1v3~1thirdPartyLinks/put'
           request:
             mediaType: application/json
           response:
@@ -6278,9 +6154,7 @@ components:
       methods:
         set:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/thumbnails/set
+            $ref: '#/paths/~1youtube~1v3~1thumbnails~1set/post'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6291,9 +6165,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/videoAbuseReportReasons
+            $ref: '#/paths/~1youtube~1v3~1videoAbuseReportReasons/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6304,9 +6176,7 @@ components:
       methods:
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/videoCategories
+            $ref: '#/paths/~1youtube~1v3~1videoCategories/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -6317,24 +6187,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /youtube/v3/videos
+            $ref: '#/paths/~1youtube~1v3~1videos/delete'
           response:
             openAPIDocKey: '200'
         getRating:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/videos/getRating
+            $ref: '#/paths/~1youtube~1v3~1videos~1getRating/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/videos
+            $ref: '#/paths/~1youtube~1v3~1videos/post'
           request:
             mediaType: application/octet-stream
           response:
@@ -6342,33 +6206,25 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /youtube/v3/videos
+            $ref: '#/paths/~1youtube~1v3~1videos/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         rate:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/videos/rate
+            $ref: '#/paths/~1youtube~1v3~1videos~1rate/post'
           response:
             openAPIDocKey: '200'
         reportAbuse:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/videos/reportAbuse
+            $ref: '#/paths/~1youtube~1v3~1videos~1reportAbuse/post'
           request:
             mediaType: application/json
           response:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/videos
+            $ref: '#/paths/~1youtube~1v3~1videos/put'
           request:
             mediaType: application/json
           response:
@@ -6381,18 +6237,14 @@ components:
       methods:
         set:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/watermarks/set
+            $ref: '#/paths/~1youtube~1v3~1watermarks~1set/post'
           request:
             mediaType: application/octet-stream
           response:
             openAPIDocKey: '200'
         unset:
           operation:
-            $ref: post
-          path:
-            $ref: /youtube/v3/watermarks/unset
+            $ref: '#/paths/~1youtube~1v3~1watermarks~1unset/post'
           response:
             openAPIDocKey: '200'
       name: watermarks
@@ -6402,9 +6254,7 @@ components:
       methods:
         updateCommentThreads:
           operation:
-            $ref: put
-          path:
-            $ref: /youtube/v3/commentThreads
+            $ref: '#/paths/~1youtube~1v3~1commentThreads/put'
           request:
             mediaType: application/json
           response:

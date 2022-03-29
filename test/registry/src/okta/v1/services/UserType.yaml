@@ -77,24 +77,18 @@ components:
       methods:
         delete:
           operation:
-            $ref: DELETE
-          path:
-            $ref: /api/v1/meta/types/user/{typeId}
+            $ref: '#/paths/~1api~1v1~1meta~1types~1user~1{typeId}/DELETE'
           response:
             openAPIDocKey: '204'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/meta/types/user/{typeId}
+            $ref: '#/paths/~1api~1v1~1meta~1types~1user~1{typeId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         insert:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/meta/types/user
+            $ref: '#/paths/~1api~1v1~1meta~1types~1user/POST'
           request:
             mediaType: application/json
           response:
@@ -102,17 +96,13 @@ components:
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/meta/types/user
+            $ref: '#/paths/~1api~1v1~1meta~1types~1user/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         partialUpdate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/meta/types/user/{typeId}
+            $ref: '#/paths/~1api~1v1~1meta~1types~1user~1{typeId}/POST'
           request:
             mediaType: application/json
           response:
@@ -120,9 +110,7 @@ components:
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: PUT
-          path:
-            $ref: /api/v1/meta/types/user/{typeId}
+            $ref: '#/paths/~1api~1v1~1meta~1types~1user~1{typeId}/PUT'
           request:
             mediaType: application/json
           response:

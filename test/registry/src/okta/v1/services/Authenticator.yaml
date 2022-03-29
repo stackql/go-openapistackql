@@ -92,33 +92,25 @@ components:
       methods:
         activate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authenticators/{authenticatorId}/lifecycle/activate
+            $ref: '#/paths/~1api~1v1~1authenticators~1{authenticatorId}~1lifecycle~1activate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         deactivate:
           operation:
-            $ref: POST
-          path:
-            $ref: /api/v1/authenticators/{authenticatorId}/lifecycle/deactivate
+            $ref: '#/paths/~1api~1v1~1authenticators~1{authenticatorId}~1lifecycle~1deactivate/POST'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authenticators/{authenticatorId}
+            $ref: '#/paths/~1api~1v1~1authenticators~1{authenticatorId}/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: GET
-          path:
-            $ref: /api/v1/authenticators
+            $ref: '#/paths/~1api~1v1~1authenticators/GET'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

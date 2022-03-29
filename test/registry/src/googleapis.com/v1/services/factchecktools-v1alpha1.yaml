@@ -328,9 +328,7 @@ components:
       methods:
         search:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/claims:search
+            $ref: '#/paths/~1v1alpha1~1claims:search/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -341,9 +339,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1alpha1/pages
+            $ref: '#/paths/~1v1alpha1~1pages/post'
           request:
             mediaType: application/json
           response:
@@ -351,33 +347,25 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1alpha1/pages/{pagesId}
+            $ref: '#/paths/~1v1alpha1~1pages~1{pagesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/pages/{pagesId}
+            $ref: '#/paths/~1v1alpha1~1pages~1{pagesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1alpha1/pages
+            $ref: '#/paths/~1v1alpha1~1pages/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1alpha1/pages/{pagesId}
+            $ref: '#/paths/~1v1alpha1~1pages~1{pagesId}/put'
           request:
             mediaType: application/json
           response:

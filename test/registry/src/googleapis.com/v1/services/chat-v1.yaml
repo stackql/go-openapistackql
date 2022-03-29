@@ -1699,9 +1699,7 @@ components:
       methods:
         messages:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/dms/{dmsId}/messages
+            $ref: '#/paths/~1v1~1dms~1{dmsId}~1messages/post'
           request:
             mediaType: application/json
           response:
@@ -1709,9 +1707,7 @@ components:
             openAPIDocKey: '200'
         webhooks:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/dms/{dmsId}/webhooks
+            $ref: '#/paths/~1v1~1dms~1{dmsId}~1webhooks/post'
           request:
             mediaType: application/json
           response:
@@ -1724,9 +1720,7 @@ components:
       methods:
         messages:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/dms/{dmsId}/conversations/{conversationsId}/messages
+            $ref: '#/paths/~1v1~1dms~1{dmsId}~1conversations~1{conversationsId}~1messages/post'
           request:
             mediaType: application/json
           response:
@@ -1739,9 +1733,7 @@ components:
       methods:
         download:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/media/{mediaId}
+            $ref: '#/paths/~1v1~1media~1{mediaId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1752,9 +1744,7 @@ components:
       methods:
         messages:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/rooms/{roomsId}/messages
+            $ref: '#/paths/~1v1~1rooms~1{roomsId}~1messages/post'
           request:
             mediaType: application/json
           response:
@@ -1762,9 +1752,7 @@ components:
             openAPIDocKey: '200'
         webhooks:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/rooms/{roomsId}/webhooks
+            $ref: '#/paths/~1v1~1rooms~1{roomsId}~1webhooks/post'
           request:
             mediaType: application/json
           response:
@@ -1777,9 +1765,7 @@ components:
       methods:
         messages:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/rooms/{roomsId}/conversations/{conversationsId}/messages
+            $ref: '#/paths/~1v1~1rooms~1{roomsId}~1conversations~1{conversationsId}~1messages/post'
           request:
             mediaType: application/json
           response:
@@ -1792,25 +1778,19 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/spaces/{spacesId}
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/spaces
+            $ref: '#/paths/~1v1~1spaces/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         webhooks:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/spaces/{spacesId}/webhooks
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1webhooks/post'
           request:
             mediaType: application/json
           response:
@@ -1823,17 +1803,13 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/spaces/{spacesId}/members/{membersId}
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1members~1{membersId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/spaces/{spacesId}/members
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1members/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -1844,9 +1820,7 @@ components:
       methods:
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v1/spaces/{spacesId}/messages
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1messages/post'
           request:
             mediaType: application/json
           response:
@@ -1854,25 +1828,19 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v1/spaces/{spacesId}/messages/{messagesId}
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1messages~1{messagesId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/spaces/{spacesId}/messages/{messagesId}
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1messages~1{messagesId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
-            $ref: put
-          path:
-            $ref: /v1/spaces/{spacesId}/messages/{messagesId}
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1messages~1{messagesId}/put'
           request:
             mediaType: application/json
           response:
@@ -1885,9 +1853,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v1/spaces/{spacesId}/messages/{messagesId}/attachments/{attachmentsId}
+            $ref: '#/paths/~1v1~1spaces~1{spacesId}~1messages~1{messagesId}~1attachments~1{attachmentsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'

@@ -369,9 +369,7 @@ components:
       methods:
         lookupKey:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/keys:lookupKey
+            $ref: '#/paths/~1v2~1keys:lookupKey/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -382,9 +380,7 @@ components:
       methods:
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/operations/{operationsId}
+            $ref: '#/paths/~1v2~1operations~1{operationsId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
@@ -395,9 +391,7 @@ components:
       methods:
         clone:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}:clone
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys~1{keysId}:clone/post'
           request:
             mediaType: application/json
           response:
@@ -405,9 +399,7 @@ components:
             openAPIDocKey: '200'
         create:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys/post'
           request:
             mediaType: application/json
           response:
@@ -415,41 +407,31 @@ components:
             openAPIDocKey: '200'
         delete:
           operation:
-            $ref: delete
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys~1{keysId}/delete'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys~1{keysId}/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         getKeyString:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}/keyString
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys~1{keysId}~1keyString/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
-            $ref: get
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
-            $ref: patch
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys~1{keysId}/patch'
           request:
             mediaType: application/json
           response:
@@ -457,9 +439,7 @@ components:
             openAPIDocKey: '200'
         undelete:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}:undelete
+            $ref: '#/paths/~1v2~1projects~1{projectsId}~1locations~1{locationsId}~1keys~1{keysId}:undelete/post'
           request:
             mediaType: application/json
           response:
