@@ -12,9 +12,15 @@ import (
 	"gotest.tools/assert"
 )
 
+var (
+	testableVersions = []string{
+		"v1",
+		"v2.0.1",
+	}
+)
+
 const (
 	individualDownloadAllowedRegistryCfgStr string = `{"allowSrcDownload": true }`
-	deprecatedDocsRegistryCfgStr            string = `{"srcPrefix": "deprecated-src" }`
 	pullProvidersRegistryCfgStr             string = `{"srcPrefix": "test-src" }`
 	unsignedProvidersRegistryCfgStr         string = `{"srcPrefix": "unsigned-src",  "verifyConfig": { "nopVerify": true }  }`
 )
@@ -65,17 +71,9 @@ func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf 
 
 	assert.NilError(t, err)
 
-	deprecatedRc, err := getRegistryCfgFromString(deprecatedDocsRegistryCfgStr)
-
-	assert.NilError(t, err)
-
 	runRemote(t, rc, tf)
 
 	runLocal(t, rc, tf)
-
-	runRemote(t, deprecatedRc, tf)
-
-	runLocal(t, deprecatedRc, tf)
 }
 
 func execLocalAndRemoteRegistryTestsIndividualDownloadAllowed(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
@@ -86,19 +84,9 @@ func execLocalAndRemoteRegistryTestsIndividualDownloadAllowed(t *testing.T, regi
 
 	assert.NilError(t, err)
 
-	deprecatedRc, err := getRegistryCfgFromString(deprecatedDocsRegistryCfgStr)
-
-	deprecatedRc.AllowSrcDownload = true
-
-	assert.NilError(t, err)
-
 	runRemote(t, rc, tf)
 
 	runLocal(t, rc, tf)
-
-	runRemote(t, deprecatedRc, tf)
-
-	runLocal(t, deprecatedRc, tf)
 }
 
 func execLocalRegistryTestOnly(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
@@ -107,13 +95,7 @@ func execLocalRegistryTestOnly(t *testing.T, registryConfigStr string, tf func(t
 
 	assert.NilError(t, err)
 
-	deprecatedRc, err := getRegistryCfgFromString(deprecatedDocsRegistryCfgStr)
-
-	assert.NilError(t, err)
-
 	runLocal(t, rc, tf)
-
-	runLocal(t, deprecatedRc, tf)
 }
 
 func getRegistryCfgFromString(registryConfigStr string) (RegistryConfig, error) {
@@ -142,113 +124,125 @@ func runRemote(t *testing.T, rc RegistryConfig, tf func(t *testing.T, r Registry
 }
 
 func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAPI) {
-	svc, err := r.GetService("okta/v1/services/Application.yaml")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
+	for _, vr := range testableVersions {
+		svc, err := r.GetService(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
 
-	assert.Equal(t, svc.GetName(), "application")
+		assert.Equal(t, svc.GetName(), "application")
+	}
 
 	t.Logf("TestSimpleOktaServiceRead passed")
 }
 
 func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r RegistryAPI) {
 
-	pr, err := r.LoadProviderByName("google", "v1")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
+	for _, vr := range testableVersions {
+		pr, err := r.LoadProviderByName("google", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		rr, err := r.GetResourcesShallowFromProvider(pr, "compute")
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, rr != nil)
+		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
 	}
-
-	rr, err := r.GetResourcesShallowFromProvider(pr, "compute")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-
-	assert.Assert(t, rr != nil)
-	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
 
 func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r RegistryAPI) {
 
-	pr, err := r.LoadProviderByName("google", "v1")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
+	for _, vr := range testableVersions {
+		pr, err := r.LoadProviderByName("google", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		rr, err := r.GetResourcesShallowFromProvider(pr, "compute")
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, rr != nil)
+		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+
+		sv, err := r.GetService(rr.Resources["acceleratorTypes"].Methods["get"].OperationRef.ExtractServiceDocPath())
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+		assert.Assert(t, sv != nil)
+
+		sn := sv.GetName()
+
+		assert.Equal(t, sn, "compute")
 	}
-
-	rr, err := r.GetResourcesShallowFromProvider(pr, "compute")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-
-	assert.Assert(t, rr != nil)
-	assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
-
-	sv, err := r.GetService(rr.Resources["acceleratorTypes"].Methods["get"].OperationRef.ExtractServiceDocPath())
-
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-	assert.Assert(t, sv != nil)
-
-	sn := sv.GetName()
-
-	assert.Equal(t, sn, "compute")
 
 	t.Logf("TestIndirectGoogleComputeServiceSubsetJsonRead passed\n")
 }
 
 func execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T, r RegistryAPI) {
 
-	pr, err := r.LoadProviderByName("google", "v1")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
+	for _, vr := range testableVersions {
+		pr, err := r.LoadProviderByName("google", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		sh, err := pr.GetProviderService("compute")
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, sh != nil)
+
+		sv, err := r.GetServiceFragment(sh, "instances")
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, sv != nil)
+
+		sn := sv.GetName()
+
+		assert.Equal(t, sn, "compute")
 	}
-
-	sh, err := pr.GetProviderService("compute")
-
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-
-	assert.Assert(t, sh != nil)
-
-	sv, err := r.GetServiceFragment(sh, "instances")
-
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-
-	assert.Assert(t, sv != nil)
-
-	sn := sv.GetName()
-
-	assert.Equal(t, sn, "compute")
 
 	t.Logf("TestIndirectGoogleComputeServiceSubsetAccess passed\n")
 }
 
 func execTestRegistrySimpleOktaPull(t *testing.T, r RegistryAPI) {
-	arc, err := r.PullProviderArchive("okta", "v1")
 
-	assert.NilError(t, err)
+	for _, vr := range testableVersions {
+		arc, err := r.PullProviderArchive("okta", vr)
 
-	assert.Assert(t, arc != nil)
+		assert.NilError(t, err)
+
+		assert.Assert(t, arc != nil)
+	}
 
 }
 
 func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
-	err := r.PullAndPersistProviderArchive("okta", "v1")
+	for _, vr := range testableVersions {
+		err := r.PullAndPersistProviderArchive("okta", vr)
 
-	assert.NilError(t, err)
+		assert.NilError(t, err)
 
-	svc, err := r.GetService("okta/v1/services/Application.yaml")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
+		svc, err := r.GetService(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Equal(t, svc.GetName(), "application")
 	}
-
-	assert.Equal(t, svc.GetName(), "application")
 
 	t.Logf("TestRegistrySimpleOktaPullAndPersist passed")
 
@@ -256,42 +250,44 @@ func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
 
 func execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t *testing.T, r RegistryAPI) {
 
-	pr, err := r.LoadProviderByName("google", "v1")
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
+	for _, vr := range testableVersions {
+		pr, err := r.LoadProviderByName("google", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		sh, err := pr.GetProviderService("compute")
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, sh != nil)
+
+		sv, err := r.GetServiceFragment(sh, "acceleratorTypes")
+
+		assert.NilError(t, err)
+
+		assert.Assert(t, sv != nil)
+
+		sn := sv.GetName()
+
+		assert.Equal(t, sn, "compute")
+
+		rsc, err := sv.GetResource("acceleratorTypes")
+
+		assert.NilError(t, err)
+
+		matchParams := map[string]interface{}{
+			"project": struct{}{},
+		}
+
+		os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
+
+		assert.Assert(t, ok)
+
+		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.acceleratorTypes.aggregatedList")
 	}
-
-	sh, err := pr.GetProviderService("compute")
-
-	if err != nil {
-		t.Fatalf("Test failed: %v", err)
-	}
-
-	assert.Assert(t, sh != nil)
-
-	sv, err := r.GetServiceFragment(sh, "acceleratorTypes")
-
-	assert.NilError(t, err)
-
-	assert.Assert(t, sv != nil)
-
-	sn := sv.GetName()
-
-	assert.Equal(t, sn, "compute")
-
-	rsc, err := sv.GetResource("acceleratorTypes")
-
-	assert.NilError(t, err)
-
-	matchParams := map[string]interface{}{
-		"project": struct{}{},
-	}
-
-	os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
-
-	assert.Assert(t, ok)
-
-	assert.Equal(t, os.OperationRef.Value.OperationID, "compute.acceleratorTypes.aggregatedList")
 
 	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
 }
