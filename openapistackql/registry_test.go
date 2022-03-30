@@ -22,6 +22,7 @@ var (
 const (
 	individualDownloadAllowedRegistryCfgStr string = `{"allowSrcDownload": true }`
 	pullProvidersRegistryCfgStr             string = `{"srcPrefix": "test-src" }`
+	deprecatedRegistryCfgStr                string = `{"srcPrefix": "deprecated-src" }`
 	unsignedProvidersRegistryCfgStr         string = `{"srcPrefix": "unsigned-src",  "verifyConfig": { "nopVerify": true }  }`
 )
 
@@ -290,4 +291,31 @@ func execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t 
 	}
 
 	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
+}
+
+func TestRegistryProviderLatestVersion(t *testing.T) {
+
+	rc, err := getRegistryCfgFromString(individualDownloadAllowedRegistryCfgStr)
+	assert.NilError(t, err)
+	r, err := GetMockLocalRegistry(rc)
+	assert.NilError(t, err)
+	v, err := r.GetLatestAvailableVersion("google")
+	assert.NilError(t, err)
+	assert.Equal(t, v, "v2.0.1")
+	vo, err := r.GetLatestAvailableVersion("okta")
+	assert.NilError(t, err)
+	assert.Equal(t, vo, "v2.0.1")
+
+	rc, err = getRegistryCfgFromString(deprecatedRegistryCfgStr)
+	assert.NilError(t, err)
+	r, err = GetMockLocalRegistry(rc)
+	assert.NilError(t, err)
+	v, err = r.GetLatestAvailableVersion("google")
+	assert.NilError(t, err)
+	assert.Equal(t, v, "v1")
+	vo, err = r.GetLatestAvailableVersion("okta")
+	assert.NilError(t, err)
+	assert.Equal(t, vo, "v1")
+
+	t.Logf("TestRegistryProviderLatestVersion passed\n")
 }

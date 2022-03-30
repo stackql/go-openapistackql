@@ -39,6 +39,7 @@ type RegistryAPI interface {
 	ListAllAvailableProviders() (map[string]ProviderDescription, error)
 	ListLocallyAvailableProviders() map[string]struct{}
 	GetDocBytes(string) ([]byte, error)
+	GetLatestAvailableVersion(string) (string, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
 	GetResourcesShallowFromURL(string) (*ResourceRegister, error)
@@ -572,6 +573,10 @@ func (r *Registry) GetLatestAvailableVersion(providerName string) (string, error
 }
 
 func (r *Registry) getLatestAvailableVersion(providerName string) (string, error) {
+	switch providerName {
+	case "google":
+		providerName = "googleapis.com"
+	}
 	var versionsAvailable []*semver.Version
 	if r.isLocalFile() {
 		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
@@ -591,7 +596,7 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 		if len(versionsAvailable) == 0 {
 			return "", fmt.Errorf("no versions available")
 		}
-		return fmt.Sprintf("v%s", versionsAvailable[0].String()), nil
+		return versionsAvailable[len(versionsAvailable)-1].Original(), nil
 	}
 	if r.localDocRoot != "" {
 		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
@@ -611,7 +616,7 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 		if len(versionsAvailable) == 0 {
 			return "", fmt.Errorf("no versions available")
 		}
-		return fmt.Sprintf("v%s", versionsAvailable[0].String()), nil
+		return versionsAvailable[len(versionsAvailable)-1].Original(), nil
 	}
 
 	return "", fmt.Errorf("could not infer latest version")
