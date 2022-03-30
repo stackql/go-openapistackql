@@ -9,11 +9,14 @@ import (
 	"os"
 	"path"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/stackql/go-openapistackql/pkg/compression"
 	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
 	"gopkg.in/yaml.v2"
+
+	"github.com/Masterminds/semver"
 )
 
 const (
@@ -562,4 +565,54 @@ func (r *Registry) getVerifiedDocBytes(docPath string) ([]byte, error) {
 		return nil, err
 	}
 	return io.ReadAll(vr.VerifyFile)
+}
+
+func (r *Registry) GetLatestAvailableVersion(providerName string) (string, error) {
+	return r.getLatestAvailableVersion(providerName)
+}
+
+func (r *Registry) getLatestAvailableVersion(providerName string) (string, error) {
+	var versionsAvailable []*semver.Version
+	if r.isLocalFile() {
+		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
+		if err != nil {
+			return "", err
+		}
+		for _, e := range deSlice {
+			if e.IsDir() {
+				nv, err := semver.NewVersion(e.Name())
+				if err != nil {
+					return "", err
+				}
+				versionsAvailable = append(versionsAvailable, nv)
+			}
+		}
+		sort.Sort(semver.Collection(versionsAvailable))
+		if len(versionsAvailable) == 0 {
+			return "", fmt.Errorf("no versions available")
+		}
+		return fmt.Sprintf("v%s", versionsAvailable[0].String()), nil
+	}
+	if r.localDocRoot != "" {
+		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
+		if err != nil {
+			return "", err
+		}
+		for _, e := range deSlice {
+			if e.IsDir() {
+				nv, err := semver.NewVersion(e.Name())
+				if err != nil {
+					return "", err
+				}
+				versionsAvailable = append(versionsAvailable, nv)
+			}
+		}
+		sort.Sort(semver.Collection(versionsAvailable))
+		if len(versionsAvailable) == 0 {
+			return "", fmt.Errorf("no versions available")
+		}
+		return fmt.Sprintf("v%s", versionsAvailable[0].String()), nil
+	}
+
+	return "", fmt.Errorf("could not infer latest version")
 }
