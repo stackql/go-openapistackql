@@ -598,26 +598,23 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 		}
 		return versionsAvailable[len(versionsAvailable)-1].Original(), nil
 	}
-	if r.localDocRoot != "" {
-		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
-		if err != nil {
-			return "", err
-		}
-		for _, e := range deSlice {
-			if e.IsDir() {
-				nv, err := semver.NewVersion(e.Name())
-				if err != nil {
-					return "", err
-				}
-				versionsAvailable = append(versionsAvailable, nv)
-			}
-		}
-		sort.Sort(semver.Collection(versionsAvailable))
-		if len(versionsAvailable) == 0 {
-			return "", fmt.Errorf("no versions available")
-		}
-		return versionsAvailable[len(versionsAvailable)-1].Original(), nil
-	}
 
-	return "", fmt.Errorf("could not infer latest version")
+	deSlice, err := os.ReadDir(path.Join(r.getLocalDocRoot(), providerName))
+	if err != nil {
+		return "", err
+	}
+	for _, e := range deSlice {
+		if e.IsDir() {
+			nv, err := semver.NewVersion(e.Name())
+			if err != nil {
+				return "", err
+			}
+			versionsAvailable = append(versionsAvailable, nv)
+		}
+	}
+	sort.Sort(semver.Collection(versionsAvailable))
+	if len(versionsAvailable) == 0 {
+		return "", fmt.Errorf("no versions available")
+	}
+	return versionsAvailable[len(versionsAvailable)-1].Original(), nil
 }
