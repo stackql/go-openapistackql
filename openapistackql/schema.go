@@ -35,7 +35,6 @@ func providerTypeConditionIsValid(providerType string, lhs string, rhs interface
 	default:
 		return false
 	}
-	return false
 }
 
 func (s *Schema) ConditionIsValid(lhs string, rhs interface{}) bool {
@@ -235,19 +234,59 @@ func (s *Schema) IsArrayRef() bool {
 	return s.Items != nil && s.Items.Value != nil
 }
 
+func (s *Schema) getPropertiesColumns() []ColumnDescriptor {
+	var cols []ColumnDescriptor
+	for k, val := range s.Properties {
+		valSchema := val.Value
+		if valSchema != nil {
+			col := ColumnDescriptor{Name: k, Schema: NewSchema(
+				valSchema,
+				k,
+			)}
+			cols = append(cols, col)
+		}
+	}
+	return cols
+}
+
+func (s *Schema) getAllOfColumns() []ColumnDescriptor {
+	return s.getAllSchemaRefsColumns(s.AllOf)
+}
+
+func (s *Schema) getAnyOfColumns() []ColumnDescriptor {
+	return s.getAllSchemaRefsColumns(s.AnyOf)
+}
+
+func (s *Schema) getOneOfColumns() []ColumnDescriptor {
+	return s.getAllSchemaRefsColumns(s.OneOf)
+}
+
+func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
+	var cols []ColumnDescriptor
+	for k, val := range srs {
+		log.Debugf("processing allOf key number = %d, id = '%s'\n", k, val.Ref)
+		ss := NewSchema(val.Value, "")
+		st := ss.Tabulate(false)
+		for _, col := range st.GetColumns() {
+			col.Name = fmt.Sprintf("%s_%s", val.Ref, col.Name)
+			cols = append(cols, col)
+		}
+	}
+	return cols
+}
+
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	if s.Type == "object" || (s.Properties != nil && len(s.Properties) > 0) {
 		var cols []ColumnDescriptor
 		if !omitColumns {
-			for k, val := range s.Properties {
-				valSchema := val.Value
-				if valSchema != nil {
-					col := ColumnDescriptor{Name: k, Schema: NewSchema(
-						valSchema,
-						k,
-					)}
-					cols = append(cols, col)
-				}
+			if len(s.Properties) > 0 {
+				cols = s.getPropertiesColumns()
+			} else if len(s.AllOf) > 0 {
+				cols = s.getAllOfColumns()
+			} else if len(s.AnyOf) > 0 {
+				cols = s.getAnyOfColumns()
+			} else if len(s.OneOf) > 0 {
+				cols = s.getOneOfColumns()
 			}
 		}
 		return &Tabulation{columns: cols, name: s.GetName()}
