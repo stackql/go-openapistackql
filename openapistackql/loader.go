@@ -15,6 +15,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	yamlconv "github.com/ghodss/yaml"
+	"github.com/go-openapi/jsonpointer"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -41,6 +42,7 @@ type Loader struct {
 	visitedExpectedRequest  map[*Schema]struct{}
 	visitedExpectedResponse map[*Schema]struct{}
 	visitedOperation        map[*openapi3.Operation]struct{}
+	visitedOperationStore   map[*OperationStore]struct{}
 	visitedPathItem         map[*openapi3.PathItem]struct{}
 }
 
@@ -54,6 +56,7 @@ func loadResourcesShallow(bt []byte) (*ResourceRegister, error) {
 	if err != nil {
 		return nil, err
 	}
+	resourceregisterLoadBackwardsCompatibility(rv)
 	return rv, nil
 }
 
@@ -80,7 +83,7 @@ func (l *Loader) LoadFromBytesAndResources(rr *ResourceRegister, resourceKey str
 	if docUrl != "" {
 		err = l.mergeResourcesScoped(svc, docUrl, rr)
 	} else {
-		err = l.mergeResources(svc, rr.Resources)
+		err = l.mergeResources(svc, rr.Resources, rr.ServiceDocPath)
 	}
 	if err != nil {
 		return nil, err
@@ -109,12 +112,19 @@ func (l *Loader) extractResources(svc *Service) error {
 	if err != nil {
 		return err
 	}
-	return l.mergeResources(svc, rscMap)
+	return l.mergeResources(svc, rscMap, nil)
 }
 
-func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource) error {
+func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource, sdRef *ServiceRef) error {
 	for _, rsc := range rscMap {
-		err := l.mergeResource(svc, rsc)
+		var sr *ServiceRef
+		if sdRef != nil {
+			sr = sdRef
+		}
+		if rsc.ServiceDocPath != nil {
+			sr = rsc.ServiceDocPath
+		}
+		err := l.mergeResource(svc, rsc, sr)
 		if err != nil {
 			return err
 		}
@@ -127,7 +137,7 @@ func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceR
 	scopedMap := make(map[string]*Resource)
 	for k, rsc := range rr.Resources {
 		if rr.ObtainServiceDocUrl(k) == svcUrl {
-			err := l.mergeResource(svc, rsc)
+			err := l.mergeResource(svc, rsc, &ServiceRef{Ref: svcUrl})
 			if err != nil {
 				return err
 			}
@@ -144,14 +154,11 @@ func (l *Loader) mergeResourcesScoped(svc *Service, svcUrl string, rr *ResourceR
 	return nil
 }
 
-func (l *Loader) mergeResource(svc *Service, rsc *Resource) error {
-	for k, v := range rsc.Methods {
+func (l *Loader) mergeResource(svc *Service, rsc *Resource, sr *ServiceRef) error {
+	for k, vOp := range rsc.Methods {
+		v := vOp
 		v.MethodKey = k
-		err := l.resolvePathItemRef(svc, v.PathItemRef)
-		if err != nil {
-			return err
-		}
-		err = l.resolveOperationRef(svc, v.OperationRef, v.PathItemRef.Ref)
+		err := l.resolveOperationRef(svc, rsc, &v, v.PathRef, sr)
 		if err != nil {
 			return err
 		}
@@ -165,6 +172,16 @@ func (l *Loader) mergeResource(svc *Service, rsc *Resource) error {
 		}
 		v.Servers = &svc.Servers
 		rsc.Methods[k] = v
+	}
+	for sqlVerb, dir := range rsc.SQLVerbs {
+		for i, v := range dir {
+			cur := v
+			err := l.resolveSQLVerb(rsc, &cur)
+			if err != nil {
+				return err
+			}
+			rsc.SQLVerbs[sqlVerb][i] = cur
+		}
 	}
 	return nil
 }
@@ -215,6 +232,7 @@ func NewLoader() *Loader {
 		make(map[*Schema]struct{}),
 		make(map[*Schema]struct{}),
 		make(map[*openapi3.Operation]struct{}),
+		make(map[*OperationStore]struct{}),
 		make(map[*openapi3.PathItem]struct{}),
 	}
 }
@@ -360,36 +378,67 @@ func loadProviderDocFromBytes(bytes []byte) (*Provider, error) {
 	return &prov, nil
 }
 
-func (loader *Loader) resolveOperationRef(doc *Service, component *OperationRef, path string) (err error) {
-	if component != nil && component.Value != nil {
+func resourceregisterLoadBackwardsCompatibility(rr *ResourceRegister) {
+	sr := rr.ServiceDocPath
+	for m, n := range rr.Resources {
+		if n.ServiceDocPath != nil {
+			sr = n.ServiceDocPath
+		}
+		for k, v := range n.Methods {
+			os := v
+			operationBackwardsCompatibility(&os, sr)
+			rr.Resources[m].Methods[k] = os
+		}
+	}
+}
+
+func operationBackwardsCompatibility(component *OperationStore, sr *ServiceRef) {
+	// backwards compatibility
+	if component.PathRef != nil {
+		stub := "#/paths/"
+		if sr != nil {
+			stub = sr.Ref + "#/paths/"
+		}
+		component.OperationRef = &OperationRef{
+			Ref: stub + strings.ReplaceAll(component.PathRef.Ref, "/", "~1") + "/" + component.OperationRef.Ref,
+		}
+	}
+	//
+}
+
+func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component *OperationStore, pir *PathItemRef, sr *ServiceRef) (err error) {
+	if component.OperationRef != nil && component.OperationRef.Value != nil {
 		if loader.visitedOperation == nil {
 			loader.visitedOperation = make(map[*openapi3.Operation]struct{})
 		}
-		if _, ok := loader.visitedOperation[component.Value]; ok {
+		if _, ok := loader.visitedOperation[component.OperationRef.Value]; ok {
 			return nil
 		}
-		loader.visitedOperation[component.Value] = struct{}{}
+		loader.visitedOperation[component.OperationRef.Value] = struct{}{}
 	}
 
 	if component == nil {
 		return errors.New("invalid operation: value MUST be an object")
 	}
-	ref := component.Ref
-	if ref != "" {
-		p, ok := doc.Paths[path]
-		if !ok {
-			return fmt.Errorf("cannot find path = '%s'", path)
-		}
-		ops := p.Operations()
-		if ops == nil {
-			return fmt.Errorf("cannot find any operation for path = '%s'; nil operations", path)
-		}
-		op, ok := ops[strings.ToUpper(component.Ref)]
-		if !ok {
-			return fmt.Errorf("cannot find operation = '%s' for path = '%s'; missing operation", component.Ref, path)
-		}
-		component.Value = op
+	operationBackwardsCompatibility(component, sr)
+	pk := component.OperationRef.ExtractPathItem()
+	pi, ok := doc.Paths[pk]
+	if !ok {
+		return fmt.Errorf("could not extract path for '%s'", pk)
 	}
+	mk := component.OperationRef.extractMethodItem()
+
+	ops := pi.Operations()
+	if ops == nil {
+		return fmt.Errorf("cannot find any operation for path = '%s'; nil operations", pk)
+	}
+	op, ok := ops[strings.ToUpper(mk)]
+	if !ok {
+		return fmt.Errorf("cannot find operation = '%s' for path = '%s'; missing operation", mk, pk)
+	}
+
+	component.OperationRef.Value = op
+	component.PathItem = pi
 	return nil
 }
 
@@ -441,6 +490,35 @@ func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operatio
 		s := NewSchema(sRef.Value, sRef.Ref)
 		component.Schema = s
 		return nil
+	}
+	return nil
+}
+
+func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef) (err error) {
+	if component != nil && component.Value != nil {
+		if loader.visitedOperationStore == nil {
+			loader.visitedOperationStore = make(map[*OperationStore]struct{})
+		}
+		if _, ok := loader.visitedOperationStore[component.Value]; ok {
+			return nil
+		}
+		loader.visitedOperationStore[component.Value] = struct{}{}
+	}
+
+	if component == nil {
+		return fmt.Errorf("operation store ref not supplied")
+	}
+	osv, _, err := jsonpointer.GetForToken(rsc, component.Ref)
+	if err != nil {
+		return err
+	}
+	resolved, ok := osv.(*OperationStore)
+	if !ok {
+		return fmt.Errorf("operation store ref type '%T' not supported", osv)
+	}
+	component.Value = resolved
+	if component.Value == nil {
+		return fmt.Errorf("operation store ref not resolved")
 	}
 	return nil
 }

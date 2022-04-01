@@ -9,11 +9,14 @@ import (
 	"os"
 	"path"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/stackql/go-openapistackql/pkg/compression"
 	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
 	"gopkg.in/yaml.v2"
+
+	"github.com/Masterminds/semver"
 )
 
 const (
@@ -36,6 +39,7 @@ type RegistryAPI interface {
 	ListAllAvailableProviders() (map[string]ProviderDescription, error)
 	ListLocallyAvailableProviders() map[string]struct{}
 	GetDocBytes(string) ([]byte, error)
+	GetLatestAvailableVersion(string) (string, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
 	GetResourcesShallowFromURL(string) (*ResourceRegister, error)
@@ -65,7 +69,6 @@ type Registry struct {
 	localSrcPrefix   string
 	localDistPrefix  string
 	transport        http.RoundTripper
-	useEmbedded      bool
 	verifier         *edcrypto.Verifier
 	nopVerifier      bool
 }
@@ -563,4 +566,55 @@ func (r *Registry) getVerifiedDocBytes(docPath string) ([]byte, error) {
 		return nil, err
 	}
 	return io.ReadAll(vr.VerifyFile)
+}
+
+func (r *Registry) GetLatestAvailableVersion(providerName string) (string, error) {
+	return r.getLatestAvailableVersion(providerName)
+}
+
+func (r *Registry) getLatestAvailableVersion(providerName string) (string, error) {
+	switch providerName {
+	case "google":
+		providerName = "googleapis.com"
+	}
+	var versionsAvailable []*semver.Version
+	if r.isLocalFile() {
+		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
+		if err != nil {
+			return "", err
+		}
+		for _, e := range deSlice {
+			if e.IsDir() {
+				nv, err := semver.NewVersion(e.Name())
+				if err != nil {
+					return "", err
+				}
+				versionsAvailable = append(versionsAvailable, nv)
+			}
+		}
+		sort.Sort(semver.Collection(versionsAvailable))
+		if len(versionsAvailable) == 0 {
+			return "", fmt.Errorf("no versions available")
+		}
+		return versionsAvailable[len(versionsAvailable)-1].Original(), nil
+	}
+
+	deSlice, err := os.ReadDir(path.Join(r.getLocalDocRoot(), providerName))
+	if err != nil {
+		return "", err
+	}
+	for _, e := range deSlice {
+		if e.IsDir() {
+			nv, err := semver.NewVersion(e.Name())
+			if err != nil {
+				return "", err
+			}
+			versionsAvailable = append(versionsAvailable, nv)
+		}
+	}
+	sort.Sort(semver.Collection(versionsAvailable))
+	if len(versionsAvailable) == 0 {
+		return "", fmt.Errorf("no versions available")
+	}
+	return versionsAvailable[len(versionsAvailable)-1].Original(), nil
 }

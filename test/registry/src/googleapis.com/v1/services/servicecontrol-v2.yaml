@@ -797,9 +797,7 @@ components:
       methods:
         check:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/services/{serviceName}:check
+            $ref: '#/paths/~1v2~1services~1{serviceName}:check/post'
           request:
             mediaType: application/json
           response:
@@ -807,9 +805,7 @@ components:
             openAPIDocKey: '200'
         report:
           operation:
-            $ref: post
-          path:
-            $ref: /v2/services/{serviceName}:report
+            $ref: '#/paths/~1v2~1services~1{serviceName}:report/post'
           request:
             mediaType: application/json
           response:

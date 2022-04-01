@@ -3,7 +3,9 @@ package openapistackql
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
+	"github.com/go-openapi/jsonpointer"
 	"vitess.io/vitess/go/sqltypes"
 )
 
@@ -32,16 +34,105 @@ func NewResourceRegister() *ResourceRegister {
 }
 
 type Resource struct {
-	ID                string      `json:"id" yaml:"id"`       // Required
-	Name              string      `json:"name" yaml:"name"`   // Required
-	Title             string      `json:"title" yaml:"title"` // Required
-	Description       string      `json:"description,omitempty" yaml:"desription,omitempty"`
-	SelectorAlgorithm string      `json:"selectorAlgorithm,omitempty" yaml:"selectorAlgorithm,omitempty"`
-	Methods           Methods     `json:"methods" yaml:"methods"`
-	ServiceDocPath    *ServiceRef `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	ID                string                         `json:"id" yaml:"id"`       // Required
+	Name              string                         `json:"name" yaml:"name"`   // Required
+	Title             string                         `json:"title" yaml:"title"` // Required
+	Description       string                         `json:"description,omitempty" yaml:"desription,omitempty"`
+	SelectorAlgorithm string                         `json:"selectorAlgorithm,omitempty" yaml:"selectorAlgorithm,omitempty"`
+	Methods           Methods                        `json:"methods" yaml:"methods"`
+	ServiceDocPath    *ServiceRef                    `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	SQLVerbs          map[string][]OperationStoreRef `json:"sqlVerbs" yaml:"sqlVerbs"`
 
 	// Hacks
 	BaseUrl string `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"`
+}
+
+var _ jsonpointer.JSONPointable = (Resource)(Resource{})
+
+func (rsc Resource) JSONLookup(token string) (interface{}, error) {
+	if rsc.Methods == nil {
+		return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
+	}
+	ss := strings.Split(token, "/")
+	if len(ss) > 1 && ss[len(ss)-2] == "methods" {
+		m, ok := rsc.Methods[ss[len(ss)-1]]
+		if !ok {
+			return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
+		}
+		return &m, nil
+	}
+	return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
+}
+
+type MethodSet []*OperationStore
+
+func (ms MethodSet) GetFirstMatch(params map[string]interface{}) (*OperationStore, bool) {
+	return ms.getFirstMatch(params)
+}
+
+func (ms MethodSet) getFirstMatch(params map[string]interface{}) (*OperationStore, bool) {
+	for _, m := range ms {
+		if m.IsParameterMatch(params) {
+			return m, true
+		}
+	}
+	return nil, false
+}
+
+func (rs *Resource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
+	return rs.getDefaultMethodKeysForSQLVerb(sqlVerb)
+}
+
+func (rs *Resource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, bool) {
+	return rs.getFirstMethodMatchFromSQLVerb(sqlVerb, parameters)
+}
+
+func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, bool) {
+	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
+	if err != nil {
+		return nil, false
+	}
+	return ms.getFirstMatch(parameters)
+}
+
+func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
+	switch strings.ToLower(sqlVerb) {
+	case "insert":
+		return []string{"insert", "create"}
+	case "delete":
+		return []string{"delete"}
+	case "select":
+		return []string{"select", "list", "aggregatedList", "get"}
+	default:
+		return []string{}
+	}
+}
+
+func (rs *Resource) getMethodsForSQLVerb(sqlVerb string) (MethodSet, error) {
+	var retVal MethodSet
+	v, ok := rs.SQLVerbs[sqlVerb]
+	if ok {
+		for _, opt := range v {
+			if opt.Value != nil {
+				retVal = append(retVal, opt.Value)
+			}
+		}
+		if len(retVal) > 0 {
+			return retVal, nil
+		}
+	} else {
+		defaultMethodKeys := rs.getDefaultMethodKeysForSQLVerb(sqlVerb)
+		for _, k := range defaultMethodKeys {
+			m, ok := rs.Methods[k]
+			if ok {
+				retVal = append(retVal, &m)
+			}
+		}
+		if len(retVal) > 0 {
+			return retVal, nil
+		}
+	}
+	return nil, fmt.Errorf("could not resolve SQL verb '%s'", sqlVerb)
 }
 
 func (rs *Resource) GetSelectableObject() string {
