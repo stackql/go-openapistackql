@@ -37,7 +37,7 @@ type RegistryAPI interface {
 	PullAndPersistProviderArchive(string, string) error
 	PullProviderArchive(string, string) (io.ReadCloser, error)
 	ListAllAvailableProviders() (map[string]ProviderDescription, error)
-	ListLocallyAvailableProviders() map[string]struct{}
+	ListLocallyAvailableProviders() map[string]ProviderDescription
 	GetDocBytes(string) ([]byte, error)
 	GetLatestAvailableVersion(string) (string, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
@@ -140,12 +140,8 @@ func newRegistry(registryCfg RegistryConfig, transport http.RoundTripper) (Regis
 	return rv, nil
 }
 
-func (r *Registry) ListLocallyAvailableProviders() map[string]struct{} {
-	rv := make(map[string]struct{})
-	for k := range r.listLocalProviders() {
-		rv[k] = struct{}{}
-	}
-	return rv
+func (r *Registry) ListLocallyAvailableProviders() map[string]ProviderDescription {
+	return r.listLocalProviders()
 }
 
 type ProviderDescription struct {
@@ -401,20 +397,34 @@ func (r *Registry) extractEmbeddedDocs() string {
 	}
 }
 
-func (r *Registry) listLocalProviders() map[string]struct{} {
+type ProviderInfo struct {
+	Name    string
+	Version string
+}
+
+func (r *Registry) listLocalProviders() map[string]ProviderDescription {
 	dr := r.getLocalDocRoot()
 	switch dr {
 	case "":
-		return map[string]struct{}{}
+		return map[string]ProviderDescription{}
 	default:
 		provs, err := os.ReadDir(dr)
 		if err != nil {
-			return map[string]struct{}{}
+			return map[string]ProviderDescription{}
 		}
-		rv := make(map[string]struct{}, len(provs))
+		rv := make(map[string]ProviderDescription)
 		for _, p := range provs {
-			if !strings.HasPrefix(p.Name(), ".") {
-				rv[p.Name()] = struct{}{}
+			if p.IsDir() && !strings.HasPrefix(p.Name(), ".") {
+				versions, err := os.ReadDir(path.Join(dr, p.Name()))
+				var val ProviderDescription
+				if err == nil {
+					for _, v := range versions {
+						if v.IsDir() && !strings.HasPrefix(v.Name(), ".") {
+							val.Versions = append(val.Versions, v.Name())
+						}
+					}
+				}
+				rv[p.Name()] = val
 			}
 		}
 		return rv

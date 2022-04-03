@@ -11,6 +11,7 @@ import (
 	"os"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
@@ -442,29 +443,54 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 	return nil
 }
 
-func (loader *Loader) resolvePathItemRef(doc *Service, component *PathItemRef) (err error) {
-	if component != nil && component.Value != nil {
-		if loader.visitedPathItem == nil {
-			loader.visitedPathItem = make(map[*openapi3.PathItem]struct{})
+func (loader *Loader) resolveContentDefault(content openapi3.Content) (*Schema, bool) {
+	if content == nil {
+		return nil, false
+	}
+	preferredMediaTypes := []string{"application/json", "application/xml", "application/octet-stream"}
+	for _, mt := range preferredMediaTypes {
+		rv, ok := content[mt]
+		if ok && rv != nil && rv.Schema != nil && rv.Schema.Value != nil {
+			return NewSchema(rv.Schema.Value, ""), true
 		}
-		if _, ok := loader.visitedPathItem[component.Value]; ok {
-			return nil
+	}
+	return nil, false
+}
+
+func (loader *Loader) findBestResponseDefault(responses openapi3.Responses) (*openapi3.Response, bool) {
+	var numericKeys []string
+	for k := range responses {
+		code, err := strconv.Atoi(k)
+		if err == nil {
+			if code < 300 {
+				numericKeys = append(numericKeys, k)
+			}
 		}
-		loader.visitedPathItem[component.Value] = struct{}{}
+	}
+	if len(numericKeys) > 0 {
+		sort.Strings(numericKeys)
+		rv, ok := responses[numericKeys[0]]
+		if ok && rv != nil && rv.Value != nil {
+			return rv.Value, true
+		}
+	}
+	rv, ok := responses["default"]
+	if ok && rv != nil && rv.Value != nil {
+		return rv.Value, true
+	}
+	return nil, false
+}
+
+func (loader *Loader) GetDocBytes(responses openapi3.Responses) (*Schema, bool) {
+	if responses == nil {
+		return nil, false
 	}
 
-	if component == nil {
-		return errors.New("invalid operation: value MUST be an object")
+	r, ok := loader.findBestResponseDefault(responses)
+	if !ok || r == nil {
+		return nil, false
 	}
-	ref := component.Ref
-	if ref != "" {
-		p, ok := doc.Paths[ref]
-		if !ok {
-			return fmt.Errorf("cannot find path = '%s'", ref)
-		}
-		component.Value = p
-	}
-	return nil
+	return loader.resolveContentDefault(r.Content)
 }
 
 func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operation, component *ExpectedRequest) (err error) {
@@ -490,7 +516,13 @@ func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operatio
 		s := NewSchema(sRef.Value, sRef.Ref)
 		component.Schema = s
 		return nil
+	} else {
+		sc, ok := loader.resolveContentDefault(op.RequestBody.Value.Content)
+		if ok {
+			component.Schema = sc
+		}
 	}
+
 	return nil
 }
 
@@ -552,6 +584,14 @@ func (loader *Loader) resolveExpectedResponse(doc *Service, op *openapi3.Operati
 		s := NewSchema(sRef.Value, textualRepresentation)
 		component.Schema = s
 		return nil
+	} else {
+		rs, ok := loader.findBestResponseDefault(op.Responses)
+		if ok {
+			sc, ok := loader.resolveContentDefault(rs.Content)
+			if ok {
+				component.Schema = sc
+			}
+		}
 	}
 	return nil
 }
