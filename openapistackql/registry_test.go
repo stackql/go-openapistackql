@@ -74,6 +74,10 @@ func TestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T) {
 	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryCanHandleUnspecifiedResponseWithDefaults)
 }
 
+func TestRegistryCanHandlePolymorphismAllOf(t *testing.T) {
+	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryCanHandlePolymorphismAllOf)
+}
+
 func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
 
 	rc, err := getRegistryCfgFromString(registryConfigStr)
@@ -424,7 +428,64 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 		assert.Equal(t, id.Value.Type, "string")
 	}
 
-	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
+}
+
+func execTestRegistryCanHandlePolymorphismAllOf(t *testing.T, r RegistryAPI) {
+
+	for _, vr := range []string{"v1"} {
+		pr, err := r.LoadProviderByName("github", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		sh, err := pr.GetProviderService("apps")
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, sh != nil)
+
+		sv, err := r.GetServiceFragment(sh, "apps")
+
+		assert.NilError(t, err)
+
+		assert.Assert(t, sv != nil)
+
+		// sn := sv.GetName()
+
+		// assert.Equal(t, sn, "repos")
+
+		rsc, err := sv.GetResource("apps")
+
+		assert.NilError(t, err)
+
+		os, ok := rsc.Methods.FindMethod("create_from_manifest")
+
+		assert.Assert(t, ok)
+
+		assert.Equal(t, os.OperationRef.Value.OperationID, "apps/create-from-manifest")
+
+		assert.Equal(t, os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value.Type, "")
+
+		sVal := NewSchema(os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value, "")
+
+		tab := sVal.Tabulate(false)
+
+		colz := tab.GetColumns()
+
+		for _, expectedProperty := range []string{"pem", "description"} {
+			found := false
+			for _, col := range colz {
+				if col.Name == expectedProperty {
+					found = true
+					break
+				}
+			}
+			assert.Assert(t, found)
+		}
+	}
+
 }
 
 func TestRegistryProviderLatestVersion(t *testing.T) {

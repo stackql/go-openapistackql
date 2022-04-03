@@ -280,8 +280,18 @@ func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescri
 	return cols
 }
 
+func (s *Schema) hasPropertiesOrPolymorphicProperties() bool {
+	if s.Properties != nil && len(s.Properties) > 0 {
+		return true
+	}
+	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
+		return true
+	}
+	return false
+}
+
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
-	if s.Type == "object" || (s.Properties != nil && len(s.Properties) > 0) {
+	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
 		var cols []ColumnDescriptor
 		if !omitColumns {
 			if len(s.Properties) > 0 {
