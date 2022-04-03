@@ -66,6 +66,10 @@ func TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t *tes
 	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs)
 }
 
+func TestRegistryArrayTopLevelResponse(t *testing.T) {
+	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryCanHandleArrayResponts)
+}
+
 func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
 
 	rc, err := getRegistryCfgFromString(registryConfigStr)
@@ -288,6 +292,52 @@ func execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t 
 		assert.Assert(t, ok)
 
 		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.acceleratorTypes.aggregatedList")
+	}
+
+	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
+}
+
+func execTestRegistryCanHandleArrayResponts(t *testing.T, r RegistryAPI) {
+
+	for _, vr := range []string{"v1"} {
+		pr, err := r.LoadProviderByName("github", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		sh, err := pr.GetProviderService("repos")
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, sh != nil)
+
+		sv, err := r.GetServiceFragment(sh, "repos")
+
+		assert.NilError(t, err)
+
+		assert.Assert(t, sv != nil)
+
+		// sn := sv.GetName()
+
+		// assert.Equal(t, sn, "repos")
+
+		rsc, err := sv.GetResource("repos")
+
+		assert.NilError(t, err)
+
+		matchParams := map[string]interface{}{
+			"org": struct{}{},
+		}
+
+		os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
+
+		assert.Assert(t, ok)
+
+		assert.Equal(t, os.OperationRef.Value.OperationID, "repos/list-for-org")
+
+		assert.Equal(t, os.OperationRef.Value.Responses["200"].Value.Content["application/json"].Schema.Value.Type, "array")
 	}
 
 	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")

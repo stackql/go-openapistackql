@@ -263,13 +263,18 @@ func (s *Schema) getOneOfColumns() []ColumnDescriptor {
 
 func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
 	var cols []ColumnDescriptor
+	existingCols := make(map[string]struct{})
 	for k, val := range srs {
-		log.Debugf("processing allOf key number = %d, id = '%s'\n", k, val.Ref)
+		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
 		ss := NewSchema(val.Value, "")
 		st := ss.Tabulate(false)
 		for _, col := range st.GetColumns() {
-			col.Name = fmt.Sprintf("%s_%s", val.Ref, col.Name)
+			_, alreadyExists := existingCols[col.Name]
+			if alreadyExists {
+				col.Name = fmt.Sprintf("%s_%s", val.Ref, col.Name)
+			}
 			cols = append(cols, col)
+			existingCols[col.Name] = struct{}{}
 		}
 	}
 	return cols
