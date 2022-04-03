@@ -338,6 +338,20 @@ func execTestRegistryCanHandleArrayResponts(t *testing.T, r RegistryAPI) {
 		assert.Equal(t, os.OperationRef.Value.OperationID, "repos/list-for-org")
 
 		assert.Equal(t, os.OperationRef.Value.Responses["200"].Value.Content["application/json"].Schema.Value.Type, "array")
+
+		props := os.OperationRef.Value.Responses["200"].Value.Content["application/json"].Schema.Value.Items.Value.Properties
+
+		name, nameExists := props["name"]
+
+		assert.Assert(t, nameExists)
+
+		assert.Equal(t, name.Value.Type, "string")
+
+		sshUrl, sshUrlExists := props["ssh_url"]
+
+		assert.Assert(t, sshUrlExists)
+
+		assert.Equal(t, sshUrl.Value.Type, "string")
 	}
 
 	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
