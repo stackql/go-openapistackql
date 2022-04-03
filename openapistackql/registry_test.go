@@ -70,6 +70,10 @@ func TestRegistryArrayTopLevelResponse(t *testing.T) {
 	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryCanHandleArrayResponts)
 }
 
+func TestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T) {
+	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryCanHandleUnspecifiedResponseWithDefaults)
+}
+
 func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
 
 	rc, err := getRegistryCfgFromString(registryConfigStr)
@@ -352,6 +356,72 @@ func execTestRegistryCanHandleArrayResponts(t *testing.T, r RegistryAPI) {
 		assert.Assert(t, sshUrlExists)
 
 		assert.Equal(t, sshUrl.Value.Type, "string")
+	}
+
+}
+
+func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r RegistryAPI) {
+
+	for _, vr := range []string{"v2.0.1"} {
+		pr, err := r.LoadProviderByName("google", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		sh, err := pr.GetProviderService("compute")
+
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Assert(t, sh != nil)
+
+		sv, err := r.GetServiceFragment(sh, "disks")
+
+		assert.NilError(t, err)
+
+		assert.Assert(t, sv != nil)
+
+		sn := sv.GetName()
+
+		assert.Equal(t, sn, "compute")
+
+		rsc, err := sv.GetResource("disks")
+
+		assert.NilError(t, err)
+
+		matchParams := map[string]interface{}{
+			"project": struct{}{},
+			"zone":    struct{}{},
+		}
+
+		os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
+
+		assert.Assert(t, ok)
+
+		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.disks.list")
+
+		sc, err := os.GetResponseBodySchema()
+
+		assert.NilError(t, err)
+
+		assert.Equal(t, sc.Type, "object")
+
+		items, _ := sc.GetSelectListItems("items")
+
+		assert.Assert(t, items != nil)
+
+		name, nameExists := items.Items.Value.Properties["name"]
+
+		assert.Assert(t, nameExists)
+
+		assert.Equal(t, name.Value.Type, "string")
+
+		id, idExists := items.Items.Value.Properties["id"]
+
+		assert.Assert(t, idExists)
+
+		assert.Equal(t, id.Value.Type, "string")
 	}
 
 	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
