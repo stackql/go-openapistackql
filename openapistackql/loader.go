@@ -163,6 +163,9 @@ func (l *Loader) mergeResource(svc *Service, rsc *Resource, sr *ServiceRef) erro
 		if err != nil {
 			return err
 		}
+		if v.Request == nil && v.OperationRef.Value.RequestBody != nil {
+			v.Request = &ExpectedRequest{}
+		}
 		err = l.resolveExpectedRequest(svc, v.OperationRef.Value, v.Request)
 		if err != nil {
 			return err
