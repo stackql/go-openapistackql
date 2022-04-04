@@ -176,7 +176,7 @@ func (schema *Schema) GetSelectSchema(itemsKey string) (*Schema, string, error) 
 func (schema *Schema) getSelectItemsSchema(key string) (*Schema, string, error) {
 	var itemS *openapi3.Schema
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
-	if strings.HasPrefix(schema.key, "[]") {
+	if strings.HasPrefix(schema.key, "[]") || schema.Type == "array" {
 		rv, err := schema.GetItems()
 		return rv, key, err
 	} else {
