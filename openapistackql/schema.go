@@ -187,23 +187,23 @@ func (schema *Schema) getSelectItemsSchema(key string) (*Schema, string, error) 
 		itemS = propS.Value
 	} else if schema.hasPolymorphicProperties() {
 		if len(schema.AllOf) > 0 {
-			sc := getFatSchema(schema.AllOf)
-			if sc == nil {
+			polySchema := getFatSchema(schema.AllOf)
+			if polySchema == nil {
 				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
 			}
-			itemS = sc.Schema
+			return polySchema, "", nil
 		} else if len(schema.AnyOf) > 0 {
-			sc := getFatSchema(schema.AnyOf)
-			if sc == nil {
+			polySchema := getFatSchema(schema.AnyOf)
+			if polySchema == nil {
 				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
 			}
-			itemS = sc.Schema
+			return polySchema, "", nil
 		} else if len(schema.OneOf) > 0 {
-			sc := getFatSchema(schema.OneOf)
-			if sc == nil {
+			polySchema := getFatSchema(schema.OneOf)
+			if polySchema == nil {
 				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
 			}
-			itemS = sc.Schema
+			return polySchema, "", nil
 		} else {
 			return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
 		}
