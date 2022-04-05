@@ -388,6 +388,19 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 	return retVal
 }
 
+func (s *Schema) getFattnedPolymorphicSchema() *Schema {
+	if len(s.AllOf) > 0 {
+		return getFatSchema(s.AllOf)
+	}
+	if len(s.OneOf) > 0 {
+		return getFatSchema(s.OneOf)
+	}
+	if len(s.AnyOf) > 0 {
+		return getFatSchema(s.AnyOf)
+	}
+	return nil
+}
+
 func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 	if visited == nil {
 		visited = make(map[string]bool)
@@ -397,7 +410,11 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 		return s
 	}
 	remainingPath := strings.TrimPrefix(path, s.key)
-	if s.Type == "object" {
+	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
+		if s.hasPolymorphicProperties() {
+			fs := s.getFattnedPolymorphicSchema()
+			return fs.FindByPath(path, visited)
+		}
 		for k, v := range s.Properties {
 			if v.Ref != "" {
 				isVis, ok := visited[v.Ref]
