@@ -179,12 +179,34 @@ func (schema *Schema) getSelectItemsSchema(key string) (*Schema, string, error) 
 	if strings.HasPrefix(schema.key, "[]") || schema.Type == "array" {
 		rv, err := schema.GetItems()
 		return rv, key, err
-	} else {
+	} else if len(schema.Properties) > 0 {
 		propS, ok := schema.Properties[key]
 		if !ok {
 			return nil, "", fmt.Errorf("could not find items for key = '%s'", key)
 		}
 		itemS = propS.Value
+	} else if schema.hasPolymorphicProperties() {
+		if len(schema.AllOf) > 0 {
+			sc := getFatSchema(schema.AllOf)
+			if sc == nil {
+				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+			}
+			itemS = sc.Schema
+		} else if len(schema.AnyOf) > 0 {
+			sc := getFatSchema(schema.AnyOf)
+			if sc == nil {
+				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+			}
+			itemS = sc.Schema
+		} else if len(schema.OneOf) > 0 {
+			sc := getFatSchema(schema.OneOf)
+			if sc == nil {
+				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+			}
+			itemS = sc.Schema
+		} else {
+			return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+		}
 	}
 	if itemS != nil {
 		s := NewSchema(
@@ -261,33 +283,54 @@ func (s *Schema) getOneOfColumns() []ColumnDescriptor {
 	return s.getAllSchemaRefsColumns(s.OneOf)
 }
 
-func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
-	var cols []ColumnDescriptor
-	existingCols := make(map[string]struct{})
+func getSchemaName(sr *openapi3.SchemaRef) string {
+	spl := strings.Split(sr.Ref, "/")
+	if l := len(spl); l > 0 {
+		return spl[l-1]
+	}
+	return ""
+}
+
+func getFatSchema(srs openapi3.SchemaRefs) *Schema {
+	var rv *Schema
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
 		ss := NewSchema(val.Value, "")
-		st := ss.Tabulate(false)
-		for _, col := range st.GetColumns() {
-			_, alreadyExists := existingCols[col.Name]
+		if rv == nil {
+			rv = ss
+			continue
+		}
+		for k, sRef := range ss.Properties {
+			_, alreadyExists := rv.Properties[k]
 			if alreadyExists {
-				col.Name = fmt.Sprintf("%s_%s", val.Ref, col.Name)
+				cn := fmt.Sprintf("%s_%s", getSchemaName(val), k)
+				rv.Properties[cn] = sRef
+				continue
 			}
-			cols = append(cols, col)
-			existingCols[col.Name] = struct{}{}
+			rv.Properties[k] = sRef
 		}
 	}
-	return cols
+	return rv
+}
+
+func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
+	sc := getFatSchema(srs)
+	st := sc.Tabulate(false)
+	return st.GetColumns()
+}
+
+func (s *Schema) hasPolymorphicProperties() bool {
+	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
+		return true
+	}
+	return false
 }
 
 func (s *Schema) hasPropertiesOrPolymorphicProperties() bool {
 	if s.Properties != nil && len(s.Properties) > 0 {
 		return true
 	}
-	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
-		return true
-	}
-	return false
+	return s.hasPolymorphicProperties()
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
