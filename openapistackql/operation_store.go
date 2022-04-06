@@ -386,23 +386,23 @@ func unmarshalBody(bytes []byte, obj interface{}, contentType string) error {
 	return fmt.Errorf("media type = '%s' not supported", contentType)
 }
 
-func (op *OperationStore) ProcessResponse(body []byte) (interface{}, error) {
-	switch op.Response.Schema.Type {
-	case "string": // (this includes dates and files)
-		return string(body), nil
-	case "number":
-		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-	case "integer":
-		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-	case "boolean":
-		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-	case "array":
-		return marshalBody(body, op.Response.BodyMediaType)
-	case "object":
-		return marshalBody(body, op.Response.BodyMediaType)
-	}
-	return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-}
+// func (op *OperationStore) ProcessResponse(body []byte) (interface{}, error) {
+// 	switch op.Response.Schema.Type {
+// 	case "string": // (this includes dates and files)
+// 		return string(body), nil
+// 	case "number":
+// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// 	case "integer":
+// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// 	case "boolean":
+// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// 	case "array":
+// 		return marshalBody(body, op.Response.BodyMediaType)
+// 	case "object":
+// 		return marshalBody(body, op.Response.BodyMediaType)
+// 	}
+// 	return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// }
 
 func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
@@ -515,4 +515,12 @@ func (op *OperationStore) GetResponseBodySchema() (*Schema, error) {
 		return op.Response.Schema, nil
 	}
 	return nil, fmt.Errorf("no response body for operation =  %s", op.GetName())
+}
+
+func (op *OperationStore) ProcessResponse(response *http.Response) (interface{}, error) {
+	responseSchema, err := op.GetResponseBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	return responseSchema.ProcessHttpResponse(response)
 }

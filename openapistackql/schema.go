@@ -2,11 +2,14 @@ package openapistackql
 
 import (
 	"fmt"
+	"io"
+	"net/http"
 	"reflect"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
+	"github.com/stackql/go-openapistackql/pkg/util"
 )
 
 const (
@@ -449,4 +452,40 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 		return ss
 	}
 	return nil
+}
+
+func (s *Schema) ProcessHttpResponse(response *http.Response) (interface{}, error) {
+	target, err := marshalResponse(response)
+	if err == nil && response.StatusCode >= 400 {
+		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
+	}
+	if err == io.EOF {
+		if response.StatusCode >= 200 && response.StatusCode < 300 {
+			return map[string]interface{}{"result": "The Operation Completed Successfully"}, nil
+		}
+	}
+	switch rv := target.(type) {
+	case string, int:
+		return map[string]interface{}{AnonymousColumnName: []interface{}{rv}}, nil
+	}
+	return target, err
+}
+
+func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response) (map[string]interface{}, error) {
+	target, err := s.ProcessHttpResponse(response)
+	if err != nil {
+		return nil, err
+	}
+	switch rv := target.(type) {
+	case map[string]interface{}:
+		return rv, nil
+	case nil:
+		return nil, nil
+	case string:
+		return map[string]interface{}{AnonymousColumnName: rv}, nil
+	case []byte:
+		return map[string]interface{}{AnonymousColumnName: string(rv)}, nil
+	default:
+		return nil, fmt.Errorf("DeprecatedProcessHttpResponse() cannot acccept response of type %T", rv)
+	}
 }
