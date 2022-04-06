@@ -524,3 +524,11 @@ func (op *OperationStore) ProcessResponse(response *http.Response) (interface{},
 	}
 	return responseSchema.ProcessHttpResponse(response)
 }
+
+func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error) {
+	responseSchema, err := op.GetResponseBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	return responseSchema.DeprecatedProcessHttpResponse(response)
+}
