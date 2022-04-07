@@ -54,9 +54,11 @@ type Schemas map[string]*Schema
 
 func NewSchema(sc *openapi3.Schema, key string) *Schema {
 	var alwaysRequired bool
-	if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
-		if pr, ok := ar.(bool); ok && pr {
-			alwaysRequired = true
+	if sc.Extensions != nil {
+		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
+			if pr, ok := ar.(bool); ok && pr {
+				alwaysRequired = true
+			}
 		}
 	}
 	return &Schema{
