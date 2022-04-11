@@ -295,9 +295,11 @@ func execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t 
 			"project": struct{}{},
 		}
 
-		os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
+		os, remainingParams, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
 
 		assert.Assert(t, ok)
+
+		assert.Assert(t, len(remainingParams) == 0)
 
 		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.acceleratorTypes.aggregatedList")
 	}
@@ -339,9 +341,11 @@ func execTestRegistryCanHandleArrayResponts(t *testing.T, r RegistryAPI) {
 			"org": struct{}{},
 		}
 
-		os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
+		os, remainingParams, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
 
 		assert.Assert(t, ok)
+
+		assert.Assert(t, len(remainingParams) == 0)
 
 		assert.Equal(t, os.OperationRef.Value.OperationID, "repos/list-for-org")
 
@@ -399,9 +403,11 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 			"zone":    struct{}{},
 		}
 
-		os, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
+		os, remainingParams, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", matchParams)
 
 		assert.Assert(t, ok)
+
+		assert.Assert(t, len(remainingParams) == 0)
 
 		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.disks.list")
 

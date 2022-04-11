@@ -81,18 +81,22 @@ type OperationStore struct {
 	parameterizedPath string `json:"-" yaml:"-"`
 }
 
-func (op *OperationStore) IsParameterMatch(params map[string]interface{}) bool {
-	return op.isParameterMatch(params)
+func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
+	return op.parameterMatch(params)
 }
 
-func (op *OperationStore) isParameterMatch(params map[string]interface{}) bool {
+func (op *OperationStore) parameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
+	copiedParams := make(map[string]interface{})
+	for k, v := range params {
+		copiedParams[k] = v
+	}
 	requiredParameters := NewParameterSuffixMap()
 	optionalParameters := NewParameterSuffixMap()
 	for k, v := range op.getRequiredParameters() {
 		key := fmt.Sprintf("%s.%s", op.getName(), k)
 		_, keyExists := requiredParameters.Get(key)
 		if keyExists {
-			return false
+			return copiedParams, false
 		}
 		requiredParameters.Put(key, v)
 	}
@@ -100,24 +104,26 @@ func (op *OperationStore) isParameterMatch(params map[string]interface{}) bool {
 		key := fmt.Sprintf("%s.%s", op.getName(), k)
 		_, keyExists := optionalParameters.Get(key)
 		if keyExists {
-			return false
+			return copiedParams, false
 		}
 		optionalParameters.Put(key, vOpt)
 	}
-	for k := range params {
+	for k := range copiedParams {
 		if requiredParameters.Delete(k) {
+			delete(copiedParams, k)
 			continue
 		}
 		if optionalParameters.Delete(k) {
+			delete(copiedParams, k)
 			continue
 		}
 		log.Debugf("parameter '%s' unmatched for method '%s'\n", k, op.getName())
 	}
 	if requiredParameters.Size() == 0 {
-		return true
+		return copiedParams, true
 	}
 	log.Debugf("unmatched **required** paramter count = %d for method '%s'\n", requiredParameters.Size(), op.getName())
-	return false
+	return copiedParams, false
 }
 
 func (op *OperationStore) GetParameterizedPath() string {
