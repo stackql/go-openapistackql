@@ -70,6 +70,10 @@ func (ms MethodSet) GetFirstMatch(params map[string]interface{}) (*OperationStor
 	return ms.getFirstMatch(params)
 }
 
+func (ms MethodSet) GetFirst() (*OperationStore, bool) {
+	return ms.getFirst()
+}
+
 func (ms MethodSet) getFirstMatch(params map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
 	for _, m := range ms {
 		if remainingParams, ok := m.ParameterMatch(params); ok {
@@ -77,6 +81,13 @@ func (ms MethodSet) getFirstMatch(params map[string]interface{}) (*OperationStor
 		}
 	}
 	return nil, params, false
+}
+
+func (ms MethodSet) getFirst() (*OperationStore, bool) {
+	for _, m := range ms {
+		return m, true
+	}
+	return nil, false
 }
 
 func (rs *Resource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
@@ -93,6 +104,18 @@ func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters ma
 		return nil, parameters, false
 	}
 	return ms.getFirstMatch(parameters)
+}
+
+func (rs *Resource) GetFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, bool) {
+	return rs.getFirstMethodFromSQLVerb(sqlVerb)
+}
+
+func (rs *Resource) getFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, bool) {
+	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
+	if err != nil {
+		return nil, false
+	}
+	return ms.getFirst()
 }
 
 func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
