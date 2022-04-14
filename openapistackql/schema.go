@@ -356,7 +356,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			return NewSchema(items, "").Tabulate(false)
+			return NewSchema(items, "").Tabulate(omitColumns)
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
