@@ -373,7 +373,7 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 	if s.Type == "array" {
 		items := s.Items.Value
 		if items != nil {
-			return NewSchema(items, "").toFlatDescriptionMap(extended)
+			return NewSchema(items, "").ToDescriptionMap(extended)
 		}
 	}
 	if s.Type == "object" {
