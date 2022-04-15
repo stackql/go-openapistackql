@@ -81,18 +81,22 @@ type OperationStore struct {
 	parameterizedPath string `json:"-" yaml:"-"`
 }
 
-func (op *OperationStore) IsParameterMatch(params map[string]interface{}) bool {
-	return op.isParameterMatch(params)
+func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
+	return op.parameterMatch(params)
 }
 
-func (op *OperationStore) isParameterMatch(params map[string]interface{}) bool {
+func (op *OperationStore) parameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
+	copiedParams := make(map[string]interface{})
+	for k, v := range params {
+		copiedParams[k] = v
+	}
 	requiredParameters := NewParameterSuffixMap()
 	optionalParameters := NewParameterSuffixMap()
 	for k, v := range op.getRequiredParameters() {
 		key := fmt.Sprintf("%s.%s", op.getName(), k)
 		_, keyExists := requiredParameters.Get(key)
 		if keyExists {
-			return false
+			return copiedParams, false
 		}
 		requiredParameters.Put(key, v)
 	}
@@ -100,24 +104,26 @@ func (op *OperationStore) isParameterMatch(params map[string]interface{}) bool {
 		key := fmt.Sprintf("%s.%s", op.getName(), k)
 		_, keyExists := optionalParameters.Get(key)
 		if keyExists {
-			return false
+			return copiedParams, false
 		}
 		optionalParameters.Put(key, vOpt)
 	}
-	for k := range params {
+	for k := range copiedParams {
 		if requiredParameters.Delete(k) {
+			delete(copiedParams, k)
 			continue
 		}
 		if optionalParameters.Delete(k) {
+			delete(copiedParams, k)
 			continue
 		}
 		log.Debugf("parameter '%s' unmatched for method '%s'\n", k, op.getName())
 	}
 	if requiredParameters.Size() == 0 {
-		return true
+		return copiedParams, true
 	}
 	log.Debugf("unmatched **required** paramter count = %d for method '%s'\n", requiredParameters.Size(), op.getName())
-	return false
+	return copiedParams, false
 }
 
 func (op *OperationStore) GetParameterizedPath() string {
@@ -386,23 +392,23 @@ func unmarshalBody(bytes []byte, obj interface{}, contentType string) error {
 	return fmt.Errorf("media type = '%s' not supported", contentType)
 }
 
-func (op *OperationStore) ProcessResponse(body []byte) (interface{}, error) {
-	switch op.Response.Schema.Type {
-	case "string": // (this includes dates and files)
-		return string(body), nil
-	case "number":
-		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-	case "integer":
-		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-	case "boolean":
-		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-	case "array":
-		return marshalBody(body, op.Response.BodyMediaType)
-	case "object":
-		return marshalBody(body, op.Response.BodyMediaType)
-	}
-	return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-}
+// func (op *OperationStore) ProcessResponse(body []byte) (interface{}, error) {
+// 	switch op.Response.Schema.Type {
+// 	case "string": // (this includes dates and files)
+// 		return string(body), nil
+// 	case "number":
+// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// 	case "integer":
+// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// 	case "boolean":
+// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// 	case "array":
+// 		return marshalBody(body, op.Response.BodyMediaType)
+// 	case "object":
+// 		return marshalBody(body, op.Response.BodyMediaType)
+// 	}
+// 	return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
+// }
 
 func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
@@ -515,4 +521,20 @@ func (op *OperationStore) GetResponseBodySchema() (*Schema, error) {
 		return op.Response.Schema, nil
 	}
 	return nil, fmt.Errorf("no response body for operation =  %s", op.GetName())
+}
+
+func (op *OperationStore) ProcessResponse(response *http.Response) (interface{}, error) {
+	responseSchema, err := op.GetResponseBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	return responseSchema.ProcessHttpResponse(response)
+}
+
+func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error) {
+	responseSchema, err := op.GetResponseBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	return responseSchema.DeprecatedProcessHttpResponse(response)
 }

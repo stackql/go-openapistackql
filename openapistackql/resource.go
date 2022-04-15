@@ -66,33 +66,56 @@ func (rsc Resource) JSONLookup(token string) (interface{}, error) {
 
 type MethodSet []*OperationStore
 
-func (ms MethodSet) GetFirstMatch(params map[string]interface{}) (*OperationStore, bool) {
+func (ms MethodSet) GetFirstMatch(params map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
 	return ms.getFirstMatch(params)
 }
 
-func (ms MethodSet) getFirstMatch(params map[string]interface{}) (*OperationStore, bool) {
+func (ms MethodSet) GetFirst() (*OperationStore, string, bool) {
+	return ms.getFirst()
+}
+
+func (ms MethodSet) getFirstMatch(params map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
 	for _, m := range ms {
-		if m.IsParameterMatch(params) {
-			return m, true
+		if remainingParams, ok := m.ParameterMatch(params); ok {
+			return m, remainingParams, true
 		}
 	}
-	return nil, false
+	return nil, params, false
+}
+
+func (ms MethodSet) getFirst() (*OperationStore, string, bool) {
+	for _, m := range ms {
+		return m, m.getName(), true
+	}
+	return nil, "", false
 }
 
 func (rs *Resource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	return rs.getDefaultMethodKeysForSQLVerb(sqlVerb)
 }
 
-func (rs *Resource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, bool) {
+func (rs *Resource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
 	return rs.getFirstMethodMatchFromSQLVerb(sqlVerb, parameters)
 }
 
-func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, bool) {
+func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
 	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
 	if err != nil {
-		return nil, false
+		return nil, parameters, false
 	}
 	return ms.getFirstMatch(parameters)
+}
+
+func (rs *Resource) GetFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, string, bool) {
+	return rs.getFirstMethodFromSQLVerb(sqlVerb)
+}
+
+func (rs *Resource) getFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, string, bool) {
+	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
+	if err != nil {
+		return nil, "", false
+	}
+	return ms.getFirst()
 }
 
 func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {

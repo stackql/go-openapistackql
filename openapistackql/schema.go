@@ -2,11 +2,14 @@ package openapistackql
 
 import (
 	"fmt"
+	"io"
+	"net/http"
 	"reflect"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
+	"github.com/stackql/go-openapistackql/pkg/util"
 )
 
 const (
@@ -51,9 +54,11 @@ type Schemas map[string]*Schema
 
 func NewSchema(sc *openapi3.Schema, key string) *Schema {
 	var alwaysRequired bool
-	if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
-		if pr, ok := ar.(bool); ok && pr {
-			alwaysRequired = true
+	if sc.Extensions != nil {
+		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
+			if pr, ok := ar.(bool); ok && pr {
+				alwaysRequired = true
+			}
 		}
 	}
 	return &Schema{
@@ -176,15 +181,37 @@ func (schema *Schema) GetSelectSchema(itemsKey string) (*Schema, string, error) 
 func (schema *Schema) getSelectItemsSchema(key string) (*Schema, string, error) {
 	var itemS *openapi3.Schema
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
-	if strings.HasPrefix(schema.key, "[]") {
+	if strings.HasPrefix(schema.key, "[]") || schema.Type == "array" {
 		rv, err := schema.GetItems()
 		return rv, key, err
-	} else {
+	} else if len(schema.Properties) > 0 {
 		propS, ok := schema.Properties[key]
 		if !ok {
 			return nil, "", fmt.Errorf("could not find items for key = '%s'", key)
 		}
 		itemS = propS.Value
+	} else if schema.hasPolymorphicProperties() {
+		if len(schema.AllOf) > 0 {
+			polySchema := getFatSchema(schema.AllOf)
+			if polySchema == nil {
+				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+			}
+			return polySchema, "", nil
+		} else if len(schema.AnyOf) > 0 {
+			polySchema := getFatSchema(schema.AnyOf)
+			if polySchema == nil {
+				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+			}
+			return polySchema, "", nil
+		} else if len(schema.OneOf) > 0 {
+			polySchema := getFatSchema(schema.OneOf)
+			if polySchema == nil {
+				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+			}
+			return polySchema, "", nil
+		} else {
+			return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
+		}
 	}
 	if itemS != nil {
 		s := NewSchema(
@@ -261,33 +288,54 @@ func (s *Schema) getOneOfColumns() []ColumnDescriptor {
 	return s.getAllSchemaRefsColumns(s.OneOf)
 }
 
-func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
-	var cols []ColumnDescriptor
-	existingCols := make(map[string]struct{})
+func getSchemaName(sr *openapi3.SchemaRef) string {
+	spl := strings.Split(sr.Ref, "/")
+	if l := len(spl); l > 0 {
+		return spl[l-1]
+	}
+	return ""
+}
+
+func getFatSchema(srs openapi3.SchemaRefs) *Schema {
+	var rv *Schema
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
 		ss := NewSchema(val.Value, "")
-		st := ss.Tabulate(false)
-		for _, col := range st.GetColumns() {
-			_, alreadyExists := existingCols[col.Name]
+		if rv == nil {
+			rv = ss
+			continue
+		}
+		for k, sRef := range ss.Properties {
+			_, alreadyExists := rv.Properties[k]
 			if alreadyExists {
-				col.Name = fmt.Sprintf("%s_%s", val.Ref, col.Name)
+				cn := fmt.Sprintf("%s_%s", getSchemaName(val), k)
+				rv.Properties[cn] = sRef
+				continue
 			}
-			cols = append(cols, col)
-			existingCols[col.Name] = struct{}{}
+			rv.Properties[k] = sRef
 		}
 	}
-	return cols
+	return rv
+}
+
+func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
+	sc := getFatSchema(srs)
+	st := sc.Tabulate(false)
+	return st.GetColumns()
+}
+
+func (s *Schema) hasPolymorphicProperties() bool {
+	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
+		return true
+	}
+	return false
 }
 
 func (s *Schema) hasPropertiesOrPolymorphicProperties() bool {
 	if s.Properties != nil && len(s.Properties) > 0 {
 		return true
 	}
-	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
-		return true
-	}
-	return false
+	return s.hasPolymorphicProperties()
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
@@ -308,7 +356,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			return NewSchema(items, "").Tabulate(false)
+			return NewSchema(items, "").Tabulate(omitColumns)
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
@@ -325,7 +373,7 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 	if s.Type == "array" {
 		items := s.Items.Value
 		if items != nil {
-			return NewSchema(items, "").toFlatDescriptionMap(extended)
+			return NewSchema(items, "").ToDescriptionMap(extended)
 		}
 	}
 	if s.Type == "object" {
@@ -345,6 +393,19 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 	return retVal
 }
 
+func (s *Schema) getFattnedPolymorphicSchema() *Schema {
+	if len(s.AllOf) > 0 {
+		return getFatSchema(s.AllOf)
+	}
+	if len(s.OneOf) > 0 {
+		return getFatSchema(s.OneOf)
+	}
+	if len(s.AnyOf) > 0 {
+		return getFatSchema(s.AnyOf)
+	}
+	return nil
+}
+
 func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 	if visited == nil {
 		visited = make(map[string]bool)
@@ -354,7 +415,11 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 		return s
 	}
 	remainingPath := strings.TrimPrefix(path, s.key)
-	if s.Type == "object" {
+	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
+		if s.hasPolymorphicProperties() {
+			fs := s.getFattnedPolymorphicSchema()
+			return fs.FindByPath(path, visited)
+		}
 		for k, v := range s.Properties {
 			if v.Ref != "" {
 				isVis, ok := visited[v.Ref]
@@ -389,4 +454,40 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 		return ss
 	}
 	return nil
+}
+
+func (s *Schema) ProcessHttpResponse(response *http.Response) (interface{}, error) {
+	target, err := marshalResponse(response)
+	if err == nil && response.StatusCode >= 400 {
+		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
+	}
+	if err == io.EOF {
+		if response.StatusCode >= 200 && response.StatusCode < 300 {
+			return map[string]interface{}{"result": "The Operation Completed Successfully"}, nil
+		}
+	}
+	switch rv := target.(type) {
+	case string, int:
+		return map[string]interface{}{AnonymousColumnName: []interface{}{rv}}, nil
+	}
+	return target, err
+}
+
+func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response) (map[string]interface{}, error) {
+	target, err := s.ProcessHttpResponse(response)
+	if err != nil {
+		return nil, err
+	}
+	switch rv := target.(type) {
+	case map[string]interface{}:
+		return rv, nil
+	case nil:
+		return nil, nil
+	case string:
+		return map[string]interface{}{AnonymousColumnName: rv}, nil
+	case []byte:
+		return map[string]interface{}{AnonymousColumnName: string(rv)}, nil
+	default:
+		return nil, fmt.Errorf("DeprecatedProcessHttpResponse() cannot acccept response of type %T", rv)
+	}
 }
