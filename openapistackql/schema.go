@@ -191,27 +191,11 @@ func (schema *Schema) getSelectItemsSchema(key string) (*Schema, string, error) 
 		}
 		itemS = propS.Value
 	} else if schema.hasPolymorphicProperties() {
-		if len(schema.AllOf) > 0 {
-			polySchema := getFatSchema(schema.AllOf)
-			if polySchema == nil {
-				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
-			}
-			return polySchema, "", nil
-		} else if len(schema.AnyOf) > 0 {
-			polySchema := getFatSchema(schema.AnyOf)
-			if polySchema == nil {
-				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
-			}
-			return polySchema, "", nil
-		} else if len(schema.OneOf) > 0 {
-			polySchema := getFatSchema(schema.OneOf)
-			if polySchema == nil {
-				return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
-			}
-			return polySchema, "", nil
-		} else {
+		polySchema := schema.getFattnedPolymorphicSchema()
+		if polySchema == nil {
 			return nil, "", fmt.Errorf("polymorphic select reposnse parse failed")
 		}
+		return polySchema, "", nil
 	}
 	if itemS != nil {
 		s := NewSchema(
@@ -387,8 +371,8 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 		}
 		return retVal
 	}
-	if len(s.AllOf) > 0 {
-		fs := getFatSchema(s.AllOf)
+	if s.hasPolymorphicProperties() {
+		fs := s.getFattnedPolymorphicSchema()
 		for k, v := range fs.Properties {
 			p := v.Value
 			if p != nil {
