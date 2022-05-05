@@ -387,6 +387,18 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 		}
 		return retVal
 	}
+	if len(s.AllOf) > 0 {
+		fs := getFatSchema(s.AllOf)
+		for k, v := range fs.Properties {
+			p := v.Value
+			if p != nil {
+				pm := NewSchema(p, "").toFlatDescriptionMap(extended)
+				pm["name"] = k
+				retVal[k] = pm
+			}
+		}
+		return retVal
+	}
 	atomicMap := s.toFlatDescriptionMap(extended)
 	atomicMap["name"] = AnonymousColumnName
 	retVal[AnonymousColumnName] = atomicMap
