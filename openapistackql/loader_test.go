@@ -21,7 +21,7 @@ func setupFileRoot(t *testing.T) {
 
 func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 	setupFileRoot(t)
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		b, err := GetServiceDocBytes(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -41,7 +41,7 @@ func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 	setupFileRoot(t)
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		b, err := GetServiceDocBytes(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -70,7 +70,7 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 
 func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 	setupFileRoot(t)
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		b, err := GetServiceDocBytes(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -110,7 +110,7 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 
 func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 	setupFileRoot(t)
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		b, err := GetServiceDocBytes(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -154,9 +154,55 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
 }
 
-func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
+func TestSimpleAWSec2ServiceJsonReadAndDumpString(t *testing.T) {
 	setupFileRoot(t)
 	for _, vr := range testableVersions {
+		b, err := GetServiceDocBytes(fmt.Sprintf("aws/%s/services/ec2.yaml", vr))
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		l := NewLoader()
+
+		svc, err := l.LoadFromBytes(b)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		assert.Equal(t, svc.GetName(), "ec2")
+
+		outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/ec2.json")
+
+		assert.NilError(t, err)
+
+		b, err = json.MarshalIndent(svc, "", "  ")
+
+		assert.NilError(t, err)
+
+		assert.Assert(t, b != nil)
+
+		f, err := os.OpenFile(outFile, os.O_TRUNC|os.O_RDWR|os.O_CREATE, 0666)
+		assert.NilError(t, err)
+
+		f.Write(b)
+		f.Close()
+
+		// ob, err := os.ReadFile(outFile)
+		// assert.NilError(t, err)
+
+		// var sv Service
+		// err = json.Unmarshal(ob, &sv)
+		// assert.NilError(t, err)
+
+		// assert.Assert(t, sv.Components.Schemas != nil)
+	}
+
+	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
+}
+
+func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
+	setupFileRoot(t)
+	for _, vr := range deprecatedTestableVersions {
 		b, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/services-split/compute/compute-v1.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -203,7 +249,7 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 	setupFileRoot(t)
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 
 		b, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/resources/compute-v1.yaml", vr))
 		if err != nil {
@@ -226,7 +272,7 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	setupFileRoot(t)
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		pr, err := LoadProviderByName("googleapis.com", vr)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -248,7 +294,7 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 
 	setupFileRoot(t)
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 
 		pr, err := LoadProviderByName("googleapis.com", vr)
 		if err != nil {
@@ -287,7 +333,7 @@ func TestIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 
 	setupFileRoot(t)
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 
 		pr, err := LoadProviderByName("googleapis.com", vr)
 		if err != nil {

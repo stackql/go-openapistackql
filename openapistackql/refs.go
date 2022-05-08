@@ -55,7 +55,13 @@ func (opr OperationRef) extractServiceDocPath() string {
 
 func (opr OperationRef) extractFragment() string {
 	s := opr.Ref
+	if strings.HasPrefix(s, "#") {
+		return s[1:]
+	}
 	elems := strings.Split(s, "#")
+	if len(elems) > 2 {
+		return strings.Join(elems[2:], "#")
+	}
 	return elems[len(elems)-1]
 }
 
