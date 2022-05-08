@@ -175,6 +175,16 @@ func TestSimpleAWSec2ServiceJsonReadAndDumpString(t *testing.T) {
 
 		assert.NilError(t, err)
 
+		inst, err := svc.GetResource("instances")
+
+		assert.NilError(t, err)
+
+		opStore, err := inst.FindMethod("describeInstances")
+
+		assert.NilError(t, err)
+
+		assert.Assert(t, opStore != nil)
+
 		b, err = json.MarshalIndent(svc, "", "  ")
 
 		assert.NilError(t, err)
