@@ -14,7 +14,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 
-	openapirouter "github.com/getkin/kin-openapi/routers/gorillamux"
+	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 
 	log "github.com/sirupsen/logrus"
 
@@ -440,7 +440,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 			}
 		}
 	}
-	router, err := openapirouter.NewRouter(parentDoc.GetT())
+	router, err := queryrouter.NewRouter(parentDoc.GetT())
 	if err != nil {
 		return nil, err
 	}
