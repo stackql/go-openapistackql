@@ -14,7 +14,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 
-	"github.com/stackql/go-openapistackql/pkg/queryrouter"
+	openapirouter "github.com/getkin/kin-openapi/routers/gorillamux"
 
 	log "github.com/sirupsen/logrus"
 
@@ -440,7 +440,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 			}
 		}
 	}
-	router, err := queryrouter.NewRouter(parentDoc.GetT())
+	router, err := openapirouter.NewRouter(parentDoc.GetT())
 	if err != nil {
 		return nil, err
 	}
@@ -463,6 +463,13 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	sv = strings.TrimSuffix(sv, "/")
 	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.extractPathItem()), pathParams)
 	u, err := url.Parse(fmt.Sprintf("%s?%s", path, q.Encode()))
+	if strings.Contains(path, "?") {
+		if len(q) > 0 {
+			u, err = url.Parse(fmt.Sprintf("%s&%s", path, q.Encode()))
+		} else {
+			u, err = url.Parse(path)
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
