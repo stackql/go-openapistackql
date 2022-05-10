@@ -14,6 +14,7 @@ const (
 	MediaTypeOctetStream string = "application/octet-stream"
 	MediaTypeTextPlain   string = "text/plain"
 	MediaTypeXML         string = "application/xml"
+	MediaTypeTextXML     string = "text/xml"
 )
 
 func IsAcceptableMediaType(mediaType string) bool {
@@ -62,7 +63,7 @@ func marshalResponse(r *http.Response) (interface{}, error) {
 	switch mediaType {
 	case MediaTypeJson:
 		err = json.NewDecoder(body).Decode(&target)
-	case MediaTypeXML:
+	case MediaTypeXML, MediaTypeTextXML:
 		err = xml.NewDecoder(body).Decode(&target)
 	case MediaTypeOctetStream:
 		target, err = io.ReadAll(body)
