@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver v1.4.2
+	github.com/clbanning/mxj/v2 v2.5.5
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/jsonpointer v0.19.5
