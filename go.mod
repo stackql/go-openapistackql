@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver v1.4.2
+	github.com/antchfx/xmlquery v1.3.10
 	github.com/clbanning/mxj/v2 v2.5.5
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
@@ -22,9 +23,11 @@ require (
 )
 
 require (
+	github.com/antchfx/xpath v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-openapi/swag v0.19.5 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
+	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect

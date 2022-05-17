@@ -1,12 +1,8 @@
 package openapistackql
 
 import (
-	"encoding/json"
-	"io"
 	"mime"
 	"net/http"
-
-	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
 
 const (
@@ -47,35 +43,4 @@ func getResponseMediaType(r *http.Response) (string, error) {
 		return mediaType, nil
 	}
 	return "", nil
-}
-
-func marshalResponse(r *http.Response) (interface{}, error) {
-	body := r.Body
-	if body != nil {
-		defer body.Close()
-	} else {
-		return nil, nil
-	}
-	var target interface{}
-	mediaType, err := getResponseMediaType(r)
-	if err != nil {
-		return nil, err
-	}
-	switch mediaType {
-	case MediaTypeJson:
-		err = json.NewDecoder(body).Decode(&target)
-	case MediaTypeXML, MediaTypeTextXML:
-		target, err = xmlmap.Unmarshal(body)
-	case MediaTypeOctetStream:
-		target, err = io.ReadAll(body)
-	case MediaTypeTextPlain, MediaTypeHTML:
-		var b []byte
-		b, err = io.ReadAll(body)
-		if err == nil {
-			target = string(b)
-		}
-	default:
-		target, err = io.ReadAll(body)
-	}
-	return target, err
 }

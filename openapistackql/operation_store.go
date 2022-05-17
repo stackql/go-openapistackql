@@ -13,12 +13,16 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
-
-	openapirouter "github.com/getkin/kin-openapi/routers/gorillamux"
+	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
+	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 
 	log "github.com/sirupsen/logrus"
 
 	"vitess.io/vitess/go/sqltypes"
+)
+
+const (
+	defaultSelectItemsKey = "items"
 )
 
 type Methods map[string]OperationStore
@@ -177,10 +181,21 @@ func (m *OperationStore) KeyExists(lhs string) bool {
 }
 
 func (m *OperationStore) GetSelectItemsKey() string {
+	return m.getSelectItemsKeyLegacy()
+}
+
+func (m *OperationStore) getSelectItemsKeyLegacy() string {
 	if m.Response != nil {
 		return m.Response.ObjectKey
 	}
 	return ""
+}
+
+func (m *OperationStore) getSelectItemsPath() []string {
+	if m.Response != nil {
+		return openapitoxpath.ToPathSlice(m.Response.ObjectKey)
+	}
+	return openapitoxpath.ToPathSlice(defaultSelectItemsKey)
 }
 
 func (m *OperationStore) GetKey(lhs string) (interface{}, error) {
@@ -440,7 +455,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 			}
 		}
 	}
-	router, err := openapirouter.NewRouter(parentDoc.GetT())
+	router, err := queryrouter.NewRouter(parentDoc.GetT())
 	if err != nil {
 		return nil, err
 	}

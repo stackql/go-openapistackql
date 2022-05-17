@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -9,7 +10,9 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
+	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
 	"github.com/stackql/go-openapistackql/pkg/util"
+	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
 
 const (
@@ -70,6 +73,14 @@ func NewSchema(sc *openapi3.Schema, key string) *Schema {
 
 func (s *Schema) GetProperties() (Schemas, error) {
 	retVal := make(Schemas)
+	if s.hasPolymorphicProperties() {
+		ss := s.getFattnedPolymorphicSchema()
+		if ss != nil {
+			for k, sr := range ss.Properties {
+				retVal[k] = NewSchema(sr.Value, k)
+			}
+		}
+	}
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, k)
 	}
@@ -94,6 +105,17 @@ func (s *Schema) IsRequired(key string) bool {
 	return false
 }
 
+func (s *Schema) getDescendent(path []string) (*Schema, bool) {
+	if len(path) == 0 || (len(path) == 1 && path[0] == "") {
+		return s, true
+	}
+	p, ok := s.getProperty(path[0])
+	if !ok {
+		return nil, false
+	}
+	return p.getDescendent(path[1:])
+}
+
 func (s *Schema) GetItems() (*Schema, error) {
 	if s.Items != nil && s.Items.Value != nil {
 		itemsPathSplit := strings.Split(s.Items.Ref, "/")
@@ -103,11 +125,26 @@ func (s *Schema) GetItems() (*Schema, error) {
 }
 
 func (s *Schema) GetProperty(propertyKey string) (*Schema, error) {
-	sc, ok := s.Properties[propertyKey]
+	rv, ok := s.getProperty(propertyKey)
 	if !ok {
-		return nil, fmt.Errorf("Schema.GetProperty() failure")
+		return nil, fmt.Errorf("failed to get property '%s'", propertyKey)
 	}
-	return NewSchema(sc.Value, propertyKey), nil
+	return rv, nil
+}
+
+func (s *Schema) getProperty(propertyKey string) (*Schema, bool) {
+	var sc *openapi3.SchemaRef
+	var ok bool
+	if s.hasPolymorphicProperties() {
+		polySchema := s.getFattnedPolymorphicSchema()
+		sc, ok = polySchema.Properties[propertyKey]
+	} else {
+		sc, ok = s.Properties[propertyKey]
+	}
+	if !ok {
+		return nil, false
+	}
+	return NewSchema(sc.Value, propertyKey), true
 }
 
 func (s *Schema) IsIntegral() bool {
@@ -147,6 +184,10 @@ func (sc *Schema) GetItemsSchema() (*Schema, error) {
 }
 
 func (schema *Schema) GetSelectListItems(key string) (*Schema, string) {
+	return schema.getSelectListItems(key)
+}
+
+func (schema *Schema) getSelectListItems(key string) (*Schema, string) {
 	propS, ok := schema.Properties[key]
 	if !ok {
 		return nil, ""
@@ -452,8 +493,147 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 	return nil
 }
 
+func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser) (interface{}, error) {
+	target, err := xmlmap.Unmarshal(body)
+	if err != nil {
+		return nil, err
+	}
+	properties, err := s.GetProperties()
+	if err != nil {
+		return nil, err
+	}
+	rv := make(map[string]interface{})
+	for k, v := range properties {
+		pr, err := target.Attributes(k)
+		if err != nil {
+			return nil, err
+		}
+		if len(pr) > 0 {
+			if v.Type == "array" {
+				rv[k] = pr
+			}
+			rv[k] = pr[0]
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	return rv, err
+}
+
+func (s *Schema) unmarshalXMLResponseAtPath(body io.ReadCloser, path string) (interface{}, error) {
+	pathSplit := openapitoxpath.ToPathSlice(path)
+	ss, ok := s.getDescendent(pathSplit)
+	if !ok {
+		return nil, fmt.Errorf("no descendent fond for path: '%s'", path)
+	}
+	p, err := xmlmap.GetSubObj(body, openapitoxpath.ToXpath(pathSplit))
+	if err != nil {
+		return nil, err
+	}
+	switch ss.Type {
+	case "array":
+		return p, nil
+	default:
+
+	}
+
+	target, err := xmlmap.Unmarshal(body)
+	if err != nil {
+		return nil, err
+	}
+	properties, err := s.GetProperties()
+	if err != nil {
+		return nil, err
+	}
+	rv := make(map[string]interface{})
+	for k, v := range properties {
+		pr, err := target.Attributes(k)
+		if err != nil {
+			return nil, err
+		}
+		if len(pr) > 0 {
+			if v.Type == "array" {
+				rv[k] = pr
+			}
+			rv[k] = pr[0]
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	return rv, err
+}
+
+func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
+	body := r.Body
+	if body != nil {
+		defer body.Close()
+	} else {
+		return nil, nil
+	}
+	var target interface{}
+	mediaType, err := getResponseMediaType(r)
+	if err != nil {
+		return nil, err
+	}
+	switch mediaType {
+	case MediaTypeJson:
+		err = json.NewDecoder(body).Decode(&target)
+	case MediaTypeXML, MediaTypeTextXML:
+		target, err = s.unmarshalXMLResponseBody(body)
+	case MediaTypeOctetStream:
+		target, err = io.ReadAll(body)
+	case MediaTypeTextPlain, MediaTypeHTML:
+		var b []byte
+		b, err = io.ReadAll(body)
+		if err == nil {
+			target = string(b)
+		}
+	default:
+		target, err = io.ReadAll(body)
+	}
+	return target, err
+}
+
+func (s *Schema) unmarshalResponseAtPath(r *http.Response, path []string) (interface{}, error) {
+	xm, err := xmlmap.GetSubObj(r.Body, openapitoxpath.ToXpath(path))
+	if err != nil {
+		return nil, err
+	}
+	log.Debugf("%v\n", xm)
+
+	mediaType, err := getResponseMediaType(r)
+	if err != nil {
+		return nil, err
+	}
+	switch mediaType {
+	case MediaTypeXML, MediaTypeTextXML:
+		return s.unmarshalXMLResponseBody(r.Body)
+	default:
+		return s.unmarshalResponse(r)
+	}
+}
+
 func (s *Schema) ProcessHttpResponse(response *http.Response) (interface{}, error) {
-	target, err := marshalResponse(response)
+	target, err := s.unmarshalResponse(response)
+	if err == nil && response.StatusCode >= 400 {
+		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
+	}
+	if err == io.EOF {
+		if response.StatusCode >= 200 && response.StatusCode < 300 {
+			return map[string]interface{}{"result": "The Operation Completed Successfully"}, nil
+		}
+	}
+	switch rv := target.(type) {
+	case string, int:
+		return map[string]interface{}{AnonymousColumnName: []interface{}{rv}}, nil
+	}
+	return target, err
+}
+
+func (s *Schema) ProcessHttpResponseFromPath(response *http.Response, path []string) (interface{}, error) {
+	target, err := s.unmarshalResponse(response)
 	if err == nil && response.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
 	}
