@@ -72,6 +72,10 @@ func NewSchema(sc *openapi3.Schema, key string) *Schema {
 }
 
 func (s *Schema) GetProperties() (Schemas, error) {
+	return s.getProperties(), nil
+}
+
+func (s *Schema) getProperties() Schemas {
 	retVal := make(Schemas)
 	if s.hasPolymorphicProperties() {
 		ss := s.getFattnedPolymorphicSchema()
@@ -84,7 +88,7 @@ func (s *Schema) GetProperties() (Schemas, error) {
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, k)
 	}
-	return retVal, nil
+	return retVal
 }
 
 func getPathSuffix(path string) string {
@@ -105,15 +109,27 @@ func (s *Schema) IsRequired(key string) bool {
 	return false
 }
 
-func (s *Schema) getDescendent(path []string) (*Schema, bool) {
+func (s *Schema) getXMLChild(path string) (*Schema, bool) {
+	for _, v := range s.getProperties() {
+		if v.getXmlAlias() == path {
+			return v, true
+		}
+	}
+	return nil, false
+}
+
+func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	if len(path) == 0 || (len(path) == 1 && path[0] == "") {
 		return s, true
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
-		return nil, false
+		p, ok = s.getXMLChild(path[0])
+		if !ok {
+			return nil, false
+		}
 	}
-	return p.getDescendent(path[1:])
+	return p.getXMLDescendent(path[1:])
 }
 
 func (s *Schema) GetItems() (*Schema, error) {
@@ -321,8 +337,38 @@ func getSchemaName(sr *openapi3.SchemaRef) string {
 	return ""
 }
 
-func getFatSchema(srs openapi3.SchemaRefs) *Schema {
-	var rv *Schema
+func (s *Schema) GetXmlAlias() string {
+	return s.getXmlAlias()
+}
+
+func (s *Schema) getXmlAlias() string {
+	switch xml := s.XML.(type) {
+	case map[string]interface{}:
+		name, ok := xml["name"]
+		if ok {
+			switch name := name.(type) {
+			case string:
+				return name
+			}
+		}
+	}
+	for _, ao := range s.AllOf {
+		if ao.Value != nil {
+			aos := NewSchema(ao.Value, "")
+			name := aos.getXmlAlias()
+			if name != "" {
+				return name
+			}
+		}
+	}
+	return ""
+}
+
+func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
+	rv := NewSchema(s.Schema, s.key)
+	if rv.Properties == nil {
+		rv.Properties = make(openapi3.Schemas)
+	}
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
 		ss := NewSchema(val.Value, "")
@@ -344,7 +390,7 @@ func getFatSchema(srs openapi3.SchemaRefs) *Schema {
 }
 
 func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
-	sc := getFatSchema(srs)
+	sc := s.getFatSchema(srs)
 	st := sc.Tabulate(false)
 	return st.GetColumns()
 }
@@ -432,13 +478,13 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 
 func (s *Schema) getFattnedPolymorphicSchema() *Schema {
 	if len(s.AllOf) > 0 {
-		return getFatSchema(s.AllOf)
+		return s.getFatSchema(s.AllOf)
 	}
 	if len(s.OneOf) > 0 {
-		return getFatSchema(s.OneOf)
+		return s.getFatSchema(s.OneOf)
 	}
 	if len(s.AnyOf) > 0 {
-		return getFatSchema(s.AnyOf)
+		return s.getFatSchema(s.AnyOf)
 	}
 	return nil
 }
@@ -523,7 +569,7 @@ func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser) (interface{}, erro
 
 func (s *Schema) unmarshalXMLResponseAtPath(body io.ReadCloser, path string) (interface{}, error) {
 	pathSplit := openapitoxpath.ToPathSlice(path)
-	ss, ok := s.getDescendent(pathSplit)
+	ss, ok := s.getXMLDescendent(pathSplit)
 	if !ok {
 		return nil, fmt.Errorf("no descendent fond for path: '%s'", path)
 	}

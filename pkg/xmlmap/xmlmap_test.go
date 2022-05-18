@@ -3,23 +3,50 @@ package xmlmap_test
 import (
 	"bytes"
 	"io"
+	"path"
+	"path/filepath"
 	"testing"
 
 	"gotest.tools/assert"
 
+	"github.com/stackql/go-openapistackql/pkg/fileutil"
 	. "github.com/stackql/go-openapistackql/pkg/xmlmap"
+
+	"github.com/getkin/kin-openapi/openapi3"
 )
+
+func getFileRoot(t *testing.T) string {
+	rv, err := fileutil.GetFilePathUnescapedFromRepositoryRoot(path.Join("test", "registry", "src"))
+	assert.NilError(t, err)
+	return rv
+}
 
 func TestListVolumesSingle(t *testing.T) {
 
-	m, err := Unmarshal(awsEc2ListSingleResponseReader)
+	m, err := Unmarshal(getAwsEc2ListSingleResponseReader())
 	assert.NilError(t, err)
 	assert.Assert(t, m != nil)
 }
 
 func TestListVolumesMulti(t *testing.T) {
 
-	m, err := GetSubObjArr(awsEc2ListMultiResponseReader, "/DescribeVolumesResponse/volumeSet/item")
+	m, err := GetSubObjArr(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item")
+	assert.NilError(t, err)
+	assert.Assert(t, m != nil)
+	assert.Assert(t, m[0]["volumeId"] == "vol-001ebed16c2567746")
+	assert.Assert(t, m[1]["volumeId"] == "vol-024a257300c66ed56")
+}
+
+func TestAwareListVolumesMulti(t *testing.T) {
+
+	fr := getFileRoot(t)
+
+	l := openapi3.NewLoader()
+	svc, err := l.LoadFromFile(filepath.Join(fr, "aws", "v0.1.0", "services", "ec2.yaml"))
+	assert.NilError(t, err)
+	assert.Assert(t, svc != nil)
+
+	m, err := GetSubObjArr(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item")
 	assert.NilError(t, err)
 	assert.Assert(t, m != nil)
 	assert.Assert(t, m[0]["volumeId"] == "vol-001ebed16c2567746")
@@ -48,7 +75,6 @@ var (
 			</volumeSet>
 	</DescribeVolumesResponse>
 	`
-	awsEc2ListSingleResponseReader = io.NopCloser(bytes.NewBufferString(awsEc2ListResponseSingle))
 
 	awsEc2ListResponseMulti string = `
 	<?xml version="1.0" encoding="UTF-8"?>
@@ -84,5 +110,12 @@ var (
 			</volumeSet>
 	</DescribeVolumesResponse>
 	`
-	awsEc2ListMultiResponseReader = io.NopCloser(bytes.NewBufferString(awsEc2ListResponseMulti))
 )
+
+func getAwsEc2ListSingleResponseReader() io.ReadCloser {
+	return io.NopCloser(bytes.NewBufferString(awsEc2ListResponseSingle))
+}
+
+func getAwsEc2ListMultiResponseReader() io.ReadCloser {
+	return io.NopCloser(bytes.NewBufferString(awsEc2ListResponseMulti))
+}

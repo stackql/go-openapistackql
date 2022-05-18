@@ -9,5 +9,5 @@ func ToXpath(path []string) string {
 }
 
 func ToPathSlice(path string) []string {
-	return strings.Split(path, ".")
+	return strings.Split(path, "/")
 }

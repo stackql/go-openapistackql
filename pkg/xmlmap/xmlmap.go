@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	mxj "github.com/clbanning/mxj/v2"
+	"github.com/getkin/kin-openapi/openapi3"
 
 	"github.com/antchfx/xmlquery"
 )
@@ -82,7 +83,26 @@ func GetSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
 	return getSubObj(xmlReader, path)
 }
 
+func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schema) (interface{}, error) {
+	rv, err := getSubObj(xmlReader, path)
+	if err != nil {
+		return rv, err
+	}
+	switch schema.Type {
+	case "array":
+		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
+	case "object":
+		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
+	default:
+		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
+	}
+}
+
 func GetSubObjArr(xmlReader io.ReadCloser, path string) ([]map[string]interface{}, error) {
+	return getSubObjArr(xmlReader, path)
+}
+
+func getSubObjArr(xmlReader io.ReadCloser, path string) ([]map[string]interface{}, error) {
 	rv, err := getSubObj(xmlReader, path)
 	if err != nil {
 		return nil, err
