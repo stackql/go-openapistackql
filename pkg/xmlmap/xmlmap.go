@@ -199,7 +199,7 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 		}
 		switch raw := raw.(type) {
 		case []map[string]string:
-			rv := make([]map[string]interface{}, len(raw))
+			var rv []map[string]interface{}
 			for _, m := range raw {
 				mc, err := castXMLMap(m, schema.Items.Value)
 				if err != nil {

@@ -50,6 +50,10 @@ func TestAwareListVolumesMulti(t *testing.T) {
 
 	m, err := GetSubObjTyped(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item", sc)
 
+	mc, ok := m.([]map[string]interface{})
+	assert.Assert(t, ok)
+	assert.Assert(t, len(mc) == 2)
+
 	assert.NilError(t, err)
 	assert.Assert(t, m != nil)
 }
