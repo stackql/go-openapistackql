@@ -125,7 +125,16 @@ func getPropertyByXMLAnnotation(schema *openapi3.Schema, name string) (*openapi3
 }
 
 func castXMLValue(inVal string, schema *openapi3.Schema) (interface{}, error) {
-	switch schema.Type {
+	ty, _ := getTypeFromSchema(schema)
+	if ty == "" {
+		if len(schema.AllOf) > 0 {
+			t, ok := getTypeFromRefs(schema.AllOf)
+			if ok {
+				ty = t
+			}
+		}
+	}
+	switch ty {
 	case "object", "array", "string":
 		return inVal, nil
 	case "integer", "int64":
@@ -147,6 +156,31 @@ func getPropertyFromRefs(refs openapi3.SchemaRefs, key string) (*openapi3.Schema
 		}
 	}
 	return nil, false
+}
+
+func getTypeFromSchema(schema *openapi3.Schema) (string, bool) {
+	if schema.Type != "" {
+		return schema.Type, true
+	}
+	if len(schema.AllOf) > 0 {
+		t, ok := getTypeFromRefs(schema.AllOf)
+		if ok {
+			return t, true
+		}
+	}
+	return "", false
+}
+
+func getTypeFromRefs(refs openapi3.SchemaRefs) (string, bool) {
+	for _, sRef := range refs {
+		if sRef != nil || sRef.Value != nil {
+			t, ok := getTypeFromSchema(sRef.Value)
+			if ok {
+				return t, true
+			}
+		}
+	}
+	return "", false
 }
 
 func getPropertyFromSchema(schema *openapi3.Schema, key string) (*openapi3.Schema, bool) {

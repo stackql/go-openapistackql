@@ -53,6 +53,8 @@ func TestAwareListVolumesMulti(t *testing.T) {
 	mc, ok := m.([]map[string]interface{})
 	assert.Assert(t, ok)
 	assert.Assert(t, len(mc) == 2)
+	assert.Assert(t, mc[1]["iops"] == 100)
+	assert.Assert(t, mc[1]["size"] == 8)
 
 	assert.NilError(t, err)
 	assert.Assert(t, m != nil)
