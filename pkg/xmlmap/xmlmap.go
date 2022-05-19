@@ -265,16 +265,29 @@ func GetSubObjArr(xmlReader io.ReadCloser, path string) ([]map[string]interface{
 	return getSubObjArr(xmlReader, path)
 }
 
+func strMapToInterfaceMap(m map[string]string) map[string]interface{} {
+	rv := make(map[string]interface{})
+	for k, v := range m {
+		rv[k] = v
+	}
+	return rv
+}
+
 func getSubObjArr(xmlReader io.ReadCloser, path string) ([]map[string]interface{}, error) {
-	rv, err := getSubObj(xmlReader, path)
+	raw, err := getSubObj(xmlReader, path)
 	if err != nil {
 		return nil, err
 	}
-	switch rv := rv.(type) {
-	case []map[string]interface{}:
+	switch raw := raw.(type) {
+	case []map[string]string:
+		var rv []map[string]interface{}
+		for _, v := range raw {
+			m := strMapToInterfaceMap(v)
+			rv = append(rv, m)
+		}
 		return rv, nil
-	case map[string]interface{}:
-		return []map[string]interface{}{rv}, nil
+	case map[string]string:
+		return []map[string]interface{}{strMapToInterfaceMap(raw)}, nil
 	default:
 		return nil, fmt.Errorf("")
 	}
