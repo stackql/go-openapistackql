@@ -3,6 +3,7 @@ package xmlmap
 import (
 	"fmt"
 	"io"
+	"strconv"
 	"strings"
 
 	mxj "github.com/clbanning/mxj/v2"
@@ -59,8 +60,8 @@ func getNodeKeyVal(node *xmlquery.Node) (kv, error) {
 	}
 }
 
-func getNodeMap(node *xmlquery.Node) (map[string]interface{}, error) {
-	rv := make(map[string]interface{})
+func getNodeMap(node *xmlquery.Node) (map[string]string, error) {
+	rv := make(map[string]string)
 	switch node.Type {
 	case xmlquery.TextNode, xmlquery.CharDataNode, xmlquery.CommentNode:
 		return nil, nil
@@ -79,20 +80,148 @@ func getNodeMap(node *xmlquery.Node) (map[string]interface{}, error) {
 	return rv, nil
 }
 
+func xmlNameFromRefs(refs openapi3.SchemaRefs) (string, bool) {
+	for _, sRef := range refs {
+		if sRef != nil || sRef.Value != nil {
+			p, ok := xmlNameFromSchema(sRef.Value)
+			if ok {
+				return p, true
+			}
+		}
+	}
+	return "", false
+}
+
+func xmlNameFromSchema(schema *openapi3.Schema) (string, bool) {
+	switch xml := schema.XML.(type) {
+	case map[string]interface{}:
+		name, ok := xml["name"]
+		if ok {
+			switch name := name.(type) {
+			case string:
+				return name, true
+			}
+		}
+	}
+	if len(schema.AllOf) > 0 {
+		rv, ok := xmlNameFromRefs(schema.AllOf)
+		if ok {
+			return rv, true
+		}
+	}
+	return "", false
+}
+
+func getPropertyByXMLAnnotation(schema *openapi3.Schema, name string) (*openapi3.Schema, bool) {
+	for _, v := range schema.Properties {
+		if v != nil && v.Value != nil {
+			xmlName, ok := xmlNameFromSchema(v.Value)
+			if ok && xmlName == name {
+				return v.Value, true
+			}
+		}
+	}
+	return nil, false
+}
+
+func castXMLValue(inVal string, schema *openapi3.Schema) (interface{}, error) {
+	switch schema.Type {
+	case "object", "array", "string":
+		return inVal, nil
+	case "integer", "int64":
+		return strconv.Atoi(inVal)
+	case "bool":
+		return strings.ToLower(inVal) == "true", nil
+	default:
+		return inVal, nil
+	}
+}
+
+func getPropertyFromRefs(refs openapi3.SchemaRefs, key string) (*openapi3.Schema, bool) {
+	for _, sRef := range refs {
+		if sRef != nil || sRef.Value != nil {
+			p, ok := getPropertyFromSchema(sRef.Value, key)
+			if ok {
+				return p, true
+			}
+		}
+	}
+	return nil, false
+}
+
+func getPropertyFromSchema(schema *openapi3.Schema, key string) (*openapi3.Schema, bool) {
+	ref, ok := schema.Properties[key]
+	if ok {
+		return ref.Value, true
+	}
+	s, ok := getPropertyByXMLAnnotation(schema, key)
+	if ok {
+		return s, true
+	}
+	if len(schema.AllOf) > 0 {
+		p, ok := getPropertyFromRefs(schema.AllOf, key)
+		if ok {
+			return p, true
+		}
+	}
+	return nil, false
+}
+
+func castXMLMap(inMap map[string]string, schema *openapi3.Schema) (map[string]interface{}, error) {
+	rv := make(map[string]interface{})
+	for k, v := range inMap {
+		ps, ok := getPropertyFromSchema(schema, k)
+		if !ok {
+			return nil, fmt.Errorf("property missing from schema: '%s'", k)
+		}
+		castVal, err := castXMLValue(v, ps)
+		if err != nil {
+			return nil, err
+		}
+		rv[k] = castVal
+	}
+	return rv, nil
+}
+
 func GetSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
 	return getSubObj(xmlReader, path)
 }
 
 func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schema) (interface{}, error) {
-	rv, err := getSubObj(xmlReader, path)
+	raw, err := getSubObj(xmlReader, path)
 	if err != nil {
-		return rv, err
+		return nil, err
 	}
 	switch schema.Type {
 	case "array":
-		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
+		if schema.Items == nil || schema.Items.Value == nil {
+			return nil, fmt.Errorf("xml serde: cannot accomodate nil items array schema when deserializing an xml array")
+		}
+		switch raw := raw.(type) {
+		case []map[string]string:
+			rv := make([]map[string]interface{}, len(raw))
+			for _, m := range raw {
+				mc, err := castXMLMap(m, schema.Items.Value)
+				if err != nil {
+					return nil, err
+				}
+				rv = append(rv, mc)
+			}
+			return rv, nil
+		default:
+			return nil, fmt.Errorf("xml serde: openapi schema type 'array' cannot accomodate golang type '%T'", raw)
+		}
 	case "object":
-		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
+		switch raw := raw.(type) {
+		case map[string]string:
+			mc, err := castXMLMap(raw, schema)
+			if err != nil {
+				return nil, err
+			}
+			return []map[string]interface{}{mc}, nil
+		default:
+			return nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
+		}
 	default:
 		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
 	}
@@ -134,7 +263,7 @@ func getSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
 		rv := []interface{}{m}
 		return rv, nil
 	}
-	var rv []map[string]interface{}
+	var rv []map[string]string
 	for _, node := range nodes {
 		switch node.Type {
 		case xmlquery.TextNode, xmlquery.CharDataNode, xmlquery.CommentNode:

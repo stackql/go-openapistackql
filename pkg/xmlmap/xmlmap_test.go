@@ -28,14 +28,14 @@ func TestListVolumesSingle(t *testing.T) {
 	assert.Assert(t, m != nil)
 }
 
-func TestListVolumesMulti(t *testing.T) {
+// func TestListVolumesMulti(t *testing.T) {
 
-	m, err := GetSubObjArr(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item")
-	assert.NilError(t, err)
-	assert.Assert(t, m != nil)
-	assert.Assert(t, m[0]["volumeId"] == "vol-001ebed16c2567746")
-	assert.Assert(t, m[1]["volumeId"] == "vol-024a257300c66ed56")
-}
+// 	m, err := GetSubObjArr(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item")
+// 	assert.NilError(t, err)
+// 	assert.Assert(t, m != nil)
+// 	assert.Assert(t, m[0]["volumeId"] == "vol-001ebed16c2567746")
+// 	assert.Assert(t, m[1]["volumeId"] == "vol-024a257300c66ed56")
+// }
 
 func TestAwareListVolumesMulti(t *testing.T) {
 
@@ -46,11 +46,12 @@ func TestAwareListVolumesMulti(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, svc != nil)
 
-	m, err := GetSubObjArr(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item")
+	sc := svc.Components.Schemas["VolumeList"].Value
+
+	m, err := GetSubObjTyped(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item", sc)
+
 	assert.NilError(t, err)
 	assert.Assert(t, m != nil)
-	assert.Assert(t, m[0]["volumeId"] == "vol-001ebed16c2567746")
-	assert.Assert(t, m[1]["volumeId"] == "vol-024a257300c66ed56")
 }
 
 var (

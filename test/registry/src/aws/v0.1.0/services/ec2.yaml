@@ -225,6 +225,7 @@ components:
           response:
             mediaType: application/xml
             openAPIDocKey: '200'
+            apiKey: '/DescribeVolumesResponse/volumeSet/item'
       sqlVerbs:
         select:
           - $ref: '#/components/x-stackQL-resources/volumes/methods/describeVolumes'
