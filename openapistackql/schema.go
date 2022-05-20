@@ -10,7 +10,6 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
-	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
 	"github.com/stackql/go-openapistackql/pkg/util"
 	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
@@ -539,76 +538,8 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 	return nil
 }
 
-func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser) (interface{}, error) {
-	target, err := xmlmap.Unmarshal(body)
-	if err != nil {
-		return nil, err
-	}
-	properties, err := s.GetProperties()
-	if err != nil {
-		return nil, err
-	}
-	rv := make(map[string]interface{})
-	for k, v := range properties {
-		pr, err := target.Attributes(k)
-		if err != nil {
-			return nil, err
-		}
-		if len(pr) > 0 {
-			if v.Type == "array" {
-				rv[k] = pr
-			}
-			rv[k] = pr[0]
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	return rv, err
-}
-
-func (s *Schema) unmarshalXMLResponseAtPath(body io.ReadCloser, path string) (interface{}, error) {
-	pathSplit := openapitoxpath.ToPathSlice(path)
-	ss, ok := s.getXMLDescendent(pathSplit)
-	if !ok {
-		return nil, fmt.Errorf("no descendent fond for path: '%s'", path)
-	}
-	p, err := xmlmap.GetSubObj(body, openapitoxpath.ToXpath(pathSplit))
-	if err != nil {
-		return nil, err
-	}
-	switch ss.Type {
-	case "array":
-		return p, nil
-	default:
-
-	}
-
-	target, err := xmlmap.Unmarshal(body)
-	if err != nil {
-		return nil, err
-	}
-	properties, err := s.GetProperties()
-	if err != nil {
-		return nil, err
-	}
-	rv := make(map[string]interface{})
-	for k, v := range properties {
-		pr, err := target.Attributes(k)
-		if err != nil {
-			return nil, err
-		}
-		if len(pr) > 0 {
-			if v.Type == "array" {
-				rv[k] = pr
-			}
-			rv[k] = pr[0]
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	return rv, err
+func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, error) {
+	return xmlmap.GetSubObjTyped(body, path, s.Schema)
 }
 
 func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
@@ -627,7 +558,8 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	case MediaTypeJson:
 		err = json.NewDecoder(body).Decode(&target)
 	case MediaTypeXML, MediaTypeTextXML:
-		target, err = s.unmarshalXMLResponseBody(body)
+		// target, err = s.unmarshalXMLResponseBody(body, "")
+		return nil, fmt.Errorf("xml disallowed here")
 	case MediaTypeOctetStream:
 		target, err = io.ReadAll(body)
 	case MediaTypeTextPlain, MediaTypeHTML:
@@ -642,12 +574,12 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	return target, err
 }
 
-func (s *Schema) unmarshalResponseAtPath(r *http.Response, path []string) (interface{}, error) {
-	xm, err := xmlmap.GetSubObj(r.Body, openapitoxpath.ToXpath(path))
-	if err != nil {
-		return nil, err
-	}
-	log.Debugf("%v\n", xm)
+func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interface{}, error) {
+	// xm, err := xmlmap.GetSubObj(r.Body, openapitoxpath.ToXpath(path))
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// log.Debugf("%v\n", xm)
 
 	mediaType, err := getResponseMediaType(r)
 	if err != nil {
@@ -655,13 +587,13 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path []string) (inter
 	}
 	switch mediaType {
 	case MediaTypeXML, MediaTypeTextXML:
-		return s.unmarshalXMLResponseBody(r.Body)
+		return s.unmarshalXMLResponseBody(r.Body, path)
 	default:
 		return s.unmarshalResponse(r)
 	}
 }
 
-func (s *Schema) ProcessHttpResponse(response *http.Response) (interface{}, error) {
+func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (interface{}, error) {
 	target, err := s.unmarshalResponse(response)
 	if err == nil && response.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
@@ -695,8 +627,8 @@ func (s *Schema) ProcessHttpResponseFromPath(response *http.Response, path []str
 	return target, err
 }
 
-func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response) (map[string]interface{}, error) {
-	target, err := s.ProcessHttpResponse(response)
+func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response, path string) (map[string]interface{}, error) {
+	target, err := s.ProcessHttpResponse(response, path)
 	if err != nil {
 		return nil, err
 	}

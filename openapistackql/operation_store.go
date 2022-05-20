@@ -181,10 +181,10 @@ func (m *OperationStore) KeyExists(lhs string) bool {
 }
 
 func (m *OperationStore) GetSelectItemsKey() string {
-	return m.getSelectItemsKeyLegacy()
+	return m.getSelectItemsKeySimple()
 }
 
-func (m *OperationStore) getSelectItemsKeyLegacy() string {
+func (m *OperationStore) getSelectItemsKeySimple() string {
 	if m.Response != nil {
 		return m.Response.ObjectKey
 	}
@@ -272,6 +272,13 @@ func (m *OperationStore) getOptionalParameters() map[string]*Parameter {
 		}
 	}
 	return retVal
+}
+
+func (ops *OperationStore) getMethod() (*openapi3.Operation, error) {
+	if ops.OperationRef != nil && ops.OperationRef.Value != nil {
+		return ops.OperationRef.Value, nil
+	}
+	return nil, fmt.Errorf("no method attached to operation store")
 }
 
 func (m *OperationStore) GetParameters() map[string]*Parameter {
@@ -550,7 +557,23 @@ func (op *OperationStore) ProcessResponse(response *http.Response) (interface{},
 	if err != nil {
 		return nil, err
 	}
-	return responseSchema.ProcessHttpResponse(response)
+	return responseSchema.ProcessHttpResponse(response, op.lookupSelectItemsKey())
+}
+
+func (ops *OperationStore) lookupSelectItemsKey() string {
+	s := ops.getSelectItemsKeySimple()
+	if s != "" {
+		return s
+	}
+	responseSchema, err := ops.GetResponseBodySchema()
+	if responseSchema == nil || err != nil {
+		return ""
+	}
+	switch responseSchema.Type {
+	case "string", "integer":
+		return AnonymousColumnName
+	}
+	return defaultSelectItemsKey
 }
 
 func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error) {
@@ -558,5 +581,5 @@ func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (ma
 	if err != nil {
 		return nil, err
 	}
-	return responseSchema.DeprecatedProcessHttpResponse(response)
+	return responseSchema.DeprecatedProcessHttpResponse(response, op.lookupSelectItemsKey())
 }
