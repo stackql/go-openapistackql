@@ -583,13 +583,19 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 	// }
 	// log.Debugf("%v\n", xm)
 
+	pathSplit := openapitoxpath.ToPathSlice(path)
+
 	mediaType, err := getResponseMediaType(r)
 	if err != nil {
 		return nil, err
 	}
 	switch mediaType {
 	case MediaTypeXML, MediaTypeTextXML:
-		return s.unmarshalXMLResponseBody(r.Body, path)
+		ss, ok := s.getXMLDescendent(pathSplit)
+		if !ok {
+			return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
+		}
+		return ss.unmarshalXMLResponseBody(r.Body, path)
 	default:
 		return s.unmarshalResponse(r)
 	}
