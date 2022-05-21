@@ -516,7 +516,8 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 				return NewSchema(rv, k)
 			}
 			ss := NewSchema(v.Value, k)
-			if ss != nil {
+			// prevent endless recursion
+			if ss != nil && path != remainingPath {
 				res := ss.FindByPath(path, visited)
 				if res != nil {
 					return res
