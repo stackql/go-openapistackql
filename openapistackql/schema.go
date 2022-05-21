@@ -10,6 +10,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
+	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
 	"github.com/stackql/go-openapistackql/pkg/util"
 	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
@@ -595,7 +596,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 }
 
 func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (interface{}, error) {
-	target, err := s.unmarshalResponse(response)
+	target, err := s.unmarshalResponseAtPath(response, path)
 	if err == nil && response.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
 	}
@@ -612,7 +613,7 @@ func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (inte
 }
 
 func (s *Schema) ProcessHttpResponseFromPath(response *http.Response, path []string) (interface{}, error) {
-	target, err := s.unmarshalResponse(response)
+	target, err := s.unmarshalResponseAtPath(response, openapitoxpath.ToXpath(path))
 	if err == nil && response.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
 	}
