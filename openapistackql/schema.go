@@ -115,10 +115,14 @@ func (s *Schema) getXMLChild(path string) (*Schema, bool) {
 			return v, true
 		}
 	}
+	if s.Type == "array" && s.Items != nil && s.Items.Value != nil {
+		ss := NewSchema(s.Items.Value, "")
+		return ss.getXMLChild(path)
+	}
 	return nil, false
 }
 
-func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
+func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
 	if len(path) == 0 || (len(path) == 1 && path[0] == "") {
 		return s, true
 	}
@@ -128,6 +132,17 @@ func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	if s.Type == "object" && len(path) > 0 {
 		path = path[1:]
 	}
+	p, ok := s.getProperty(path[0])
+	if !ok {
+		p, ok = s.getXMLChild(path[0])
+		if !ok {
+			return nil, false
+		}
+	}
+	return p.getXMLDescendent(path[1:])
+}
+
+func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	p, ok := s.getProperty(path[0])
 	if !ok {
 		p, ok = s.getXMLChild(path[0])
@@ -597,7 +612,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 	}
 	switch mediaType {
 	case MediaTypeXML, MediaTypeTextXML:
-		ss, ok := s.getXMLDescendent(pathSplit)
+		ss, ok := s.getXMLDescendentInit(pathSplit)
 		if !ok {
 			return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
 		}
