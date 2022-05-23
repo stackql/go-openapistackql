@@ -62,8 +62,6 @@ func TestXMLHandle(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, processedResponse != nil)
 
-	// m, err := GetSubObjTyped(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item", sc)
-
 	mc, ok := processedResponse.([]map[string]interface{})
 	assert.Assert(t, ok)
 	assert.Assert(t, len(mc) == 2)
