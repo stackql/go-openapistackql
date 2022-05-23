@@ -12,6 +12,8 @@ import (
 	. "github.com/stackql/go-openapistackql/openapistackql"
 	"github.com/stackql/go-openapistackql/pkg/fileutil"
 
+	"github.com/stackql/go-openapistackql/test/pkg/testutil"
+
 	"gotest.tools/assert"
 )
 
@@ -36,14 +38,14 @@ func TestPlaceholder(t *testing.T) {
 func TestXMLHandle(t *testing.T) {
 	setupFileRoot(t)
 	res := &http.Response{
-		Header:     http.Header{"Content-Type": []string{"application/json"}},
+		Header:     http.Header{"Content-Type": []string{"text/xml"}},
 		StatusCode: 200,
-		Body:       ioutil.NopCloser(strings.NewReader(`{"a": { "b": [ "c" ] } }`)),
+		Body:       testutil.GetAwsEc2ListMultiResponseReader(),
 	}
-	s := NewSchema(openapi3.NewSchema(), "")
-	pr, err := s.ProcessHttpResponse(res, "")
-	assert.NilError(t, err)
-	assert.Assert(t, pr != nil)
+	// s := NewSchema(openapi3.NewSchema(), "")
+	// pr, err := s.ProcessHttpResponse(res, "")
+	// assert.NilError(t, err)
+	// assert.Assert(t, pr != nil)
 
 	// fr := getFileRoot(t)
 
@@ -66,9 +68,18 @@ func TestXMLHandle(t *testing.T) {
 
 	// sc := svc.Components.Schemas["VolumeList"].Value
 
-	ops, err := svc.GetResource("volumes")
+	rsc, err := svc.GetResource("volumes")
 	assert.NilError(t, err)
+	assert.Assert(t, rsc != nil)
+
+	ops, st, ok := rsc.GetFirstMethodFromSQLVerb("select")
+	assert.Assert(t, ok)
+	assert.Assert(t, st != "")
 	assert.Assert(t, ops != nil)
+
+	processedResponse, err := ops.ProcessResponse(res)
+	assert.NilError(t, err)
+	assert.Assert(t, processedResponse != nil)
 
 	// m, err := GetSubObjTyped(getAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item", sc)
 

@@ -110,14 +110,32 @@ func (s *Schema) IsRequired(key string) bool {
 }
 
 func (s *Schema) getXMLChild(path string) (*Schema, bool) {
+	xmlAlias := s.getXmlAlias()
+	if xmlAlias == path {
+		return s, true
+	}
 	for _, v := range s.getProperties() {
 		if v.getXmlAlias() == path {
 			return v, true
 		}
 	}
-	if s.Type == "array" && s.Items != nil && s.Items.Value != nil {
-		ss := NewSchema(s.Items.Value, "")
-		return ss.getXMLChild(path)
+	// if s.hasPolymorphicProperties() {
+	// 	polySchema := s.getFattnedPolymorphicSchema()
+	// 	sc, ok = polySchema.Properties[propertyKey]
+	// }
+	for _, v := range s.AllOf {
+		if v.Value == nil {
+			continue
+		}
+		si := v.Value
+		if si.Type == "array" && si.Items != nil && si.Items.Value != nil {
+			ss := NewSchema(si.Items.Value, "")
+			_, ok := ss.getXMLChild(path)
+			if ok {
+				return NewSchema(si, ""), true
+			}
+			return nil, false
+		}
 	}
 	return nil, false
 }
@@ -143,6 +161,9 @@ func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
 }
 
 func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
+	if len(path) == 0 {
+		return s, true
+	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
 		p, ok = s.getXMLChild(path[0])
@@ -396,6 +417,12 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 		if rv == nil {
 			rv = ss
 			continue
+		}
+		if ss.XML != nil {
+			rv.XML = ss.XML
+		}
+		if ss.Type != "" {
+			rv.Type = ss.Type
 		}
 		for k, sRef := range ss.Properties {
 			_, alreadyExists := rv.Properties[k]
