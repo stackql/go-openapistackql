@@ -414,7 +414,7 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 
 		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.disks.list")
 
-		sc, err := os.GetResponseBodySchema()
+		sc, _, err := os.GetResponseBodySchemaAndMediaType()
 
 		assert.NilError(t, err)
 

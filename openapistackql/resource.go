@@ -160,7 +160,7 @@ func (rs *Resource) getMethodsForSQLVerb(sqlVerb string) (MethodSet, error) {
 
 func (rs *Resource) GetSelectableObject() string {
 	if m, ok := rs.Methods["list"]; ok {
-		sc, err := m.GetResponseBodySchema()
+		sc, _, err := m.getResponseBodySchemaAndMediaType()
 		if err == nil {
 			return sc.GetName()
 		}

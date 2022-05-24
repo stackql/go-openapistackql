@@ -135,6 +135,10 @@ func (op *OperationStore) GetParameterizedPath() string {
 }
 
 func (op *OperationStore) GetOptimalResponseMediaType() string {
+	return op.getOptimalResponseMediaType()
+}
+
+func (op *OperationStore) getOptimalResponseMediaType() string {
 	if op.Response != nil && op.Response.BodyMediaType != "" {
 		return op.Response.BodyMediaType
 	}
@@ -142,7 +146,7 @@ func (op *OperationStore) GetOptimalResponseMediaType() string {
 }
 
 func (op *OperationStore) IsNullary() bool {
-	rbs, _ := op.GetResponseBodySchema()
+	rbs, _, _ := op.GetResponseBodySchemaAndMediaType()
 	return rbs == nil
 }
 
@@ -218,7 +222,7 @@ func (m *OperationStore) GetColumnOrder(extended bool) []string {
 }
 
 func (m *OperationStore) IsAwaitable() bool {
-	rs, err := m.GetResponseBodySchema()
+	rs, _, err := m.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return false
 	}
@@ -545,15 +549,27 @@ func (op *OperationStore) IsRequiredRequestBodyProperty(key string) bool {
 	return false
 }
 
-func (op *OperationStore) GetResponseBodySchema() (*Schema, error) {
+func (op *OperationStore) GetResponseBodySchemaAndMediaType() (*Schema, string, error) {
+	return op.getResponseBodySchemaAndMediaType()
+}
+
+func (op *OperationStore) getResponseBodySchemaAndMediaType() (*Schema, string, error) {
 	if op.Response != nil && op.Response.Schema != nil {
-		return op.Response.Schema, nil
+		return op.Response.Schema, op.Response.BodyMediaType, nil
 	}
-	return nil, fmt.Errorf("no response body for operation =  %s", op.GetName())
+	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
+}
+
+func (op *OperationStore) GetSelectSchemaAndMediaType() (*Schema, string, error) {
+	k := op.lookupSelectItemsKey()
+	if op.Response != nil && op.Response.Schema != nil {
+		return op.Response.Schema.getSelectItemsSchema(k, op.getOptimalResponseMediaType())
+	}
+	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
 }
 
 func (op *OperationStore) ProcessResponse(response *http.Response) (interface{}, error) {
-	responseSchema, err := op.GetResponseBodySchema()
+	responseSchema, _, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +581,7 @@ func (ops *OperationStore) lookupSelectItemsKey() string {
 	if s != "" {
 		return s
 	}
-	responseSchema, err := ops.GetResponseBodySchema()
+	responseSchema, _, err := ops.GetResponseBodySchemaAndMediaType()
 	if responseSchema == nil || err != nil {
 		return ""
 	}
@@ -577,7 +593,7 @@ func (ops *OperationStore) lookupSelectItemsKey() string {
 }
 
 func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error) {
-	responseSchema, err := op.GetResponseBodySchema()
+	responseSchema, _, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
 	}

@@ -260,14 +260,14 @@ func (schema *Schema) getSelectListItems(key string) (*Schema, string) {
 	return nil, ""
 }
 
-func (schema *Schema) GetSelectSchema(itemsKey string) (*Schema, string, error) {
+func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, string, error) {
 	if itemsKey == AnonymousColumnName {
 		switch schema.Type {
 		case "string", "integer":
 			return schema, AnonymousColumnName, nil
 		}
 	}
-	sc, str, err := schema.getSelectItemsSchema(itemsKey)
+	sc, str, err := schema.getSelectItemsSchema(itemsKey, mediaType)
 	if err == nil {
 		return sc, str, err
 	}
@@ -277,9 +277,18 @@ func (schema *Schema) GetSelectSchema(itemsKey string) (*Schema, string, error) 
 	return nil, "", fmt.Errorf("unable to complete schema.GetSelectSchema() for schema = '%v' and itemsKey = '%s'", schema, itemsKey)
 }
 
-func (schema *Schema) getSelectItemsSchema(key string) (*Schema, string, error) {
+func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
 	var itemS *openapi3.Schema
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
+	switch mediaType {
+	case MediaTypeXML, MediaTypeTextXML:
+		pathSplit := openapitoxpath.ToPathSlice(key)
+		ss, ok := schema.getXMLDescendentInit(pathSplit)
+		if ok {
+			return ss, key, nil
+		}
+		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
+	}
 	if strings.HasPrefix(schema.key, "[]") || schema.Type == "array" {
 		rv, err := schema.GetItems()
 		return rv, key, err
