@@ -560,7 +560,7 @@ func (op *OperationStore) getResponseBodySchemaAndMediaType() (*Schema, string, 
 	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
 }
 
-func (op *OperationStore) GetSelectSchemaAndMediaType() (*Schema, string, error) {
+func (op *OperationStore) GetSelectSchemaAndObjectPath() (*Schema, string, error) {
 	k := op.lookupSelectItemsKey()
 	if op.Response != nil && op.Response.Schema != nil {
 		return op.Response.Schema.getSelectItemsSchema(k, op.getOptimalResponseMediaType())
