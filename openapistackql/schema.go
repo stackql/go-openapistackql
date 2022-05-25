@@ -284,8 +284,17 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 	case MediaTypeXML, MediaTypeTextXML:
 		pathSplit := openapitoxpath.ToPathSlice(key)
 		ss, ok := schema.getXMLDescendentInit(pathSplit)
-		if ok {
-			return ss, key, nil
+		if ok && ss.Items != nil && ss.Items.Value != nil {
+			rv, err := ss.GetItems()
+			if rv.key == "" {
+				for _, v := range rv.AllOf {
+					if v.Ref != "" {
+						rv.key = getPathSuffix(v.Ref)
+						break
+					}
+				}
+			}
+			return rv, mediaType, err
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
 	}

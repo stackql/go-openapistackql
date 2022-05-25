@@ -69,3 +69,39 @@ func TestXMLHandle(t *testing.T) {
 	assert.Assert(t, mc[1]["size"] == 8)
 
 }
+
+func TestXMLSchemaInterrogation(t *testing.T) {
+	setupFileRoot(t)
+
+	b, err := GetServiceDocBytes(fmt.Sprintf("aws/%s/services/ec2.yaml", "v0.1.0"))
+	if err != nil {
+		t.Fatalf("Test failed: %v", err)
+	}
+
+	l := NewLoader()
+
+	svc, err := l.LoadFromBytes(b)
+
+	assert.NilError(t, err)
+	assert.Assert(t, svc != nil)
+
+	assert.Equal(t, svc.GetName(), "ec2")
+
+	rsc, err := svc.GetResource("volumes")
+	assert.NilError(t, err)
+	assert.Assert(t, rsc != nil)
+
+	ops, st, ok := rsc.GetFirstMethodFromSQLVerb("select")
+	assert.Assert(t, ok)
+	assert.Assert(t, st != "")
+	assert.Assert(t, ops != nil)
+
+	s, p, err := ops.GetSelectSchemaAndObjectPath()
+
+	assert.NilError(t, err)
+	assert.Assert(t, s != nil)
+	assert.Assert(t, p != "")
+
+	assert.Assert(t, s.GetName() == "Volume")
+
+}
