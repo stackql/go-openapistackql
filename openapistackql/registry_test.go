@@ -13,9 +13,12 @@ import (
 )
 
 var (
-	testableVersions = []string{
+	deprecatedTestableVersions = []string{
 		"v1",
 		"v2.0.1",
+	}
+	testableVersions = []string{
+		"v0.1.0",
 	}
 )
 
@@ -137,7 +140,7 @@ func runRemote(t *testing.T, rc RegistryConfig, tf func(t *testing.T, r Registry
 }
 
 func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAPI) {
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		svc, err := r.GetService(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -151,7 +154,7 @@ func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAP
 
 func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r RegistryAPI) {
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		pr, err := r.LoadProviderByName("google", vr)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -170,7 +173,7 @@ func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r Regi
 
 func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r RegistryAPI) {
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		pr, err := r.LoadProviderByName("google", vr)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -201,7 +204,7 @@ func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r 
 
 func execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T, r RegistryAPI) {
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		pr, err := r.LoadProviderByName("google", vr)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -233,7 +236,7 @@ func execTestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T, r Re
 
 func execTestRegistrySimpleOktaPull(t *testing.T, r RegistryAPI) {
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		arc, err := r.PullProviderArchive("okta", vr)
 
 		assert.NilError(t, err)
@@ -244,7 +247,7 @@ func execTestRegistrySimpleOktaPull(t *testing.T, r RegistryAPI) {
 }
 
 func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		err := r.PullAndPersistProviderArchive("okta", vr)
 
 		assert.NilError(t, err)
@@ -263,7 +266,7 @@ func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
 
 func execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t *testing.T, r RegistryAPI) {
 
-	for _, vr := range testableVersions {
+	for _, vr := range deprecatedTestableVersions {
 		pr, err := r.LoadProviderByName("google", vr)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -411,7 +414,7 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 
 		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.disks.list")
 
-		sc, err := os.GetResponseBodySchema()
+		sc, _, err := os.GetResponseBodySchemaAndMediaType()
 
 		assert.NilError(t, err)
 

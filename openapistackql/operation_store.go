@@ -13,12 +13,16 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
-
-	openapirouter "github.com/getkin/kin-openapi/routers/gorillamux"
+	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
+	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 
 	log "github.com/sirupsen/logrus"
 
 	"vitess.io/vitess/go/sqltypes"
+)
+
+const (
+	defaultSelectItemsKey = "items"
 )
 
 type Methods map[string]OperationStore
@@ -131,6 +135,10 @@ func (op *OperationStore) GetParameterizedPath() string {
 }
 
 func (op *OperationStore) GetOptimalResponseMediaType() string {
+	return op.getOptimalResponseMediaType()
+}
+
+func (op *OperationStore) getOptimalResponseMediaType() string {
 	if op.Response != nil && op.Response.BodyMediaType != "" {
 		return op.Response.BodyMediaType
 	}
@@ -138,7 +146,7 @@ func (op *OperationStore) GetOptimalResponseMediaType() string {
 }
 
 func (op *OperationStore) IsNullary() bool {
-	rbs, _ := op.GetResponseBodySchema()
+	rbs, _, _ := op.GetResponseBodySchemaAndMediaType()
 	return rbs == nil
 }
 
@@ -177,10 +185,21 @@ func (m *OperationStore) KeyExists(lhs string) bool {
 }
 
 func (m *OperationStore) GetSelectItemsKey() string {
+	return m.getSelectItemsKeySimple()
+}
+
+func (m *OperationStore) getSelectItemsKeySimple() string {
 	if m.Response != nil {
 		return m.Response.ObjectKey
 	}
 	return ""
+}
+
+func (m *OperationStore) getSelectItemsPath() []string {
+	if m.Response != nil {
+		return openapitoxpath.ToPathSlice(m.Response.ObjectKey)
+	}
+	return openapitoxpath.ToPathSlice(defaultSelectItemsKey)
 }
 
 func (m *OperationStore) GetKey(lhs string) (interface{}, error) {
@@ -203,7 +222,7 @@ func (m *OperationStore) GetColumnOrder(extended bool) []string {
 }
 
 func (m *OperationStore) IsAwaitable() bool {
-	rs, err := m.GetResponseBodySchema()
+	rs, _, err := m.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return false
 	}
@@ -257,6 +276,13 @@ func (m *OperationStore) getOptionalParameters() map[string]*Parameter {
 		}
 	}
 	return retVal
+}
+
+func (ops *OperationStore) getMethod() (*openapi3.Operation, error) {
+	if ops.OperationRef != nil && ops.OperationRef.Value != nil {
+		return ops.OperationRef.Value, nil
+	}
+	return nil, fmt.Errorf("no method attached to operation store")
 }
 
 func (m *OperationStore) GetParameters() map[string]*Parameter {
@@ -440,7 +466,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 			}
 		}
 	}
-	router, err := openapirouter.NewRouter(parentDoc.GetT())
+	router, err := queryrouter.NewRouter(parentDoc.GetT())
 	if err != nil {
 		return nil, err
 	}
@@ -463,6 +489,13 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	sv = strings.TrimSuffix(sv, "/")
 	path := replaceSimpleStringVars(fmt.Sprintf("%s%s", sv, op.OperationRef.extractPathItem()), pathParams)
 	u, err := url.Parse(fmt.Sprintf("%s?%s", path, q.Encode()))
+	if strings.Contains(path, "?") {
+		if len(q) > 0 {
+			u, err = url.Parse(fmt.Sprintf("%s&%s", path, q.Encode()))
+		} else {
+			u, err = url.Parse(path)
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -516,25 +549,53 @@ func (op *OperationStore) IsRequiredRequestBodyProperty(key string) bool {
 	return false
 }
 
-func (op *OperationStore) GetResponseBodySchema() (*Schema, error) {
+func (op *OperationStore) GetResponseBodySchemaAndMediaType() (*Schema, string, error) {
+	return op.getResponseBodySchemaAndMediaType()
+}
+
+func (op *OperationStore) getResponseBodySchemaAndMediaType() (*Schema, string, error) {
 	if op.Response != nil && op.Response.Schema != nil {
-		return op.Response.Schema, nil
+		return op.Response.Schema, op.Response.BodyMediaType, nil
 	}
-	return nil, fmt.Errorf("no response body for operation =  %s", op.GetName())
+	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
+}
+
+func (op *OperationStore) GetSelectSchemaAndObjectPath() (*Schema, string, error) {
+	k := op.lookupSelectItemsKey()
+	if op.Response != nil && op.Response.Schema != nil {
+		return op.Response.Schema.getSelectItemsSchema(k, op.getOptimalResponseMediaType())
+	}
+	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
 }
 
 func (op *OperationStore) ProcessResponse(response *http.Response) (interface{}, error) {
-	responseSchema, err := op.GetResponseBodySchema()
+	responseSchema, _, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
 	}
-	return responseSchema.ProcessHttpResponse(response)
+	return responseSchema.ProcessHttpResponse(response, op.lookupSelectItemsKey())
+}
+
+func (ops *OperationStore) lookupSelectItemsKey() string {
+	s := ops.getSelectItemsKeySimple()
+	if s != "" {
+		return s
+	}
+	responseSchema, _, err := ops.GetResponseBodySchemaAndMediaType()
+	if responseSchema == nil || err != nil {
+		return ""
+	}
+	switch responseSchema.Type {
+	case "string", "integer":
+		return AnonymousColumnName
+	}
+	return defaultSelectItemsKey
 }
 
 func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error) {
-	responseSchema, err := op.GetResponseBodySchema()
+	responseSchema, _, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
 	}
-	return responseSchema.DeprecatedProcessHttpResponse(response)
+	return responseSchema.DeprecatedProcessHttpResponse(response, op.lookupSelectItemsKey())
 }

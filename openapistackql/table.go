@@ -54,3 +54,15 @@ func (t *Tabulation) PushBackColumn(col ColumnDescriptor) {
 func (t *Tabulation) GetName() string {
 	return t.name
 }
+
+func (t *Tabulation) RenameColumnsToXml() *Tabulation {
+	for i, v := range t.columns {
+		if v.Schema != nil {
+			alias := v.Schema.getXmlAlias()
+			if alias != "" {
+				t.columns[i].Name = alias
+			}
+		}
+	}
+	return t
+}

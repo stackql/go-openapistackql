@@ -8,10 +8,18 @@ import (
 )
 
 func GetFilePathFromRepositoryRoot(relativePath string) (string, error) {
+	rv, err := getFilePathUnescapedFromRepositoryRoot(relativePath)
+	return strings.ReplaceAll(rv, `\`, `\\`), err
+}
+
+func GetFilePathUnescapedFromRepositoryRoot(relativePath string) (string, error) {
+	return getFilePathUnescapedFromRepositoryRoot(relativePath)
+}
+
+func getFilePathUnescapedFromRepositoryRoot(relativePath string) (string, error) {
 	_, filename, _, _ := runtime.Caller(0)
 	curDir := filepath.Dir(filename)
-	rv, err := filepath.Abs(filepath.Join(curDir, "../..", relativePath))
-	return strings.ReplaceAll(rv, `\`, `\\`), err
+	return filepath.Abs(filepath.Join(curDir, "../..", relativePath))
 }
 
 func GetForwardSlashFilePathFromRepositoryRoot(relativePath string) (string, error) {
@@ -20,3 +28,7 @@ func GetForwardSlashFilePathFromRepositoryRoot(relativePath string) (string, err
 	rv, err := filepath.Abs(path.Join(curDir, "../..", relativePath))
 	return filepath.ToSlash(rv), err
 }
+
+// func FilePathJoin(paths ...string) string {
+// 	return strings.ReplaceAll(filepath.Join(paths...), `\`, `\\`)
+// }
