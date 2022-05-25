@@ -119,10 +119,6 @@ func (s *Schema) getXMLChild(path string) (*Schema, bool) {
 			return v, true
 		}
 	}
-	// if s.hasPolymorphicProperties() {
-	// 	polySchema := s.getFattnedPolymorphicSchema()
-	// 	sc, ok = polySchema.Properties[propertyKey]
-	// }
 	for _, v := range s.AllOf {
 		if v.Value == nil {
 			continue

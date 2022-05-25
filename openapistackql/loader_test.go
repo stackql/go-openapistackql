@@ -141,14 +141,6 @@ func TestSimpleOktaApplicationServiceJsonReadAndDumpString(t *testing.T) {
 		f.Write(b)
 		f.Close()
 
-		// ob, err := os.ReadFile(outFile)
-		// assert.NilError(t, err)
-
-		// var sv Service
-		// err = json.Unmarshal(ob, &sv)
-		// assert.NilError(t, err)
-
-		// assert.Assert(t, sv.Components.Schemas != nil)
 	}
 
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
@@ -203,14 +195,6 @@ func TestSimpleAWSec2ServiceJsonReadAndDumpString(t *testing.T) {
 		f.Write(b)
 		f.Close()
 
-		// ob, err := os.ReadFile(outFile)
-		// assert.NilError(t, err)
-
-		// var sv Service
-		// err = json.Unmarshal(ob, &sv)
-		// assert.NilError(t, err)
-
-		// assert.Assert(t, sv.Components.Schemas != nil)
 	}
 
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
@@ -249,14 +233,6 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 		f.Write(b)
 		f.Close()
 
-		// ob, err := os.ReadFile(outFile)
-		// assert.NilError(t, err)
-
-		// var sv Service
-		// err = json.Unmarshal(ob, &sv)
-		// assert.NilError(t, err)
-
-		// assert.Assert(t, sv.Components.Schemas != nil)
 	}
 
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
