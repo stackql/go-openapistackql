@@ -8,9 +8,10 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/PaesslerAG/jsonpath"
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
-	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
+	"github.com/stackql/go-openapistackql/pkg/openapitopath"
 	"github.com/stackql/go-openapistackql/pkg/util"
 	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
@@ -137,11 +138,8 @@ func (s *Schema) getXMLChild(path string) (*Schema, bool) {
 }
 
 func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
-	if len(path) == 0 || (len(path) == 1 && path[0] == "") {
+	if len(path) == 0 {
 		return s, true
-	}
-	if path[0] == "" {
-		path = path[1:]
 	}
 	if s.Type == "object" && len(path) > 0 {
 		path = path[1:]
@@ -156,6 +154,20 @@ func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
 	return p.getXMLDescendent(path[1:])
 }
 
+func (s *Schema) getDescendentInit(path []string) (*Schema, bool) {
+	if len(path) == 0 {
+		return s, true
+	}
+	if s.Type == "object" && len(path) > 0 && path[0] == "$" {
+		path = path[1:]
+	}
+	p, ok := s.getProperty(path[0])
+	if !ok {
+		return nil, false
+	}
+	return p.getDescendent(path[1:])
+}
+
 func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	if len(path) == 0 {
 		return s, true
@@ -168,6 +180,23 @@ func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 		}
 	}
 	return p.getXMLDescendent(path[1:])
+}
+
+func (s *Schema) getDescendent(path []string) (*Schema, bool) {
+	if len(path) == 0 {
+		return s, true
+	}
+	if items, err := s.GetItems(); path[0] == "[*]" && err == nil {
+		return items.getDescendent(path[1:])
+	}
+	p, ok := s.getProperty(path[0])
+	if !ok {
+		p, ok = s.getXMLChild(path[0])
+		if !ok {
+			return nil, false
+		}
+	}
+	return p.getDescendent(path[1:])
 }
 
 func (s *Schema) GetItems() (*Schema, error) {
@@ -274,14 +303,14 @@ func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, stri
 }
 
 func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
-	var itemS *openapi3.Schema
+	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	if key == "" {
 		return schema, "", nil
 	}
-	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	switch mediaType {
 	case MediaTypeXML, MediaTypeTextXML:
-		pathSplit := openapitoxpath.ToPathSlice(key)
+		pathResolver := openapitopath.NewXPathResolver()
+		pathSplit := pathResolver.ToPathSlice(key)
 		ss, ok := schema.getXMLDescendentInit(pathSplit)
 		if ok && ss.Items != nil && ss.Items.Value != nil {
 			rv, err := ss.GetItems()
@@ -293,10 +322,28 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 					}
 				}
 			}
-			return rv, mediaType, err
+			return rv, key, err
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
+	case MediaTypeJson:
+		if key != "" && strings.HasPrefix(key, "$") {
+			pathResolver := openapitopath.NewJSONPathResolver()
+			pathSplit := pathResolver.ToPathSlice(key)
+			ss, ok := schema.getDescendentInit(pathSplit)
+			if ok {
+				return ss, key, nil
+			}
+			return nil, "", fmt.Errorf("could not resolve json schema for key = '%s'", key)
+		}
+		fallthrough
+	default:
+		return schema.deprecatedGetSelectItemsSchema(key, mediaType)
 	}
+}
+
+func (schema *Schema) deprecatedGetSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
+	var itemS *openapi3.Schema
+	log.Infoln(fmt.Sprintf("schema.deprecatedGetSelectItemsSchema() key = '%s'", key))
 	if strings.HasPrefix(schema.key, "[]") || schema.Type == "array" {
 		rv, err := schema.GetItems()
 		return rv, key, err
@@ -609,6 +656,15 @@ func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (inte
 	return xmlmap.GetSubObjTyped(body, path, s.Schema)
 }
 
+func (s *Schema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, error) {
+	var target interface{}
+	err := json.NewDecoder(body).Decode(&target)
+	if err != nil {
+		return nil, err
+	}
+	return jsonpath.Get(path, target)
+}
+
 func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	body := r.Body
 	if body != nil {
@@ -642,13 +698,6 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 }
 
 func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interface{}, error) {
-	// xm, err := xmlmap.GetSubObj(r.Body, openapitoxpath.ToXpath(path))
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// log.Debugf("%v\n", xm)
-
-	pathSplit := openapitoxpath.ToPathSlice(path)
 
 	mediaType, err := getResponseMediaType(r)
 	if err != nil {
@@ -656,11 +705,25 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 	}
 	switch mediaType {
 	case MediaTypeXML, MediaTypeTextXML:
+		pathResolver := openapitopath.NewXPathResolver()
+		pathSplit := pathResolver.ToPathSlice(path)
 		ss, ok := s.getXMLDescendentInit(pathSplit)
 		if !ok {
 			return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
 		}
 		return ss.unmarshalXMLResponseBody(r.Body, path)
+	case MediaTypeJson:
+		// TODO: follow same pattern as XML, but with json path
+		if path != "" && strings.HasPrefix(path, "$") {
+			pathResolver := openapitopath.NewJSONPathResolver()
+			pathSplit := pathResolver.ToPathSlice(path)
+			ss, ok := s.getDescendentInit(pathSplit)
+			if !ok {
+				return nil, fmt.Errorf("cannot find json descendent for path %+v", pathSplit)
+			}
+			return ss.unmarshalJSONResponseBody(r.Body, path)
+		}
+		fallthrough
 	default:
 		return s.unmarshalResponse(r)
 	}
@@ -668,23 +731,6 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 
 func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (interface{}, error) {
 	target, err := s.unmarshalResponseAtPath(response, path)
-	if err == nil && response.StatusCode >= 400 {
-		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
-	}
-	if err == io.EOF {
-		if response.StatusCode >= 200 && response.StatusCode < 300 {
-			return map[string]interface{}{"result": "The Operation Completed Successfully"}, nil
-		}
-	}
-	switch rv := target.(type) {
-	case string, int:
-		return map[string]interface{}{AnonymousColumnName: []interface{}{rv}}, nil
-	}
-	return target, err
-}
-
-func (s *Schema) ProcessHttpResponseFromPath(response *http.Response, path []string) (interface{}, error) {
-	target, err := s.unmarshalResponseAtPath(response, openapitoxpath.ToXpath(path))
 	if err == nil && response.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
 	}
