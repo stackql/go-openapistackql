@@ -589,7 +589,10 @@ func (ops *OperationStore) lookupSelectItemsKey() string {
 	case "string", "integer":
 		return AnonymousColumnName
 	}
-	return defaultSelectItemsKey
+	if _, ok := responseSchema.getProperty(defaultSelectItemsKey); ok {
+		return defaultSelectItemsKey
+	}
+	return ""
 }
 
 func (op *OperationStore) DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error) {
