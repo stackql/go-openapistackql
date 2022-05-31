@@ -14,7 +14,7 @@ import (
 
 	"github.com/stackql/go-openapistackql/pkg/compression"
 	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 
 	"github.com/Masterminds/semver"
 )
