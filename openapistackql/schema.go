@@ -275,6 +275,9 @@ func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, stri
 
 func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
 	var itemS *openapi3.Schema
+	if key == "" {
+		return schema, "", nil
+	}
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	switch mediaType {
 	case MediaTypeXML, MediaTypeTextXML:
