@@ -48,10 +48,6 @@ func TestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeResourcesJsonRead)
 }
 
-func TestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
-	execLocalAndRemoteRegistryTestsIndividualDownloadAllowed(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead)
-}
-
 func TestRegistryIndirectGoogleComputeServiceSubsetAccess(t *testing.T) {
 	execLocalAndRemoteRegistryTests(t, individualDownloadAllowedRegistryCfgStr, execTestRegistryIndirectGoogleComputeServiceSubsetAccess)
 }
@@ -95,19 +91,6 @@ func TestListProviderVersionsRegistry(t *testing.T) {
 func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
 
 	rc, err := getRegistryCfgFromString(registryConfigStr)
-
-	assert.NilError(t, err)
-
-	runRemote(t, rc, tf)
-
-	runLocal(t, rc, tf)
-}
-
-func execLocalAndRemoteRegistryTestsIndividualDownloadAllowed(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
-
-	rc, err := getRegistryCfgFromString(registryConfigStr)
-
-	rc.AllowSrcDownload = true
 
 	assert.NilError(t, err)
 
