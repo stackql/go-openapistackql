@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver v1.4.2
+	github.com/PaesslerAG/jsonpath v0.1.1
 	github.com/antchfx/xmlquery v1.3.10
 	github.com/clbanning/mxj/v2 v2.5.5
 	github.com/getkin/kin-openapi v0.88.0
@@ -24,6 +25,7 @@ require (
 )
 
 require (
+	github.com/PaesslerAG/gval v1.0.0 // indirect
 	github.com/antchfx/xpath v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-openapi/swag v0.19.5 // indirect

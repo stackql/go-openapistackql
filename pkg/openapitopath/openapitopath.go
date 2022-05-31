@@ -46,5 +46,12 @@ func (jpr *JSONPathResolver) ToPathSlice(path string) []string {
 	if len(strSlice) > 0 && strSlice[0] == "$" {
 		strSlice = strSlice[1:]
 	}
-	return strSlice
+	var rv []string
+	for _, s := range strSlice {
+		rv = append(rv, strings.TrimSuffix(s, "[*]"))
+		if strings.TrimSuffix(s, "[*]") != s {
+			rv = append(rv, "[*]")
+		}
+	}
+	return rv
 }

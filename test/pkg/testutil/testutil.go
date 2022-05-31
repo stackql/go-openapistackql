@@ -3,6 +3,10 @@ package testutil
 import (
 	"bytes"
 	"io"
+	"os"
+	"path"
+
+	"github.com/stackql/go-openapistackql/pkg/fileutil"
 )
 
 var (
@@ -70,4 +74,12 @@ func GetAwsEc2ListSingleResponseReader() io.ReadCloser {
 
 func GetAwsEc2ListMultiResponseReader() io.ReadCloser {
 	return io.NopCloser(bytes.NewBufferString(awsEc2ListResponseMulti))
+}
+
+func GetK8SNodesListMultiResponseReader() (io.ReadCloser, error) {
+	f, err := fileutil.GetFilePathFromRepositoryRoot(path.Join("test", "input", "k8s-nodes.json"))
+	if err != nil {
+		return nil, err
+	}
+	return os.Open(f)
 }

@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/PaesslerAG/jsonpath"
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
 	"github.com/stackql/go-openapistackql/pkg/openapitopath"
@@ -185,6 +186,9 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 	if len(path) == 0 {
 		return s, true
 	}
+	if items, err := s.GetItems(); path[0] == "[*]" && err == nil {
+		return items.getDescendent(path[1:])
+	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
 		p, ok = s.getXMLChild(path[0])
@@ -192,7 +196,7 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 			return nil, false
 		}
 	}
-	return p.getXMLDescendent(path[1:])
+	return p.getDescendent(path[1:])
 }
 
 func (s *Schema) GetItems() (*Schema, error) {
@@ -664,6 +668,15 @@ func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (inte
 	return xmlmap.GetSubObjTyped(body, path, s.Schema)
 }
 
+func (s *Schema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, error) {
+	var target interface{}
+	err := json.NewDecoder(body).Decode(&target)
+	if err != nil {
+		return nil, err
+	}
+	return jsonpath.Get(path, target)
+}
+
 func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	body := r.Body
 	if body != nil {
@@ -713,14 +726,14 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 		return ss.unmarshalXMLResponseBody(r.Body, path)
 	case MediaTypeJson:
 		// TODO: follow same pattern as XML, but with json path
-		if path != "" {
+		if path != "" && strings.HasPrefix(path, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(path)
 			ss, ok := s.getDescendentInit(pathSplit)
 			if !ok {
-				return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
+				return nil, fmt.Errorf("cannot find json descendent for path %+v", pathSplit)
 			}
-			return ss.unmarshalXMLResponseBody(r.Body, path)
+			return ss.unmarshalJSONResponseBody(r.Body, path)
 		}
 		fallthrough
 	default:
