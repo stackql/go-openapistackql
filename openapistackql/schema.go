@@ -333,19 +333,10 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
 			ss, ok := schema.getDescendentInit(pathSplit)
-			if ok && ss.Items != nil && ss.Items.Value != nil {
-				rv, err := ss.GetItems()
-				if rv.key == "" {
-					for _, v := range rv.AllOf {
-						if v.Ref != "" {
-							rv.key = getPathSuffix(v.Ref)
-							break
-						}
-					}
-				}
-				return rv, mediaType, err
+			if ok {
+				return ss, mediaType, nil
 			}
-			return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
+			return nil, "", fmt.Errorf("could not resolve json schema for key = '%s'", key)
 		}
 		fallthrough
 	default:
