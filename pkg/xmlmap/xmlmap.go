@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	mxj "github.com/clbanning/mxj/v2"
 	"github.com/getkin/kin-openapi/openapi3"
 
 	"github.com/antchfx/xmlquery"
@@ -20,24 +19,6 @@ The problem is stated in [the golang xml package](https://pkg.go.dev/encoding/xm
 > Mapping between XML elements and data structures is inherently flawed: an XML element is an order-dependent collection of anonymous values, while a data structure is an order-independent collection of named values. See package json for a textual representation more suitable to data structures.
 
 */
-
-var _ mxj.Map
-
-func Unmarshal(xmlReader io.ReadCloser) (mxj.Map, error) {
-	return unmarshal(xmlReader)
-}
-
-func unmarshal(xmlReader io.ReadCloser) (mxj.Map, error) {
-	mv, err := mxj.NewMapXmlReader(xmlReader)
-	if err != nil {
-		return nil, err
-	}
-	return mv, nil
-}
-
-// for child := n.FirstChild; child != nil; child = child.NextSibling {
-// 	output(buf, child)
-// }
 
 type kv struct {
 	k, v   string
@@ -217,10 +198,6 @@ func castXMLMap(inMap map[string]string, schema *openapi3.Schema) (map[string]in
 	return rv, nil
 }
 
-func GetSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
-	return getSubObj(xmlReader, path)
-}
-
 func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schema) (interface{}, error) {
 	raw, err := getSubObj(xmlReader, path)
 	if err != nil {
@@ -258,38 +235,6 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 		}
 	default:
 		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
-	}
-}
-
-func GetSubObjArr(xmlReader io.ReadCloser, path string) ([]map[string]interface{}, error) {
-	return getSubObjArr(xmlReader, path)
-}
-
-func strMapToInterfaceMap(m map[string]string) map[string]interface{} {
-	rv := make(map[string]interface{})
-	for k, v := range m {
-		rv[k] = v
-	}
-	return rv
-}
-
-func getSubObjArr(xmlReader io.ReadCloser, path string) ([]map[string]interface{}, error) {
-	raw, err := getSubObj(xmlReader, path)
-	if err != nil {
-		return nil, err
-	}
-	switch raw := raw.(type) {
-	case []map[string]string:
-		var rv []map[string]interface{}
-		for _, v := range raw {
-			m := strMapToInterfaceMap(v)
-			rv = append(rv, m)
-		}
-		return rv, nil
-	case map[string]string:
-		return []map[string]interface{}{strMapToInterfaceMap(raw)}, nil
-	default:
-		return nil, fmt.Errorf("")
 	}
 }
 

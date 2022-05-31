@@ -18,6 +18,7 @@ require (
 	github.com/stackql/stackql-provider-registry v0.0.1-rc01
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	gopkg.in/yaml.v2 v2.4.0
+	gopkg.in/yaml.v3 v3.0.0
 	gotest.tools v2.2.0+incompatible
 	vitess.io/vitess v0.0.10-rc01
 )
