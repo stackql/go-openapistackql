@@ -200,43 +200,53 @@ func TestSimpleAWSec2ServiceJsonReadAndDumpString(t *testing.T) {
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
 }
 
-// func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
-// 	setupFileRoot(t)
-// 	for _, vr := range googleTestableVersions {
-// 		b, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/services-split/compute/compute-v1.yaml", vr))
-// 		if err != nil {
-// 			t.Fatalf("Test failed: %v", err)
-// 		}
+func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
+	setupFileRoot(t)
+	for _, vr := range googleTestableVersions {
+		b, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/services-split/compute/compute-v1.yaml", vr))
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
 
-// 		l := NewLoader()
+		br, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/resources/compute-v1.yaml", vr))
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
 
-// 		svc, err := l.LoadFromBytes(b)
-// 		if err != nil {
-// 			t.Fatalf("Test failed: %v", err)
-// 		}
+		l := NewLoader()
 
-// 		assert.Equal(t, svc.GetName(), "compute")
+		rr, err := LoadResourcesShallow(br)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
 
-// 		outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Compute.json")
+		svc, err := l.LoadFromBytesAndResources(rr, "subnetworks", b)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
 
-// 		assert.NilError(t, err)
+		assert.Equal(t, svc.GetName(), "compute")
 
-// 		b, err = json.MarshalIndent(svc, "", "  ")
+		outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Compute.json")
 
-// 		assert.NilError(t, err)
+		assert.NilError(t, err)
 
-// 		assert.Assert(t, b != nil)
+		b, err = json.MarshalIndent(svc, "", "  ")
 
-// 		f, err := os.OpenFile(outFile, os.O_TRUNC|os.O_RDWR|os.O_CREATE, 0666)
-// 		assert.NilError(t, err)
+		assert.NilError(t, err)
 
-// 		f.Write(b)
-// 		f.Close()
+		assert.Assert(t, b != nil)
 
-// 	}
+		f, err := os.OpenFile(outFile, os.O_TRUNC|os.O_RDWR|os.O_CREATE, 0666)
+		assert.NilError(t, err)
 
-// 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
-// }
+		f.Write(b)
+		f.Close()
+
+	}
+
+	t.Logf("TestSimpleGoogleComputeServiceJsonReadAndDumpString passed\n")
+}
 
 func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 	setupFileRoot(t)
