@@ -37,6 +37,7 @@ type RegistryAPI interface {
 	PullAndPersistProviderArchive(string, string) error
 	PullProviderArchive(string, string) (io.ReadCloser, error)
 	ListAllAvailableProviders() (map[string]ProviderDescription, error)
+	ListAllProviderVersions(string) (map[string]ProviderDescription, error)
 	ListLocallyAvailableProviders() map[string]ProviderDescription
 	GetDocBytes(string) ([]byte, error)
 	GetLatestAvailableVersion(string) (string, error)
@@ -145,10 +146,12 @@ func (r *Registry) ListLocallyAvailableProviders() map[string]ProviderDescriptio
 }
 
 type ProviderDescription struct {
+	_        struct{}
 	Versions []string `json:"versions" yaml: "versions"`
 }
 
 type ProvidersList struct {
+	_         struct{}
 	Providers map[string]ProviderDescription `json:"providers" yaml: "providers"`
 }
 
@@ -158,11 +161,49 @@ func NewProvidersList() ProvidersList {
 	}
 }
 
+func getLatestSemverString(svSlice []string) (string, error) {
+	var versionsAvailable []*semver.Version
+	for _, e := range svSlice {
+		nv, err := semver.NewVersion(e)
+		if err != nil {
+			return "", err
+		}
+		versionsAvailable = append(versionsAvailable, nv)
+	}
+	sort.Sort(semver.Collection(versionsAvailable))
+	if len(versionsAvailable) == 0 {
+		return "", fmt.Errorf("no versions available")
+	}
+	return versionsAvailable[len(versionsAvailable)-1].Original(), nil
+}
+
+func (pl ProvidersList) GetLatestList() (ProvidersList, error) {
+	m := make(map[string]ProviderDescription)
+	for k, v := range pl.Providers {
+		latest, err := getLatestSemverString(v.Versions)
+		if err != nil {
+			return NewProvidersList(), err
+		}
+		m[k] = ProviderDescription{Versions: []string{latest}}
+	}
+	return ProvidersList{Providers: m}, nil
+}
+
+func (pl ProvidersList) GetSingleProviderList(prov string) ProvidersList {
+	m := make(map[string]ProviderDescription)
+	for k, v := range pl.Providers {
+		if k == prov {
+			m[k] = v
+		}
+	}
+	return ProvidersList{Providers: m}
+}
+
 func (r *Registry) ListAllAvailableProviders() (map[string]ProviderDescription, error) {
 	if r.isFile() {
 		return nil, fmt.Errorf("'registry list' is meaningless in local mode")
 	}
-	rv := NewProvidersList()
+	regProvs := NewProvidersList()
 	rc, err := r.getRemoteProviderList()
 	if err != nil {
 		return nil, err
@@ -171,11 +212,36 @@ func (r *Registry) ListAllAvailableProviders() (map[string]ProviderDescription, 
 	if err != nil {
 		return nil, err
 	}
-	err = yaml.Unmarshal(b, rv)
+	err = yaml.Unmarshal(b, regProvs)
 	if err != nil {
 		return nil, err
 	}
-	return rv.Providers, nil
+	latest, err := regProvs.GetLatestList()
+	if err != nil {
+		return nil, err
+	}
+	return latest.Providers, nil
+}
+
+func (r *Registry) ListAllProviderVersions(prov string) (map[string]ProviderDescription, error) {
+	if r.isFile() {
+		return nil, fmt.Errorf("'registry list' is meaningless in local mode")
+	}
+	regProvs := NewProvidersList()
+	rc, err := r.getRemoteProviderList()
+	if err != nil {
+		return nil, err
+	}
+	b, err := io.ReadAll(rc)
+	if err != nil {
+		return nil, err
+	}
+	err = yaml.Unmarshal(b, regProvs)
+	if err != nil {
+		return nil, err
+	}
+	singleProvList := regProvs.GetSingleProviderList(prov)
+	return singleProvList.Providers, nil
 }
 
 func (r *Registry) isHttp() bool {
