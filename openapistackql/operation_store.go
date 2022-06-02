@@ -71,7 +71,7 @@ type ExpectedResponse struct {
 
 type OperationStore struct {
 	MethodKey string `json:"-" yaml:"-"`
-	SQLVerb   string `json:"sqlVerb" yaml:"sqlVerb"` // Required
+	SQLVerb   string `json:"-" yaml:"-"` // Required
 	// Optional parameters.
 	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
@@ -214,6 +214,7 @@ func (m *OperationStore) GetColumnOrder(extended bool) []string {
 	retVal := []string{
 		MethodName,
 		RequiredParams,
+		SQLVerb,
 	}
 	if extended {
 		retVal = append(retVal, MethodDescription)
@@ -344,12 +345,17 @@ func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{}
 	}
 	sort.Strings(requiredParamNames)
 	sort.Strings(requiredBodyParamNames)
-	for _, s := range requiredBodyParamNames {
-		requiredParamNames = append(requiredParamNames, s)
+	requiredParamNames = append(requiredParamNames, requiredBodyParamNames...)
+
+	sqlVerb := m.SQLVerb
+	if sqlVerb == "" {
+		sqlVerb = "EXEC"
 	}
+
 	retVal := map[string]interface{}{
 		MethodName:     m.MethodKey,
 		RequiredParams: strings.Join(requiredParamNames, ", "),
+		SQLVerb:        strings.ToUpper(sqlVerb),
 	}
 	if extended {
 		retVal[MethodDescription] = m.OperationRef.Value.Description

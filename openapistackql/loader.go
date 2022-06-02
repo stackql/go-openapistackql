@@ -180,7 +180,7 @@ func (l *Loader) mergeResource(svc *Service, rsc *Resource, sr *ServiceRef) erro
 	for sqlVerb, dir := range rsc.SQLVerbs {
 		for i, v := range dir {
 			cur := v
-			err := l.resolveSQLVerb(rsc, &cur)
+			err := l.resolveSQLVerb(rsc, &cur, sqlVerb)
 			if err != nil {
 				return err
 			}
@@ -531,7 +531,7 @@ func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operatio
 	return nil
 }
 
-func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef) (err error) {
+func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef, sqlVerb string) (err error) {
 	if component != nil && component.Value != nil {
 		if loader.visitedOperationStore == nil {
 			loader.visitedOperationStore = make(map[*OperationStore]struct{})
@@ -553,6 +553,7 @@ func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef
 	if !ok {
 		return fmt.Errorf("operation store ref type '%T' not supported", osv)
 	}
+	resolved.SQLVerb = sqlVerb
 	component.Value = resolved
 	if component.Value == nil {
 		return fmt.Errorf("operation store ref not resolved")

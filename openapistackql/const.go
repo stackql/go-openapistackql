@@ -4,6 +4,7 @@ const (
 	MethodDescription string = "description"
 	MethodName        string = "MethodName"
 	RequiredParams    string = "RequiredParams"
+	SQLVerb           string = "SQLVerb"
 )
 
 const (
