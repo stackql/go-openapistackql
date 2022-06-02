@@ -1,6 +1,7 @@
 package semver
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 
@@ -12,29 +13,21 @@ const (
 )
 
 var (
-	stableSemVerRegex *regexp.Regexp = regexp.MustCompile(stableSemVerRegexStr)
+	_ *regexp.Regexp = regexp.MustCompile(stableSemVerRegexStr)
 )
 
-func FindLatestStable(versions []string) (string, error) {
-	var acceptableVersions []*semver.Version
-	var allVersions []*semver.Version
-	for _, v := range versions {
-		sv, err := semver.NewVersion(v)
+func FindLatestStable(svSlice []string) (string, error) {
+	var versionsAvailable []*semver.Version
+	for _, e := range svSlice {
+		nv, err := semver.NewVersion(e)
 		if err != nil {
 			return "", err
 		}
-		allVersions = append(allVersions, sv)
-		if stableSemVerRegex.MatchString(v) {
-			acceptableVersions = append(acceptableVersions, sv)
-		}
+		versionsAvailable = append(versionsAvailable, nv)
 	}
-	if len(acceptableVersions) > 0 {
-		return "v" + getMaxFromCollection(semver.Collection(acceptableVersions)), nil
+	sort.Sort(semver.Collection(versionsAvailable))
+	if len(versionsAvailable) == 0 {
+		return "", fmt.Errorf("no versions available")
 	}
-	return "v" + getMaxFromCollection(semver.Collection(allVersions)), nil
-}
-
-func getMaxFromCollection(c semver.Collection) string {
-	sort.Sort(c)
-	return c[c.Len()-1].String()
+	return versionsAvailable[len(versionsAvailable)-1].Original(), nil
 }
