@@ -100,7 +100,8 @@ func (rs *Resource) GetMethodsMatched() Methods {
 
 func (rs *Resource) getMethodsMatched() Methods {
 	rv := rs.Methods
-	for k, m := range rv {
+	for k, v := range rv {
+		m := v
 		sqlVerb := m.SQLVerb
 		if sqlVerb == "" {
 			sqlVerb = rs.getDefaultSQLVerbForMethodKey(k)
