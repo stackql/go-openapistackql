@@ -13,7 +13,6 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
-	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
 	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 
 	log "github.com/sirupsen/logrus"
@@ -193,13 +192,6 @@ func (m *OperationStore) getSelectItemsKeySimple() string {
 		return m.Response.ObjectKey
 	}
 	return ""
-}
-
-func (m *OperationStore) getSelectItemsPath() []string {
-	if m.Response != nil {
-		return openapitoxpath.ToPathSlice(m.Response.ObjectKey)
-	}
-	return openapitoxpath.ToPathSlice(defaultSelectItemsKey)
 }
 
 func (m *OperationStore) GetKey(lhs string) (interface{}, error) {
