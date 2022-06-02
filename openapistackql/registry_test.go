@@ -81,6 +81,14 @@ func TestRegistryCanHandlePolymorphismAllOf(t *testing.T) {
 	execLocalRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryCanHandlePolymorphismAllOf)
 }
 
+func TestListProvidersRegistry(t *testing.T) {
+	execRemoteRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryProvidersList)
+}
+
+func TestListProviderVersionsRegistry(t *testing.T) {
+	execRemoteRegistryTestOnly(t, unsignedProvidersRegistryCfgStr, execTestRegistryProviderVersionsList)
+}
+
 func execLocalAndRemoteRegistryTests(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
 
 	rc, err := getRegistryCfgFromString(registryConfigStr)
@@ -112,6 +120,15 @@ func execLocalRegistryTestOnly(t *testing.T, registryConfigStr string, tf func(t
 	assert.NilError(t, err)
 
 	runLocal(t, rc, tf)
+}
+
+func execRemoteRegistryTestOnly(t *testing.T, registryConfigStr string, tf func(t *testing.T, r RegistryAPI)) {
+
+	rc, err := getRegistryCfgFromString(registryConfigStr)
+
+	assert.NilError(t, err)
+
+	runRemote(t, rc, tf)
 }
 
 func getRegistryCfgFromString(registryConfigStr string) (RegistryConfig, error) {
@@ -150,6 +167,31 @@ func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAP
 	}
 
 	t.Logf("TestSimpleOktaServiceRead passed")
+}
+
+func execTestRegistryProvidersList(t *testing.T, r RegistryAPI) {
+
+	pr, err := r.ListAllAvailableProviders()
+	assert.NilError(t, err)
+
+	assert.Assert(t, len(pr) > 0)
+	assert.Assert(t, len(pr["google"].Versions) == 1)
+	assert.Assert(t, len(pr["okta"].Versions) == 1)
+	assert.Assert(t, pr["google"].Versions[0] == "v2.0.1")
+	assert.Assert(t, pr["okta"].Versions[0] == "v2.0.1")
+
+	t.Logf("execTestRegistryProvidersList passed")
+}
+
+func execTestRegistryProviderVersionsList(t *testing.T, r RegistryAPI) {
+
+	pr, err := r.ListAllProviderVersions("google")
+	assert.NilError(t, err)
+
+	assert.Assert(t, len(pr) == 1)
+	assert.Assert(t, len(pr["google"].Versions) == 2)
+
+	t.Logf("execTestRegistryProviderVersionsList passed")
 }
 
 func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r RegistryAPI) {
