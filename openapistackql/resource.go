@@ -94,6 +94,34 @@ func (rs *Resource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	return rs.getDefaultMethodKeysForSQLVerb(sqlVerb)
 }
 
+func (rs *Resource) GetMethodsMatched() Methods {
+	return rs.getMethodsMatched()
+}
+
+func (rs *Resource) matchSQLVerbs() {
+	for k, v := range rs.SQLVerbs {
+		for _, or := range v {
+			orp := &or
+			resolveSQLVerbFromResource(rs, orp, k)
+		}
+	}
+}
+
+func (rs *Resource) getMethodsMatched() Methods {
+	rs.matchSQLVerbs()
+	rv := rs.Methods
+	for k, v := range rv {
+		m := v
+		sqlVerb := m.SQLVerb
+		if sqlVerb == "" {
+			sqlVerb = rs.getDefaultSQLVerbForMethodKey(k)
+		}
+		m.SQLVerb = sqlVerb
+		rv[k] = m
+	}
+	return rv
+}
+
 func (rs *Resource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
 	return rs.getFirstMethodMatchFromSQLVerb(sqlVerb, parameters)
 }
@@ -128,6 +156,19 @@ func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 		return []string{"select", "list", "aggregatedList", "get"}
 	default:
 		return []string{}
+	}
+}
+
+func (rs *Resource) getDefaultSQLVerbForMethodKey(methodName string) string {
+	switch strings.ToLower(methodName) {
+	case "insert", "create":
+		return "insert"
+	case "delete":
+		return "delete"
+	case "select", "list", "aggregatedList", "get":
+		return "select"
+	default:
+		return ""
 	}
 }
 
