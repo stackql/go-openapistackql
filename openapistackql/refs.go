@@ -35,9 +35,7 @@ func (opr OperationRef) ExtractMethodItem() string {
 }
 
 func (opr OperationRef) extractMethodItem() string {
-	s := opr.extractFragment()
-	elems := strings.Split(s, "/")
-	return elems[len(elems)-1]
+	return extractSuffix(opr.Ref)
 }
 
 func (opr OperationRef) ExtractServiceDocPath() string {
@@ -53,8 +51,7 @@ func (opr OperationRef) extractServiceDocPath() string {
 	return s
 }
 
-func (opr OperationRef) extractFragment() string {
-	s := opr.Ref
+func extractFragment(s string) string {
 	if strings.HasPrefix(s, "#") {
 		return s[1:]
 	}
@@ -65,9 +62,23 @@ func (opr OperationRef) extractFragment() string {
 	return elems[len(elems)-1]
 }
 
+func extractSuffix(s string) string {
+	sf := extractFragment(s)
+	elems := strings.Split(sf, "/")
+	return elems[len(elems)-1]
+}
+
+func (opr OperationRef) extractFragment() string {
+	return extractFragment(opr.Ref)
+}
+
 type OperationStoreRef struct {
 	Ref   string `json:"$ref" yaml:"$ref"`
 	Value *OperationStore
+}
+
+func (osr OperationStoreRef) extractMethodItem() string {
+	return extractSuffix(osr.Ref)
 }
 
 type PathItemRef struct {
