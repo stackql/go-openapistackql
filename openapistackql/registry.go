@@ -9,14 +9,13 @@ import (
 	"os"
 	"path"
 	"regexp"
-	"sort"
 	"strings"
 
 	"github.com/stackql/go-openapistackql/pkg/compression"
 	"github.com/stackql/stackql-provider-registry/signing/Ed25519/app/edcrypto"
 	"gopkg.in/yaml.v2"
 
-	"github.com/Masterminds/semver"
+	"github.com/stackql/go-openapistackql/pkg/semver"
 )
 
 const (
@@ -150,6 +149,10 @@ type ProviderDescription struct {
 	Versions []string `json:"versions" yaml: "versions"`
 }
 
+func (pd ProviderDescription) GetLatestVersion() (string, error) {
+	return semver.FindLatestStable(pd.Versions)
+}
+
 type ProvidersList struct {
 	_         struct{}
 	Providers map[string]ProviderDescription `json:"providers" yaml: "providers"`
@@ -161,26 +164,10 @@ func NewProvidersList() ProvidersList {
 	}
 }
 
-func getLatestSemverString(svSlice []string) (string, error) {
-	var versionsAvailable []*semver.Version
-	for _, e := range svSlice {
-		nv, err := semver.NewVersion(e)
-		if err != nil {
-			return "", err
-		}
-		versionsAvailable = append(versionsAvailable, nv)
-	}
-	sort.Sort(semver.Collection(versionsAvailable))
-	if len(versionsAvailable) == 0 {
-		return "", fmt.Errorf("no versions available")
-	}
-	return versionsAvailable[len(versionsAvailable)-1].Original(), nil
-}
-
 func (pl ProvidersList) GetLatestList() (ProvidersList, error) {
 	m := make(map[string]ProviderDescription)
 	for k, v := range pl.Providers {
-		latest, err := getLatestSemverString(v.Versions)
+		latest, err := semver.FindLatestStable(v.Versions)
 		if err != nil {
 			return NewProvidersList(), err
 		}
@@ -653,44 +640,29 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 	case "google":
 		providerName = "googleapis.com"
 	}
-	var versionsAvailable []*semver.Version
 	if r.isLocalFile() {
 		deSlice, err := os.ReadDir(path.Join(r.srcUrl.Path, providerName))
 		if err != nil {
 			return "", err
 		}
+		var deStrSlice []string
 		for _, e := range deSlice {
 			if e.IsDir() {
-				nv, err := semver.NewVersion(e.Name())
-				if err != nil {
-					return "", err
-				}
-				versionsAvailable = append(versionsAvailable, nv)
+				deStrSlice = append(deStrSlice, e.Name())
 			}
 		}
-		sort.Sort(semver.Collection(versionsAvailable))
-		if len(versionsAvailable) == 0 {
-			return "", fmt.Errorf("no versions available")
-		}
-		return versionsAvailable[len(versionsAvailable)-1].Original(), nil
+		return semver.FindLatestStable(deStrSlice)
 	}
 
 	deSlice, err := os.ReadDir(path.Join(r.getLocalDocRoot(), providerName))
 	if err != nil {
 		return "", err
 	}
+	var deStrSlice []string
 	for _, e := range deSlice {
 		if e.IsDir() {
-			nv, err := semver.NewVersion(e.Name())
-			if err != nil {
-				return "", err
-			}
-			versionsAvailable = append(versionsAvailable, nv)
+			deStrSlice = append(deStrSlice, e.Name())
 		}
 	}
-	sort.Sort(semver.Collection(versionsAvailable))
-	if len(versionsAvailable) == 0 {
-		return "", fmt.Errorf("no versions available")
-	}
-	return versionsAvailable[len(versionsAvailable)-1].Original(), nil
+	return semver.FindLatestStable(deStrSlice)
 }
