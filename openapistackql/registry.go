@@ -160,14 +160,10 @@ func NewProvidersList() ProvidersList {
 	}
 }
 
-func getLatestSemverString(svSlice []string) (string, error) {
-	return semver.FindLatestStable(svSlice)
-}
-
 func (pl ProvidersList) GetLatestList() (ProvidersList, error) {
 	m := make(map[string]ProviderDescription)
 	for k, v := range pl.Providers {
-		latest, err := getLatestSemverString(v.Versions)
+		latest, err := semver.FindLatestStable(v.Versions)
 		if err != nil {
 			return NewProvidersList(), err
 		}
@@ -651,7 +647,7 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 				deStrSlice = append(deStrSlice, e.Name())
 			}
 		}
-		return getLatestSemverString(deStrSlice)
+		return semver.FindLatestStable(deStrSlice)
 	}
 
 	deSlice, err := os.ReadDir(path.Join(r.getLocalDocRoot(), providerName))
@@ -664,5 +660,5 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 			deStrSlice = append(deStrSlice, e.Name())
 		}
 	}
-	return getLatestSemverString(deStrSlice)
+	return semver.FindLatestStable(deStrSlice)
 }
