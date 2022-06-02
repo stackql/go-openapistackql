@@ -149,6 +149,10 @@ type ProviderDescription struct {
 	Versions []string `json:"versions" yaml: "versions"`
 }
 
+func (pd ProviderDescription) GetLatestVersion() (string, error) {
+	return semver.FindLatestStable(pd.Versions)
+}
+
 type ProvidersList struct {
 	_         struct{}
 	Providers map[string]ProviderDescription `json:"providers" yaml: "providers"`
