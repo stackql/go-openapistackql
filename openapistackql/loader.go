@@ -542,16 +542,9 @@ func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef
 		loader.visitedOperationStore[component.Value] = struct{}{}
 	}
 
-	if component == nil {
-		return fmt.Errorf("operation store ref not supplied")
-	}
-	osv, _, err := jsonpointer.GetForToken(rsc, component.Ref)
+	resolved, err := resolveSQLVerbFromResource(rsc, component, sqlVerb)
 	if err != nil {
 		return err
-	}
-	resolved, ok := osv.(*OperationStore)
-	if !ok {
-		return fmt.Errorf("operation store ref type '%T' not supported", osv)
 	}
 	resolved.SQLVerb = sqlVerb
 	component.Value = resolved
@@ -559,6 +552,26 @@ func (loader *Loader) resolveSQLVerb(rsc *Resource, component *OperationStoreRef
 		return fmt.Errorf("operation store ref not resolved")
 	}
 	return nil
+}
+
+func resolveSQLVerbFromResource(rsc *Resource, component *OperationStoreRef, sqlVerb string) (*OperationStore, error) {
+
+	if component == nil {
+		return nil, fmt.Errorf("operation store ref not supplied")
+	}
+	osv, _, err := jsonpointer.GetForToken(rsc, component.Ref)
+	if err != nil {
+		return nil, err
+	}
+	resolved, ok := osv.(*OperationStore)
+	if !ok {
+		return nil, fmt.Errorf("operation store ref type '%T' not supported", osv)
+	}
+	if resolved == nil {
+		return nil, fmt.Errorf("operation store ref not resolved")
+	}
+	resolved.SQLVerb = sqlVerb
+	return resolved, nil
 }
 
 func (loader *Loader) resolveExpectedResponse(doc *Service, op *openapi3.Operation, component *ExpectedResponse) (err error) {

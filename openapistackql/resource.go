@@ -98,7 +98,17 @@ func (rs *Resource) GetMethodsMatched() Methods {
 	return rs.getMethodsMatched()
 }
 
+func (rs *Resource) matchSQLVerbs() {
+	for k, v := range rs.SQLVerbs {
+		for _, or := range v {
+			orp := &or
+			resolveSQLVerbFromResource(rs, orp, k)
+		}
+	}
+}
+
 func (rs *Resource) getMethodsMatched() Methods {
+	rs.matchSQLVerbs()
 	rv := rs.Methods
 	for k, v := range rv {
 		m := v
