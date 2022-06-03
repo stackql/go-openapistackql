@@ -102,7 +102,14 @@ func (rs *Resource) matchSQLVerbs() {
 	for k, v := range rs.SQLVerbs {
 		for _, or := range v {
 			orp := &or
-			resolveSQLVerbFromResource(rs, orp, k)
+			mutated, err := resolveSQLVerbFromResource(rs, orp, k)
+			if err == nil && mutated != nil {
+				mk := or.extractMethodItem()
+				_, ok := rs.Methods[mk]
+				if mk != "" && ok {
+					rs.Methods[mk] = *mutated
+				}
+			}
 		}
 	}
 }
