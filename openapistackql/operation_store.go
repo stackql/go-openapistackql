@@ -13,7 +13,6 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
-	"github.com/stackql/go-openapistackql/pkg/openapitoxpath"
 	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 
 	log "github.com/sirupsen/logrus"
@@ -32,6 +31,52 @@ func (ms Methods) FindMethod(key string) (*OperationStore, error) {
 		return &m, nil
 	}
 	return nil, fmt.Errorf("could not find method for key = '%s'", key)
+}
+
+func sortOperationStoreSlices(opSlices ...[]OperationStore) {
+	for _, opSlice := range opSlices {
+		sort.SliceStable(opSlice, func(i, j int) bool {
+			return opSlice[i].MethodKey < opSlice[j].MethodKey
+		})
+	}
+}
+
+func combineOperationStoreSlices(opSlices ...[]OperationStore) []OperationStore {
+	var rv []OperationStore
+	for _, sl := range opSlices {
+		rv = append(rv, sl...)
+	}
+	return rv
+}
+
+func (ms Methods) OrderMethods() ([]OperationStore, error) {
+	var selectBin, insertBin, deleteBin, updateBin, execBin []OperationStore
+	for k, v := range ms {
+		switch v.SQLVerb {
+		case "select":
+			v.MethodKey = k
+			selectBin = append(selectBin, v)
+		case "insert":
+			v.MethodKey = k
+			insertBin = append(insertBin, v)
+		case "update":
+			v.MethodKey = k
+			updateBin = append(updateBin, v)
+		case "delete":
+			v.MethodKey = k
+			deleteBin = append(deleteBin, v)
+		case "exec":
+			v.MethodKey = k
+			execBin = append(execBin, v)
+		default:
+			v.MethodKey = k
+			v.SQLVerb = "exec"
+			execBin = append(execBin, v)
+		}
+	}
+	sortOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
+	rv := combineOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
+	return rv, nil
 }
 
 func (ms Methods) FindFromSelector(sel OperationSelector) (*OperationStore, error) {
@@ -71,7 +116,7 @@ type ExpectedResponse struct {
 
 type OperationStore struct {
 	MethodKey string `json:"-" yaml:"-"`
-	SQLVerb   string `json:"sqlVerb" yaml:"sqlVerb"` // Required
+	SQLVerb   string `json:"-" yaml:"-"` // Required
 	// Optional parameters.
 	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
@@ -195,13 +240,6 @@ func (m *OperationStore) getSelectItemsKeySimple() string {
 	return ""
 }
 
-func (m *OperationStore) getSelectItemsPath() []string {
-	if m.Response != nil {
-		return openapitoxpath.ToPathSlice(m.Response.ObjectKey)
-	}
-	return openapitoxpath.ToPathSlice(defaultSelectItemsKey)
-}
-
 func (m *OperationStore) GetKey(lhs string) (interface{}, error) {
 	val, ok := m.ToPresentationMap(true)[lhs]
 	if !ok {
@@ -214,6 +252,7 @@ func (m *OperationStore) GetColumnOrder(extended bool) []string {
 	retVal := []string{
 		MethodName,
 		RequiredParams,
+		SQLVerb,
 	}
 	if extended {
 		retVal = append(retVal, MethodDescription)
@@ -344,12 +383,17 @@ func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{}
 	}
 	sort.Strings(requiredParamNames)
 	sort.Strings(requiredBodyParamNames)
-	for _, s := range requiredBodyParamNames {
-		requiredParamNames = append(requiredParamNames, s)
+	requiredParamNames = append(requiredParamNames, requiredBodyParamNames...)
+
+	sqlVerb := m.SQLVerb
+	if sqlVerb == "" {
+		sqlVerb = "EXEC"
 	}
+
 	retVal := map[string]interface{}{
 		MethodName:     m.MethodKey,
 		RequiredParams: strings.Join(requiredParamNames, ", "),
+		SQLVerb:        strings.ToUpper(sqlVerb),
 	}
 	if extended {
 		retVal[MethodDescription] = m.OperationRef.Value.Description
