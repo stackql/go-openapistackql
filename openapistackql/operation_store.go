@@ -61,7 +61,9 @@ func (ms Methods) OrderMethods() ([]OperationStore, error) {
 			v.MethodKey = k
 			selectBin = append(execBin, v)
 		default:
-			return nil, fmt.Errorf("cannot accomodate sqlVerb = '%s'", v.SQLVerb)
+			v.MethodKey = k
+			v.SQLVerb = "exec"
+			selectBin = append(execBin, v)
 		}
 	}
 	sortOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
