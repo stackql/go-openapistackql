@@ -58,20 +58,20 @@ func (ms Methods) OrderMethods() ([]OperationStore, error) {
 			selectBin = append(selectBin, v)
 		case "insert":
 			v.MethodKey = k
-			selectBin = append(insertBin, v)
+			insertBin = append(insertBin, v)
 		case "update":
 			v.MethodKey = k
-			selectBin = append(updateBin, v)
+			updateBin = append(updateBin, v)
 		case "delete":
 			v.MethodKey = k
-			selectBin = append(deleteBin, v)
+			deleteBin = append(deleteBin, v)
 		case "exec":
 			v.MethodKey = k
-			selectBin = append(execBin, v)
+			execBin = append(execBin, v)
 		default:
 			v.MethodKey = k
 			v.SQLVerb = "exec"
-			selectBin = append(execBin, v)
+			execBin = append(execBin, v)
 		}
 	}
 	sortOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
