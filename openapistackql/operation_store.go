@@ -41,6 +41,14 @@ func sortOperationStoreSlices(opSlices ...[]OperationStore) {
 	}
 }
 
+func combineOperationStoreSlices(opSlices ...[]OperationStore) []OperationStore {
+	var rv []OperationStore
+	for _, sl := range opSlices {
+		rv = append(rv, sl...)
+	}
+	return rv
+}
+
 func (ms Methods) OrderMethods() ([]OperationStore, error) {
 	var selectBin, insertBin, deleteBin, updateBin, execBin []OperationStore
 	for k, v := range ms {
@@ -67,8 +75,8 @@ func (ms Methods) OrderMethods() ([]OperationStore, error) {
 		}
 	}
 	sortOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
-	selectBin = append(selectBin, append(insertBin, append(deleteBin, append(updateBin, execBin...)...)...)...)
-	return selectBin, nil
+	rv := combineOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
+	return rv, nil
 }
 
 func (ms Methods) FindFromSelector(sel OperationSelector) (*OperationStore, error) {
