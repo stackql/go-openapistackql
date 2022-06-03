@@ -33,6 +33,42 @@ func (ms Methods) FindMethod(key string) (*OperationStore, error) {
 	return nil, fmt.Errorf("could not find method for key = '%s'", key)
 }
 
+func sortOperationStoreSlices(opSlices ...[]OperationStore) {
+	for _, opSlice := range opSlices {
+		sort.SliceStable(opSlice, func(i, j int) bool {
+			return opSlice[i].MethodKey < opSlice[j].MethodKey
+		})
+	}
+}
+
+func (ms Methods) OrderMethods() ([]OperationStore, error) {
+	var selectBin, insertBin, deleteBin, updateBin, execBin []OperationStore
+	for k, v := range ms {
+		switch v.SQLVerb {
+		case "select":
+			v.MethodKey = k
+			selectBin = append(selectBin, v)
+		case "insert":
+			v.MethodKey = k
+			selectBin = append(insertBin, v)
+		case "update":
+			v.MethodKey = k
+			selectBin = append(updateBin, v)
+		case "delete":
+			v.MethodKey = k
+			selectBin = append(deleteBin, v)
+		case "exec":
+			v.MethodKey = k
+			selectBin = append(execBin, v)
+		default:
+			return nil, fmt.Errorf("cannot accomodate sqlVerb = '%s'", v.SQLVerb)
+		}
+	}
+	sortOperationStoreSlices(selectBin, insertBin, deleteBin, updateBin, execBin)
+	selectBin = append(selectBin, append(insertBin, append(deleteBin, append(updateBin, execBin...)...)...)...)
+	return selectBin, nil
+}
+
 func (ms Methods) FindFromSelector(sel OperationSelector) (*OperationStore, error) {
 	for _, m := range ms {
 		if m.SQLVerb == sel.SQLVerb {
