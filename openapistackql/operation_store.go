@@ -521,7 +521,9 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	}
 	contentTypeHeaderRequired := false
 	var bodyReader io.Reader
-	if requestBody != nil && op.Request != nil {
+	predOne := requestBody != nil
+	predTwo := op.Request != nil
+	if (predOne) && (predTwo) {
 		b, err := marshalBody(requestBody, op.Request.BodyMediaType)
 		if err != nil {
 			return nil, err
