@@ -3,13 +3,10 @@ package openapistackql
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"reflect"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
-	log "github.com/sirupsen/logrus"
-	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 	yaml "gopkg.in/yaml.v3"
 	"vitess.io/vitess/go/sqltypes"
 )
@@ -35,12 +32,6 @@ func NewService(t *openapi3.T) *Service {
 
 func (svc *Service) IsPreferred() bool {
 	return false
-}
-
-func (svc *Service) FindRoute(req *http.Request) {
-	router, _ := queryrouter.NewRouter(svc.GetT())
-	route, pathParams, err := router.FindRoute(req)
-	log.Infoln(fmt.Sprintf("route = %v, pathParams =  %v, err = %v", route, pathParams, err))
 }
 
 func (svc *Service) GetSchemas() (map[string]*Schema, error) {

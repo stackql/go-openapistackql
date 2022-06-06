@@ -14,6 +14,7 @@ package queryrouter
  */
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"sort"
@@ -22,6 +23,8 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/routers"
 	"github.com/gorilla/mux"
+
+	"github.com/stackql/go-openapistackql/pkg/urltranslate"
 )
 
 var _ routers.Router = &Router{}
@@ -33,16 +36,20 @@ type Router struct {
 
 func NewRouter(doc *openapi3.T) (routers.Router, error) {
 	type srv struct {
-		schemes    []string
-		host, base string
-		server     *openapi3.Server
+		schemes []string
+		host    urltranslate.QueryElement
+		base    string
+		server  *openapi3.Server
 	}
 	servers := make([]srv, 0, len(doc.Servers))
 	for _, server := range doc.Servers {
-		serverURL := server.URL
+		serverURLParameterised, err := urltranslate.ExtractParameterisedURL(server.URL)
+		if err != nil {
+			return nil, err
+		}
+		serverURL := serverURLParameterised.String()
 		var schemes []string
 		var u *url.URL
-		var err error
 		if strings.Contains(serverURL, "://") {
 			scheme0 := strings.Split(serverURL, "://")[0]
 			schemes = permutePart(scheme0, server)
@@ -57,8 +64,16 @@ func NewRouter(doc *openapi3.T) (routers.Router, error) {
 		if len(path) > 0 && path[len(path)-1] == '/' {
 			path = path[:len(path)-1]
 		}
+		urlHost, err := urltranslate.ParseURLHost(bDecode(u.Host))
+		if err != nil {
+			return nil, err
+		}
+		hostElem, ok := serverURLParameterised.GetElementByString(urlHost.GetHost())
+		if !ok {
+			return nil, fmt.Errorf("element = '%s' unavailable in URL = '%s'", hostElem.FullString(), serverURLParameterised.Raw())
+		}
 		servers = append(servers, srv{
-			host:    bDecode(u.Host), //u.Hostname()?
+			host:    hostElem, //u.Hostname()?
 			base:    path,
 			schemes: schemes, // scheme: []string{scheme0}, TODO: https://github.com/gorilla/mux/issues/624
 			server:  server,
@@ -92,8 +107,8 @@ func NewRouter(doc *openapi3.T) (routers.Router, error) {
 			if schemes := s.schemes; len(schemes) != 0 {
 				muxRoute.Schemes(schemes...)
 			}
-			if host := s.host; host != "" {
-				muxRoute.Host(host)
+			if host := s.host; host != nil && host.FullString() != "" {
+				muxRoute.Host(host.FullString())
 			}
 			if err := muxRoute.GetError(); err != nil {
 				return nil, err
