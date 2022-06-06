@@ -8,13 +8,13 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"reflect"
 	"sort"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/stackql/go-openapistackql/pkg/queryrouter"
+	"github.com/stackql/go-openapistackql/pkg/util"
 
 	log "github.com/sirupsen/logrus"
 
@@ -522,8 +522,8 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 	}
 	contentTypeHeaderRequired := false
 	var bodyReader io.Reader
-	predOne := !reflect.ValueOf(requestBody).IsNil()
-	predTwo := !reflect.ValueOf(op.Request).IsNil()
+	predOne := !util.IsNil(requestBody)
+	predTwo := !util.IsNil(op.Request)
 	if predOne && predTwo {
 		b, err := marshalBody(requestBody, op.Request.BodyMediaType)
 		if err != nil {
