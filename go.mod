@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver v1.4.2
+	github.com/PaesslerAG/jsonpath v0.1.1
 	github.com/antchfx/xmlquery v1.3.10
 	github.com/clbanning/mxj/v2 v2.5.5
 	github.com/getkin/kin-openapi v0.88.0
@@ -18,11 +19,13 @@ require (
 	github.com/stackql/stackql-provider-registry v0.0.1-rc01
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	gopkg.in/yaml.v2 v2.4.0
+	gopkg.in/yaml.v3 v3.0.0
 	gotest.tools v2.2.0+incompatible
 	vitess.io/vitess v0.0.10-rc01
 )
 
 require (
+	github.com/PaesslerAG/gval v1.0.0 // indirect
 	github.com/antchfx/xpath v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-openapi/swag v0.19.5 // indirect
