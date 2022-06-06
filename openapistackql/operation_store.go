@@ -14,6 +14,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/stackql/go-openapistackql/pkg/queryrouter"
+	"github.com/stackql/go-openapistackql/pkg/urltranslate"
 	"github.com/stackql/go-openapistackql/pkg/util"
 
 	log "github.com/sirupsen/logrus"
@@ -438,7 +439,7 @@ func selectServer(servers openapi3.Servers, inputParams map[string]interface{}) 
 	if err != nil {
 		return "", err
 	}
-	return srvs[0], nil
+	return urltranslate.SanitiseServerURL(srvs[0])
 }
 
 func (op *OperationStore) acceptPathParam(mutableParamMap map[string]interface{}) {}
