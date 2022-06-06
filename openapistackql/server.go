@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/stackql/go-openapistackql/pkg/urltranslate"
 )
 
 func ObtainServerURLsFromServers(svs []*openapi3.Server, vars map[string]string) ([]string, error) {
@@ -46,7 +47,11 @@ func generateServerURL(sv *openapi3.Server, vars map[string]string) (string, err
 			mergedVars[k] = existing
 		}
 	}
-	return replaceSimpleStringVars(sv.URL, mergedVars), nil
+	saninisedUrl, err := urltranslate.SanitiseServerURL(sv.URL)
+	if err != nil {
+		return "", err
+	}
+	return replaceSimpleStringVars(saninisedUrl, mergedVars), nil
 }
 
 func replaceSimpleStringVars(template string, vars map[string]string) string {
