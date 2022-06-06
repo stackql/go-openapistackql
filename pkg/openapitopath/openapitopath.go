@@ -5,7 +5,6 @@ import (
 )
 
 type PathResolver interface {
-	// ToPath(path []string) string
 	ToPathSlice(path string) []string
 }
 
@@ -24,10 +23,6 @@ func NewJSONPathResolver() PathResolver {
 	return &JSONPathResolver{}
 }
 
-// func (xpr *XPathResolver) ToPath(path []string) string {
-// 	return strings.Join(path, "/")
-// }
-
 func (xpr *XPathResolver) ToPathSlice(path string) []string {
 	strSlice := strings.Split(path, "/")
 	if len(strSlice) > 0 && strSlice[0] == "" {
@@ -35,11 +30,6 @@ func (xpr *XPathResolver) ToPathSlice(path string) []string {
 	}
 	return strSlice
 }
-
-// func (jpr *JSONPathResolver) ToPath(path []string) string {
-// 	sj := strings.Join(path, ".")
-// 	return "$." + sj
-// }
 
 func (jpr *JSONPathResolver) ToPathSlice(path string) []string {
 	strSlice := strings.Split(path, ".")
