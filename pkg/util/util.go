@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strconv"
 
 	"vitess.io/vitess/go/vt/sqlparser"
@@ -40,4 +41,8 @@ func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 	default:
 		return []byte(fmt.Sprintf(`{ "displayError": {"type": "%T", "error": "currently unable to represent object of type %T"}}`, subject, subject))
 	}
+}
+
+func IsNil(arg interface{}) bool {
+	return arg == nil || reflect.ValueOf(arg).IsNil()
 }
