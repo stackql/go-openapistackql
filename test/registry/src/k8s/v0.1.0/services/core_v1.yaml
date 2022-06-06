@@ -21458,7 +21458,7 @@ components:
           - $ref: '#/components/x-stackQL-resources/persistent_volume/methods/deleteCoreV1CollectionPersistentVolume'
 openapi: 3.0.0
 servers:
-  - url: https://{cluster_addr}/
+  - url: https://{cluster_addr:[^.]+}/
     variables:
       cluster_addr:
         default: localhost

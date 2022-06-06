@@ -152,3 +152,54 @@ func TestXMLSchemaInterrogation(t *testing.T) {
 	assert.Assert(t, s.GetName() == "Volume")
 
 }
+
+func TestHostRouting(t *testing.T) {
+	setupFileRoot(t)
+
+	rdr, err := testutil.GetK8SNodesListMultiResponseReader()
+
+	assert.NilError(t, err)
+
+	res := &http.Response{
+		Header:     http.Header{"Content-Type": []string{"application/json"}},
+		StatusCode: 200,
+		Body:       rdr,
+	}
+
+	b, err := GetServiceDocBytes(fmt.Sprintf("k8s/%s/services/core_v1.yaml", "v0.1.0"))
+	assert.NilError(t, err)
+
+	l := NewLoader()
+
+	svc, err := l.LoadFromBytes(b)
+
+	assert.NilError(t, err)
+	assert.Assert(t, svc != nil)
+
+	// assert.Equal(t, svc.GetName(), "ec2")
+
+	rsc, err := svc.GetResource("node")
+	assert.NilError(t, err)
+	assert.Assert(t, rsc != nil)
+
+	ops, _, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", nil)
+	assert.Assert(t, ok)
+	// assert.Assert(t, st != "")
+	assert.Assert(t, ops != nil)
+
+	processedResponse, err := ops.ProcessResponse(res)
+	assert.NilError(t, err)
+	assert.Assert(t, processedResponse != nil)
+
+	mc, ok := processedResponse.([]interface{})
+	assert.Assert(t, ok)
+	e0, ok := mc[0].(map[string]interface{})
+	assert.Assert(t, ok)
+	assert.Assert(t, len(mc) == 3)
+	assert.Assert(t, e0["uid"] == "d5626684-69a3-4644-bf2b-a8e67bb44b01")
+
+	rvi, err := ops.Parameterize(svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
+	assert.NilError(t, err)
+	assert.Assert(t, rvi != nil)
+
+}
