@@ -202,4 +202,8 @@ func TestHostRouting(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
+	rvi, err = ops.Parameterize(svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
+	assert.NilError(t, err)
+	assert.Assert(t, rvi != nil)
+
 }
