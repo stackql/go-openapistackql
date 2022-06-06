@@ -322,7 +322,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 					}
 				}
 			}
-			return rv, mediaType, err
+			return rv, key, err
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
 	case MediaTypeJson:
@@ -331,7 +331,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			pathSplit := pathResolver.ToPathSlice(key)
 			ss, ok := schema.getDescendentInit(pathSplit)
 			if ok {
-				return ss, mediaType, nil
+				return ss, key, nil
 			}
 			return nil, "", fmt.Errorf("could not resolve json schema for key = '%s'", key)
 		}
