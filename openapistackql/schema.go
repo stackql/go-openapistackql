@@ -326,7 +326,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
 	case MediaTypeJson:
-		if key != "" {
+		if key != "" && strings.HasPrefix(key, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
 			ss, ok := schema.getDescendentInit(pathSplit)
