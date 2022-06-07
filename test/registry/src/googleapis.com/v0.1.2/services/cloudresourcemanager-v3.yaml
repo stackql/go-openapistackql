@@ -1193,6 +1193,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: folders
         move:
           operation:
             $ref: '#/paths/~1v3~1folders~1{foldersId}:move/post'

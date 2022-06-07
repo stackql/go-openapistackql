@@ -37,7 +37,7 @@ type Router struct {
 func NewRouter(doc *openapi3.T) (routers.Router, error) {
 	type srv struct {
 		schemes []string
-		host    urltranslate.QueryVar
+		host    urltranslate.QueryElement
 		base    string
 		server  *openapi3.Server
 	}
@@ -64,13 +64,12 @@ func NewRouter(doc *openapi3.T) (routers.Router, error) {
 		if len(path) > 0 && path[len(path)-1] == '/' {
 			path = path[:len(path)-1]
 		}
-		hostVarName := strings.TrimSuffix(strings.TrimPrefix(bDecode(u.Host), "{"), "}")
-		hostVar, ok := serverURLParameterised.GetVarByName(hostVarName)
+		hostElem, ok := serverURLParameterised.GetElementByString(bDecode(u.Host))
 		if !ok {
-			return nil, fmt.Errorf("var = '%s' unavailable in URL = '%s'", hostVarName, serverURLParameterised.Raw())
+			return nil, fmt.Errorf("element = '%s' unavailable in URL = '%s'", hostElem.FullString(), serverURLParameterised.Raw())
 		}
 		servers = append(servers, srv{
-			host:    hostVar, //u.Hostname()?
+			host:    hostElem, //u.Hostname()?
 			base:    path,
 			schemes: schemes, // scheme: []string{scheme0}, TODO: https://github.com/gorilla/mux/issues/624
 			server:  server,
@@ -104,7 +103,7 @@ func NewRouter(doc *openapi3.T) (routers.Router, error) {
 			if schemes := s.schemes; len(schemes) != 0 {
 				muxRoute.Schemes(schemes...)
 			}
-			if host := s.host; host != nil && host.GetName() != "" {
+			if host := s.host; host != nil && host.FullString() != "" {
 				muxRoute.Host(host.FullString())
 			}
 			if err := muxRoute.GetError(); err != nil {
