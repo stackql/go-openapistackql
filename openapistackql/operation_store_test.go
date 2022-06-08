@@ -62,7 +62,7 @@ func TestXPathHandle(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, processedResponse != nil)
 
-	mc, ok := processedResponse.([]map[string]interface{})
+	mc, ok := processedResponse.GetProcessedBody().([]map[string]interface{})
 	assert.Assert(t, ok)
 	assert.Assert(t, len(mc) == 2)
 	assert.Assert(t, mc[1]["iops"] == 100)
@@ -108,7 +108,7 @@ func TestJSONPathHandle(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, processedResponse != nil)
 
-	mc, ok := processedResponse.([]interface{})
+	mc, ok := processedResponse.GetProcessedBody().([]interface{})
 	assert.Assert(t, ok)
 	e0, ok := mc[0].(map[string]interface{})
 	assert.Assert(t, ok)
@@ -191,7 +191,7 @@ func TestVariableHostRouting(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, processedResponse != nil)
 
-	mc, ok := processedResponse.([]interface{})
+	mc, ok := processedResponse.GetProcessedBody().([]interface{})
 	assert.Assert(t, ok)
 	e0, ok := mc[0].(map[string]interface{})
 	assert.Assert(t, ok)
@@ -246,7 +246,7 @@ func TestVariableHostRoutingFutureProofed(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, processedResponse != nil)
 
-	mc, ok := processedResponse.([]interface{})
+	mc, ok := processedResponse.GetProcessedBody().([]interface{})
 	assert.Assert(t, ok)
 	e0, ok := mc[0].(map[string]interface{})
 	assert.Assert(t, ok)
@@ -301,7 +301,7 @@ func TestStaticHostRouting(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, processedResponse != nil)
 
-	rm, ok := processedResponse.(map[string]interface{})
+	rm, ok := processedResponse.GetProcessedBody().(map[string]interface{})
 	assert.Assert(t, ok)
 
 	k := ops.GetSelectItemsKey()

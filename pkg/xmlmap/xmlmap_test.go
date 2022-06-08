@@ -31,7 +31,11 @@ func TestAwareListVolumesMulti(t *testing.T) {
 
 	sc := svc.Components.Schemas["VolumeList"].Value
 
-	m, err := GetSubObjTyped(testutil.GetAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item", sc)
+	m, doc, err := GetSubObjTyped(testutil.GetAwsEc2ListMultiResponseReader(), "/DescribeVolumesResponse/volumeSet/item", sc)
+
+	assert.NilError(t, err)
+	assert.Assert(t, m != nil)
+	assert.Assert(t, doc != nil)
 
 	mc, ok := m.([]map[string]interface{})
 	assert.Assert(t, ok)
@@ -39,8 +43,6 @@ func TestAwareListVolumesMulti(t *testing.T) {
 	assert.Assert(t, mc[1]["iops"] == 100)
 	assert.Assert(t, mc[1]["size"] == 8)
 
-	assert.NilError(t, err)
-	assert.Assert(t, m != nil)
 }
 
 func TestXMLMArshal(t *testing.T) {

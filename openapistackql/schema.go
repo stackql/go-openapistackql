@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/PaesslerAG/jsonpath"
+	"github.com/antchfx/xmlquery"
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
 	"github.com/stackql/go-openapistackql/pkg/openapitopath"
@@ -675,17 +676,21 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 	return nil
 }
 
-func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, error) {
+func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, *xmlquery.Node, error) {
 	return xmlmap.GetSubObjTyped(body, path, s.Schema)
 }
 
-func (s *Schema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, error) {
+func (s *Schema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, interface{}, error) {
 	var target interface{}
 	err := json.NewDecoder(body).Decode(&target)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return jsonpath.Get(path, target)
+	processedResponse, err := jsonpath.Get(path, target)
+	if err != nil {
+		return nil, nil, err
+	}
+	return processedResponse, target, nil
 }
 
 func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
@@ -704,7 +709,6 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	case MediaTypeJson, MediaTypeScimJson:
 		err = json.NewDecoder(body).Decode(&target)
 	case MediaTypeXML, MediaTypeTextXML:
-		// target, err = s.unmarshalXMLResponseBody(body, "")
 		return nil, fmt.Errorf("xml disallowed here")
 	case MediaTypeOctetStream:
 		target, err = io.ReadAll(body)
@@ -720,7 +724,7 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	return target, err
 }
 
-func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interface{}, error) {
+func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*Response, error) {
 
 	mediaType, err := getResponseMediaType(r)
 	if err != nil {
@@ -734,7 +738,11 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 		if !ok {
 			return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
 		}
-		return ss.unmarshalXMLResponseBody(r.Body, path)
+		processedResponse, rawResponse, err := ss.unmarshalXMLResponseBody(r.Body, path)
+		if err != nil {
+			return nil, err
+		}
+		return NewResponse(processedResponse, rawResponse, r), nil
 	case MediaTypeJson, MediaTypeScimJson:
 		// TODO: follow same pattern as XML, but with json path
 		if path != "" && strings.HasPrefix(path, "$") {
@@ -744,27 +752,37 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 			if !ok {
 				return nil, fmt.Errorf("cannot find json descendent for path %+v", pathSplit)
 			}
-			return ss.unmarshalJSONResponseBody(r.Body, path)
+			processedResponse, rawResponse, err := ss.unmarshalJSONResponseBody(r.Body, path)
+			if err != nil {
+				return nil, err
+			}
+			return NewResponse(processedResponse, rawResponse, r), nil
 		}
 		fallthrough
 	default:
-		return s.unmarshalResponse(r)
+		processedResponse, err := s.unmarshalResponse(r)
+		if err != nil {
+			return nil, err
+		}
+		return NewResponse(processedResponse, processedResponse, r), nil
 	}
 }
 
-func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (interface{}, error) {
+func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (*Response, error) {
 	target, err := s.unmarshalResponseAtPath(response, path)
 	if err == nil && response.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
 	}
 	if err == io.EOF {
 		if response.StatusCode >= 200 && response.StatusCode < 300 {
-			return map[string]interface{}{"result": "The Operation Completed Successfully"}, nil
+			boilerplate := map[string]interface{}{"result": "The Operation Completed Successfully"}
+			return NewResponse(boilerplate, boilerplate, response), nil
 		}
 	}
-	switch rv := target.(type) {
+	switch rv := target.GetProcessedBody().(type) {
 	case string, int:
-		return map[string]interface{}{AnonymousColumnName: []interface{}{rv}}, nil
+		boilerplate := map[string]interface{}{AnonymousColumnName: []interface{}{rv}}
+		return NewResponse(boilerplate, target.GetBody(), target.GetHttpResponse()), nil
 	}
 	return target, err
 }
@@ -774,7 +792,7 @@ func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response, path str
 	if err != nil {
 		return nil, err
 	}
-	switch rv := target.(type) {
+	switch rv := target.GetProcessedBody().(type) {
 	case map[string]interface{}:
 		return rv, nil
 	case nil:
