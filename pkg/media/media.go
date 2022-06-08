@@ -1,4 +1,4 @@
-package openapistackql
+package media
 
 import (
 	"mime"
@@ -33,7 +33,7 @@ func isAcceptableMediaType(mediaType string) bool {
 	}
 }
 
-func getResponseMediaType(r *http.Response) (string, error) {
+func GetResponseMediaType(r *http.Response) (string, error) {
 	rt := r.Header.Get("Content-Type")
 	var mediaType string
 	var err error

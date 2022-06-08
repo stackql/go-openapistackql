@@ -10,6 +10,8 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 
 	"github.com/antchfx/xmlquery"
+
+	log "github.com/sirupsen/logrus"
 )
 
 /*
@@ -188,7 +190,8 @@ func castXMLMap(inMap map[string]string, schema *openapi3.Schema) (map[string]in
 	for k, v := range inMap {
 		ps, ok := getPropertyFromSchema(schema, k)
 		if !ok {
-			return nil, fmt.Errorf("property missing from schema: '%s'", k)
+			log.Infof("property missing from schema: '%s'\n", k)
+			continue
 		}
 		castVal, err := castXMLValue(v, ps)
 		if err != nil {
@@ -199,15 +202,15 @@ func castXMLMap(inMap map[string]string, schema *openapi3.Schema) (map[string]in
 	return rv, nil
 }
 
-func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schema) (interface{}, error) {
-	raw, err := getSubObj(xmlReader, path)
+func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schema) (interface{}, *xmlquery.Node, error) {
+	raw, doc, err := getSubObjFromReadCloser(xmlReader, path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	switch schema.Type {
 	case "array":
 		if schema.Items == nil || schema.Items.Value == nil {
-			return nil, fmt.Errorf("xml serde: cannot accomodate nil items array schema when deserializing an xml array")
+			return nil, nil, fmt.Errorf("xml serde: cannot accomodate nil items array schema when deserializing an xml array")
 		}
 		switch raw := raw.(type) {
 		case []map[string]string:
@@ -215,55 +218,59 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 			for _, m := range raw {
 				mc, err := castXMLMap(m, schema.Items.Value)
 				if err != nil {
-					return nil, err
+					return nil, nil, err
 				}
 				rv = append(rv, mc)
 			}
-			return rv, nil
+			return rv, doc, nil
 		default:
-			return nil, fmt.Errorf("xml serde: openapi schema type 'array' cannot accomodate golang type '%T'", raw)
+			return nil, nil, fmt.Errorf("xml serde: openapi schema type 'array' cannot accomodate golang type '%T'", raw)
 		}
 	case "object":
 		switch raw := raw.(type) {
 		case map[string]string:
 			mc, err := castXMLMap(raw, schema)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
-			return []map[string]interface{}{mc}, nil
+			return []map[string]interface{}{mc}, doc, nil
 		case []map[string]string:
-			if len(raw) == 1 {
-				m := make(map[string]interface{})
-				for k, v := range raw[0] {
-					m[k] = v
-				}
-				return m, nil
+			if len(raw) != 1 {
+				return nil, nil, fmt.Errorf("cannot ")
 			}
-			return nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
+			mc, err := castXMLMap(raw[0], schema)
+			if err != nil {
+				return nil, nil, err
+			}
+			return mc, doc, nil
 		default:
-			return nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
+			return nil, nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
 		}
 	default:
-		return nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
+		return nil, nil, fmt.Errorf("unsupported openapi schema type '%s'", schema.Type)
 	}
 }
 
-func getSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
+func getSubObjFromReadCloser(xmlReader io.ReadCloser, path string) (interface{}, *xmlquery.Node, error) {
 	doc, err := xmlquery.Parse(xmlReader)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
+	rv, err := getSubObjFromNode(doc, path)
+	if err != nil {
+		return nil, nil, err
+	}
+	return rv, doc, nil
+}
+
+func GetSubObjFromNode(doc *xmlquery.Node, path string) (interface{}, error) {
+	return getSubObjFromNode(doc, path)
+}
+
+func getSubObjFromNode(doc *xmlquery.Node, path string) (interface{}, error) {
 	nodes, err := xmlquery.QueryAll(doc, path)
 	if err != nil {
 		return nil, err
-	}
-	if len(nodes) == 1 {
-		m, err := getNodeMap(nodes[0])
-		if err != nil {
-			return nil, err
-		}
-		rv := []map[string]string{m}
-		return rv, nil
 	}
 	var rv []map[string]string
 	for _, node := range nodes {
