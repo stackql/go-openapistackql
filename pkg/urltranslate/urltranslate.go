@@ -2,6 +2,7 @@ package urltranslate
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -56,14 +57,6 @@ func (vwr *varWithRegexp) IsVariable() bool {
 func (vwr *varWithRegexp) String() string {
 	return fmt.Sprintf("{%s}", vwr.name)
 }
-
-// func (vwr *varWithRegexp) IsRegexp() bool {
-// 	return vwr.regexpStr != ""
-// }
-
-// func (vwr *varWithRegexp) GetRegexpStr() string {
-// 	return vwr.regexpStr
-// }
 
 func (vwr *varWithRegexp) GetName() string {
 	return vwr.name
@@ -195,4 +188,42 @@ func SanitiseServerURL(s string) (string, error) {
 		return "", err
 	}
 	return pu.String(), err
+}
+
+type URLHost interface {
+	GetHost() string
+}
+
+type URLHostSimple struct {
+	_         struct{}
+	raw, host string
+	port      int
+}
+
+func (h *URLHostSimple) GetHost() string {
+	return h.host
+}
+
+func ParseURLHost(h string) (URLHost, error) {
+	hSplit := strings.Split(h, ":")
+	switch len(hSplit) {
+	case 1:
+		return &URLHostSimple{
+			raw:  h,
+			host: h,
+			port: -1,
+		}, nil
+	case 2:
+		port, err := strconv.Atoi(hSplit[1])
+		if err != nil {
+			return nil, err
+		}
+		return &URLHostSimple{
+			raw:  h,
+			host: hSplit[0],
+			port: port,
+		}, nil
+	default:
+		return nil, fmt.Errorf("cannot parse URL host from string '%s'", h)
+	}
 }

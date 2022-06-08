@@ -64,7 +64,11 @@ func NewRouter(doc *openapi3.T) (routers.Router, error) {
 		if len(path) > 0 && path[len(path)-1] == '/' {
 			path = path[:len(path)-1]
 		}
-		hostElem, ok := serverURLParameterised.GetElementByString(bDecode(u.Host))
+		urlHost, err := urltranslate.ParseURLHost(bDecode(u.Host))
+		if err != nil {
+			return nil, err
+		}
+		hostElem, ok := serverURLParameterised.GetElementByString(urlHost.GetHost())
 		if !ok {
 			return nil, fmt.Errorf("element = '%s' unavailable in URL = '%s'", hostElem.FullString(), serverURLParameterised.Raw())
 		}
