@@ -1,6 +1,8 @@
-package openapistackql
+package response
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type Response struct {
 	rawBody       interface{}

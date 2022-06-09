@@ -74,5 +74,4 @@ func (he *IHTTPElement) GetType() HTTPElementType {
 }
 
 type HTTPElementAction interface {
-	//
 }

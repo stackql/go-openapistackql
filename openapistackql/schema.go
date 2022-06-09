@@ -13,6 +13,7 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
 	"github.com/stackql/go-openapistackql/pkg/openapitopath"
+	"github.com/stackql/go-openapistackql/pkg/response"
 	"github.com/stackql/go-openapistackql/pkg/util"
 	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
@@ -724,7 +725,7 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	return target, err
 }
 
-func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*Response, error) {
+func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*response.Response, error) {
 
 	mediaType, err := getResponseMediaType(r)
 	if err != nil {
@@ -742,7 +743,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*Respon
 		if err != nil {
 			return nil, err
 		}
-		return NewResponse(processedResponse, rawResponse, r), nil
+		return response.NewResponse(processedResponse, rawResponse, r), nil
 	case MediaTypeJson, MediaTypeScimJson:
 		// TODO: follow same pattern as XML, but with json path
 		if path != "" && strings.HasPrefix(path, "$") {
@@ -756,7 +757,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*Respon
 			if err != nil {
 				return nil, err
 			}
-			return NewResponse(processedResponse, rawResponse, r), nil
+			return response.NewResponse(processedResponse, rawResponse, r), nil
 		}
 		fallthrough
 	default:
@@ -764,25 +765,25 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*Respon
 		if err != nil {
 			return nil, err
 		}
-		return NewResponse(processedResponse, processedResponse, r), nil
+		return response.NewResponse(processedResponse, processedResponse, r), nil
 	}
 }
 
-func (s *Schema) ProcessHttpResponse(response *http.Response, path string) (*Response, error) {
-	target, err := s.unmarshalResponseAtPath(response, path)
-	if err == nil && response.StatusCode >= 400 {
+func (s *Schema) ProcessHttpResponse(r *http.Response, path string) (*response.Response, error) {
+	target, err := s.unmarshalResponseAtPath(r, path)
+	if err == nil && r.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
 	}
 	if err == io.EOF {
-		if response.StatusCode >= 200 && response.StatusCode < 300 {
+		if r.StatusCode >= 200 && r.StatusCode < 300 {
 			boilerplate := map[string]interface{}{"result": "The Operation Completed Successfully"}
-			return NewResponse(boilerplate, boilerplate, response), nil
+			return response.NewResponse(boilerplate, boilerplate, r), nil
 		}
 	}
 	switch rv := target.GetProcessedBody().(type) {
 	case string, int:
 		boilerplate := map[string]interface{}{AnonymousColumnName: []interface{}{rv}}
-		return NewResponse(boilerplate, target.GetBody(), target.GetHttpResponse()), nil
+		return response.NewResponse(boilerplate, target.GetBody(), target.GetHttpResponse()), nil
 	}
 	return target, err
 }
