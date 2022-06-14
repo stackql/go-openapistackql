@@ -305,6 +305,9 @@ func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, stri
 func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	if key == "" {
+		if schema.Items != nil && schema.Items.Value != nil {
+			return NewSchema(schema.Items.Value, ""), "", nil
+		}
 		return schema, "", nil
 	}
 	switch mediaType {
