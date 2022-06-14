@@ -42,3 +42,13 @@ func TestAwareListVolumesMulti(t *testing.T) {
 	assert.NilError(t, err)
 	assert.Assert(t, m != nil)
 }
+
+func TestXMLMArshal(t *testing.T) {
+	input := map[string]interface{}{
+		"XX": "yy",
+	}
+	b, err := MarshalXMLUserInput(input, "Input")
+	assert.NilError(t, err)
+	s := string(b)
+	assert.Assert(t, s == "<Input><XX>yy</XX></Input>")
+}

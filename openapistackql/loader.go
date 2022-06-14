@@ -454,7 +454,7 @@ func (loader *Loader) resolveContentDefault(content openapi3.Content) (*Schema, 
 	for _, mt := range preferredMediaTypes {
 		rv, ok := content[mt]
 		if ok && rv != nil && rv.Schema != nil && rv.Schema.Value != nil {
-			return NewSchema(rv.Schema.Value, ""), mt, true
+			return NewSchema(rv.Schema.Value, rv.Schema.Ref), mt, true
 		}
 	}
 	return nil, "", false
