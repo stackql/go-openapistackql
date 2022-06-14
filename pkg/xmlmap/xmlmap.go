@@ -200,7 +200,7 @@ func castXMLMap(inMap map[string]string, schema *openapi3.Schema) (map[string]in
 }
 
 func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schema) (interface{}, *xmlquery.Node, error) {
-	raw, doc, err := getSubObj(xmlReader, path)
+	raw, doc, err := getSubObjFromReadCloser(xmlReader, path)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -239,37 +239,41 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 	}
 }
 
-func getSubObj(xmlReader io.ReadCloser, path string) (interface{}, *xmlquery.Node, error) {
+func getSubObjFromReadCloser(xmlReader io.ReadCloser, path string) (interface{}, *xmlquery.Node, error) {
 	doc, err := xmlquery.Parse(xmlReader)
 	if err != nil {
 		return nil, nil, err
 	}
-	nodes, err := xmlquery.QueryAll(doc, path)
+	rv, err := getSubObjFromNode(doc, path)
 	if err != nil {
 		return nil, nil, err
 	}
-	if len(nodes) == 1 {
-		m, err := getNodeMap(nodes[0])
-		if err != nil {
-			return nil, nil, err
-		}
-		rv := []interface{}{m}
-		return rv, doc, nil
+	return rv, doc, nil
+}
+
+func GetSubObjFromNode(doc *xmlquery.Node, path string) (interface{}, error) {
+	return getSubObjFromNode(doc, path)
+}
+
+func getSubObjFromNode(doc *xmlquery.Node, path string) (interface{}, error) {
+	nodes, err := xmlquery.QueryAll(doc, path)
+	if err != nil {
+		return nil, err
 	}
 	var rv []map[string]string
 	for _, node := range nodes {
 		switch node.Type {
 		case xmlquery.TextNode, xmlquery.CharDataNode, xmlquery.CommentNode:
-			return node.InnerText(), doc, nil
+			return node.InnerText(), nil
 		default:
 			nm, err := getNodeMap(node)
 			if err != nil {
-				return nil, nil, err
+				return nil, err
 			}
 			rv = append(rv, nm)
 		}
 	}
-	return rv, doc, nil
+	return rv, nil
 }
 
 func MarshalXMLUserInput(input interface{}, enclosingName string) ([]byte, error) {

@@ -12,6 +12,7 @@ import (
 	"github.com/antchfx/xmlquery"
 	"github.com/getkin/kin-openapi/openapi3"
 	log "github.com/sirupsen/logrus"
+	"github.com/stackql/go-openapistackql/pkg/media"
 	"github.com/stackql/go-openapistackql/pkg/openapitopath"
 	"github.com/stackql/go-openapistackql/pkg/response"
 	"github.com/stackql/go-openapistackql/pkg/util"
@@ -328,7 +329,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 		return schema, "", nil
 	}
 	switch mediaType {
-	case MediaTypeXML, MediaTypeTextXML:
+	case media.MediaTypeXML, media.MediaTypeTextXML:
 		pathResolver := openapitopath.NewXPathResolver()
 		pathSplit := pathResolver.ToPathSlice(key)
 		ss, ok := schema.getXMLDescendentInit(pathSplit)
@@ -345,7 +346,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			return rv, key, err
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
-	case MediaTypeJson, MediaTypeScimJson:
+	case media.MediaTypeJson, media.MediaTypeScimJson:
 		if key != "" && strings.HasPrefix(key, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
@@ -702,18 +703,18 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 		return nil, nil
 	}
 	var target interface{}
-	mediaType, err := getResponseMediaType(r)
+	mediaType, err := media.GetResponseMediaType(r)
 	if err != nil {
 		return nil, err
 	}
 	switch mediaType {
-	case MediaTypeJson, MediaTypeScimJson:
+	case media.MediaTypeJson, media.MediaTypeScimJson:
 		err = json.NewDecoder(body).Decode(&target)
-	case MediaTypeXML, MediaTypeTextXML:
+	case media.MediaTypeXML, media.MediaTypeTextXML:
 		return nil, fmt.Errorf("xml disallowed here")
-	case MediaTypeOctetStream:
+	case media.MediaTypeOctetStream:
 		target, err = io.ReadAll(body)
-	case MediaTypeTextPlain, MediaTypeHTML:
+	case media.MediaTypeTextPlain, media.MediaTypeHTML:
 		var b []byte
 		b, err = io.ReadAll(body)
 		if err == nil {
@@ -727,12 +728,12 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 
 func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*response.Response, error) {
 
-	mediaType, err := getResponseMediaType(r)
+	mediaType, err := media.GetResponseMediaType(r)
 	if err != nil {
 		return nil, err
 	}
 	switch mediaType {
-	case MediaTypeXML, MediaTypeTextXML:
+	case media.MediaTypeXML, media.MediaTypeTextXML:
 		pathResolver := openapitopath.NewXPathResolver()
 		pathSplit := pathResolver.ToPathSlice(path)
 		ss, ok := s.getXMLDescendentInit(pathSplit)
@@ -744,7 +745,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*respon
 			return nil, err
 		}
 		return response.NewResponse(processedResponse, rawResponse, r), nil
-	case MediaTypeJson, MediaTypeScimJson:
+	case media.MediaTypeJson, media.MediaTypeScimJson:
 		// TODO: follow same pattern as XML, but with json path
 		if path != "" && strings.HasPrefix(path, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()

@@ -12,6 +12,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
+	"github.com/stackql/go-openapistackql/pkg/media"
 	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 	"github.com/stackql/go-openapistackql/pkg/response"
 	"github.com/stackql/go-openapistackql/pkg/urltranslate"
@@ -190,7 +191,7 @@ func (op *OperationStore) getOptimalResponseMediaType() string {
 	if op.Response != nil && op.Response.BodyMediaType != "" {
 		return op.Response.BodyMediaType
 	}
-	return MediaTypeJson
+	return media.MediaTypeJson
 }
 
 func (op *OperationStore) IsNullary() bool {
