@@ -1,6 +1,7 @@
 package xmlmap
 
 import (
+	"encoding/xml"
 	"fmt"
 	"io"
 	"strconv"
@@ -269,4 +270,39 @@ func getSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
 		}
 	}
 	return rv, nil
+}
+
+func MarshalXMLUserInput(input interface{}) ([]byte, error) {
+	switch input := input.(type) {
+	case map[string]interface{}:
+		m := permissableMap(input)
+		return xml.Marshal(m)
+	default:
+		return nil, fmt.Errorf("cannot MarshaL XML user input from type = '%T'", input)
+	}
+}
+
+type permissableMap map[string]interface{}
+
+// StringMap marshals into XML.
+func (s permissableMap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	tokens := []xml.Token{start}
+
+	for key, value := range s {
+		t := xml.StartElement{Name: xml.Name{"", key}}
+		tokens = append(tokens, t, xml.CharData(fmt.Sprintf("%v", value)), xml.EndElement{t.Name})
+	}
+
+	tokens = append(tokens, xml.EndElement{start.Name})
+
+	for _, t := range tokens {
+		err := e.EncodeToken(t)
+		if err != nil {
+			return err
+		}
+	}
+
+	// flush to ensure tokens are written
+	return e.Flush()
 }

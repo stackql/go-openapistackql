@@ -3,7 +3,6 @@ package openapistackql
 import (
 	"bytes"
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 	"io"
 	"net/http"
@@ -16,6 +15,7 @@ import (
 	"github.com/stackql/go-openapistackql/pkg/queryrouter"
 	"github.com/stackql/go-openapistackql/pkg/urltranslate"
 	"github.com/stackql/go-openapistackql/pkg/util"
+	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 
 	log "github.com/sirupsen/logrus"
 
@@ -449,28 +449,10 @@ func marshalBody(body interface{}, contentType string) ([]byte, error) {
 	case "application/json":
 		return json.Marshal(body)
 	case "application/xml", "text/xml":
-		return xml.Marshal(body)
+		return xmlmap.MarshalXMLUserInput(body)
 	}
 	return nil, fmt.Errorf("media type = '%s' not supported", contentType)
 }
-
-// func (op *OperationStore) ProcessResponse(body []byte) (interface{}, error) {
-// 	switch op.Response.Schema.Type {
-// 	case "string": // (this includes dates and files)
-// 		return string(body), nil
-// 	case "number":
-// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-// 	case "integer":
-// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-// 	case "boolean":
-// 		return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-// 	case "array":
-// 		return marshalBody(body, op.Response.BodyMediaType)
-// 	case "object":
-// 		return marshalBody(body, op.Response.BodyMediaType)
-// 	}
-// 	return nil, fmt.Errorf("raw %T as top-level response not currently supported", op.Response.Schema.Type)
-// }
 
 func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
