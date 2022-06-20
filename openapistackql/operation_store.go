@@ -448,20 +448,10 @@ func marshalBody(body interface{}, contentType string) ([]byte, error) {
 	switch contentType {
 	case "application/json":
 		return json.Marshal(body)
-	case "application/xml":
+	case "application/xml", "text/xml":
 		return xml.Marshal(body)
 	}
 	return nil, fmt.Errorf("media type = '%s' not supported", contentType)
-}
-
-func unmarshalBody(bytes []byte, obj interface{}, contentType string) error {
-	switch contentType {
-	case "application/json":
-		return json.Unmarshal(bytes, obj)
-	case "application/xml":
-		return xml.Unmarshal(bytes, obj)
-	}
-	return fmt.Errorf("media type = '%s' not supported", contentType)
 }
 
 // func (op *OperationStore) ProcessResponse(body []byte) (interface{}, error) {
