@@ -524,6 +524,15 @@ func (s *Schema) hasPropertiesOrPolymorphicProperties() bool {
 	return s.hasPolymorphicProperties()
 }
 
+func (s *Schema) isNotSimple() bool {
+	switch s.Type {
+	case "object", "array", "":
+		return true
+	default:
+		return false
+	}
+}
+
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
 		var cols []ColumnDescriptor
@@ -613,7 +622,7 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 		return s
 	}
 	remainingPath := strings.TrimPrefix(path, s.key)
-	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
+	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.isNotSimple()) {
 		if s.hasPolymorphicProperties() {
 			fs := s.getFattnedPolymorphicSchema()
 			return fs.FindByPath(path, visited)
