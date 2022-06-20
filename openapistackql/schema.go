@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -723,7 +724,11 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 		if !ok {
 			return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
 		}
-		return ss.unmarshalXMLResponseBody(r.Body, path)
+		b, _ := io.ReadAll(r.Body)
+		s := string(b)
+		log.Debugf("%s\n", s)
+		r := io.NopCloser(bytes.NewReader(b))
+		return ss.unmarshalXMLResponseBody(r, path)
 	case MediaTypeJson:
 		// TODO: follow same pattern as XML, but with json path
 		if path != "" && strings.HasPrefix(path, "$") {
