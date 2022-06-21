@@ -1,6 +1,7 @@
 package xmlmap
 
 import (
+	"encoding/xml"
 	"fmt"
 	"io"
 	"strconv"
@@ -230,6 +231,15 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 				return nil, err
 			}
 			return []map[string]interface{}{mc}, nil
+		case []map[string]string:
+			if len(raw) == 1 {
+				m := make(map[string]interface{})
+				for k, v := range raw[0] {
+					m[k] = v
+				}
+				return m, nil
+			}
+			return nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
 		default:
 			return nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
 		}
@@ -252,7 +262,7 @@ func getSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
 		if err != nil {
 			return nil, err
 		}
-		rv := []interface{}{m}
+		rv := []map[string]string{m}
 		return rv, nil
 	}
 	var rv []map[string]string
@@ -269,4 +279,51 @@ func getSubObj(xmlReader io.ReadCloser, path string) (interface{}, error) {
 		}
 	}
 	return rv, nil
+}
+
+func MarshalXMLUserInput(input interface{}, enclosingName string) ([]byte, error) {
+	switch input := input.(type) {
+	case map[string]interface{}:
+		m := newPermissableMapWrapper(input, enclosingName)
+		return xml.Marshal(m)
+	default:
+		return nil, fmt.Errorf("cannot MarshaL XML user input from type = '%T'", input)
+	}
+}
+
+type permissableMap map[string]interface{}
+
+type permissableMapWrapper struct {
+	m    permissableMap
+	name xml.Name
+}
+
+func newPermissableMapWrapper(m map[string]interface{}, name string) permissableMapWrapper {
+	return permissableMapWrapper{
+		m:    m,
+		name: xml.Name{"", name},
+	}
+}
+
+func (s permissableMapWrapper) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	start.Name = s.name
+	tokens := []xml.Token{start}
+
+	for key, value := range s.m {
+		t := xml.StartElement{Name: xml.Name{"", key}}
+		tokens = append(tokens, t, xml.CharData(fmt.Sprintf("%v", value)), xml.EndElement{t.Name})
+	}
+
+	tokens = append(tokens, xml.EndElement{start.Name})
+
+	for _, t := range tokens {
+		err := e.EncodeToken(t)
+		if err != nil {
+			return err
+		}
+	}
+
+	// flush to ensure tokens are written
+	return e.Flush()
 }

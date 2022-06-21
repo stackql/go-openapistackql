@@ -98,7 +98,19 @@ func getPathSuffix(path string) string {
 }
 
 func (s *Schema) GetName() string {
+	return s.getName()
+}
+
+func (s *Schema) getName() string {
 	return getPathSuffix(s.key)
+}
+
+func (s *Schema) getXMLALiasOrName() string {
+	xa := s.getXmlAlias()
+	if xa != "" {
+		return xa
+	}
+	return s.getName()
 }
 
 func (s *Schema) IsRequired(key string) bool {
@@ -143,6 +155,9 @@ func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
 	}
 	if s.Type == "object" && len(path) > 0 {
 		path = path[1:]
+	}
+	if len(path) == 0 {
+		return s, true
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
@@ -305,6 +320,9 @@ func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, stri
 func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	if key == "" {
+		if schema.Items != nil && schema.Items.Value != nil {
+			return NewSchema(schema.Items.Value, ""), "", nil
+		}
 		return schema, "", nil
 	}
 	switch mediaType {
@@ -443,10 +461,6 @@ func getSchemaName(sr *openapi3.SchemaRef) string {
 	return ""
 }
 
-func (s *Schema) GetXmlAlias() string {
-	return s.getXmlAlias()
-}
-
 func (s *Schema) getXmlAlias() string {
 	switch xml := s.XML.(type) {
 	case map[string]interface{}:
@@ -519,6 +533,15 @@ func (s *Schema) hasPropertiesOrPolymorphicProperties() bool {
 		return true
 	}
 	return s.hasPolymorphicProperties()
+}
+
+func (s *Schema) isNotSimple() bool {
+	switch s.Type {
+	case "object", "array", "":
+		return true
+	default:
+		return false
+	}
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
@@ -610,7 +633,7 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 		return s
 	}
 	remainingPath := strings.TrimPrefix(path, s.key)
-	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
+	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.isNotSimple()) {
 		if s.hasPolymorphicProperties() {
 			fs := s.getFattnedPolymorphicSchema()
 			return fs.FindByPath(path, visited)
