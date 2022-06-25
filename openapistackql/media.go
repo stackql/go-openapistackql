@@ -8,6 +8,7 @@ import (
 const (
 	MediaTypeHTML        string = "text/html"
 	MediaTypeJson        string = "application/json"
+	MediaTypeScimJson    string = "application/scim+json"
 	MediaTypeOctetStream string = "application/octet-stream"
 	MediaTypeTextPlain   string = "text/plain"
 	MediaTypeXML         string = "application/xml"
@@ -22,6 +23,7 @@ func isAcceptableMediaType(mediaType string) bool {
 	switch mediaType {
 	case MediaTypeHTML,
 		MediaTypeJson,
+		MediaTypeScimJson,
 		MediaTypeOctetStream,
 		MediaTypeTextPlain,
 		MediaTypeXML:
