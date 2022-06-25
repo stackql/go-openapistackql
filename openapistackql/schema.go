@@ -343,7 +343,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			return rv, key, err
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
-	case MediaTypeJson:
+	case MediaTypeJson, MediaTypeScimJson:
 		if key != "" && strings.HasPrefix(key, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
@@ -701,7 +701,7 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 		return nil, err
 	}
 	switch mediaType {
-	case MediaTypeJson:
+	case MediaTypeJson, MediaTypeScimJson:
 		err = json.NewDecoder(body).Decode(&target)
 	case MediaTypeXML, MediaTypeTextXML:
 		// target, err = s.unmarshalXMLResponseBody(body, "")
@@ -735,7 +735,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (interfa
 			return nil, fmt.Errorf("cannot find xml descendent for path %+v", pathSplit)
 		}
 		return ss.unmarshalXMLResponseBody(r.Body, path)
-	case MediaTypeJson:
+	case MediaTypeJson, MediaTypeScimJson:
 		// TODO: follow same pattern as XML, but with json path
 		if path != "" && strings.HasPrefix(path, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
