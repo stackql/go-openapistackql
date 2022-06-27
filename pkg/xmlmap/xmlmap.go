@@ -231,6 +231,15 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 				return nil, nil, err
 			}
 			return []map[string]interface{}{mc}, doc, nil
+		case []map[string]string:
+			if len(raw) != 1 {
+				return nil, nil, fmt.Errorf("cannot ")
+			}
+			mc, err := castXMLMap(raw[0], schema)
+			if err != nil {
+				return nil, nil, err
+			}
+			return []map[string]interface{}{mc}, doc, nil
 		default:
 			return nil, nil, fmt.Errorf("xml serde: openapi schema type 'object' cannot accomodate golang type '%T'", raw)
 		}
