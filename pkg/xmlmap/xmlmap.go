@@ -10,6 +10,8 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 
 	"github.com/antchfx/xmlquery"
+
+	log "github.com/sirupsen/logrus"
 )
 
 /*
@@ -188,7 +190,8 @@ func castXMLMap(inMap map[string]string, schema *openapi3.Schema) (map[string]in
 	for k, v := range inMap {
 		ps, ok := getPropertyFromSchema(schema, k)
 		if !ok {
-			return nil, fmt.Errorf("property missing from schema: '%s'", k)
+			log.Infof("property missing from schema: '%s'\n", k)
+			continue
 		}
 		castVal, err := castXMLValue(v, ps)
 		if err != nil {
