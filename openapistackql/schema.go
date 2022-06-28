@@ -771,6 +771,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*respon
 }
 
 func (s *Schema) ProcessHttpResponse(r *http.Response, path string) (*response.Response, error) {
+	defer r.Body.Close()
 	target, err := s.unmarshalResponseAtPath(r, path)
 	if err == nil && r.StatusCode >= 400 {
 		err = fmt.Errorf(fmt.Sprintf("HTTP response error: %s", string(util.InterfaceToBytes(target, true))))
