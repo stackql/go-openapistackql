@@ -40,7 +40,10 @@ func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 	case nil:
 		return []byte("null")
 	case *response.Response:
-		return []byte(sub.Error())
+		if isErrorCol {
+			return []byte(sub.Error())
+		}
+		return []byte(sub.String())
 	default:
 		return []byte(fmt.Sprintf(`{ "displayError": {"type": "%T", "error": "currently unable to represent object of type %T"}}`, subject, subject))
 	}

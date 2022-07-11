@@ -32,8 +32,12 @@ func (r *Response) GetProcessedBody() interface{} {
 	return r.processedBody
 }
 
-func (r *Response) Error() string {
-	baseString := ""
+func (r *Response) String() string {
+	return r.string()
+}
+
+func (r *Response) string() string {
+	var baseString string
 	switch body := r.processedBody.(type) {
 	case map[string]interface{}:
 		b, err := json.Marshal(body)
@@ -48,12 +52,19 @@ func (r *Response) Error() string {
 	}
 	if r.httpResponse != nil {
 		if baseString != "" {
-			return fmt.Sprintf(`{ "httpError": { "statusCode": %d, "" } }`, r.httpResponse.StatusCode)
+			return fmt.Sprintf(`{ "statusCode": %d, "body": %s  }`, r.httpResponse.StatusCode, baseString)
 		}
-		return fmt.Sprintf(`{ "httpError": { "statusCode": %d } }`, r.httpResponse.StatusCode)
 	}
 	if baseString != "" {
-		return fmt.Sprintf(`{ "httpError": { "message": "unknown error", "body": %s } }`, baseString)
+		return fmt.Sprintf(`{ "body": %s  }`, baseString)
+	}
+	return ""
+}
+
+func (r *Response) Error() string {
+	baseString := r.string()
+	if baseString != "" {
+		return fmt.Sprintf(`{ "httpError": %s }`, baseString)
 	}
 	return `{ "httpError": { "message": "unknown error" } }`
 }
