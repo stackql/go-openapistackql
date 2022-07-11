@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"strconv"
 
+	"github.com/stackql/go-openapistackql/pkg/response"
 	"vitess.io/vitess/go/vt/sqlparser"
 )
 
@@ -38,6 +39,8 @@ func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 		return []byte(fmt.Sprintf(`{ "marshallingError": {"type": "array", "error": "%s"}}`, err.Error()))
 	case nil:
 		return []byte("null")
+	case *response.Response:
+		return []byte(sub.Error())
 	default:
 		return []byte(fmt.Sprintf(`{ "displayError": {"type": "%T", "error": "currently unable to represent object of type %T"}}`, subject, subject))
 	}
