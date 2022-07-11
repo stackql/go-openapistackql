@@ -1,6 +1,7 @@
 package response
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -29,6 +30,43 @@ func (r *Response) GetBody() interface{} {
 
 func (r *Response) GetProcessedBody() interface{} {
 	return r.processedBody
+}
+
+func (r *Response) String() string {
+	return r.string()
+}
+
+func (r *Response) string() string {
+	var baseString string
+	switch body := r.processedBody.(type) {
+	case map[string]interface{}:
+		b, err := json.Marshal(body)
+		if err == nil {
+			baseString = string(b)
+		}
+	case map[string]string:
+		b, err := json.Marshal(body)
+		if err == nil {
+			baseString = string(b)
+		}
+	}
+	if r.httpResponse != nil {
+		if baseString != "" {
+			return fmt.Sprintf(`{ "statusCode": %d, "body": %s  }`, r.httpResponse.StatusCode, baseString)
+		}
+	}
+	if baseString != "" {
+		return fmt.Sprintf(`{ "body": %s  }`, baseString)
+	}
+	return ""
+}
+
+func (r *Response) Error() string {
+	baseString := r.string()
+	if baseString != "" {
+		return fmt.Sprintf(`{ "httpError": %s }`, baseString)
+	}
+	return `{ "httpError": { "message": "unknown error" } }`
 }
 
 func (r *Response) ExtractElement(e httpelement.HTTPElement) (interface{}, error) {
