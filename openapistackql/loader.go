@@ -116,6 +116,34 @@ func (l *Loader) extractResources(svc *Service) error {
 	return l.mergeResources(svc, rscMap, nil)
 }
 
+func (l *Loader) extractAndMergeGraphQL(operation *OperationStore) error {
+	if operation.OperationRef == nil || operation.OperationRef.Value == nil {
+		return nil
+	}
+	gql, ok := operation.OperationRef.Value.Extensions[ExtensionKeyGraphQL]
+	if !ok {
+		return nil
+	}
+	var bt []byte
+	var err error
+	switch rs := gql.(type) {
+	case json.RawMessage:
+		bt, err = rs.MarshalJSON()
+	default:
+		bt, err = yaml.Marshal(gql)
+	}
+	if err != nil {
+		return err
+	}
+	var rv GraphQL
+	err = yaml.Unmarshal(bt, &rv)
+	if err != nil {
+		return err
+	}
+	operation.GraphQL = &rv
+	return nil
+}
+
 func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource, sdRef *ServiceRef) error {
 	for _, rsc := range rscMap {
 		var sr *ServiceRef
@@ -443,7 +471,7 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 
 	component.OperationRef.Value = op
 	component.PathItem = pi
-	return nil
+	return loader.extractAndMergeGraphQL(component)
 }
 
 func (loader *Loader) resolveContentDefault(content openapi3.Content) (*Schema, string, bool) {
