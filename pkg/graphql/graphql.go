@@ -39,6 +39,7 @@ func NewStandardGQLReader(
 		queryTemplate:        tmpl,
 		request:              request,
 		pageCount:            1,
+		iterativeInput:       make(map[string]interface{}),
 	}
 	for k, v := range constInput {
 		rv.iterativeInput[k] = v
