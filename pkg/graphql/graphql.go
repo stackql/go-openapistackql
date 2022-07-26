@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"text/template"
 
 	"github.com/PaesslerAG/jsonpath"
@@ -121,5 +122,6 @@ func (gq *StandardGQLReader) renderQuery() (io.ReadCloser, error) {
 	if err := gq.queryTemplate.Execute(&tplWr, gq.iterativeInput); err != nil {
 		return nil, err
 	}
-	return io.NopCloser(bytes.NewReader(tplWr.Bytes())), nil
+	s := strings.ReplaceAll(tplWr.String(), "\n", "")
+	return io.NopCloser(bytes.NewReader([]byte(s))), nil
 }
