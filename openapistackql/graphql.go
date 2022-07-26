@@ -26,6 +26,13 @@ type GraphQL struct {
 	HTTPVerb string        `json:"httpVerb" yaml:"httpVerb"`
 }
 
+func (gq *GraphQL) GetCursorJSONPath() (string, bool) {
+	if gq.Cursor == nil {
+		return "", false
+	}
+	return gq.Cursor.GetCursorJSONPath()
+}
+
 var _ jsonpointer.JSONPointable = (GraphQL)(GraphQL{})
 
 func (gq GraphQL) JSONLookup(token string) (interface{}, error) {
