@@ -123,6 +123,6 @@ func (gq *StandardGQLReader) renderQuery() (io.ReadCloser, error) {
 		return nil, err
 	}
 	s := strings.ReplaceAll(tplWr.String(), "\n", "")
-	payload := fmt.Sprintf(`{ "query": "%s" }`, s)
+	payload := fmt.Sprintf(`{ "query": "%s" }`, strings.ReplaceAll(s, `"`, `\"`))
 	return io.NopCloser(bytes.NewReader([]byte(payload))), nil
 }
