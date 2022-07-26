@@ -6,9 +6,9 @@ import (
 	"github.com/go-openapi/jsonpointer"
 )
 
-type GraphQLCursor map[string]interface{}
+type GraphQLElement map[string]interface{}
 
-func (gqc GraphQLCursor) GetCursorJSONPath() (string, bool) {
+func (gqc GraphQLElement) getJSONPath() (string, bool) {
 	jp, ok := gqc["jsonPath"]
 	switch jp := jp.(type) {
 	case string:
@@ -19,18 +19,26 @@ func (gqc GraphQLCursor) GetCursorJSONPath() (string, bool) {
 }
 
 type GraphQL struct {
-	ID       string        `json:"id" yaml:"id"`
-	Query    string        `json:"query,omitempty" yaml:"query,omitempty"` // Required
-	Cursor   GraphQLCursor `json:"cursor,omitempty" yaml:"cursor,omitempty"`
-	URL      string        `json:"url" yaml:"url"`
-	HTTPVerb string        `json:"httpVerb" yaml:"httpVerb"`
+	ID               string         `json:"id" yaml:"id"`
+	Query            string         `json:"query,omitempty" yaml:"query,omitempty"` // Required
+	Cursor           GraphQLElement `json:"cursor,omitempty" yaml:"cursor,omitempty"`
+	ReponseSelection GraphQLElement `json:"responseSelection,omitempty" yaml:"responseSelection,omitempty"`
+	URL              string         `json:"url" yaml:"url"`
+	HTTPVerb         string         `json:"httpVerb" yaml:"httpVerb"`
 }
 
 func (gq *GraphQL) GetCursorJSONPath() (string, bool) {
 	if gq.Cursor == nil {
 		return "", false
 	}
-	return gq.Cursor.GetCursorJSONPath()
+	return gq.Cursor.getJSONPath()
+}
+
+func (gq *GraphQL) GetResponseJSONPath() (string, bool) {
+	if gq.Cursor == nil {
+		return "", false
+	}
+	return gq.ReponseSelection.getJSONPath()
 }
 
 var _ jsonpointer.JSONPointable = (GraphQL)(GraphQL{})
