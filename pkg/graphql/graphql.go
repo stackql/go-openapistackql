@@ -71,6 +71,7 @@ func (gq *StandardGQLReader) Read() ([]map[string]interface{}, error) {
 		return nil, err
 	}
 	req.Body = rb
+	req.URL.RawQuery = ""
 	r, err := gq.httpClient.Do(req)
 	if err != nil {
 		return nil, err
