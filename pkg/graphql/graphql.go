@@ -81,7 +81,7 @@ func (gq *StandardGQLReader) Read() ([]map[string]interface{}, error) {
 		return nil, err
 	}
 	gq.pageCount++
-	var target []map[string]interface{}
+	var target map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&target)
 	if err != nil {
 		return nil, err
