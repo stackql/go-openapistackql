@@ -115,8 +115,17 @@ func (gq *StandardGQLReader) Read() ([]map[string]interface{}, error) {
 		return nil, err
 	}
 	switch pr := processedResponse.(type) {
-	case []map[string]interface{}:
-		return pr, returnErr
+	case []interface{}:
+		var rv []map[string]interface{}
+		for _, v := range pr {
+			switch v := v.(type) {
+			case map[string]interface{}:
+				rv = append(rv, v)
+			default:
+				return nil, fmt.Errorf("cannot accomodate GraphQL pocessed response item of type = '%T'", v)
+			}
+		}
+		return rv, returnErr
 	default:
 		return nil, fmt.Errorf("cannot accomodate GraphQL pocessed response of type = '%T'", pr)
 	}
