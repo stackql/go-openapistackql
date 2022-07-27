@@ -95,9 +95,14 @@ func (gq *StandardGQLReader) Read() ([]map[string]interface{}, error) {
 		returnErr = io.EOF
 	} else {
 		switch ct := cursorRaw.(type) {
-		case []string:
+		case []interface{}:
 			if len(ct) == 1 {
-				gq.iterativeInput["cursor"] = fmt.Sprintf("after%s", ct[0])
+				switch c := ct[0].(type) {
+				case string:
+					gq.iterativeInput["cursor"] = fmt.Sprintf(`, after: "%s"`, c)
+				default:
+					gq.iterativeInput["cursor"] = fmt.Sprintf(`, after: %v`, c)
+				}
 			} else {
 				returnErr = io.EOF
 			}
