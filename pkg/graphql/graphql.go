@@ -73,9 +73,7 @@ func (gq *StandardGQLReader) Read() ([]map[string]interface{}, error) {
 	}
 	req.Body = rb
 	req.URL.RawQuery = ""
-	if req.Header.Get("Accept") != "" {
-		req.Header.Del("Accept")
-	}
+	req.Header.Set("Content-Type", "application/json")
 	r, err := gq.httpClient.Do(req)
 	if err != nil {
 		return nil, err
