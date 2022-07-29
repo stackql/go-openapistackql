@@ -119,8 +119,9 @@ type ExpectedResponse struct {
 }
 
 type OperationStore struct {
-	MethodKey string `json:"-" yaml:"-"`
-	SQLVerb   string `json:"-" yaml:"-"` // Required
+	MethodKey string   `json:"-" yaml:"-"`
+	SQLVerb   string   `json:"-" yaml:"-"`
+	GraphQL   *GraphQL `json:"-" yaml:"-"`
 	// Optional parameters.
 	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required

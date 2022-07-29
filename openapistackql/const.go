@@ -9,6 +9,7 @@ const (
 
 const (
 	ExtensionKeyAlwaysRequired string = "x-alwaysRequired"
+	ExtensionKeyGraphQL        string = "x-stackQL-graphQL"
 	ExtensionKeyProvider       string = "x-stackql-provider"
 	ExtensionKeyResources      string = "x-stackQL-resources"
 )
