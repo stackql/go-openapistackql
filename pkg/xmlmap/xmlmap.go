@@ -268,6 +268,9 @@ func GetSubObjFromNode(doc *xmlquery.Node, path string) (interface{}, error) {
 }
 
 func getSubObjFromNode(doc *xmlquery.Node, path string) (interface{}, error) {
+	if path == "" {
+		path = "/*"
+	}
 	nodes, err := xmlquery.QueryAll(doc, path)
 	if err != nil {
 		return nil, err
