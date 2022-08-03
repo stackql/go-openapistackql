@@ -81,7 +81,7 @@ func (s *Schema) GetProperties() (Schemas, error) {
 
 func (s *Schema) getProperties() Schemas {
 	retVal := make(Schemas)
-	if s.hasPolymorphicProperties() {
+	if s.hasPolymorphicProperties() && len(s.Properties) == 0 {
 		ss := s.getFattnedPolymorphicSchema()
 		if ss != nil {
 			for k, sr := range ss.Properties {
