@@ -125,7 +125,7 @@ func (s *Schema) IsRequired(key string) bool {
 	return false
 }
 
-func (s *Schema) getXMLChild(path string) (*Schema, bool) {
+func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 	xmlAlias := s.getXmlAlias()
 	if xmlAlias == path {
 		return s, true
@@ -142,8 +142,11 @@ func (s *Schema) getXMLChild(path string) (*Schema, bool) {
 		si := v.Value
 		if si.Type == "array" && si.Items != nil && si.Items.Value != nil {
 			ss := NewSchema(si.Items.Value, "")
-			_, ok := ss.getXMLChild(path)
+			ds, ok := ss.getXMLChild(path, isTerminal)
 			if ok {
+				if !isTerminal {
+					return ds, true
+				}
 				return NewSchema(si, ""), true
 			}
 			return nil, false
@@ -164,7 +167,7 @@ func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
-		p, ok = s.getXMLChild(path[0])
+		p, ok = s.getXMLChild(path[0], len(path) <= 1)
 		if !ok {
 			return nil, false
 		}
@@ -192,7 +195,7 @@ func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
-		p, ok = s.getXMLChild(path[0])
+		p, ok = s.getXMLChild(path[0], len(path) <= 1)
 		if !ok {
 			return nil, false
 		}
@@ -209,7 +212,7 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
-		p, ok = s.getXMLChild(path[0])
+		p, ok = s.getXMLChild(path[0], len(path) <= 1)
 		if !ok {
 			return nil, false
 		}
