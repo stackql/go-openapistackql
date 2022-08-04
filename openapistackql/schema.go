@@ -395,12 +395,48 @@ func (schema *Schema) deprecatedGetSelectItemsSchema(key string, mediaType strin
 	return nil, "", fmt.Errorf("could not find items for key = '%s'", key)
 }
 
+func (s *Schema) getType() string {
+	if s.Type != "" {
+		return s.Type
+	}
+	for _, sRef := range s.AllOf {
+		if sRef != nil && sRef.Value != nil && sRef.Value.Type != "" {
+			return sRef.Value.Type
+		}
+	}
+	return ""
+}
+
+func (s *Schema) getTitle() string {
+	if s.Title != "" {
+		return s.Title
+	}
+	for _, sRef := range s.AllOf {
+		if sRef != nil && sRef.Value != nil && sRef.Value.Title != "" {
+			return sRef.Value.Title
+		}
+	}
+	return ""
+}
+
+func (s *Schema) getDescription() string {
+	if s.Description != "" {
+		return s.Description
+	}
+	for _, sRef := range s.AllOf {
+		if sRef != nil && sRef.Value != nil && sRef.Value.Description != "" {
+			return sRef.Value.Description
+		}
+	}
+	return ""
+}
+
 func (s *Schema) toFlatDescriptionMap(extended bool) map[string]interface{} {
 	retVal := make(map[string]interface{})
-	retVal["name"] = s.Title
-	retVal["type"] = s.Type
+	retVal["name"] = s.getTitle()
+	retVal["type"] = s.getType()
 	if extended {
-		retVal["description"] = s.Description
+		retVal["description"] = s.getDescription()
 	}
 	return retVal
 }
