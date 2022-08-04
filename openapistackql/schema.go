@@ -348,6 +348,9 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			}
 			return rv, key, err
 		}
+		if ok {
+			return ss, key, nil
+		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
 	case media.MediaTypeJson, media.MediaTypeScimJson:
 		if key != "" && strings.HasPrefix(key, "$") {
