@@ -193,6 +193,9 @@ func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	if len(path) == 0 {
 		return s, true
 	}
+	if len(path) == 1 && path[0] == "*" {
+		return s, true
+	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
 		p, ok = s.getXMLChild(path[0], len(path) <= 1)
