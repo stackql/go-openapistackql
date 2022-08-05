@@ -193,6 +193,9 @@ func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	if len(path) == 0 {
 		return s, true
 	}
+	if len(path) == 1 && path[0] == "*" {
+		return s, true
+	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
 		p, ok = s.getXMLChild(path[0], len(path) <= 1)
@@ -347,6 +350,9 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 				}
 			}
 			return rv, key, err
+		}
+		if ok {
+			return ss, key, nil
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
 	case media.MediaTypeJson, media.MediaTypeScimJson:
