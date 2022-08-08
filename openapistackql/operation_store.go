@@ -482,7 +482,7 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 		} else if p.Value.In == openapi3.ParameterInQuery {
 			val, present := copyParams[p.Value.Name]
 			if present {
-				q.Set(name, fmt.Sprintf("%v", val))
+				q.Add(name, fmt.Sprintf("%v", val))
 				delete(copyParams, name)
 			}
 		}
