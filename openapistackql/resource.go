@@ -10,8 +10,10 @@ import (
 )
 
 type ResourceRegister struct {
-	ServiceDocPath *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
-	Resources      map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
+	ServiceDocPath  *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	Resources       map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
+	ProviderService *ProviderService     `json:"-" yaml:"-"` // upwards traversal
+	Provider        *Provider            `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (rr *ResourceRegister) ObtainServiceDocUrl(resourceKey string) string {
@@ -42,9 +44,18 @@ type Resource struct {
 	Methods           Methods                        `json:"methods" yaml:"methods"`
 	ServiceDocPath    *ServiceRef                    `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	SQLVerbs          map[string][]OperationStoreRef `json:"sqlVerbs" yaml:"sqlVerbs"`
+	BaseUrl           string                         `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"` // hack
+	QueryTranspose    *QueryTranspose                `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	Service           *Service                       `json:"-" yaml:"-"` // upwards traversal
+	ProviderService   *ProviderService               `json:"-" yaml:"-"` // upwards traversal
+	Provider          *Provider                      `json:"-" yaml:"-"` // upwards traversal
+}
 
-	// Hacks
-	BaseUrl string `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"`
+func (r *Resource) GetQueryTransposeAlgorithm() string {
+	if r.QueryTranspose == nil {
+		return ""
+	}
+	return r.QueryTranspose.Algorithm
 }
 
 var _ jsonpointer.JSONPointable = (Resource)(Resource{})
