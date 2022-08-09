@@ -496,6 +496,9 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	}
 	if strings.ToLower(prov.Name) == "aws" {
 		for k, v := range copyParams {
+			if k == "region" {
+				continue
+			}
 			q.Set(k, fmt.Sprintf("%v", v))
 		}
 		for k := range copyParams {
