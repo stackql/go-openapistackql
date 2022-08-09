@@ -457,7 +457,7 @@ func marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, er
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.BodyMediaType)
 }
 
-func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
+func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
 	copyParams := make(map[string]interface{})
 	for k, v := range inputParams {
@@ -492,6 +492,14 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 				}
 				delete(copyParams, name)
 			}
+		}
+	}
+	if strings.ToLower(prov.Name) == "aws" {
+		for k, v := range copyParams {
+			q.Set(k, fmt.Sprintf("%v", v))
+		}
+		for k := range copyParams {
+			delete(copyParams, k)
 		}
 	}
 	router, err := queryrouter.NewRouter(parentDoc.GetT())
