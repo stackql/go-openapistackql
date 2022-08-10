@@ -446,6 +446,17 @@ func GetServersFromHeirarchy(t *Service, op *OperationStore) openapi3.Servers {
 	return getServersFromHeirarchy(t, op)
 }
 
+func (op *OperationStore) getServerVariable(key string) (*openapi3.ServerVariable, bool) {
+	srvs := getServersFromHeirarchy(op.Service, op)
+	for _, srv := range srvs {
+		v, ok := srv.Variables[key]
+		if ok {
+			return v, true
+		}
+	}
+	return nil, false
+}
+
 func getServersFromHeirarchy(t *Service, op *OperationStore) openapi3.Servers {
 	servers := t.Servers
 	if servers == nil || (op.OperationRef.Value.Servers != nil && len(*op.OperationRef.Value.Servers) > 0) {
@@ -481,10 +492,14 @@ func marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, er
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.BodyMediaType)
 }
 
-func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
+func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, inputParams *HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
 	copyParams := make(map[string]interface{})
-	for k, v := range inputParams {
+	flatParameters, err := inputParams.ToFlatMap()
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range flatParameters {
 		copyParams[k] = v
 	}
 	pathParams := make(map[string]string)
@@ -495,7 +510,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 		}
 		name := p.Value.Name
 		if p.Value.In == openapi3.ParameterInPath {
-			val, present := copyParams[p.Value.Name]
+			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInPath)
 			if present {
 				pathParams[name] = fmt.Sprintf("%v", val)
 				delete(copyParams, name)
@@ -504,7 +519,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 				return nil, fmt.Errorf("OperationStore.Parameterize() failure")
 			}
 		} else if p.Value.In == openapi3.ParameterInQuery {
-			val, present := copyParams[p.Value.Name]
+			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInQuery)
 			if present {
 				switch val := val.(type) {
 				case []interface{}:
@@ -518,15 +533,11 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 			}
 		}
 	}
-	if strings.ToLower(prov.Name) == "aws" {
-		for k, v := range copyParams {
-			if k == "region" {
-				continue
-			}
-			q.Set(k, fmt.Sprintf("%v", v))
-		}
-		for k := range copyParams {
-			delete(copyParams, k)
+	for k := range copyParams {
+		p, ok := inputParams.GetParameter(k, openapi3.ParameterInQuery)
+		if ok {
+			q.Set(k, fmt.Sprintf("%v", p))
+			// delete(copyParams, k)
 		}
 	}
 	router, err := queryrouter.NewRouter(parentDoc.GetT())
@@ -534,7 +545,11 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 		return nil, err
 	}
 	servers := getServersFromHeirarchy(parentDoc, op)
-	sv, err := selectServer(servers, inputParams)
+	serverParams, err := inputParams.GetServerParameterFlatMap()
+	if err != nil {
+		return nil, err
+	}
+	sv, err := selectServer(servers, serverParams)
 	if err != nil {
 		return nil, err
 	}
