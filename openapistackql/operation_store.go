@@ -152,7 +152,7 @@ func (op *OperationStore) GetQueryTransposeAlgorithm() string {
 		return op.Resource.GetQueryTransposeAlgorithm()
 	}
 	if op.Service != nil && op.Service.GetQueryTransposeAlgorithm() != "" {
-		return op.Resource.GetQueryTransposeAlgorithm()
+		return op.Service.GetQueryTransposeAlgorithm()
 	}
 	if op.ProviderService != nil && op.ProviderService.GetQueryTransposeAlgorithm() != "" {
 		return op.ProviderService.GetQueryTransposeAlgorithm()
