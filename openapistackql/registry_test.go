@@ -144,7 +144,16 @@ func runRemote(t *testing.T, rc RegistryConfig, tf func(t *testing.T, r Registry
 
 func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAPI) {
 	for _, vr := range oktaTestableVersions {
-		svc, err := r.GetService(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
+		pr, err := LoadProviderByName("okta", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		ps, ok := pr.ProviderServices["application"]
+		if !ok {
+			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
+		}
+		svc, err := r.GetService(ps)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
@@ -215,7 +224,7 @@ func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r 
 		assert.Assert(t, rr != nil)
 		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
 
-		sv, err := r.GetService(rr.Resources["acceleratorTypes"].Methods["get"].OperationRef.ExtractServiceDocPath())
+		sv, err := r.GetService(rr.Resources["acceleratorTypes"].Methods["get"].ProviderService)
 
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -280,7 +289,17 @@ func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
 
 		assert.NilError(t, err)
 
-		svc, err := r.GetService(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
+		pr, err := LoadProviderByName("okta", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		ps, ok := pr.ProviderServices["application"]
+		if !ok {
+			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
+		}
+		svc, err := r.GetService(ps)
+
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}

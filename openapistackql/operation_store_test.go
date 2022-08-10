@@ -15,6 +15,15 @@ import (
 	"gotest.tools/assert"
 )
 
+var (
+	dummmyGoogleProv *Provider = &Provider{
+		Name: "google",
+	}
+	dummmyK8sProv *Provider = &Provider{
+		Name: "k8s",
+	}
+)
+
 func TestPlaceholder(t *testing.T) {
 	res := &http.Response{
 		Header:     http.Header{"Content-Type": []string{"application/json"}},
@@ -198,11 +207,11 @@ func TestVariableHostRouting(t *testing.T) {
 	assert.Assert(t, len(mc) == 3)
 	assert.Assert(t, e0["uid"] == "d5626684-69a3-4644-bf2b-a8e67bb44b01")
 
-	rvi, err := ops.Parameterize(svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
+	rvi, err := ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
-	rvi, err = ops.Parameterize(svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
+	rvi, err = ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
@@ -253,11 +262,11 @@ func TestVariableHostRoutingFutureProofed(t *testing.T) {
 	assert.Assert(t, len(mc) == 3)
 	assert.Assert(t, e0["uid"] == "d5626684-69a3-4644-bf2b-a8e67bb44b01")
 
-	rvi, err := ops.Parameterize(svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
+	rvi, err := ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
-	rvi, err = ops.Parameterize(svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
+	rvi, err = ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
@@ -317,7 +326,7 @@ func TestStaticHostRouting(t *testing.T) {
 	assert.Assert(t, e0["name"] == "folders/12312312312")
 	assert.Assert(t, e0["lifecycleState"] == "ACTIVE")
 
-	rvi, err := ops.Parameterize(svc, map[string]interface{}{"parent": "organizations/123123123123"}, nil)
+	rvi, err := ops.Parameterize(dummmyGoogleProv, svc, map[string]interface{}{"parent": "organizations/123123123123"}, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 

@@ -42,8 +42,8 @@ type RegistryAPI interface {
 	GetLatestAvailableVersion(string) (string, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
-	GetResourcesShallowFromURL(string) (*ResourceRegister, error)
-	GetService(string) (*Service, error)
+	GetResourcesShallowFromURL(ps *ProviderService) (*ResourceRegister, error)
+	GetService(ps *ProviderService) (*Service, error)
 	GetServiceFragment(*ProviderService, string) (*Service, error)
 	GetServiceFromProviderService(*ProviderService) (*Service, error)
 	GetServiceDocBytes(string) ([]byte, error)
@@ -307,14 +307,14 @@ func (r *Registry) GetResourcesRegisterDocBytes(url string) ([]byte, error) {
 	return r.getVerifiedDocBytes(url)
 }
 
-func (r *Registry) GetService(url string) (*Service, error) {
+func (r *Registry) GetService(ps *ProviderService) (*Service, error) {
+	url := ps.ServiceRef.Ref
 	b, err := r.getVerifiedDocBytes(url)
 	if err != nil {
 		return nil, err
 	}
-	return LoadServiceDocFromBytes(b)
+	return LoadServiceDocFromBytes(ps, b)
 }
-
 func (r *Registry) GetResourcesShallowFromProvider(pr *Provider, serviceKey string) (*ResourceRegister, error) {
 	return pr.getResourcesShallowWithRegistry(r, serviceKey)
 }
@@ -323,19 +323,20 @@ func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService) (
 	return pr.getResourcesShallowWithRegistry(r)
 }
 
-func (r *Registry) GetResourcesShallowFromURL(url string) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallowFromURL(ps *ProviderService) (*ResourceRegister, error) {
+	url := ps.ResourcesRef.Ref
 	b, err := r.getVerifiedDocBytes(url)
 	if err != nil {
 		return nil, err
 	}
-	return loadResourcesShallow(b)
+	return loadResourcesShallow(ps, b)
 }
 
 func (r *Registry) GetServiceFromProviderService(ps *ProviderService) (*Service, error) {
 	if ps.ServiceRef == nil || ps.ServiceRef.Ref == "" {
 		return nil, fmt.Errorf("no service reachable for %s", ps.GetName())
 	}
-	return r.GetService(ps.ServiceRef.Ref)
+	return r.GetService(ps)
 }
 
 func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (*Service, error) {
@@ -344,7 +345,7 @@ func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (
 		if ps.ServiceRef == nil || ps.ServiceRef.Ref == "" {
 			return nil, fmt.Errorf("no service or resources reachable for %s", ps.GetName())
 		}
-		return r.GetService(ps.ServiceRef.Ref)
+		return r.GetService(ps)
 	}
 	rr, err := r.GetResourcesShallowFromProviderService(ps)
 	if err != nil {

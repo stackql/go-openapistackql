@@ -13,7 +13,10 @@ import (
 
 type Service struct {
 	*openapi3.T
-	rsc map[string]*Resource
+	rsc             map[string]*Resource
+	QueryTranspose  *QueryTranspose  `json:"-" yaml:"-"`
+	ProviderService *ProviderService `json:"-" yaml:"-"` // upwards traversal
+	Provider        *Provider        `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (sv *Service) iDiscoveryDoc() {}
@@ -32,6 +35,13 @@ func NewService(t *openapi3.T) *Service {
 
 func (svc *Service) IsPreferred() bool {
 	return false
+}
+
+func (svc *Service) GetQueryTransposeAlgorithm() string {
+	if svc.QueryTranspose == nil {
+		return ""
+	}
+	return svc.QueryTranspose.Algorithm
 }
 
 func (svc *Service) GetSchemas() (map[string]*Schema, error) {

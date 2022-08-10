@@ -119,9 +119,10 @@ type ExpectedResponse struct {
 }
 
 type OperationStore struct {
-	MethodKey string   `json:"-" yaml:"-"`
-	SQLVerb   string   `json:"-" yaml:"-"`
-	GraphQL   *GraphQL `json:"-" yaml:"-"`
+	MethodKey      string          `json:"-" yaml:"-"`
+	SQLVerb        string          `json:"-" yaml:"-"`
+	GraphQL        *GraphQL        `json:"-" yaml:"-"`
+	QueryTranspose *QueryTranspose `json:"-" yaml:"-"`
 	// Optional parameters.
 	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
@@ -132,11 +133,34 @@ type OperationStore struct {
 	Response     *ExpectedResponse      `json:"response" yaml:"response"`
 	Servers      *openapi3.Servers      `json:"servers" yaml:"servers"`
 	// private
-	parameterizedPath string `json:"-" yaml:"-"`
+	parameterizedPath string           `json:"-" yaml:"-"`
+	ProviderService   *ProviderService `json:"-" yaml:"-"` // upwards traversal
+	Provider          *Provider        `json:"-" yaml:"-"` // upwards traversal
+	Service           *Service         `json:"-" yaml:"-"` // upwards traversal
+	Resource          *Resource        `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
 	return op.parameterMatch(params)
+}
+
+func (op *OperationStore) GetQueryTransposeAlgorithm() string {
+	if op.QueryTranspose != nil && op.QueryTranspose.Algorithm != "" {
+		return op.QueryTranspose.Algorithm
+	}
+	if op.Resource != nil && op.Resource.GetQueryTransposeAlgorithm() != "" {
+		return op.Resource.GetQueryTransposeAlgorithm()
+	}
+	if op.Service != nil && op.Service.GetQueryTransposeAlgorithm() != "" {
+		return op.Service.GetQueryTransposeAlgorithm()
+	}
+	if op.ProviderService != nil && op.ProviderService.GetQueryTransposeAlgorithm() != "" {
+		return op.ProviderService.GetQueryTransposeAlgorithm()
+	}
+	if op.Provider != nil && op.Provider.GetQueryTransposeAlgorithm() != "" {
+		return op.Provider.GetQueryTransposeAlgorithm()
+	}
+	return ""
 }
 
 func (op *OperationStore) parameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
@@ -457,7 +481,7 @@ func marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, er
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.BodyMediaType)
 }
 
-func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
+func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, inputParams map[string]interface{}, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
 	copyParams := make(map[string]interface{})
 	for k, v := range inputParams {
@@ -482,9 +506,27 @@ func (op *OperationStore) Parameterize(parentDoc *Service, inputParams map[strin
 		} else if p.Value.In == openapi3.ParameterInQuery {
 			val, present := copyParams[p.Value.Name]
 			if present {
-				q.Set(name, fmt.Sprintf("%v", val))
+				switch val := val.(type) {
+				case []interface{}:
+					for _, v := range val {
+						q.Add(name, fmt.Sprintf("%v", v))
+					}
+				default:
+					q.Set(name, fmt.Sprintf("%v", val))
+				}
 				delete(copyParams, name)
 			}
+		}
+	}
+	if strings.ToLower(prov.Name) == "aws" {
+		for k, v := range copyParams {
+			if k == "region" {
+				continue
+			}
+			q.Set(k, fmt.Sprintf("%v", v))
+		}
+		for k := range copyParams {
+			delete(copyParams, k)
 		}
 	}
 	router, err := queryrouter.NewRouter(parentDoc.GetT())
