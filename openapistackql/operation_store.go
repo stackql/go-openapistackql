@@ -132,7 +132,11 @@ type OperationStore struct {
 	Response     *ExpectedResponse      `json:"response" yaml:"response"`
 	Servers      *openapi3.Servers      `json:"servers" yaml:"servers"`
 	// private
-	parameterizedPath string `json:"-" yaml:"-"`
+	parameterizedPath string           `json:"-" yaml:"-"`
+	ProviderService   *ProviderService `json:"-" yaml:"-"` // upwards traversal
+	Provider          *Provider        `json:"-" yaml:"-"` // upwards traversal
+	Service           *Service         `json:"-" yaml:"-"` // upwards traversal
+	Resource          *Resource        `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {

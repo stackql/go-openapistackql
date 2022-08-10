@@ -10,8 +10,10 @@ import (
 )
 
 type ResourceRegister struct {
-	ServiceDocPath *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
-	Resources      map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
+	ServiceDocPath  *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
+	Resources       map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
+	ProviderService *ProviderService     `json:"-" yaml:"-"` // upwards traversal
+	Provider        *Provider            `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (rr *ResourceRegister) ObtainServiceDocUrl(resourceKey string) string {
@@ -42,9 +44,9 @@ type Resource struct {
 	Methods           Methods                        `json:"methods" yaml:"methods"`
 	ServiceDocPath    *ServiceRef                    `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	SQLVerbs          map[string][]OperationStoreRef `json:"sqlVerbs" yaml:"sqlVerbs"`
-
-	// Hacks
-	BaseUrl string `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"`
+	BaseUrl           string                         `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"` // hack
+	ProviderService   *ProviderService               `json:"-" yaml:"-"`                                 // upwards traversal
+	Provider          *Provider                      `json:"-" yaml:"-"`                                 // upwards traversal
 }
 
 var _ jsonpointer.JSONPointable = (Resource)(Resource{})

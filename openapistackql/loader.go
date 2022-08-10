@@ -47,16 +47,18 @@ type Loader struct {
 	visitedPathItem         map[*openapi3.PathItem]struct{}
 }
 
-func LoadResourcesShallow(bt []byte) (*ResourceRegister, error) {
-	return loadResourcesShallow(bt)
+func LoadResourcesShallow(ps *ProviderService, bt []byte) (*ResourceRegister, error) {
+	return loadResourcesShallow(ps, bt)
 }
 
-func loadResourcesShallow(bt []byte) (*ResourceRegister, error) {
+func loadResourcesShallow(ps *ProviderService, bt []byte) (*ResourceRegister, error) {
 	rv := NewResourceRegister()
 	err := yaml.Unmarshal(bt, &rv)
 	if err != nil {
 		return nil, err
 	}
+	rv.Provider = ps.Provider
+	rv.ProviderService = ps
 	resourceregisterLoadBackwardsCompatibility(rv)
 	return rv, nil
 }
@@ -269,20 +271,20 @@ func NewLoader() *Loader {
 	}
 }
 
-func LoadServiceDocFromBytes(bytes []byte) (*Service, error) {
-	return loadServiceDocFromBytes(bytes)
+func LoadServiceDocFromBytes(ps *ProviderService, bytes []byte) (*Service, error) {
+	return loadServiceDocFromBytes(ps, bytes)
 }
 
 func LoadProviderDocFromBytes(bytes []byte) (*Provider, error) {
 	return loadProviderDocFromBytes(bytes)
 }
 
-func LoadServiceDocFromFile(fileName string) (*Service, error) {
+func LoadServiceDocFromFile(ps *ProviderService, fileName string) (*Service, error) {
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return nil, err
 	}
-	return loadServiceDocFromBytes(bytes)
+	return loadServiceDocFromBytes(ps, bytes)
 }
 
 func LoadProviderDocFromFile(fileName string) (*Provider, error) {
@@ -391,9 +393,15 @@ func getProviderDoc(provider string) (string, error) {
 	return findLatestDoc(path.Join(OpenapiFileRoot, provider))
 }
 
-func loadServiceDocFromBytes(bytes []byte) (*Service, error) {
+func loadServiceDocFromBytes(ps *ProviderService, bytes []byte) (*Service, error) {
 	loader := NewLoader()
-	return loader.LoadFromBytes(bytes)
+	rv, err := loader.LoadFromBytes(bytes)
+	if err != nil {
+		return nil, err
+	}
+	rv.Provider = ps.Provider
+	rv.ProviderService = ps
+	return rv, nil
 }
 
 func LoadServiceSubsetDocFromBytes(rr *ResourceRegister, resourceKey string, bytes []byte) (*Service, error) {
@@ -407,17 +415,25 @@ func loadProviderDocFromBytes(bytes []byte) (*Provider, error) {
 	if err != nil {
 		return nil, err
 	}
+	for _, v := range prov.ProviderServices {
+		v.Provider = &prov
+	}
 	return &prov, nil
 }
 
 func resourceregisterLoadBackwardsCompatibility(rr *ResourceRegister) {
 	sr := rr.ServiceDocPath
 	for m, n := range rr.Resources {
+		n.Provider = rr.Provider
+		n.ProviderService = rr.ProviderService
 		if n.ServiceDocPath != nil {
 			sr = n.ServiceDocPath
 		}
 		for k, v := range n.Methods {
 			os := v
+			os.Provider = rr.Provider
+			os.ProviderService = rr.ProviderService
+			os.Resource = n
 			operationBackwardsCompatibility(&os, sr)
 			rr.Resources[m].Methods[k] = os
 		}

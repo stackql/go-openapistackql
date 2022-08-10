@@ -37,7 +37,7 @@ type ProviderService struct {
 	Preferred    bool          `json:"preferred" yaml:"preferred"`
 	ServiceRef   *ServiceRef   `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
 	ResourcesRef *ResourcesRef `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
-
+	Provider     *Provider     `json:"-" yaml:"-"`                                     // upwards traversal
 }
 
 func (sv *ProviderService) ConditionIsValid(lhs string, rhs interface{}) bool {
@@ -45,20 +45,20 @@ func (sv *ProviderService) ConditionIsValid(lhs string, rhs interface{}) bool {
 	return reflect.TypeOf(elem) == reflect.TypeOf(rhs)
 }
 
-func getService(url string) (*Service, error) {
-	b, err := getServiceDocBytes(url)
+func getService(ps *ProviderService) (*Service, error) {
+	b, err := getServiceDocBytes(ps.ServiceRef.Ref)
 	if err != nil {
 		return nil, err
 	}
-	return LoadServiceDocFromBytes(b)
+	return LoadServiceDocFromBytes(ps, b)
 }
 
-func getResourcesShallow(url string) (*ResourceRegister, error) {
-	b, err := getServiceDocBytes(url)
+func getResourcesShallow(ps *ProviderService) (*ResourceRegister, error) {
+	b, err := getServiceDocBytes(ps.ResourcesRef.Ref)
 	if err != nil {
 		return nil, err
 	}
-	return loadResourcesShallow(b)
+	return loadResourcesShallow(ps, b)
 }
 
 func (pr *Provider) MarshalJSON() ([]byte, error) {
@@ -157,9 +157,9 @@ func (ps *ProviderService) getServiceWithRegistry(registry *Registry) (*Service,
 		return ps.ServiceRef.Value, nil
 	}
 	if registry != nil {
-		return registry.GetService(ps.ServiceRef.Ref)
+		return registry.GetService(ps)
 	}
-	svc, err := getService(ps.ServiceRef.Ref)
+	svc, err := getService(ps)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (ps *ProviderService) GetService() (*Service, error) {
 	if ps.ServiceRef.Value != nil {
 		return ps.ServiceRef.Value, nil
 	}
-	svc, err := getService(ps.ServiceRef.Ref)
+	svc, err := getService(ps)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func (ps *ProviderService) getService() (*Service, error) {
 	if ps.ServiceRef.Value != nil {
 		return ps.ServiceRef.Value, nil
 	}
-	svc, err := getService(ps.ServiceRef.Ref)
+	svc, err := getService(ps)
 	if err != nil {
 		return nil, err
 	}
@@ -267,9 +267,9 @@ func (ps *ProviderService) getResourcesShallowWithRegistry(registry *Registry) (
 		return ps.ResourcesRef.Value, nil
 	}
 	if registry != nil {
-		return registry.GetResourcesShallowFromURL(ps.ResourcesRef.Ref)
+		return registry.GetResourcesShallowFromURL(ps)
 	}
-	return getResourcesShallow(ps.ResourcesRef.Ref)
+	return getResourcesShallow(ps)
 }
 
 func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
@@ -290,7 +290,7 @@ func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
 	if ps.ResourcesRef.Value != nil {
 		return ps.ResourcesRef.Value, nil
 	}
-	return getResourcesShallow(ps.ResourcesRef.Ref)
+	return getResourcesShallow(ps)
 }
 
 func (ps *ProviderService) GetName() string {

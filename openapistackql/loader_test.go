@@ -22,12 +22,23 @@ func setupFileRoot(t *testing.T) {
 func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 	setupFileRoot(t)
 	for _, vr := range oktaTestableVersions {
+
+		pr, err := LoadProviderByName("okta", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		ps, ok := pr.ProviderServices["application"]
+		if !ok {
+			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
+		}
+
 		b, err := GetServiceDocBytes(fmt.Sprintf("okta/%s/services/Application.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		svc, err := LoadServiceDocFromBytes(b)
+		svc, err := LoadServiceDocFromBytes(ps, b)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
@@ -203,6 +214,16 @@ func TestSimpleAWSec2ServiceJsonReadAndDumpString(t *testing.T) {
 func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 	setupFileRoot(t)
 	for _, vr := range googleTestableVersions {
+		pr, err := LoadProviderByName("googleapis.com", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		ps, ok := pr.ProviderServices["compute"]
+		if !ok {
+			t.Fatalf("Test failed: could not locate ProviderService for google.compute")
+		}
+
 		b, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/services-split/compute/compute-v1.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
@@ -215,7 +236,7 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 
 		l := NewLoader()
 
-		rr, err := LoadResourcesShallow(br)
+		rr, err := LoadResourcesShallow(ps, br)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
@@ -253,12 +274,22 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 
 	for _, vr := range googleTestableVersions {
 
+		pr, err := LoadProviderByName("googleapis.com", vr)
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		ps, ok := pr.ProviderServices["compute"]
+		if !ok {
+			t.Fatalf("Test failed: could not locate ProviderService for google.compute")
+		}
+
 		b, err := GetServiceDocBytes(fmt.Sprintf("googleapis.com/%s/resources/compute-v1.yaml", vr))
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		rr, err := LoadResourcesShallow(b)
+		rr, err := LoadResourcesShallow(ps, b)
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
