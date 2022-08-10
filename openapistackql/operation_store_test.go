@@ -207,11 +207,19 @@ func TestVariableHostRouting(t *testing.T) {
 	assert.Assert(t, len(mc) == 3)
 	assert.Assert(t, e0["uid"] == "d5626684-69a3-4644-bf2b-a8e67bb44b01")
 
-	rvi, err := ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
+	params := NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{"cluster_addr": "k8shost"})
+	assert.NilError(t, err)
+
+	rvi, err := ops.Parameterize(dummmyK8sProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
-	rvi, err = ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
+	params = NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{"cluster_addr": "201.0.255.3"})
+	assert.NilError(t, err)
+
+	rvi, err = ops.Parameterize(dummmyK8sProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
@@ -262,11 +270,19 @@ func TestVariableHostRoutingFutureProofed(t *testing.T) {
 	assert.Assert(t, len(mc) == 3)
 	assert.Assert(t, e0["uid"] == "d5626684-69a3-4644-bf2b-a8e67bb44b01")
 
-	rvi, err := ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "k8shost"}, nil)
+	params := NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{"cluster_addr": "k8shost"})
+	assert.NilError(t, err)
+
+	rvi, err := ops.Parameterize(dummmyK8sProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
-	rvi, err = ops.Parameterize(dummmyK8sProv, svc, map[string]interface{}{"cluster_addr": "201.0.255.3"}, nil)
+	params = NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{"cluster_addr": "201.0.255.3"})
+	assert.NilError(t, err)
+
+	rvi, err = ops.Parameterize(dummmyK8sProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
@@ -326,7 +342,11 @@ func TestStaticHostRouting(t *testing.T) {
 	assert.Assert(t, e0["name"] == "folders/12312312312")
 	assert.Assert(t, e0["lifecycleState"] == "ACTIVE")
 
-	rvi, err := ops.Parameterize(dummmyGoogleProv, svc, map[string]interface{}{"parent": "organizations/123123123123"}, nil)
+	params := NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{"parent": "organizations/123123123123"})
+	assert.NilError(t, err)
+
+	rvi, err := ops.Parameterize(dummmyGoogleProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
