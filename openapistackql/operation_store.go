@@ -119,9 +119,10 @@ type ExpectedResponse struct {
 }
 
 type OperationStore struct {
-	MethodKey string   `json:"-" yaml:"-"`
-	SQLVerb   string   `json:"-" yaml:"-"`
-	GraphQL   *GraphQL `json:"-" yaml:"-"`
+	MethodKey      string          `json:"-" yaml:"-"`
+	SQLVerb        string          `json:"-" yaml:"-"`
+	GraphQL        *GraphQL        `json:"-" yaml:"-"`
+	QueryTranspose *QueryTranspose `json:"-" yaml:"-"`
 	// Optional parameters.
 	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
@@ -141,6 +142,25 @@ type OperationStore struct {
 
 func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
 	return op.parameterMatch(params)
+}
+
+func (op *OperationStore) GetQueryTransposeAlgorithm() string {
+	if op.QueryTranspose != nil && op.QueryTranspose.Algorithm != "" {
+		return op.QueryTranspose.Algorithm
+	}
+	if op.Resource != nil && op.Resource.GetQueryTransposeAlgorithm() != "" {
+		return op.Resource.GetQueryTransposeAlgorithm()
+	}
+	if op.Service != nil && op.Service.GetQueryTransposeAlgorithm() != "" {
+		return op.Resource.GetQueryTransposeAlgorithm()
+	}
+	if op.ProviderService != nil && op.ProviderService.GetQueryTransposeAlgorithm() != "" {
+		return op.ProviderService.GetQueryTransposeAlgorithm()
+	}
+	if op.Provider != nil && op.Provider.GetQueryTransposeAlgorithm() != "" {
+		return op.Provider.GetQueryTransposeAlgorithm()
+	}
+	return ""
 }
 
 func (op *OperationStore) parameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {

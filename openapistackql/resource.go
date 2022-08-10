@@ -45,8 +45,17 @@ type Resource struct {
 	ServiceDocPath    *ServiceRef                    `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	SQLVerbs          map[string][]OperationStoreRef `json:"sqlVerbs" yaml:"sqlVerbs"`
 	BaseUrl           string                         `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"` // hack
-	ProviderService   *ProviderService               `json:"-" yaml:"-"`                                 // upwards traversal
-	Provider          *Provider                      `json:"-" yaml:"-"`                                 // upwards traversal
+	QueryTranspose    *QueryTranspose                `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	Service           *Service                       `json:"-" yaml:"-"` // upwards traversal
+	ProviderService   *ProviderService               `json:"-" yaml:"-"` // upwards traversal
+	Provider          *Provider                      `json:"-" yaml:"-"` // upwards traversal
+}
+
+func (r *Resource) GetQueryTransposeAlgorithm() string {
+	if r.QueryTranspose == nil {
+		return ""
+	}
+	return r.QueryTranspose.Algorithm
 }
 
 var _ jsonpointer.JSONPointable = (Resource)(Resource{})

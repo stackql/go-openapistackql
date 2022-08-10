@@ -146,6 +146,55 @@ func (l *Loader) extractAndMergeGraphQL(operation *OperationStore) error {
 	return nil
 }
 
+func extractQueryTranspose(qt interface{}) (*QueryTranspose, error) {
+	var bt []byte
+	var err error
+	switch rs := qt.(type) {
+	case json.RawMessage:
+		bt, err = rs.MarshalJSON()
+	default:
+		bt, err = yaml.Marshal(qt)
+	}
+	if err != nil {
+		return nil, err
+	}
+	var rv QueryTranspose
+	err = yaml.Unmarshal(bt, &rv)
+	if err != nil {
+		return nil, err
+	}
+	return &rv, nil
+}
+
+func (l *Loader) extractAndMergeQueryTransposeOpLevel(operation *OperationStore) error {
+	if operation.OperationRef == nil || operation.OperationRef.Value == nil {
+		return nil
+	}
+	qt, ok := operation.OperationRef.Value.Extensions[ExtensionKeyQueryParamTranspose]
+	if !ok {
+		return nil
+	}
+	rv, err := extractQueryTranspose(qt)
+	if err != nil {
+		return err
+	}
+	operation.QueryTranspose = rv
+	return nil
+}
+
+func (l *Loader) extractAndMergeQueryTransposeServiceLevel(svc *Service) error {
+	qt, ok := svc.Extensions[ExtensionKeyQueryParamTranspose]
+	if !ok {
+		return nil
+	}
+	rv, err := extractQueryTranspose(qt)
+	if err != nil {
+		return err
+	}
+	svc.QueryTranspose = rv
+	return nil
+}
+
 func (l *Loader) mergeResources(svc *Service, rscMap map[string]*Resource, sdRef *ServiceRef) error {
 	for _, rsc := range rscMap {
 		var sr *ServiceRef
@@ -217,6 +266,9 @@ func (l *Loader) mergeResource(svc *Service, rsc *Resource, sr *ServiceRef) erro
 			rsc.SQLVerbs[sqlVerb][i] = cur
 		}
 	}
+	rsc.Service = svc
+	rsc.Provider = svc.Provider
+	rsc.ProviderService = svc.ProviderService
 	return nil
 }
 
@@ -401,6 +453,10 @@ func loadServiceDocFromBytes(ps *ProviderService, bytes []byte) (*Service, error
 	}
 	rv.Provider = ps.Provider
 	rv.ProviderService = ps
+	err = loader.extractAndMergeQueryTransposeServiceLevel(rv)
+	if err != nil {
+		return nil, err
+	}
 	return rv, nil
 }
 
@@ -487,6 +543,14 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 
 	component.OperationRef.Value = op
 	component.PathItem = pi
+	component.Service = doc
+	component.ProviderService = doc.ProviderService
+	component.Provider = doc.Provider
+	component.Resource = rsc
+	err = loader.extractAndMergeQueryTransposeOpLevel(component)
+	if err != nil {
+		return err
+	}
 	return loader.extractAndMergeGraphQL(component)
 }
 
