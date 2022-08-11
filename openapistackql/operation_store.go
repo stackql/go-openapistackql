@@ -10,6 +10,8 @@ import (
 	"sort"
 	"strings"
 
+	"golang.org/x/exp/slices"
+
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/stackql/go-openapistackql/pkg/media"
@@ -310,12 +312,80 @@ func (m *OperationStore) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	return rv, err
 }
 
-func (m *OperationStore) GetRequiredParameters() map[string]*Parameter {
+// This method needs to incorporate request body parameters
+func (m *OperationStore) GetRequiredParameters() map[string]Addressable {
 	return m.getRequiredParameters()
 }
 
-func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
-	retVal := make(map[string]*Parameter)
+func (m *OperationStore) getRequestBodyAttributes() (map[string]Addressable, error) {
+	s, err := m.getRequestBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	rv := make(map[string]Addressable)
+	if s != nil {
+		propz := s.getProperties()
+		for k, v := range propz {
+			isRequired := slices.Contains(s.Required, k)
+			renamedKey := m.renameRequestBodyAttribute(k)
+			if isRequired {
+				rv[renamedKey] = NewRequiredAddressableRequestBodyProperty(renamedKey, v)
+			} else {
+				rv[renamedKey] = NewOptionalAddressableRequestBodyProperty(renamedKey, v)
+			}
+		}
+	}
+	return rv, nil
+}
+
+func (m *OperationStore) getRequestBodyAttributesNoRename() (map[string]Addressable, error) {
+	s, err := m.getRequestBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	rv := make(map[string]Addressable)
+	if s != nil {
+		propz := s.getProperties()
+		for k, v := range propz {
+			isRequired := slices.Contains(s.Required, k)
+			if isRequired {
+				rv[k] = NewRequiredAddressableRequestBodyProperty(k, v)
+			} else {
+				rv[k] = NewOptionalAddressableRequestBodyProperty(k, v)
+			}
+		}
+	}
+	return rv, nil
+}
+
+func (m *OperationStore) getRequiredRequestBodyAttributes() (map[string]Addressable, error) {
+	return m.getIndicatedRequestBodyAttributes(true)
+}
+
+func (m *OperationStore) getOptionalRequestBodyAttributes() (map[string]Addressable, error) {
+	return m.getIndicatedRequestBodyAttributes(false)
+}
+
+func (m *OperationStore) getIndicatedRequestBodyAttributes(required bool) (map[string]Addressable, error) {
+	rv := make(map[string]Addressable)
+	allAttr, err := m.getRequestBodyAttributes()
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range allAttr {
+		if v.IsRequired() == required {
+			rv[k] = v
+		}
+	}
+	return rv, nil
+}
+
+func (m *OperationStore) renameRequestBodyAttribute(k string) string {
+	return defaultRequestBodyAttributeRename(k)
+}
+
+func (m *OperationStore) getRequiredNonBodyParameters() map[string]Addressable {
+	retVal := make(map[string]Addressable)
 	if m.OperationRef.Value == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
 	}
@@ -328,12 +398,25 @@ func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
 	return retVal
 }
 
-func (m *OperationStore) GetOptionalParameters() map[string]*Parameter {
+func (m *OperationStore) getRequiredParameters() map[string]Addressable {
+	retVal := m.getRequiredNonBodyParameters()
+	ss, err := m.getRequiredRequestBodyAttributes()
+	if err != nil {
+		return retVal
+	}
+	for k, v := range ss {
+		retVal[k] = v
+	}
+	return retVal
+}
+
+// This method needs to incorporate request body parameters
+func (m *OperationStore) GetOptionalParameters() map[string]Addressable {
 	return m.getOptionalParameters()
 }
 
-func (m *OperationStore) getOptionalParameters() map[string]*Parameter {
-	retVal := make(map[string]*Parameter)
+func (m *OperationStore) getOptionalParameters() map[string]Addressable {
+	retVal := make(map[string]Addressable)
 	if m.OperationRef == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
 	}
@@ -342,6 +425,13 @@ func (m *OperationStore) getOptionalParameters() map[string]*Parameter {
 		if param != nil && !param.Required {
 			retVal[param.Name] = (*Parameter)(p.Value)
 		}
+	}
+	ss, err := m.getOptionalRequestBodyAttributes()
+	if err != nil {
+		return retVal
+	}
+	for k, v := range ss {
+		retVal[k] = v
 	}
 	return retVal
 }
@@ -353,8 +443,8 @@ func (ops *OperationStore) getMethod() (*openapi3.Operation, error) {
 	return nil, fmt.Errorf("no method attached to operation store")
 }
 
-func (m *OperationStore) GetParameters() map[string]*Parameter {
-	retVal := make(map[string]*Parameter)
+func (m *OperationStore) getNonBodyParameters() map[string]Addressable {
+	retVal := make(map[string]Addressable)
 	if m.OperationRef == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
 	}
@@ -367,7 +457,23 @@ func (m *OperationStore) GetParameters() map[string]*Parameter {
 	return retVal
 }
 
-func (m *OperationStore) GetParameter(paramKey string) (*Parameter, bool) {
+func (m *OperationStore) GetParameters() map[string]Addressable {
+	retVal := m.getNonBodyParameters()
+	ss, err := m.getRequestBodyAttributes()
+	if err != nil {
+		return retVal
+	}
+	for k, v := range ss {
+		retVal[k] = v
+	}
+	return retVal
+}
+
+func (m *OperationStore) GetNonBodyParameters() map[string]Addressable {
+	return m.getNonBodyParameters()
+}
+
+func (m *OperationStore) GetParameter(paramKey string) (Addressable, bool) {
 	params := m.GetParameters()
 	rv, ok := params[paramKey]
 	return rv, ok
@@ -385,31 +491,24 @@ func (m *OperationStore) getName() string {
 }
 
 func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{} {
-	requiredParams := m.GetRequiredParameters()
+	requiredParams := m.getRequiredNonBodyParameters()
 	var requiredParamNames []string
 	for s := range requiredParams {
 		requiredParamNames = append(requiredParamNames, s)
 	}
 	var requiredBodyParamNames []string
-	rs, err := m.GetRequestBodySchema()
-	if rs != nil && err == nil {
-		for k, pr := range rs.Properties {
-			if pr == nil || pr.Value == nil {
-				continue
-			}
-			paramName := fmt.Sprintf("%s%s", RequestBodyBaseKey, k)
-			sc := pr.Value
-			if rs.IsRequired(k) || m.IsRequiredRequestBodyProperty(k) {
-				requiredBodyParamNames = append(requiredBodyParamNames, paramName)
-				continue
-			}
-			for _, methodName := range sc.Required {
-				if methodName == m.GetName() {
-					requiredBodyParamNames = append(requiredBodyParamNames, paramName)
-				}
-			}
+	rs, _ := m.getRequestBodyAttributesNoRename()
+	for k, v := range rs {
+		isRequiredFromMethodAnnotation := false
+		if m.Request != nil && len(m.Request.Required) > 0 {
+			isRequiredFromMethodAnnotation = slices.Contains(m.Request.Required, k)
+		}
+		if v.IsRequired() || isRequiredFromMethodAnnotation {
+			renamedKey := m.renameRequestBodyAttribute(k)
+			requiredBodyParamNames = append(requiredBodyParamNames, renamedKey)
 		}
 	}
+
 	sort.Strings(requiredParamNames)
 	sort.Strings(requiredBodyParamNames)
 	requiredParamNames = append(requiredParamNames, requiredBodyParamNames...)
@@ -482,11 +581,15 @@ func selectServer(servers openapi3.Servers, inputParams map[string]interface{}) 
 
 func (op *OperationStore) acceptPathParam(mutableParamMap map[string]interface{}) {}
 
-func marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, error) {
-	switch expectedRequest.BodyMediaType {
-	case "application/json":
+func (op *OperationStore) marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, error) {
+	mediaType := expectedRequest.BodyMediaType
+	if expectedRequest.Schema != nil {
+		mediaType = expectedRequest.Schema.extractMediaTypeSynonym(mediaType)
+	}
+	switch mediaType {
+	case media.MediaTypeJson:
 		return json.Marshal(body)
-	case "application/xml", "text/xml":
+	case media.MediaTypeXML, media.MediaTypeTextXML:
 		return xmlmap.MarshalXMLUserInput(body, expectedRequest.Schema.getXMLALiasOrName())
 	}
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.BodyMediaType)
@@ -504,11 +607,24 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	}
 	pathParams := make(map[string]string)
 	q := make(url.Values)
+	prefilledHeader := make(http.Header)
 	for _, p := range params {
 		if p.Value == nil {
 			continue
 		}
 		name := p.Value.Name
+
+		if p.Value.In == openapi3.ParameterInHeader {
+			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInHeader)
+			if present {
+				prefilledHeader.Set(name, fmt.Sprintf("%v", val.Val))
+				delete(copyParams, name)
+			} else if p.Value != nil && p.Value.Schema != nil && p.Value.Schema.Value != nil && p.Value.Schema.Value.Default != nil {
+				prefilledHeader.Set(name, fmt.Sprintf("%v", p.Value.Schema.Value.Default))
+			} else if p.Value.Required {
+				return nil, fmt.Errorf("OperationStore.Parameterize() failure; missing required header '%s'", name)
+			}
+		}
 		if p.Value.In == openapi3.ParameterInPath {
 			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInPath)
 			if present {
@@ -516,7 +632,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 				delete(copyParams, name)
 			}
 			if !present && p.Value.Required {
-				return nil, fmt.Errorf("OperationStore.Parameterize() failure")
+				return nil, fmt.Errorf("OperationStore.Parameterize() failure; missing required path parameter '%s'", name)
 			}
 		} else if p.Value.In == openapi3.ParameterInQuery {
 			queryParamsRemaining, err := inputParams.GetRemainingQueryParamsFlatMap(copyParams)
@@ -563,7 +679,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	predOne := !util.IsNil(requestBody)
 	predTwo := !util.IsNil(op.Request)
 	if predOne && predTwo {
-		b, err := marshalBody(requestBody, op.Request)
+		b, err := op.marshalBody(requestBody, op.Request)
 		if err != nil {
 			return nil, err
 		}
@@ -589,8 +705,11 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 		return nil, err
 	}
 	if contentTypeHeaderRequired {
-		httpReq.Header.Set("Content-Type", op.Request.BodyMediaType)
+		if prefilledHeader.Get("Content-Type") != "" {
+			prefilledHeader.Set("Content-Type", op.Request.BodyMediaType)
+		}
 	}
+	httpReq.Header = prefilledHeader
 	route, checkedPathParams, err := router.FindRoute(httpReq)
 	if err != nil {
 		return nil, err
@@ -609,6 +728,10 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 }
 
 func (op *OperationStore) GetRequestBodySchema() (*Schema, error) {
+	return op.getRequestBodySchema()
+}
+
+func (op *OperationStore) getRequestBodySchema() (*Schema, error) {
 	if op.Request != nil {
 		return op.Request.Schema, nil
 	}

@@ -45,7 +45,7 @@ func (psm *ParameterSuffixMap) GetAll() map[string]*Parameter {
 	return rv
 }
 
-func (psm *ParameterSuffixMap) Put(k string, v *Parameter) {
+func (psm *ParameterSuffixMap) Put(k string, v Addressable) {
 	psm.sm.Put(k, v)
 }
 
