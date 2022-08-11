@@ -533,12 +533,13 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 			}
 		}
 	}
-	for k := range copyParams {
-		p, ok := inputParams.GetParameter(k, openapi3.ParameterInQuery)
-		if ok {
-			q.Set(k, fmt.Sprintf("%v", p.Val))
-			// delete(copyParams, k)
-		}
+	queryParamsRemaining, err := inputParams.GetRemainingQueryParamsFlatMap(copyParams)
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range queryParamsRemaining {
+		q.Set(k, fmt.Sprintf("%v", v))
+		delete(copyParams, k)
 	}
 	router, err := queryrouter.NewRouter(parentDoc.GetT())
 	if err != nil {

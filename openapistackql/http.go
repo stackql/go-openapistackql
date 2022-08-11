@@ -216,3 +216,27 @@ func (hp *HttpParameters) GetServerParameterFlatMap() (map[string]interface{}, e
 	}
 	return rv, nil
 }
+
+func (hp *HttpParameters) GetRemainingQueryParamsFlatMap(keysRemaining map[string]interface{}) (map[string]interface{}, error) {
+	rv := make(map[string]interface{})
+	visited := make(map[string]struct{})
+	for k, v := range hp.QueryParams {
+		_, ok := keysRemaining[k]
+		if !ok {
+			continue
+		}
+		// var err error
+		m, err := hp.processFuncHTTPParam(k, v.Val)
+		if err != nil {
+			return nil, err
+		}
+		for mk, mv := range m {
+			val := NewParameterBinding(nil, mv)
+			err = hp.updateStuff(mk, val, rv, visited)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+	return rv, nil
+}
