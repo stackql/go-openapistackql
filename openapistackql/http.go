@@ -227,7 +227,7 @@ func (hp *HttpParameters) GetRemainingQueryParamsFlatMap(keysRemaining map[strin
 			return nil, err
 		}
 		for mk, mv := range m {
-			_, ok := keysRemaining[k]
+			_, ok := keysRemaining[mk]
 			if !ok {
 				continue
 			}
