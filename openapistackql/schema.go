@@ -135,6 +135,17 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 			return v, true
 		}
 	}
+	if s.Type == "array" && s.Items != nil && s.Items.Value != nil {
+		ss := NewSchema(s.Items.Value, "")
+		ds, ok := ss.getXMLChild(path, isTerminal)
+		if ok {
+			if !isTerminal {
+				return ds, true
+			}
+			return s, true
+		}
+		return nil, false
+	}
 	for _, v := range s.AllOf {
 		if v.Value == nil {
 			continue
