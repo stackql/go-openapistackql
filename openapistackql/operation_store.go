@@ -519,9 +519,13 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 				return nil, fmt.Errorf("OperationStore.Parameterize() failure")
 			}
 		} else if p.Value.In == openapi3.ParameterInQuery {
-			pVal, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInQuery)
+			queryParamsRemaining, err := inputParams.GetRemainingQueryParamsFlatMap(copyParams)
+			if err != nil {
+				return nil, err
+			}
+			pVal, present := queryParamsRemaining[p.Value.Name]
 			if present {
-				switch val := pVal.Val.(type) {
+				switch val := pVal.(type) {
 				case []interface{}:
 					for _, v := range val {
 						q.Add(name, fmt.Sprintf("%v", v))
