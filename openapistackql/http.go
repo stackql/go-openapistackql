@@ -89,41 +89,41 @@ func (hp *HttpParameters) StoreParameter(param *Parameter, val interface{}) {
 	}
 }
 
-func (hp *HttpParameters) GetParameter(paramName, paramIn string) (interface{}, bool) {
+func (hp *HttpParameters) GetParameter(paramName, paramIn string) (*ParameterBinding, bool) {
 	if paramIn == openapi3.ParameterInPath {
 		rv, ok := hp.PathParams[paramName]
 		if !ok {
 			return nil, false
 		}
-		return rv, true
+		return &rv, true
 	}
 	if paramIn == openapi3.ParameterInQuery {
 		rv, ok := hp.QueryParams[paramName]
 		if !ok {
 			return nil, false
 		}
-		return rv, true
+		return &rv, true
 	}
 	if paramIn == openapi3.ParameterInHeader {
 		rv, ok := hp.HeaderParams[paramName]
 		if !ok {
 			return nil, false
 		}
-		return rv, true
+		return &rv, true
 	}
 	if paramIn == openapi3.ParameterInCookie {
 		rv, ok := hp.CookieParams[paramName]
 		if !ok {
 			return nil, false
 		}
-		return rv, true
+		return &rv, true
 	}
 	if paramIn == "server" {
 		rv, ok := hp.CookieParams[paramName]
 		if !ok {
 			return nil, false
 		}
-		return rv, true
+		return &rv, true
 	}
 	return nil, false
 }

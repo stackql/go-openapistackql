@@ -512,16 +512,16 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 		if p.Value.In == openapi3.ParameterInPath {
 			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInPath)
 			if present {
-				pathParams[name] = fmt.Sprintf("%v", val)
+				pathParams[name] = fmt.Sprintf("%v", val.Val)
 				delete(copyParams, name)
 			}
 			if !present && p.Value.Required {
 				return nil, fmt.Errorf("OperationStore.Parameterize() failure")
 			}
 		} else if p.Value.In == openapi3.ParameterInQuery {
-			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInQuery)
+			pVal, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInQuery)
 			if present {
-				switch val := val.(type) {
+				switch val := pVal.Val.(type) {
 				case []interface{}:
 					for _, v := range val {
 						q.Add(name, fmt.Sprintf("%v", v))
@@ -536,7 +536,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	for k := range copyParams {
 		p, ok := inputParams.GetParameter(k, openapi3.ParameterInQuery)
 		if ok {
-			q.Set(k, fmt.Sprintf("%v", p))
+			q.Set(k, fmt.Sprintf("%v", p.Val))
 			// delete(copyParams, k)
 		}
 	}
