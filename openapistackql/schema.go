@@ -337,6 +337,15 @@ func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, stri
 	return nil, "", fmt.Errorf("unable to complete schema.GetSelectSchema() for schema = '%v' and itemsKey = '%s'", schema, itemsKey)
 }
 
+// TODO: implement upwards-searchable configurable type set matching
+func (schema *Schema) extractMediaTypeSynonym(mediaType string) string {
+	m, ok := media.DefaultMediaFuzzyMatcher.Find(mediaType)
+	if ok {
+		return m
+	}
+	return mediaType
+}
+
 func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	if key == "" {
@@ -345,8 +354,8 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 		}
 		return schema, "", nil
 	}
-	switch mediaType {
-	case media.MediaTypeXML, media.MediaTypeTextXML:
+	switch schema.extractMediaTypeSynonym(mediaType) {
+	case media.MediaTypeXML:
 		pathResolver := openapitopath.NewXPathResolver()
 		pathSplit := pathResolver.ToPathSlice(key)
 		ss, ok := schema.getXMLDescendentInit(pathSplit)
@@ -366,7 +375,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			return ss, key, nil
 		}
 		return nil, "", fmt.Errorf("could not resolve xml schema for key = '%s'", key)
-	case media.MediaTypeJson, media.MediaTypeScimJson:
+	case media.MediaTypeJson:
 		if key != "" && strings.HasPrefix(key, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
@@ -788,8 +797,8 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*respon
 	if err != nil {
 		return nil, err
 	}
-	switch mediaType {
-	case media.MediaTypeXML, media.MediaTypeTextXML:
+	switch s.extractMediaTypeSynonym(mediaType) {
+	case media.MediaTypeXML:
 		pathResolver := openapitopath.NewXPathResolver()
 		pathSplit := pathResolver.ToPathSlice(path)
 		ss, ok := s.getXMLDescendentInit(pathSplit)
@@ -801,7 +810,7 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*respon
 			return nil, err
 		}
 		return response.NewResponse(processedResponse, rawResponse, r), nil
-	case media.MediaTypeJson, media.MediaTypeScimJson:
+	case media.MediaTypeJson:
 		// TODO: follow same pattern as XML, but with json path
 		if path != "" && strings.HasPrefix(path, "$") {
 			pathResolver := openapitopath.NewJSONPathResolver()
