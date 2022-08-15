@@ -10,6 +10,8 @@ import (
 	"sort"
 	"strings"
 
+	"golang.org/x/exp/slices"
+
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/stackql/go-openapistackql/pkg/media"
@@ -310,8 +312,46 @@ func (m *OperationStore) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	return rv, err
 }
 
+// This method needs to incorporate request body parameters
 func (m *OperationStore) GetRequiredParameters() map[string]*Parameter {
 	return m.getRequiredParameters()
+}
+
+func (m *OperationStore) getRequestBodyAttributes() (Schemas, error) {
+	s, err := m.getRequestBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	if s != nil {
+		return s.getProperties(), nil
+	}
+	return nil, nil
+}
+
+func (m *OperationStore) getRequiredRequestBodyAttributes() (Schemas, error) {
+	return m.getIndicatedRequestBodyAttributes(true)
+}
+
+func (m *OperationStore) getOptionalRequestBodyAttributes() (Schemas, error) {
+	return m.getIndicatedRequestBodyAttributes(false)
+}
+
+func (m *OperationStore) getIndicatedRequestBodyAttributes(required bool) (Schemas, error) {
+	s, err := m.getRequestBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	rv := make(Schemas)
+	if s != nil {
+		propz := s.getProperties()
+		for k, v := range propz {
+			predicate := slices.Contains(s.Required, k)
+			if (!required) != predicate {
+				rv[k] = v
+			}
+		}
+	}
+	return rv, nil
 }
 
 func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
@@ -328,6 +368,7 @@ func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
 	return retVal
 }
 
+// This method needs to incorporate request body parameters
 func (m *OperationStore) GetOptionalParameters() map[string]*Parameter {
 	return m.getOptionalParameters()
 }
@@ -609,6 +650,10 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 }
 
 func (op *OperationStore) GetRequestBodySchema() (*Schema, error) {
+	return op.getRequestBodySchema()
+}
+
+func (op *OperationStore) getRequestBodySchema() (*Schema, error) {
 	if op.Request != nil {
 		return op.Request.Schema, nil
 	}

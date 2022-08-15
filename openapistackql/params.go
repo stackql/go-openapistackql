@@ -6,7 +6,29 @@ import (
 
 type Parameter openapi3.Parameter
 
+// Enforce invariant
+var _ Addressable = &Parameter{}
+
 type Parameters openapi3.Parameters
+
+func (p *Parameter) GetName() string {
+	return p.Name
+}
+
+func (p *Parameter) GetLocation() string {
+	return p.In
+}
+
+func (p *Parameter) GetSchema() (*Schema, bool) {
+	if p.Schema != nil && p.Schema.Value != nil {
+		return NewSchema(p.Schema.Value, ""), true
+	}
+	return nil, false
+}
+
+func (p *Parameter) IsRequired() bool {
+	return p.Required
+}
 
 func (p *Parameter) ConditionIsValid(lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(p.Schema.Value.Type, lhs, rhs)
