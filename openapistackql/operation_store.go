@@ -504,7 +504,8 @@ func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{}
 			isRequiredFromMethodAnnotation = slices.Contains(m.Request.Required, k)
 		}
 		if v.IsRequired() || isRequiredFromMethodAnnotation {
-			requiredBodyParamNames = append(requiredBodyParamNames, k)
+			renamedKey := m.renameRequestBodyAttribute(k)
+			requiredBodyParamNames = append(requiredBodyParamNames, renamedKey)
 		}
 	}
 
