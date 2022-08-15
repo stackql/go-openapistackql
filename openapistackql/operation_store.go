@@ -607,11 +607,24 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	}
 	pathParams := make(map[string]string)
 	q := make(url.Values)
+	prefilledHeader := make(http.Header)
 	for _, p := range params {
 		if p.Value == nil {
 			continue
 		}
 		name := p.Value.Name
+
+		if p.Value.In == openapi3.ParameterInHeader {
+			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInHeader)
+			if present {
+				prefilledHeader.Set(name, fmt.Sprintf("%v", val.Val))
+				delete(copyParams, name)
+			} else if p.Value != nil && p.Value.Schema != nil && p.Value.Schema.Value != nil && p.Value.Schema.Value.Default != nil {
+				prefilledHeader.Set(name, fmt.Sprintf("%v", p.Value.Schema.Value.Default))
+			} else if p.Value.Required {
+				return nil, fmt.Errorf("OperationStore.Parameterize() failure; missing required header '%s'", name)
+			}
+		}
 		if p.Value.In == openapi3.ParameterInPath {
 			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInPath)
 			if present {
@@ -619,7 +632,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 				delete(copyParams, name)
 			}
 			if !present && p.Value.Required {
-				return nil, fmt.Errorf("OperationStore.Parameterize() failure")
+				return nil, fmt.Errorf("OperationStore.Parameterize() failure; missing required path parameter '%s'", name)
 			}
 		} else if p.Value.In == openapi3.ParameterInQuery {
 			queryParamsRemaining, err := inputParams.GetRemainingQueryParamsFlatMap(copyParams)
