@@ -27,6 +27,10 @@ func (ns *NamedSchema) IsRequired() bool {
 	return ns.isRequired
 }
 
+func (ns *NamedSchema) ConditionIsValid(lhs string, rhs interface{}) bool {
+	return providerTypeConditionIsValid(ns.s.Type, lhs, rhs)
+}
+
 func NewAddressableRequestBodyProperty(name string, s *Schema, isRequired bool) Addressable {
 	return &NamedSchema{
 		s:          s,
@@ -37,6 +41,7 @@ func NewAddressableRequestBodyProperty(name string, s *Schema, isRequired bool) 
 }
 
 type Addressable interface {
+	ConditionIsValid(lhs string, rhs interface{}) bool
 	GetLocation() string
 	GetName() string
 	GetSchema() (*Schema, bool)
