@@ -19,6 +19,10 @@ func (ns *NamedSchema) GetSchema() (*Schema, bool) {
 	return ns.s, true
 }
 
+func (ns *NamedSchema) GetType() string {
+	return ns.s.Type
+}
+
 func (ns *NamedSchema) IsRequired() bool {
 	return ns.isRequired
 }
@@ -33,8 +37,9 @@ func NewAddressableRequestBodyProperty(name string, s *Schema, isRequired bool) 
 }
 
 type Addressable interface {
+	GetLocation() string
 	GetName() string
 	GetSchema() (*Schema, bool)
-	GetLocation() string
+	GetType() string
 	IsRequired() bool
 }
