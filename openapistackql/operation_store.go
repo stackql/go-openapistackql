@@ -423,7 +423,7 @@ func (ops *OperationStore) getMethod() (*openapi3.Operation, error) {
 	return nil, fmt.Errorf("no method attached to operation store")
 }
 
-func (m *OperationStore) GetParameters() map[string]Addressable {
+func (m *OperationStore) getNonBodyParameters() map[string]Addressable {
 	retVal := make(map[string]Addressable)
 	if m.OperationRef == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
@@ -434,6 +434,11 @@ func (m *OperationStore) GetParameters() map[string]Addressable {
 			retVal[param.Name] = (*Parameter)(p.Value)
 		}
 	}
+	return retVal
+}
+
+func (m *OperationStore) GetParameters() map[string]Addressable {
+	retVal := m.getNonBodyParameters()
 	ss, err := m.getRequestBodyAttributes()
 	if err != nil {
 		return retVal
@@ -442,6 +447,10 @@ func (m *OperationStore) GetParameters() map[string]Addressable {
 		retVal[k] = v
 	}
 	return retVal
+}
+
+func (m *OperationStore) GetNonBodyParameters() map[string]Addressable {
+	return m.getNonBodyParameters()
 }
 
 func (m *OperationStore) GetParameter(paramKey string) (Addressable, bool) {
