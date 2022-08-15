@@ -705,8 +705,11 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 		return nil, err
 	}
 	if contentTypeHeaderRequired {
-		httpReq.Header.Set("Content-Type", op.Request.BodyMediaType)
+		if prefilledHeader.Get("Content-Type") != "" {
+			prefilledHeader.Set("Content-Type", op.Request.BodyMediaType)
+		}
 	}
+	httpReq.Header = prefilledHeader
 	route, checkedPathParams, err := router.FindRoute(httpReq)
 	if err != nil {
 		return nil, err
