@@ -313,7 +313,7 @@ func (m *OperationStore) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 }
 
 // This method needs to incorporate request body parameters
-func (m *OperationStore) GetRequiredParameters() map[string]*Parameter {
+func (m *OperationStore) GetRequiredParameters() map[string]Addressable {
 	return m.getRequiredParameters()
 }
 
@@ -354,8 +354,8 @@ func (m *OperationStore) getIndicatedRequestBodyAttributes(required bool) (Schem
 	return rv, nil
 }
 
-func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
-	retVal := make(map[string]*Parameter)
+func (m *OperationStore) getRequiredParameters() map[string]Addressable {
+	retVal := make(map[string]Addressable)
 	if m.OperationRef.Value == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
 	}
@@ -369,12 +369,12 @@ func (m *OperationStore) getRequiredParameters() map[string]*Parameter {
 }
 
 // This method needs to incorporate request body parameters
-func (m *OperationStore) GetOptionalParameters() map[string]*Parameter {
+func (m *OperationStore) GetOptionalParameters() map[string]Addressable {
 	return m.getOptionalParameters()
 }
 
-func (m *OperationStore) getOptionalParameters() map[string]*Parameter {
-	retVal := make(map[string]*Parameter)
+func (m *OperationStore) getOptionalParameters() map[string]Addressable {
+	retVal := make(map[string]Addressable)
 	if m.OperationRef == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
 	}

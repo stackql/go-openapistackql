@@ -313,7 +313,7 @@ func (ps *ProviderService) GetName() string {
 	return ps.Name
 }
 
-func (ps *ProviderService) GetRequiredParameters() map[string]*Parameter {
+func (ps *ProviderService) GetRequiredParameters() map[string]Addressable {
 	return nil
 }
 
