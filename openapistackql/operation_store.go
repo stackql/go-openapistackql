@@ -338,6 +338,26 @@ func (m *OperationStore) getRequestBodyAttributes() (map[string]Addressable, err
 	return rv, nil
 }
 
+func (m *OperationStore) getRequestBodyAttributesNoRename() (map[string]Addressable, error) {
+	s, err := m.getRequestBodySchema()
+	if err != nil {
+		return nil, err
+	}
+	rv := make(map[string]Addressable)
+	if s != nil {
+		propz := s.getProperties()
+		for k, v := range propz {
+			isRequired := slices.Contains(s.Required, k)
+			if isRequired {
+				rv[k] = NewRequiredAddressableRequestBodyProperty(k, v)
+			} else {
+				rv[k] = NewOptionalAddressableRequestBodyProperty(k, v)
+			}
+		}
+	}
+	return rv, nil
+}
+
 func (m *OperationStore) getRequiredRequestBodyAttributes() (map[string]Addressable, error) {
 	return m.getIndicatedRequestBodyAttributes(true)
 }
@@ -477,9 +497,15 @@ func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{}
 		requiredParamNames = append(requiredParamNames, s)
 	}
 	var requiredBodyParamNames []string
-	rs, _ := m.getRequiredRequestBodyAttributes()
-	for k, _ := range rs {
-		requiredBodyParamNames = append(requiredBodyParamNames, k)
+	rs, _ := m.getRequestBodyAttributesNoRename()
+	for k, v := range rs {
+		isRequiredFromMethodAnnotation := false
+		if m.Request != nil && len(m.Request.Required) > 0 {
+			isRequiredFromMethodAnnotation = slices.Contains(m.Request.Required, k)
+		}
+		if v.IsRequired() || isRequiredFromMethodAnnotation {
+			requiredBodyParamNames = append(requiredBodyParamNames, k)
+		}
 	}
 
 	sort.Strings(requiredParamNames)
