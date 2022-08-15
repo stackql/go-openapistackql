@@ -364,7 +364,7 @@ func (m *OperationStore) renameRequestBodyAttribute(k string) string {
 	return defaultRequestBodyAttributeRename(k)
 }
 
-func (m *OperationStore) getRequiredParameters() map[string]Addressable {
+func (m *OperationStore) getRequiredNonBodyParameters() map[string]Addressable {
 	retVal := make(map[string]Addressable)
 	if m.OperationRef.Value == nil || m.OperationRef.Value.Parameters == nil {
 		return retVal
@@ -375,6 +375,11 @@ func (m *OperationStore) getRequiredParameters() map[string]Addressable {
 			retVal[param.Name] = (*Parameter)(p.Value)
 		}
 	}
+	return retVal
+}
+
+func (m *OperationStore) getRequiredParameters() map[string]Addressable {
+	retVal := m.getRequiredNonBodyParameters()
 	ss, err := m.getRequiredRequestBodyAttributes()
 	if err != nil {
 		return retVal
@@ -457,31 +462,17 @@ func (m *OperationStore) getName() string {
 }
 
 func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{} {
-	requiredParams := m.GetRequiredParameters()
+	requiredParams := m.getRequiredNonBodyParameters()
 	var requiredParamNames []string
 	for s := range requiredParams {
 		requiredParamNames = append(requiredParamNames, s)
 	}
 	var requiredBodyParamNames []string
-	rs, err := m.GetRequestBodySchema()
-	if rs != nil && err == nil {
-		for k, pr := range rs.Properties {
-			if pr == nil || pr.Value == nil {
-				continue
-			}
-			paramName := fmt.Sprintf("%s%s", RequestBodyBaseKey, k)
-			sc := pr.Value
-			if rs.IsRequired(k) || m.IsRequiredRequestBodyProperty(k) {
-				requiredBodyParamNames = append(requiredBodyParamNames, paramName)
-				continue
-			}
-			for _, methodName := range sc.Required {
-				if methodName == m.GetName() {
-					requiredBodyParamNames = append(requiredBodyParamNames, paramName)
-				}
-			}
-		}
+	rs, _ := m.getRequiredRequestBodyAttributes()
+	for k, _ := range rs {
+		requiredBodyParamNames = append(requiredBodyParamNames, k)
 	}
+
 	sort.Strings(requiredParamNames)
 	sort.Strings(requiredBodyParamNames)
 	requiredParamNames = append(requiredParamNames, requiredBodyParamNames...)
