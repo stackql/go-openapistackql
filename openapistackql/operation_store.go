@@ -581,11 +581,15 @@ func selectServer(servers openapi3.Servers, inputParams map[string]interface{}) 
 
 func (op *OperationStore) acceptPathParam(mutableParamMap map[string]interface{}) {}
 
-func marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, error) {
-	switch expectedRequest.BodyMediaType {
-	case "application/json":
+func (op *OperationStore) marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, error) {
+	mediaType := expectedRequest.BodyMediaType
+	if expectedRequest.Schema != nil {
+		mediaType = expectedRequest.Schema.extractMediaTypeSynonym(mediaType)
+	}
+	switch mediaType {
+	case media.MediaTypeJson:
 		return json.Marshal(body)
-	case "application/xml", "text/xml":
+	case media.MediaTypeXML, media.MediaTypeTextXML:
 		return xmlmap.MarshalXMLUserInput(body, expectedRequest.Schema.getXMLALiasOrName())
 	}
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.BodyMediaType)
@@ -662,7 +666,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	predOne := !util.IsNil(requestBody)
 	predTwo := !util.IsNil(op.Request)
 	if predOne && predTwo {
-		b, err := marshalBody(requestBody, op.Request)
+		b, err := op.marshalBody(requestBody, op.Request)
 		if err != nil {
 			return nil, err
 		}
