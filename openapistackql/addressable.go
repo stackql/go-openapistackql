@@ -1,5 +1,7 @@
 package openapistackql
 
+import "fmt"
+
 type NamedSchema struct {
 	s          *Schema
 	name       string
@@ -31,7 +33,15 @@ func (ns *NamedSchema) ConditionIsValid(lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(ns.s.Type, lhs, rhs)
 }
 
-func NewAddressableRequestBodyProperty(name string, s *Schema, isRequired bool) Addressable {
+func NewRequiredAddressableRequestBodyProperty(name string, s *Schema) Addressable {
+	return newAddressableRequestBodyProperty(name, s, true)
+}
+
+func NewOptionalAddressableRequestBodyProperty(name string, s *Schema) Addressable {
+	return newAddressableRequestBodyProperty(name, s, false)
+}
+
+func newAddressableRequestBodyProperty(name string, s *Schema, isRequired bool) Addressable {
 	return &NamedSchema{
 		s:          s,
 		name:       name,
@@ -47,4 +57,12 @@ type Addressable interface {
 	GetSchema() (*Schema, bool)
 	GetType() string
 	IsRequired() bool
+}
+
+func DefaultRequestBodyAttributeRename(k string) string {
+	return defaultRequestBodyAttributeRename(k)
+}
+
+func defaultRequestBodyAttributeRename(k string) string {
+	return fmt.Sprintf("%s%s", RequestBodyBaseKey, k)
 }

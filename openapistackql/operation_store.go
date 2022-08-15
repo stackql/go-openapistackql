@@ -317,41 +317,51 @@ func (m *OperationStore) GetRequiredParameters() map[string]Addressable {
 	return m.getRequiredParameters()
 }
 
-func (m *OperationStore) getRequestBodyAttributes() (Schemas, error) {
+func (m *OperationStore) getRequestBodyAttributes() (map[string]Addressable, error) {
 	s, err := m.getRequestBodySchema()
 	if err != nil {
 		return nil, err
 	}
-	if s != nil {
-		return s.getProperties(), nil
-	}
-	return nil, nil
-}
-
-func (m *OperationStore) getRequiredRequestBodyAttributes() (Schemas, error) {
-	return m.getIndicatedRequestBodyAttributes(true)
-}
-
-func (m *OperationStore) getOptionalRequestBodyAttributes() (Schemas, error) {
-	return m.getIndicatedRequestBodyAttributes(false)
-}
-
-func (m *OperationStore) getIndicatedRequestBodyAttributes(required bool) (Schemas, error) {
-	s, err := m.getRequestBodySchema()
-	if err != nil {
-		return nil, err
-	}
-	rv := make(Schemas)
+	rv := make(map[string]Addressable)
 	if s != nil {
 		propz := s.getProperties()
 		for k, v := range propz {
-			predicate := slices.Contains(s.Required, k)
-			if (!required) != predicate {
-				rv[k] = v
+			isRequired := slices.Contains(s.Required, k)
+			renamedKey := m.renameRequestBodyAttribute(k)
+			if isRequired {
+				rv[renamedKey] = NewRequiredAddressableRequestBodyProperty(renamedKey, v)
+			} else {
+				rv[renamedKey] = NewOptionalAddressableRequestBodyProperty(renamedKey, v)
 			}
 		}
 	}
 	return rv, nil
+}
+
+func (m *OperationStore) getRequiredRequestBodyAttributes() (map[string]Addressable, error) {
+	return m.getIndicatedRequestBodyAttributes(true)
+}
+
+func (m *OperationStore) getOptionalRequestBodyAttributes() (map[string]Addressable, error) {
+	return m.getIndicatedRequestBodyAttributes(false)
+}
+
+func (m *OperationStore) getIndicatedRequestBodyAttributes(required bool) (map[string]Addressable, error) {
+	rv := make(map[string]Addressable)
+	allAttr, err := m.getRequestBodyAttributes()
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range allAttr {
+		if v.IsRequired() == required {
+			rv[k] = v
+		}
+	}
+	return rv, nil
+}
+
+func (m *OperationStore) renameRequestBodyAttribute(k string) string {
+	return defaultRequestBodyAttributeRename(k)
 }
 
 func (m *OperationStore) getRequiredParameters() map[string]Addressable {
@@ -364,6 +374,13 @@ func (m *OperationStore) getRequiredParameters() map[string]Addressable {
 		if param != nil && param.Required {
 			retVal[param.Name] = (*Parameter)(p.Value)
 		}
+	}
+	ss, err := m.getRequiredRequestBodyAttributes()
+	if err != nil {
+		return retVal
+	}
+	for k, v := range ss {
+		retVal[k] = v
 	}
 	return retVal
 }
@@ -383,6 +400,13 @@ func (m *OperationStore) getOptionalParameters() map[string]Addressable {
 		if param != nil && !param.Required {
 			retVal[param.Name] = (*Parameter)(p.Value)
 		}
+	}
+	ss, err := m.getOptionalRequestBodyAttributes()
+	if err != nil {
+		return retVal
+	}
+	for k, v := range ss {
+		retVal[k] = v
 	}
 	return retVal
 }
@@ -404,6 +428,13 @@ func (m *OperationStore) GetParameters() map[string]Addressable {
 		if param != nil {
 			retVal[param.Name] = (*Parameter)(p.Value)
 		}
+	}
+	ss, err := m.getRequestBodyAttributes()
+	if err != nil {
+		return retVal
+	}
+	for k, v := range ss {
+		retVal[k] = v
 	}
 	return retVal
 }
