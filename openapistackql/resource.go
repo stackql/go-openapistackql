@@ -290,7 +290,7 @@ func (rs *Resource) KeyExists(lhs string) bool {
 	return ok
 }
 
-func (rs *Resource) GetRequiredParameters() map[string]*Parameter {
+func (rs *Resource) GetRequiredParameters() map[string]Addressable {
 	return nil
 }
 

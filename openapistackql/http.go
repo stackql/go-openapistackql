@@ -11,11 +11,11 @@ import (
 )
 
 type ParameterBinding struct {
-	Param *Parameter // may originally be *openapi3.Parameter or *openapi3.ServerVariable, latter will be co-opted
+	Param Addressable // may originally be *openapi3.Parameter or *openapi3.ServerVariable, latter will be co-opted
 	Val   interface{}
 }
 
-func NewParameterBinding(param *Parameter, val interface{}) ParameterBinding {
+func NewParameterBinding(param Addressable, val interface{}) ParameterBinding {
 	return ParameterBinding{
 		Param: param,
 		Val:   val,
@@ -66,25 +66,25 @@ func (hp *HttpParameters) IngestMap(m map[string]interface{}) error {
 	return nil
 }
 
-func (hp *HttpParameters) StoreParameter(param *Parameter, val interface{}) {
-	if param.In == openapi3.ParameterInPath {
-		hp.PathParams[param.Name] = NewParameterBinding(param, val)
+func (hp *HttpParameters) StoreParameter(param Addressable, val interface{}) {
+	if param.GetLocation() == openapi3.ParameterInPath {
+		hp.PathParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
-	if param.In == openapi3.ParameterInQuery {
-		hp.QueryParams[param.Name] = NewParameterBinding(param, val)
+	if param.GetLocation() == openapi3.ParameterInQuery {
+		hp.QueryParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
-	if param.In == openapi3.ParameterInHeader {
-		hp.HeaderParams[param.Name] = NewParameterBinding(param, val)
+	if param.GetLocation() == openapi3.ParameterInHeader {
+		hp.HeaderParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
-	if param.In == openapi3.ParameterInCookie {
-		hp.CookieParams[param.Name] = NewParameterBinding(param, val)
+	if param.GetLocation() == openapi3.ParameterInCookie {
+		hp.CookieParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
-	if param.In == "server" {
-		hp.ServerParams[param.Name] = NewParameterBinding(param, val)
+	if param.GetLocation() == "server" {
+		hp.ServerParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
 }

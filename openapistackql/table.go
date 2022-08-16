@@ -10,7 +10,7 @@ type ITable interface {
 	KeyExists(string) bool
 	GetKey(string) (interface{}, error)
 	GetKeyAsSqlVal(string) (sqltypes.Value, error)
-	GetRequiredParameters() map[string]*Parameter
+	GetRequiredParameters() map[string]Addressable
 	FilterBy(func(interface{}) (ITable, error)) (ITable, error)
 }
 

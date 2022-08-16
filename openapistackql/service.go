@@ -112,7 +112,7 @@ func (sv *Service) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	return rv, err
 }
 
-func (rs *Service) GetRequiredParameters() map[string]*Parameter {
+func (rs *Service) GetRequiredParameters() map[string]Addressable {
 	return nil
 }
 
