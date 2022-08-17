@@ -121,10 +121,10 @@ type ExpectedResponse struct {
 }
 
 type OperationStore struct {
-	MethodKey      string          `json:"-" yaml:"-"`
-	SQLVerb        string          `json:"-" yaml:"-"`
-	GraphQL        *GraphQL        `json:"-" yaml:"-"`
-	QueryTranspose *QueryTranspose `json:"-" yaml:"-"`
+	MethodKey     string         `json:"-" yaml:"-"`
+	SQLVerb       string         `json:"-" yaml:"-"`
+	GraphQL       *GraphQL       `json:"-" yaml:"-"`
+	StackQLConfig *StackQLConfig `json:"-" yaml:"-"`
 	// Optional parameters.
 	Parameters   map[string]interface{} `json:"parameters,omitempty" yaml:"parameters,omitempty"`
 	PathItem     *openapi3.PathItem     `json:"-" yaml:"-"`                 // Required
@@ -147,8 +147,8 @@ func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[str
 }
 
 func (op *OperationStore) GetQueryTransposeAlgorithm() string {
-	if op.QueryTranspose != nil && op.QueryTranspose.Algorithm != "" {
-		return op.QueryTranspose.Algorithm
+	if op.StackQLConfig != nil && op.StackQLConfig.QueryTranspose != nil && op.StackQLConfig.QueryTranspose.Algorithm != "" {
+		return op.StackQLConfig.QueryTranspose.Algorithm
 	}
 	if op.Resource != nil && op.Resource.GetQueryTransposeAlgorithm() != "" {
 		return op.Resource.GetQueryTransposeAlgorithm()
@@ -580,6 +580,10 @@ func selectServer(servers openapi3.Servers, inputParams map[string]interface{}) 
 }
 
 func (op *OperationStore) acceptPathParam(mutableParamMap map[string]interface{}) {}
+
+func (op *OperationStore) MarshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, error) {
+	return op.marshalBody(body, expectedRequest)
+}
 
 func (op *OperationStore) marshalBody(body interface{}, expectedRequest *ExpectedRequest) ([]byte, error) {
 	mediaType := expectedRequest.BodyMediaType

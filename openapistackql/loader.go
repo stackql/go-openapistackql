@@ -146,7 +146,7 @@ func (l *Loader) extractAndMergeGraphQL(operation *OperationStore) error {
 	return nil
 }
 
-func extractQueryTranspose(qt interface{}) (*QueryTranspose, error) {
+func extractStackQLConfig(qt interface{}) (*StackQLConfig, error) {
 	var bt []byte
 	var err error
 	switch rs := qt.(type) {
@@ -158,7 +158,7 @@ func extractQueryTranspose(qt interface{}) (*QueryTranspose, error) {
 	if err != nil {
 		return nil, err
 	}
-	var rv QueryTranspose
+	var rv StackQLConfig
 	err = yaml.Unmarshal(bt, &rv)
 	if err != nil {
 		return nil, err
@@ -170,28 +170,41 @@ func (l *Loader) extractAndMergeQueryTransposeOpLevel(operation *OperationStore)
 	if operation.OperationRef == nil || operation.OperationRef.Value == nil {
 		return nil
 	}
-	qt, ok := operation.OperationRef.Value.Extensions[ExtensionKeyQueryParamTranspose]
+	qt, ok := operation.OperationRef.Value.Extensions[ExtensionKeyConfig]
 	if !ok {
 		return nil
 	}
-	rv, err := extractQueryTranspose(qt)
+	rv, err := extractStackQLConfig(qt)
 	if err != nil {
 		return err
 	}
-	operation.QueryTranspose = rv
+	operation.StackQLConfig = rv
 	return nil
 }
 
 func (l *Loader) extractAndMergeQueryTransposeServiceLevel(svc *Service) error {
-	qt, ok := svc.Extensions[ExtensionKeyQueryParamTranspose]
+	qt, ok := svc.Extensions[ExtensionKeyConfig]
 	if !ok {
 		return nil
 	}
-	rv, err := extractQueryTranspose(qt)
+	rv, err := extractStackQLConfig(qt)
 	if err != nil {
 		return err
 	}
-	svc.QueryTranspose = rv
+	svc.StackQLConfig = rv
+	return nil
+}
+
+func (l *Loader) extractAndMergeConfigServiceLevel(svc *Service) error {
+	qt, ok := svc.Extensions[ExtensionKeyConfig]
+	if !ok {
+		return nil
+	}
+	rv, err := extractStackQLConfig(qt)
+	if err != nil {
+		return err
+	}
+	svc.StackQLConfig = rv
 	return nil
 }
 
