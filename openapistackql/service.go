@@ -14,7 +14,7 @@ import (
 type Service struct {
 	*openapi3.T
 	rsc             map[string]*Resource
-	QueryTranspose  *QueryTranspose  `json:"-" yaml:"-"`
+	StackQLConfig   *StackQLConfig   `json:"-" yaml:"-"`
 	ProviderService *ProviderService `json:"-" yaml:"-"` // upwards traversal
 	Provider        *Provider        `json:"-" yaml:"-"` // upwards traversal
 }
@@ -38,10 +38,24 @@ func (svc *Service) IsPreferred() bool {
 }
 
 func (svc *Service) GetQueryTransposeAlgorithm() string {
-	if svc.QueryTranspose == nil {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
-	return svc.QueryTranspose.Algorithm
+	return svc.StackQLConfig.QueryTranspose.Algorithm
+}
+
+func (svc *Service) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.Pagination == nil || svc.StackQLConfig.Pagination.RequestToken == nil {
+		return nil, false
+	}
+	return svc.StackQLConfig.Pagination.RequestToken, true
+}
+
+func (svc *Service) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.Pagination == nil || svc.StackQLConfig.Pagination.ResponseToken == nil {
+		return nil, false
+	}
+	return svc.StackQLConfig.Pagination.ResponseToken, true
 }
 
 func (svc *Service) GetSchemas() (map[string]*Schema, error) {

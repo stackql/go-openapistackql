@@ -45,17 +45,31 @@ type Resource struct {
 	ServiceDocPath    *ServiceRef                    `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	SQLVerbs          map[string][]OperationStoreRef `json:"sqlVerbs" yaml:"sqlVerbs"`
 	BaseUrl           string                         `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"` // hack
-	QueryTranspose    *QueryTranspose                `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	StackQLConfig     *StackQLConfig                 `json:"config,omitempty" yaml:"config,omitempty"`
 	Service           *Service                       `json:"-" yaml:"-"` // upwards traversal
 	ProviderService   *ProviderService               `json:"-" yaml:"-"` // upwards traversal
 	Provider          *Provider                      `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (r *Resource) GetQueryTransposeAlgorithm() string {
-	if r.QueryTranspose == nil {
+	if r.StackQLConfig == nil || r.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
-	return r.QueryTranspose.Algorithm
+	return r.StackQLConfig.QueryTranspose.Algorithm
+}
+
+func (r *Resource) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
+	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.RequestToken == nil {
+		return nil, false
+	}
+	return r.StackQLConfig.Pagination.RequestToken, true
+}
+
+func (r *Resource) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
+	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.ResponseToken == nil {
+		return nil, false
+	}
+	return r.StackQLConfig.Pagination.ResponseToken, true
 }
 
 var _ jsonpointer.JSONPointable = (Resource)(Resource{})

@@ -6,7 +6,6 @@ require (
 	github.com/Masterminds/semver v1.4.2
 	github.com/PaesslerAG/jsonpath v0.1.1
 	github.com/antchfx/xmlquery v1.3.10
-	github.com/clbanning/mxj/v2 v2.5.5
 	github.com/getkin/kin-openapi v0.88.0
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/jsonpointer v0.19.5
@@ -17,7 +16,6 @@ require (
 	github.com/stackql/go-spew v1.1.3-alpha24
 	github.com/stackql/go-suffix-map v0.0.1-alpha01
 	github.com/stackql/stackql-provider-registry v0.0.1-rc01
-	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.0

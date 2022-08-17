@@ -8,11 +8,11 @@ const (
 )
 
 const (
-	ExtensionKeyAlwaysRequired      string = "x-alwaysRequired"
-	ExtensionKeyGraphQL             string = "x-stackQL-graphQL"
-	ExtensionKeyQueryParamTranspose string = "x-stackQL-queryParamTranspose"
-	ExtensionKeyProvider            string = "x-stackql-provider"
-	ExtensionKeyResources           string = "x-stackQL-resources"
+	ExtensionKeyAlwaysRequired string = "x-alwaysRequired"
+	ExtensionKeyGraphQL        string = "x-stackQL-graphQL"
+	ExtensionKeyConfig         string = "x-stackQL-config"
+	ExtensionKeyProvider       string = "x-stackql-provider"
+	ExtensionKeyResources      string = "x-stackQL-resources"
 )
 
 const (
