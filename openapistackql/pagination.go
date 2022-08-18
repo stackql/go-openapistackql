@@ -71,30 +71,8 @@ func getHeaderTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error
 	}, nil
 }
 
-func getHeaderStandardTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error) {
-	if tokenSemantic.Algorithm == "" && strings.ToLower(tokenSemantic.Key) == "link" && strings.ToLower(tokenSemantic.Location) == "header" {
-		return defaultLinkHeaderTransformer, nil
-	}
-	rs, ok := tokenSemantic.Args.GetRegex()
-	if !ok {
-		return nil, fmt.Errorf("could not extract regex string")
-	}
-	rx, err := regexp.Compile(rs)
-	if err != nil {
-		return nil, err
-	}
-	return func(input interface{}) (interface{}, error) {
-		h, ok := input.(http.Header)
-		if !ok {
-			return nil, fmt.Errorf("cannot ingest purported http header of type = '%T'", h)
-		}
-		s := h.Values(tokenSemantic.Key)
-		resArr := rx.FindStringSubmatch(strings.Join(s, ","))
-		if len(resArr) == 2 {
-			return resArr[1], nil
-		}
-		return "", nil
-	}, nil
+func DefaultLinkHeaderTransformer(input interface{}) (interface{}, error) {
+	return defaultLinkHeaderTransformer(input)
 }
 
 func defaultLinkHeaderTransformer(input interface{}) (interface{}, error) {
