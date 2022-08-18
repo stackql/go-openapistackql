@@ -25,35 +25,63 @@ type Provider struct {
 	Version          string                      `json:"version" yaml:"version"`
 	Description      string                      `json:"description,omitempty" yaml:"desription,omitempty"`
 	ProviderServices map[string]*ProviderService `json:"providerServices,omitempty" yaml:"providerServices,omitempty"`
-	QueryTranspose   *QueryTranspose             `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	StackQLConfig    *StackQLConfig              `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
 type ProviderService struct {
 	openapi3.ExtensionProps
-	ID             string          `json:"id" yaml:"id"`           // Required
-	Name           string          `json:"name" yaml:"name"`       // Required
-	Title          string          `json:"title" yaml:"title"`     // Required
-	Version        string          `json:"version" yaml:"version"` // Required
-	Description    string          `json:"description" yaml:"description"`
-	Preferred      bool            `json:"preferred" yaml:"preferred"`
-	ServiceRef     *ServiceRef     `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
-	ResourcesRef   *ResourcesRef   `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
-	Provider       *Provider       `json:"-" yaml:"-"`                                     // upwards traversal
-	QueryTranspose *QueryTranspose `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	ID            string         `json:"id" yaml:"id"`           // Required
+	Name          string         `json:"name" yaml:"name"`       // Required
+	Title         string         `json:"title" yaml:"title"`     // Required
+	Version       string         `json:"version" yaml:"version"` // Required
+	Description   string         `json:"description" yaml:"description"`
+	Preferred     bool           `json:"preferred" yaml:"preferred"`
+	ServiceRef    *ServiceRef    `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
+	ResourcesRef  *ResourcesRef  `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
+	Provider      *Provider      `json:"-" yaml:"-"`                                     // upwards traversal
+	StackQLConfig *StackQLConfig `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
 func (pr *Provider) GetQueryTransposeAlgorithm() string {
-	if pr.QueryTranspose == nil {
+	if pr.StackQLConfig == nil || pr.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
-	return pr.QueryTranspose.Algorithm
+	return pr.StackQLConfig.QueryTranspose.Algorithm
 }
 
 func (sv *ProviderService) GetQueryTransposeAlgorithm() string {
-	if sv.QueryTranspose == nil {
+	if sv.StackQLConfig == nil || sv.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
-	return sv.QueryTranspose.Algorithm
+	return sv.StackQLConfig.QueryTranspose.Algorithm
+}
+
+func (sv *ProviderService) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
+	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.RequestToken == nil {
+		return nil, false
+	}
+	return sv.StackQLConfig.Pagination.RequestToken, true
+}
+
+func (sv *ProviderService) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
+	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.ResponseToken == nil {
+		return nil, false
+	}
+	return sv.StackQLConfig.Pagination.ResponseToken, true
+}
+
+func (pr *Provider) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
+	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.RequestToken == nil {
+		return nil, false
+	}
+	return pr.StackQLConfig.Pagination.RequestToken, true
+}
+
+func (pr *Provider) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
+	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.ResponseToken == nil {
+		return nil, false
+	}
+	return pr.StackQLConfig.Pagination.ResponseToken, true
 }
 
 func (sv *ProviderService) ConditionIsValid(lhs string, rhs interface{}) bool {
