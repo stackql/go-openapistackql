@@ -58,14 +58,14 @@ func (r *Resource) GetQueryTransposeAlgorithm() string {
 	return r.StackQLConfig.QueryTranspose.Algorithm
 }
 
-func (r *Resource) GetRequestPaginationTokenSemantic() (*TokenSemantic, bool) {
+func (r *Resource) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
 	return r.StackQLConfig.Pagination.RequestToken, true
 }
 
-func (r *Resource) GetResponsePaginationTokenSemantic() (*TokenSemantic, bool) {
+func (r *Resource) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
 	}

@@ -165,54 +165,54 @@ func (op *OperationStore) GetQueryTransposeAlgorithm() string {
 	return ""
 }
 
-func (op *OperationStore) GetRequestPaginationTokenSemantic() (*TokenSemantic, bool) {
+func (op *OperationStore) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if op.StackQLConfig != nil && op.StackQLConfig.Pagination != nil && op.StackQLConfig.Pagination.RequestToken != nil {
 		return op.StackQLConfig.Pagination.RequestToken, true
 	}
 	if op.Resource != nil {
-		if ts, ok := op.Resource.GetRequestPaginationTokenSemantic(); ok {
+		if ts, ok := op.Resource.GetPaginationRequestTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	if op.Service != nil {
-		if ts, ok := op.Service.GetRequestPaginationTokenSemantic(); ok {
+		if ts, ok := op.Service.GetPaginationRequestTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	if op.ProviderService != nil {
-		if ts, ok := op.ProviderService.GetRequestPaginationTokenSemantic(); ok {
+		if ts, ok := op.ProviderService.GetPaginationRequestTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	if op.Provider != nil {
-		if ts, ok := op.ProviderService.GetRequestPaginationTokenSemantic(); ok {
+		if ts, ok := op.ProviderService.GetPaginationRequestTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	return nil, false
 }
 
-func (op *OperationStore) GetResponsePaginationTokenSemantic() (*TokenSemantic, bool) {
+func (op *OperationStore) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if op.StackQLConfig != nil && op.StackQLConfig.Pagination != nil && op.StackQLConfig.Pagination.ResponseToken != nil {
 		return op.StackQLConfig.Pagination.ResponseToken, true
 	}
 	if op.Resource != nil {
-		if ts, ok := op.Resource.GetResponsePaginationTokenSemantic(); ok {
+		if ts, ok := op.Resource.GetPaginationResponseTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	if op.Service != nil {
-		if ts, ok := op.Service.GetResponsePaginationTokenSemantic(); ok {
+		if ts, ok := op.Service.GetPaginationResponseTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	if op.ProviderService != nil {
-		if ts, ok := op.ProviderService.GetResponsePaginationTokenSemantic(); ok {
+		if ts, ok := op.ProviderService.GetPaginationResponseTokenSemantic(); ok {
 			return ts, true
 		}
 	}
 	if op.Provider != nil {
-		if ts, ok := op.ProviderService.GetResponsePaginationTokenSemantic(); ok {
+		if ts, ok := op.ProviderService.GetPaginationResponseTokenSemantic(); ok {
 			return ts, true
 		}
 	}

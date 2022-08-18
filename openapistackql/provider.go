@@ -56,28 +56,28 @@ func (sv *ProviderService) GetQueryTransposeAlgorithm() string {
 	return sv.StackQLConfig.QueryTranspose.Algorithm
 }
 
-func (sv *ProviderService) GetRequestPaginationTokenSemantic() (*TokenSemantic, bool) {
+func (sv *ProviderService) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
 	return sv.StackQLConfig.Pagination.RequestToken, true
 }
 
-func (sv *ProviderService) GetResponsePaginationTokenSemantic() (*TokenSemantic, bool) {
+func (sv *ProviderService) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
 	}
 	return sv.StackQLConfig.Pagination.ResponseToken, true
 }
 
-func (pr *Provider) GetRequestPaginationTokenSemantic() (*TokenSemantic, bool) {
+func (pr *Provider) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
 	return pr.StackQLConfig.Pagination.RequestToken, true
 }
 
-func (pr *Provider) GetResponsePaginationTokenSemantic() (*TokenSemantic, bool) {
+func (pr *Provider) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
 	}

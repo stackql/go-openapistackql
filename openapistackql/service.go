@@ -44,14 +44,14 @@ func (svc *Service) GetQueryTransposeAlgorithm() string {
 	return svc.StackQLConfig.QueryTranspose.Algorithm
 }
 
-func (svc *Service) GetRequestPaginationTokenSemantic() (*TokenSemantic, bool) {
+func (svc *Service) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if svc.StackQLConfig == nil || svc.StackQLConfig.Pagination == nil || svc.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
 	return svc.StackQLConfig.Pagination.RequestToken, true
 }
 
-func (svc *Service) GetResponsePaginationTokenSemantic() (*TokenSemantic, bool) {
+func (svc *Service) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if svc.StackQLConfig == nil || svc.StackQLConfig.Pagination == nil || svc.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
 	}
