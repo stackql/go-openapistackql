@@ -39,6 +39,10 @@ type TransformerLocator interface {
 
 type StandardTransformerLocator struct{}
 
+func NewStandardTransformerLocator() TransformerLocator {
+	return &StandardTransformerLocator{}
+}
+
 func (stl *StandardTransformerLocator) GetTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error) {
 	switch strings.ToLower(tokenSemantic.Location) {
 	case "header":

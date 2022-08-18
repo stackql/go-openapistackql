@@ -15,6 +15,11 @@ type TokenSemantic struct {
 	Location  string            `json:"location,omitempty" yaml:"location,omitempty"`
 }
 
+func (ts *TokenSemantic) GetTransformer() (TokenTransformer, error) {
+	tl := NewStandardTransformerLocator()
+	return tl.GetTransformer(ts)
+}
+
 var _ jsonpointer.JSONPointable = (TokenSemantic)(TokenSemantic{})
 
 func (qt TokenSemantic) JSONLookup(token string) (interface{}, error) {
