@@ -706,7 +706,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			rv := NewSchema(items, s.svc, "").Tabulate(omitColumns)
+			rv := newSchema(items, s.svc, "", s.isExpanded).Tabulate(omitColumns)
 			return rv
 		}
 	} else if s.Type == "string" {
