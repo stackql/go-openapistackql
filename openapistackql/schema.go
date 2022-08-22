@@ -652,7 +652,14 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
 		var cols []ColumnDescriptor
 		if !omitColumns {
-			if len(s.Properties) > 0 {
+			if s.isObjectSchemaImplicitlyUnioned() {
+				cols = s.getPropertiesColumns()
+				var additionalCols []ColumnDescriptor
+				if len(s.AllOf) > 0 {
+					additionalCols = s.getAllOfColumns()
+				}
+				cols = append(cols, additionalCols...)
+			} else if len(s.Properties) > 0 {
 				cols = s.getPropertiesColumns()
 			} else if len(s.AllOf) > 0 {
 				cols = s.getAllOfColumns()
