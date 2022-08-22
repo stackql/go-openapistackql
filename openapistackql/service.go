@@ -25,6 +25,16 @@ func (sv *Service) GetT() *openapi3.T {
 	return sv.T
 }
 
+func (sv *Service) isObjectSchemaImplicitlyUnioned() bool {
+	if sv.StackQLConfig != nil {
+		return sv.StackQLConfig.isObjectSchemaImplicitlyUnioned()
+	}
+	if sv.Provider == nil {
+		return false
+	}
+	return sv.Provider.isObjectSchemaImplicitlyUnioned()
+}
+
 func NewService(t *openapi3.T) *Service {
 	svc := &Service{
 		T:   t,
@@ -61,7 +71,7 @@ func (svc *Service) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) 
 func (svc *Service) GetSchemas() (map[string]*Schema, error) {
 	rv := make(map[string]*Schema)
 	for k, sv := range svc.Components.Schemas {
-		rv[k] = NewSchema(sv.Value, k)
+		rv[k] = NewSchema(sv.Value, svc, k)
 	}
 	return rv, nil
 }
@@ -76,7 +86,7 @@ func (svc *Service) GetSchema(key string) (*Schema, error) {
 	if responseSchema == nil {
 		return nil, fmt.Errorf("cannot find schema for key = '%s' in service title = '%s'", key, svcName)
 	}
-	return NewSchema(responseSchema, key), nil
+	return NewSchema(responseSchema, svc, key), nil
 }
 
 func extractExtensionValBytes(extMap map[string]interface{}, key string) ([]byte, error) {
