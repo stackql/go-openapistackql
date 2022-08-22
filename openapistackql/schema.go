@@ -609,7 +609,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 	}
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
-		ss := NewSchema(val.Value, s.svc, "")
+		ss := newSchema(val.Value, s.svc, "", s.isExpanded)
 		if rv == nil {
 			rv = ss
 			continue
