@@ -602,7 +602,7 @@ func (s *Schema) getXmlAlias() string {
 }
 
 func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
-	rv := NewSchema(s.Schema, s.svc, s.key)
+	rv := newSchema(s.Schema, s.svc, s.key, s.isExpanded)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
@@ -621,7 +621,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 		}
 		for k, sRef := range ss.Properties {
 			_, alreadyExists := rv.Properties[k]
-			if alreadyExists {
+			if alreadyExists && !rv.isExpanded {
 				cn := fmt.Sprintf("%s_%s", getSchemaName(val), k)
 				rv.Properties[cn] = sRef
 				continue
