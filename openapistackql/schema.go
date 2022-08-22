@@ -625,6 +625,11 @@ func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescri
 	return st.GetColumns()
 }
 
+func (s *Schema) getAllSchemaRefsColumnsShallow(srs openapi3.SchemaRefs) []ColumnDescriptor {
+	sc := s.getFatSchema(srs)
+	return sc.getPropertiesColumns()
+}
+
 func (s *Schema) hasPolymorphicProperties() bool {
 	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
 		return true
@@ -656,7 +661,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 				cols = s.getPropertiesColumns()
 				var additionalCols []ColumnDescriptor
 				if len(s.AllOf) > 0 {
-					additionalCols = s.getAllOfColumns()
+					additionalCols = s.getAllSchemaRefsColumnsShallow(s.AllOf)
 				}
 				cols = append(cols, additionalCols...)
 			} else if len(s.Properties) > 0 {
