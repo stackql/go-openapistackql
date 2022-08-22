@@ -49,6 +49,13 @@ func (pr *Provider) GetQueryTransposeAlgorithm() string {
 	return pr.StackQLConfig.QueryTranspose.Algorithm
 }
 
+func (pr *Provider) isObjectSchemaImplicitlyUnioned() bool {
+	if pr.StackQLConfig != nil {
+		return pr.StackQLConfig.isObjectSchemaImplicitlyUnioned()
+	}
+	return false
+}
+
 func (sv *ProviderService) GetQueryTransposeAlgorithm() string {
 	if sv.StackQLConfig == nil || sv.StackQLConfig.QueryTranspose == nil {
 		return ""

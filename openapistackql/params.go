@@ -4,12 +4,32 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
-type Parameter openapi3.Parameter
+type Parameter struct {
+	openapi3.Parameter
+	svc *Service
+}
+
+func NewParameter(param *openapi3.Parameter, svc *Service) *Parameter {
+	return &Parameter{
+		*param,
+		svc,
+	}
+}
 
 // Enforce invariant
 var _ Addressable = &Parameter{}
 
-type Parameters openapi3.Parameters
+type Parameters struct {
+	openapi3.Parameters
+	svc *Service
+}
+
+func NewParameters(params openapi3.Parameters, svc *Service) Parameters {
+	return Parameters{
+		params,
+		svc,
+	}
+}
 
 func (p *Parameter) GetName() string {
 	return p.Name
@@ -21,7 +41,7 @@ func (p *Parameter) GetLocation() string {
 
 func (p *Parameter) GetSchema() (*Schema, bool) {
 	if p.Schema != nil && p.Schema.Value != nil {
-		return NewSchema(p.Schema.Value, ""), true
+		return NewSchema(p.Schema.Value, p.svc, ""), true
 	}
 	return nil, false
 }
@@ -39,10 +59,10 @@ func (p *Parameter) GetType() string {
 }
 
 func (p Parameters) getParameterFromInSubset(key, inSubset string) (*Parameter, bool) {
-	for _, paramRef := range p {
+	for _, paramRef := range p.Parameters {
 		param := paramRef.Value
 		if param.In == inSubset && param.Name == key {
-			return (*Parameter)(param), true
+			return NewParameter(param, p.svc), true
 		}
 	}
 	return nil, false

@@ -30,7 +30,7 @@ func TestPlaceholder(t *testing.T) {
 		StatusCode: 200,
 		Body:       ioutil.NopCloser(strings.NewReader(`{"a": { "b": [ "c" ] } }`)),
 	}
-	s := NewSchema(openapi3.NewSchema(), "")
+	s := NewSchema(openapi3.NewSchema(), nil, "")
 	pr, err := s.ProcessHttpResponse(res, "")
 	assert.NilError(t, err)
 	assert.Assert(t, pr != nil)

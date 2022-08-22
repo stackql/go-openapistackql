@@ -9,6 +9,7 @@ import (
 type StackQLConfig struct {
 	QueryTranspose *QueryTranspose `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
 	Pagination     *Pagination     `json:"pagination,omitempty" yaml:"pagination,omitempty"`
+	Variations     *Variations     `json:"variations,omitempty" yaml:"variations,omitempty"`
 }
 
 var _ jsonpointer.JSONPointable = (StackQLConfig)(StackQLConfig{})
@@ -20,4 +21,11 @@ func (qt StackQLConfig) JSONLookup(token string) (interface{}, error) {
 	default:
 		return nil, fmt.Errorf("could not resolve token '%s' from QueryTranspose doc object", token)
 	}
+}
+
+func (cfg *StackQLConfig) isObjectSchemaImplicitlyUnioned() bool {
+	if cfg.Variations != nil {
+		return cfg.Variations.IsObjectSchemaImplicitlyUnioned
+	}
+	return false
 }

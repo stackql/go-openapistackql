@@ -54,11 +54,12 @@ func (hp *HttpParameters) IngestMap(m map[string]interface{}) error {
 		if param, ok := hp.opStore.GetOperationParameter(k); ok {
 			hp.StoreParameter(param, v)
 		} else if _, ok := hp.opStore.getServerVariable(k); ok {
-			param := &Parameter{
+			param := &openapi3.Parameter{
 				In:   "server",
 				Name: k,
 			}
-			hp.StoreParameter(param, v)
+			svc := hp.opStore.Service
+			hp.StoreParameter(NewParameter(param, svc), v)
 		} else {
 			return fmt.Errorf("could not place parameter '%s'", k)
 		}
