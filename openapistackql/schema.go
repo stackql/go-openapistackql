@@ -100,6 +100,9 @@ func (s *Schema) GetProperties() (Schemas, error) {
 }
 
 func (s *Schema) getProperties() Schemas {
+	defer func() {
+		s.isExpanded = true
+	}()
 	retVal := make(Schemas)
 	if s.isObjectSchemaImplicitlyUnioned() {
 		return s.getInplicitlyUnionedProperties()
@@ -111,7 +114,6 @@ func (s *Schema) getProperties() Schemas {
 				retVal[k] = NewSchema(sr.Value, s.svc, k)
 			}
 		}
-		s.isExpanded = true
 	}
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, s.svc, k)
@@ -135,7 +137,6 @@ func (s *Schema) getInplicitlyUnionedProperties() Schemas {
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, s.svc, k)
 	}
-	s.isExpanded = true
 	return retVal
 }
 
@@ -669,6 +670,9 @@ func (s *Schema) isNotSimple() bool {
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
+	defer func() {
+		s.isExpanded = true
+	}()
 	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
 		var cols []ColumnDescriptor
 		if !omitColumns {
@@ -703,7 +707,6 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 		if items := s.Items.Value; items != nil {
 
 			rv := NewSchema(items, s.svc, "").Tabulate(omitColumns)
-			s.isExpanded = true
 			return rv
 		}
 	} else if s.Type == "string" {
