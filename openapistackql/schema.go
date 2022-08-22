@@ -53,13 +53,14 @@ func (s *Schema) ConditionIsValid(lhs string, rhs interface{}) bool {
 
 type Schema struct {
 	*openapi3.Schema
+	svc            *Service
 	key            string
 	alwaysRequired bool
 }
 
 type Schemas map[string]*Schema
 
-func NewSchema(sc *openapi3.Schema, key string) *Schema {
+func NewSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
 	var alwaysRequired bool
 	if sc.Extensions != nil {
 		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
@@ -70,9 +71,17 @@ func NewSchema(sc *openapi3.Schema, key string) *Schema {
 	}
 	return &Schema{
 		sc,
+		svc,
 		key,
 		alwaysRequired,
 	}
+}
+
+func (s *Schema) isObjectSchemaImplicitlyUnioned() bool {
+	if s.svc == nil {
+		return false
+	}
+	return s.svc.isObjectSchemaImplicitlyUnioned()
 }
 
 func (s *Schema) GetProperties() (Schemas, error) {
@@ -81,16 +90,38 @@ func (s *Schema) GetProperties() (Schemas, error) {
 
 func (s *Schema) getProperties() Schemas {
 	retVal := make(Schemas)
+	if s.isObjectSchemaImplicitlyUnioned() {
+		return s.getInplicitlyUnionedProperties()
+	}
 	if s.hasPolymorphicProperties() && len(s.Properties) == 0 {
 		ss := s.getFattnedPolymorphicSchema()
 		if ss != nil {
 			for k, sr := range ss.Properties {
-				retVal[k] = NewSchema(sr.Value, k)
+				retVal[k] = NewSchema(sr.Value, s.svc, k)
 			}
 		}
 	}
 	for k, sr := range s.Properties {
-		retVal[k] = NewSchema(sr.Value, k)
+		retVal[k] = NewSchema(sr.Value, s.svc, k)
+	}
+	return retVal
+}
+
+// This is a horrendous hack to cover weird `properties` + `allOf` seen
+// all across azure autorest docs.  It is opt-in via config and
+// should, nay must, be removed when time permits
+func (s *Schema) getInplicitlyUnionedProperties() Schemas {
+	retVal := make(Schemas)
+	if s.hasPolymorphicProperties() {
+		ss := s.getFattnedPolymorphicSchema()
+		if ss != nil {
+			for k, sr := range ss.Properties {
+				retVal[k] = NewSchema(sr.Value, s.svc, k)
+			}
+		}
+	}
+	for k, sr := range s.Properties {
+		retVal[k] = NewSchema(sr.Value, s.svc, k)
 	}
 	return retVal
 }
@@ -136,7 +167,7 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 		}
 	}
 	if s.Type == "array" && s.Items != nil && s.Items.Value != nil {
-		ss := NewSchema(s.Items.Value, "")
+		ss := NewSchema(s.Items.Value, s.svc, "")
 		ds, ok := ss.getXMLChild(path, isTerminal)
 		if ok {
 			if !isTerminal {
@@ -152,13 +183,13 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 		}
 		si := v.Value
 		if si.Type == "array" && si.Items != nil && si.Items.Value != nil {
-			ss := NewSchema(si.Items.Value, "")
+			ss := NewSchema(si.Items.Value, s.svc, "")
 			ds, ok := ss.getXMLChild(path, isTerminal)
 			if ok {
 				if !isTerminal {
 					return ds, true
 				}
-				return NewSchema(si, ""), true
+				return NewSchema(si, s.svc, ""), true
 			}
 			return nil, false
 		}
@@ -237,7 +268,7 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 func (s *Schema) GetItems() (*Schema, error) {
 	if s.Items != nil && s.Items.Value != nil {
 		itemsPathSplit := strings.Split(s.Items.Ref, "/")
-		return NewSchema(s.Items.Value, itemsPathSplit[len(itemsPathSplit)-1]), nil
+		return NewSchema(s.Items.Value, s.svc, itemsPathSplit[len(itemsPathSplit)-1]), nil
 	}
 	return nil, fmt.Errorf("no items present in schema with key = '%s'", s.key)
 }
@@ -262,7 +293,7 @@ func (s *Schema) getProperty(propertyKey string) (*Schema, bool) {
 	if !ok {
 		return nil, false
 	}
-	return NewSchema(sc.Value, propertyKey), true
+	return NewSchema(sc.Value, s.svc, propertyKey), true
 }
 
 func (s *Schema) IsIntegral() bool {
@@ -285,6 +316,7 @@ func (sc *Schema) GetPropertySchema(key string) (*Schema, error) {
 	}
 	return NewSchema(
 		sh.Value,
+		sc.svc,
 		key,
 	), nil
 }
@@ -295,6 +327,7 @@ func (sc *Schema) GetItemsSchema() (*Schema, error) {
 	if sh.Value != nil {
 		return NewSchema(
 			sh.Value,
+			sc.svc,
 			"",
 		), nil
 	}
@@ -314,6 +347,7 @@ func (schema *Schema) getSelectListItems(key string) (*Schema, string) {
 	if itemS != nil {
 		return NewSchema(
 			itemS,
+			schema.svc,
 			"",
 		), key
 	}
@@ -350,7 +384,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	if key == "" {
 		if schema.Items != nil && schema.Items.Value != nil {
-			return NewSchema(schema.Items.Value, ""), "", nil
+			return NewSchema(schema.Items.Value, schema.svc, ""), "", nil
 		}
 		return schema, "", nil
 	}
@@ -413,6 +447,7 @@ func (schema *Schema) deprecatedGetSelectItemsSchema(key string, mediaType strin
 	if itemS != nil {
 		s := NewSchema(
 			itemS,
+			schema.svc,
 			key,
 		)
 		rv, err := s.GetItems()
@@ -479,7 +514,7 @@ func (s *Schema) GetAllColumns() []string {
 		}
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
-			iS := NewSchema(items, "")
+			iS := NewSchema(items, s.svc, "")
 			return iS.GetAllColumns()
 		}
 	}
@@ -501,6 +536,7 @@ func (s *Schema) getPropertiesColumns() []ColumnDescriptor {
 		if valSchema != nil {
 			col := ColumnDescriptor{Name: k, Schema: NewSchema(
 				valSchema,
+				s.svc,
 				k,
 			)}
 			cols = append(cols, col)
@@ -542,7 +578,7 @@ func (s *Schema) getXmlAlias() string {
 	}
 	for _, ao := range s.AllOf {
 		if ao.Value != nil {
-			aos := NewSchema(ao.Value, "")
+			aos := NewSchema(ao.Value, s.svc, "")
 			name := aos.getXmlAlias()
 			if name != "" {
 				return name
@@ -553,13 +589,13 @@ func (s *Schema) getXmlAlias() string {
 }
 
 func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
-	rv := NewSchema(s.Schema, s.key)
+	rv := NewSchema(s.Schema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
-		ss := NewSchema(val.Value, "")
+		ss := NewSchema(val.Value, s.svc, "")
 		if rv == nil {
 			rv = ss
 			continue
@@ -630,7 +666,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			return NewSchema(items, "").Tabulate(omitColumns)
+			return NewSchema(items, s.svc, "").Tabulate(omitColumns)
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
@@ -647,14 +683,14 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 	if s.Type == "array" {
 		items := s.Items.Value
 		if items != nil {
-			return NewSchema(items, "").ToDescriptionMap(extended)
+			return NewSchema(items, s.svc, "").ToDescriptionMap(extended)
 		}
 	}
 	if s.Type == "object" {
 		for k, v := range s.Properties {
 			p := v.Value
 			if p != nil {
-				pm := NewSchema(p, "").toFlatDescriptionMap(extended)
+				pm := NewSchema(p, s.svc, "").toFlatDescriptionMap(extended)
 				pm["name"] = k
 				retVal[k] = pm
 			}
@@ -666,7 +702,7 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 		for k, v := range fs.Properties {
 			p := v.Value
 			if p != nil {
-				pm := NewSchema(p, "").toFlatDescriptionMap(extended)
+				pm := NewSchema(p, s.svc, "").toFlatDescriptionMap(extended)
 				pm["name"] = k
 				retVal[k] = pm
 			}
@@ -717,9 +753,9 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 			log.Infoln(fmt.Sprintf("FindByPath() attempting to match  path = '%s' with property '%s', visited = %v", path, k, visited))
 			if k == path {
 				rv := v.Value
-				return NewSchema(rv, k)
+				return NewSchema(rv, s.svc, k)
 			}
-			ss := NewSchema(v.Value, k)
+			ss := NewSchema(v.Value, s.svc, k)
 			// TODO: prevent endless recursion
 			if ss != nil {
 				res := ss.FindByPath(path, visited)

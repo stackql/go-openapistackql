@@ -567,7 +567,7 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 	return loader.extractAndMergeGraphQL(component)
 }
 
-func (loader *Loader) resolveContentDefault(content openapi3.Content) (*Schema, string, bool) {
+func (loader *Loader) resolveContentDefault(content openapi3.Content, svc *Service) (*Schema, string, bool) {
 	if content == nil {
 		return nil, "", false
 	}
@@ -575,7 +575,7 @@ func (loader *Loader) resolveContentDefault(content openapi3.Content) (*Schema, 
 	for _, mt := range preferredMediaTypes {
 		rv, ok := content[mt]
 		if ok && rv != nil && rv.Schema != nil && rv.Schema.Value != nil {
-			return NewSchema(rv.Schema.Value, rv.Schema.Ref), mt, true
+			return NewSchema(rv.Schema.Value, svc, rv.Schema.Ref), mt, true
 		}
 	}
 	return nil, "", false
@@ -605,19 +605,6 @@ func (loader *Loader) findBestResponseDefault(responses openapi3.Responses) (*op
 	return nil, false
 }
 
-func (loader *Loader) GetDocBytes(responses openapi3.Responses) (*Schema, bool) {
-	if responses == nil {
-		return nil, false
-	}
-
-	r, ok := loader.findBestResponseDefault(responses)
-	if !ok || r == nil {
-		return nil, false
-	}
-	sc, _, err := loader.resolveContentDefault(r.Content)
-	return sc, err
-}
-
 func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operation, component *ExpectedRequest) (err error) {
 	if component != nil && component.Schema != nil {
 		if loader.visitedExpectedRequest == nil {
@@ -638,11 +625,11 @@ func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operatio
 			return nil
 		}
 		sRef := op.RequestBody.Value.Content[bmt].Schema
-		s := NewSchema(sRef.Value, sRef.Ref)
+		s := NewSchema(sRef.Value, doc, sRef.Ref)
 		component.Schema = s
 		return nil
 	} else {
-		sc, mt, ok := loader.resolveContentDefault(op.RequestBody.Value.Content)
+		sc, mt, ok := loader.resolveContentDefault(op.RequestBody.Value.Content, doc)
 		if ok {
 			component.BodyMediaType = mt
 			component.Schema = sc
@@ -721,13 +708,13 @@ func (loader *Loader) resolveExpectedResponse(doc *Service, op *openapi3.Operati
 		if textualRepresentation == "" && sRef.Value.Items != nil && sRef.Value.Items.Ref != "" {
 			textualRepresentation = fmt.Sprintf("[]%s", getPathSuffix(sRef.Value.Items.Ref))
 		}
-		s := NewSchema(sRef.Value, textualRepresentation)
+		s := NewSchema(sRef.Value, doc, textualRepresentation)
 		component.Schema = s
 		return nil
 	} else {
 		rs, ok := loader.findBestResponseDefault(op.Responses)
 		if ok {
-			sc, mt, ok := loader.resolveContentDefault(rs.Content)
+			sc, mt, ok := loader.resolveContentDefault(rs.Content, doc)
 			if ok {
 				component.BodyMediaType = mt
 				component.Schema = sc

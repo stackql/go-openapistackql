@@ -446,7 +446,7 @@ func (m *OperationStore) getRequiredNonBodyParameters() map[string]Addressable {
 	for _, p := range m.OperationRef.Value.Parameters {
 		param := p.Value
 		if param != nil && param.Required {
-			retVal[param.Name] = (*Parameter)(p.Value)
+			retVal[param.Name] = NewParameter(p.Value, m.Service)
 		}
 	}
 	return retVal
@@ -477,7 +477,7 @@ func (m *OperationStore) getOptionalParameters() map[string]Addressable {
 	for _, p := range m.OperationRef.Value.Parameters {
 		param := p.Value
 		if param != nil && !param.Required {
-			retVal[param.Name] = (*Parameter)(p.Value)
+			retVal[param.Name] = NewParameter(p.Value, m.Service)
 		}
 	}
 	ss, err := m.getOptionalRequestBodyAttributes()
@@ -505,7 +505,7 @@ func (m *OperationStore) getNonBodyParameters() map[string]Addressable {
 	for _, p := range m.OperationRef.Value.Parameters {
 		param := p.Value
 		if param != nil {
-			retVal[param.Name] = (*Parameter)(p.Value)
+			retVal[param.Name] = NewParameter(p.Value, m.Service)
 		}
 	}
 	return retVal
@@ -584,12 +584,12 @@ func (m *OperationStore) ToPresentationMap(extended bool) map[string]interface{}
 }
 
 func (op *OperationStore) GetOperationParameters() Parameters {
-	return Parameters(op.OperationRef.Value.Parameters)
+	return NewParameters(op.OperationRef.Value.Parameters, op.Service)
 }
 
 func (op *OperationStore) GetOperationParameter(key string) (*Parameter, bool) {
-	params := Parameters(op.OperationRef.Value.Parameters)
-	if params == nil {
+	params := NewParameters(op.OperationRef.Value.Parameters, op.Service)
+	if op.OperationRef.Value.Parameters == nil {
 		return nil, false
 	}
 	return params.GetParameter(key)
