@@ -635,6 +635,37 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 	return rv
 }
 
+func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
+	rv := newSchema(s.Schema, s.svc, s.key, s.isExpanded)
+	if rv.Properties == nil {
+		rv.Properties = make(openapi3.Schemas)
+	}
+	for k, val := range srs {
+		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
+		ss := newSchema(val.Value, s.svc, "", s.isExpanded)
+		if rv == nil {
+			rv = ss
+			continue
+		}
+		if ss.XML != nil {
+			rv.XML = ss.XML
+		}
+		if ss.Type != "" {
+			rv.Type = ss.Type
+		}
+		for k, sRef := range ss.Properties {
+			_, alreadyExists := rv.Properties[k]
+			if alreadyExists && !ss.isExpanded {
+				continue
+			}
+			rv.Properties[k] = sRef
+		}
+	}
+	rv.isExpanded = true
+	s.isExpanded = true
+	return rv
+}
+
 func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
 	sc := s.getFatSchema(srs)
 	st := sc.Tabulate(false)
@@ -642,7 +673,7 @@ func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescri
 }
 
 func (s *Schema) getAllSchemaRefsColumnsShallow(srs openapi3.SchemaRefs) []ColumnDescriptor {
-	sc := s.getFatSchema(srs)
+	sc := s.getFatSchemaWithOverwrites(srs)
 	return sc.getPropertiesColumns()
 }
 
