@@ -56,6 +56,8 @@ type Schema struct {
 	svc            *Service
 	key            string
 	alwaysRequired bool
+	// horrible hack to guard repeated property expansion
+	isExpanded bool
 }
 
 type Schemas map[string]*Schema
@@ -74,6 +76,7 @@ func NewSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
 		svc,
 		key,
 		alwaysRequired,
+		false,
 	}
 }
 
@@ -93,13 +96,14 @@ func (s *Schema) getProperties() Schemas {
 	if s.isObjectSchemaImplicitlyUnioned() {
 		return s.getInplicitlyUnionedProperties()
 	}
-	if s.hasPolymorphicProperties() && len(s.Properties) == 0 {
+	if s.hasPolymorphicProperties() && len(s.Properties) == 0 && !s.isExpanded {
 		ss := s.getFattnedPolymorphicSchema()
 		if ss != nil {
 			for k, sr := range ss.Properties {
 				retVal[k] = NewSchema(sr.Value, s.svc, k)
 			}
 		}
+		s.isExpanded = true
 	}
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, s.svc, k)
@@ -112,13 +116,14 @@ func (s *Schema) getProperties() Schemas {
 // should, nay must, be removed when time permits
 func (s *Schema) getInplicitlyUnionedProperties() Schemas {
 	retVal := make(Schemas)
-	if s.hasPolymorphicProperties() {
+	if s.hasPolymorphicProperties() && !s.isExpanded {
 		ss := s.getFattnedPolymorphicSchema()
 		if ss != nil {
 			for k, sr := range ss.Properties {
 				retVal[k] = NewSchema(sr.Value, s.svc, k)
 			}
 		}
+		s.isExpanded = true
 	}
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, s.svc, k)
