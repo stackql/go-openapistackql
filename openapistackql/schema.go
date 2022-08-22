@@ -658,12 +658,21 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 		var cols []ColumnDescriptor
 		if !omitColumns {
 			if s.isObjectSchemaImplicitlyUnioned() {
+				keysUsed := make(map[string]struct{})
 				cols = s.getPropertiesColumns()
+				for _, col := range cols {
+					keysUsed[col.Name] = struct{}{}
+				}
 				var additionalCols []ColumnDescriptor
 				if len(s.AllOf) > 0 {
 					additionalCols = s.getAllSchemaRefsColumnsShallow(s.AllOf)
 				}
-				cols = append(cols, additionalCols...)
+				for _, col := range additionalCols {
+					if _, ok := keysUsed[col.Name]; !ok {
+						cols = append(cols, col)
+						keysUsed[col.Name] = struct{}{}
+					}
+				}
 			} else if len(s.Properties) > 0 {
 				cols = s.getPropertiesColumns()
 			} else if len(s.AllOf) > 0 {
