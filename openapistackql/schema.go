@@ -630,6 +630,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 		}
 	}
 	rv.isExpanded = true
+	s.isExpanded = true
 	return rv
 }
 
