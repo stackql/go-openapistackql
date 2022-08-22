@@ -679,7 +679,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 					keysUsed[col.Name] = struct{}{}
 				}
 				var additionalCols []ColumnDescriptor
-				if len(s.AllOf) > 0 {
+				if len(s.AllOf) > 0 && !s.isExpanded {
 					additionalCols = s.getAllSchemaRefsColumnsShallow(s.AllOf)
 				}
 				for _, col := range additionalCols {
@@ -702,7 +702,9 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			return NewSchema(items, s.svc, "").Tabulate(omitColumns)
+			rv := NewSchema(items, s.svc, "").Tabulate(omitColumns)
+			s.isExpanded = true
+			return rv
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
