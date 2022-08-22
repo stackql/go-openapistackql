@@ -63,6 +63,14 @@ type Schema struct {
 type Schemas map[string]*Schema
 
 func NewSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
+	return newSchema(sc, svc, key, false)
+}
+
+func newPreExpandedSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
+	return newSchema(sc, svc, key, true)
+}
+
+func newSchema(sc *openapi3.Schema, svc *Service, key string, isExpanded bool) *Schema {
 	var alwaysRequired bool
 	if sc.Extensions != nil {
 		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
@@ -76,7 +84,7 @@ func NewSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
 		svc,
 		key,
 		alwaysRequired,
-		false,
+		isExpanded,
 	}
 }
 
@@ -123,11 +131,11 @@ func (s *Schema) getInplicitlyUnionedProperties() Schemas {
 				retVal[k] = NewSchema(sr.Value, s.svc, k)
 			}
 		}
-		s.isExpanded = true
 	}
 	for k, sr := range s.Properties {
 		retVal[k] = NewSchema(sr.Value, s.svc, k)
 	}
+	s.isExpanded = true
 	return retVal
 }
 
@@ -621,6 +629,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 			rv.Properties[k] = sRef
 		}
 	}
+	rv.isExpanded = true
 	return rv
 }
 
