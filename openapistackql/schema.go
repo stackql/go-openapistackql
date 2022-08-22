@@ -56,21 +56,15 @@ type Schema struct {
 	svc            *Service
 	key            string
 	alwaysRequired bool
-	// horrible hack to guard repeated property expansion
-	isExpanded bool
 }
 
 type Schemas map[string]*Schema
 
 func NewSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
-	return newSchema(sc, svc, key, false)
+	return newSchema(sc, svc, key)
 }
 
-func newPreExpandedSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
-	return newSchema(sc, svc, key, true)
-}
-
-func newSchema(sc *openapi3.Schema, svc *Service, key string, isExpanded bool) *Schema {
+func newSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
 	var alwaysRequired bool
 	if sc.Extensions != nil {
 		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
@@ -84,7 +78,6 @@ func newSchema(sc *openapi3.Schema, svc *Service, key string, isExpanded bool) *
 		svc,
 		key,
 		alwaysRequired,
-		isExpanded,
 	}
 }
 
@@ -100,14 +93,11 @@ func (s *Schema) GetProperties() (Schemas, error) {
 }
 
 func (s *Schema) getProperties() Schemas {
-	defer func() {
-		s.isExpanded = true
-	}()
 	retVal := make(Schemas)
 	if s.isObjectSchemaImplicitlyUnioned() {
 		return s.getInplicitlyUnionedProperties()
 	}
-	if s.hasPolymorphicProperties() && len(s.Properties) == 0 && !s.isExpanded {
+	if s.hasPolymorphicProperties() && len(s.Properties) == 0 {
 		ss := s.getFattnedPolymorphicSchema()
 		if ss != nil {
 			for k, sr := range ss.Properties {
@@ -126,7 +116,7 @@ func (s *Schema) getProperties() Schemas {
 // should, nay must, be removed when time permits
 func (s *Schema) getInplicitlyUnionedProperties() Schemas {
 	retVal := make(Schemas)
-	if s.hasPolymorphicProperties() && !s.isExpanded {
+	if s.hasPolymorphicProperties() {
 		ss := s.getFattnedPolymorphicSchema()
 		if ss != nil {
 			for k, sr := range ss.Properties {
@@ -603,13 +593,13 @@ func (s *Schema) getXmlAlias() string {
 }
 
 func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
-	rv := newSchema(s.Schema, s.svc, s.key, s.isExpanded)
+	rv := newSchema(s.Schema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
-		ss := newSchema(val.Value, s.svc, "", s.isExpanded)
+		ss := newSchema(val.Value, s.svc, "")
 		if rv == nil {
 			rv = ss
 			continue
@@ -622,7 +612,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 		}
 		for k, sRef := range ss.Properties {
 			_, alreadyExists := rv.Properties[k]
-			if alreadyExists && !ss.isExpanded {
+			if alreadyExists {
 				cn := fmt.Sprintf("%s_%s", getSchemaName(val), k)
 				rv.Properties[cn] = sRef
 				continue
@@ -630,19 +620,17 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 			rv.Properties[k] = sRef
 		}
 	}
-	rv.isExpanded = true
-	s.isExpanded = true
 	return rv
 }
 
 func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
-	rv := newSchema(s.Schema, s.svc, s.key, s.isExpanded)
+	rv := newSchema(s.Schema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
-		ss := newSchema(val.Value, s.svc, "", s.isExpanded)
+		ss := newSchema(val.Value, s.svc, "")
 		if rv == nil {
 			rv = ss
 			continue
@@ -655,14 +643,12 @@ func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
 		}
 		for k, sRef := range ss.Properties {
 			_, alreadyExists := rv.Properties[k]
-			if alreadyExists && !ss.isExpanded {
+			if alreadyExists {
 				continue
 			}
 			rv.Properties[k] = sRef
 		}
 	}
-	rv.isExpanded = true
-	s.isExpanded = true
 	return rv
 }
 
@@ -701,9 +687,6 @@ func (s *Schema) isNotSimple() bool {
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
-	defer func() {
-		s.isExpanded = true
-	}()
 	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
 		var cols []ColumnDescriptor
 		if !omitColumns {
@@ -714,7 +697,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 					keysUsed[col.Name] = struct{}{}
 				}
 				var additionalCols []ColumnDescriptor
-				if len(s.AllOf) > 0 && !s.isExpanded {
+				if len(s.AllOf) > 0 {
 					additionalCols = s.getAllSchemaRefsColumnsShallow(s.AllOf)
 				}
 				for _, col := range additionalCols {
@@ -737,7 +720,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 
-			rv := newSchema(items, s.svc, "", s.isExpanded).Tabulate(omitColumns)
+			rv := newSchema(items, s.svc, "").Tabulate(omitColumns)
 			return rv
 		}
 	} else if s.Type == "string" {
