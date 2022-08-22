@@ -622,7 +622,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 		}
 		for k, sRef := range ss.Properties {
 			_, alreadyExists := rv.Properties[k]
-			if alreadyExists && !rv.isExpanded {
+			if alreadyExists && !ss.isExpanded {
 				cn := fmt.Sprintf("%s_%s", getSchemaName(val), k)
 				rv.Properties[cn] = sRef
 				continue
