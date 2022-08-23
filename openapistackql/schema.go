@@ -938,6 +938,9 @@ func (s *Schema) ProcessHttpResponse(r *http.Response, path string) (*response.R
 			return response.NewResponse(boilerplate, boilerplate, r), nil
 		}
 	}
+	if target == nil || target.GetProcessedBody() == nil {
+		return target, err
+	}
 	switch rv := target.GetProcessedBody().(type) {
 	case string, int:
 		boilerplate := map[string]interface{}{AnonymousColumnName: []interface{}{rv}}
