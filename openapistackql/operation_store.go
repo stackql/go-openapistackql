@@ -165,6 +165,25 @@ func (op *OperationStore) GetQueryTransposeAlgorithm() string {
 	return ""
 }
 
+func (op *OperationStore) GetRequestTranslateAlgorithm() string {
+	if op.StackQLConfig != nil && op.StackQLConfig.RequestTranslate != nil && op.StackQLConfig.RequestTranslate.Algorithm != "" {
+		return op.StackQLConfig.RequestTranslate.Algorithm
+	}
+	if op.Resource != nil && op.Resource.GetRequestTranslateAlgorithm() != "" {
+		return op.Resource.GetRequestTranslateAlgorithm()
+	}
+	if op.Service != nil && op.Service.GetRequestTranslateAlgorithm() != "" {
+		return op.Service.GetRequestTranslateAlgorithm()
+	}
+	if op.ProviderService != nil && op.ProviderService.GetRequestTranslateAlgorithm() != "" {
+		return op.ProviderService.GetRequestTranslateAlgorithm()
+	}
+	if op.Provider != nil && op.Provider.GetRequestTranslateAlgorithm() != "" {
+		return op.Provider.GetRequestTranslateAlgorithm()
+	}
+	return ""
+}
+
 func (op *OperationStore) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if op.StackQLConfig != nil && op.StackQLConfig.Pagination != nil && op.StackQLConfig.Pagination.RequestToken != nil {
 		return op.StackQLConfig.Pagination.RequestToken, true

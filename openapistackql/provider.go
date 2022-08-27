@@ -49,6 +49,13 @@ func (pr *Provider) GetQueryTransposeAlgorithm() string {
 	return pr.StackQLConfig.QueryTranspose.Algorithm
 }
 
+func (pr *Provider) GetRequestTranslateAlgorithm() string {
+	if pr.StackQLConfig == nil || pr.StackQLConfig.RequestTranslate == nil {
+		return ""
+	}
+	return pr.StackQLConfig.RequestTranslate.Algorithm
+}
+
 func (pr *Provider) isObjectSchemaImplicitlyUnioned() bool {
 	if pr.StackQLConfig != nil {
 		return pr.StackQLConfig.isObjectSchemaImplicitlyUnioned()
@@ -61,6 +68,13 @@ func (sv *ProviderService) GetQueryTransposeAlgorithm() string {
 		return ""
 	}
 	return sv.StackQLConfig.QueryTranspose.Algorithm
+}
+
+func (sv *ProviderService) GetRequestTranslateAlgorithm() string {
+	if sv.StackQLConfig == nil || sv.StackQLConfig.RequestTranslate == nil {
+		return ""
+	}
+	return sv.StackQLConfig.RequestTranslate.Algorithm
 }
 
 func (sv *ProviderService) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {

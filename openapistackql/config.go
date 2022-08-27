@@ -7,9 +7,10 @@ import (
 )
 
 type StackQLConfig struct {
-	QueryTranspose *QueryTranspose `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
-	Pagination     *Pagination     `json:"pagination,omitempty" yaml:"pagination,omitempty"`
-	Variations     *Variations     `json:"variations,omitempty" yaml:"variations,omitempty"`
+	QueryTranspose   *Transform  `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	RequestTranslate *Transform  `json:"requestTranslate,omitempty" yaml:"requestTranslate,omitempty"`
+	Pagination       *Pagination `json:"pagination,omitempty" yaml:"pagination,omitempty"`
+	Variations       *Variations `json:"variations,omitempty" yaml:"variations,omitempty"`
 }
 
 var _ jsonpointer.JSONPointable = (StackQLConfig)(StackQLConfig{})
