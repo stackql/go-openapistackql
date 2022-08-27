@@ -27,10 +27,10 @@ func (gp *GetQueryToPostFormEncodedTranslator) Translate(req *http.Request) (*ht
 	}
 	rq := req.URL.RawQuery
 	if rq != "" {
-		req.Body = io.NopCloser(bytes.NewBufferString(rq))
+		rv.Body = io.NopCloser(bytes.NewBufferString(rq))
 	}
-	req.URL.RawQuery = ""
-	req.Method = http.MethodPost
+	rv.URL.RawQuery = ""
+	rv.Method = http.MethodPost
 	rv.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=utf-8")
 	return rv, nil
 }
