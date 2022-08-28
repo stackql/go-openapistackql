@@ -27,7 +27,9 @@ func (gp *GetQueryToPostFormEncodedTranslator) Translate(req *http.Request) (*ht
 	}
 	rq := req.URL.RawQuery
 	if rq != "" {
-		rv.Body = io.NopCloser(bytes.NewBufferString(rq))
+		b := []byte(rq)
+		rv.ContentLength = int64(len(b))
+		rv.Body = io.NopCloser(bytes.NewBuffer(b))
 	}
 	rv.URL.RawQuery = ""
 	rv.Method = http.MethodPost
