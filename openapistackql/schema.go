@@ -193,7 +193,7 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 				if !isTerminal {
 					return ds, true
 				}
-				return NewSchema(si, s.svc, getPathSuffix(v.Ref)), true
+				return NewSchema(si, s.svc, getPathSuffix(si.Items.Ref)), true
 			}
 			return nil, false
 		}
