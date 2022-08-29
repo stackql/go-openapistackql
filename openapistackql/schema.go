@@ -193,7 +193,7 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 				if !isTerminal {
 					return ds, true
 				}
-				return NewSchema(si, s.svc, ""), true
+				return NewSchema(si, s.svc, getPathSuffix(v.Ref)), true
 			}
 			return nil, false
 		}
@@ -297,7 +297,7 @@ func (s *Schema) getProperty(propertyKey string) (*Schema, bool) {
 	if !ok {
 		return nil, false
 	}
-	return NewSchema(sc.Value, s.svc, propertyKey), true
+	return NewSchema(sc.Value, s.svc, getPathSuffix(sc.Ref)), true
 }
 
 func (s *Schema) IsIntegral() bool {
