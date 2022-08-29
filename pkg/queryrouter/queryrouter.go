@@ -101,7 +101,10 @@ func NewRouter(doc *openapi3.T) (routers.Router, error) {
 				var pairs []string
 				kvs := strings.Split(path[qmIxd+1:], "&")
 				for _, v := range kvs {
-					pairs = append(pairs, strings.Split(v, "=")...)
+					pair := strings.Split(v, "=")
+					if len(pair) == 2 {
+						pairs = append(pairs, pair...)
+					}
 				}
 				muxRoute = muxRouter.Queries(pairs...).Methods(methods...)
 			}
