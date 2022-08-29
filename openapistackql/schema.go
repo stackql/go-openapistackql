@@ -139,6 +139,13 @@ func (s *Schema) GetName() string {
 	return s.getName()
 }
 
+func (s *Schema) GetSelectionName() string {
+	if s.Items != nil {
+		return getPathSuffix(s.Items.Ref)
+	}
+	return s.getName()
+}
+
 func (s *Schema) getName() string {
 	return getPathSuffix(s.key)
 }
@@ -193,7 +200,7 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 				if !isTerminal {
 					return ds, true
 				}
-				return NewSchema(si, s.svc, ""), true
+				return NewSchema(si, s.svc, getPathSuffix(si.Items.Ref)), true
 			}
 			return nil, false
 		}
@@ -297,7 +304,7 @@ func (s *Schema) getProperty(propertyKey string) (*Schema, bool) {
 	if !ok {
 		return nil, false
 	}
-	return NewSchema(sc.Value, s.svc, propertyKey), true
+	return NewSchema(sc.Value, s.svc, getPathSuffix(sc.Ref)), true
 }
 
 func (s *Schema) IsIntegral() bool {
@@ -599,7 +606,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 	}
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
-		ss := newSchema(val.Value, s.svc, "")
+		ss := newSchema(val.Value, s.svc, getPathSuffix(val.Ref))
 		if rv == nil {
 			rv = ss
 			continue
