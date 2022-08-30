@@ -139,6 +139,13 @@ func (s *Schema) GetName() string {
 	return s.getName()
 }
 
+func (s *Schema) GetSelectionName() string {
+	if s.Items != nil {
+		return getPathSuffix(s.Items.Ref)
+	}
+	return s.getName()
+}
+
 func (s *Schema) getName() string {
 	return getPathSuffix(s.key)
 }
