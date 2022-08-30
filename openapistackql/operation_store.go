@@ -614,12 +614,8 @@ func (op *OperationStore) GetOperationParameter(key string) (*Parameter, bool) {
 	return params.GetParameter(key)
 }
 
-func GetServersFromHeirarchy(t *Service, op *OperationStore) openapi3.Servers {
-	return getServersFromHeirarchy(t, op)
-}
-
 func (op *OperationStore) getServerVariable(key string) (*openapi3.ServerVariable, bool) {
-	srvs := getServersFromHeirarchy(op.Service, op)
+	srvs := getServersFromHeirarchy(op)
 	for _, srv := range srvs {
 		v, ok := srv.Variables[key]
 		if ok {
@@ -629,12 +625,17 @@ func (op *OperationStore) getServerVariable(key string) (*openapi3.ServerVariabl
 	return nil, false
 }
 
-func getServersFromHeirarchy(t *Service, op *OperationStore) openapi3.Servers {
-	servers := t.Servers
-	if servers == nil || (op.OperationRef.Value.Servers != nil && len(*op.OperationRef.Value.Servers) > 0) {
-		servers = *op.OperationRef.Value.Servers
+func getServersFromHeirarchy(op *OperationStore) openapi3.Servers {
+	if op.OperationRef.Value.Servers != nil && len(*op.OperationRef.Value.Servers) > 0 {
+		return *op.OperationRef.Value.Servers
 	}
-	return servers
+	if op.PathItem != nil && len(op.PathItem.Servers) > 0 {
+		return op.PathItem.Servers
+	}
+	if op.Service != nil && len(op.Service.Servers) > 0 {
+		return op.Service.Servers
+	}
+	return nil
 }
 
 func selectServer(servers openapi3.Servers, inputParams map[string]interface{}) (string, error) {
@@ -742,7 +743,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	if err != nil {
 		return nil, err
 	}
-	servers := getServersFromHeirarchy(parentDoc, op)
+	servers := getServersFromHeirarchy(op)
 	serverParams, err := inputParams.GetServerParameterFlatMap()
 	if err != nil {
 		return nil, err
