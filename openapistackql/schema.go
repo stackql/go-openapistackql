@@ -271,6 +271,18 @@ func (s *Schema) getXmlName() (string, bool) {
 	return "", false
 }
 
+func (s *Schema) isItemsXmlWrapped() bool {
+	if s.Items != nil && s.Items.Value == nil {
+		itemsSchema := newSchema(s.Items.Value, s.svc, "")
+		return itemsSchema.isXmlWrapped()
+	}
+	if len(s.AllOf) > 0 {
+		fs := s.getFatItemsSchema(s.AllOf)
+		return fs.isXmlWrapped()
+	}
+	return false
+}
+
 func (s *Schema) isXmlWrapped() bool {
 	// This is a hack until aws.ec2 is fixed
 	if _, ok := s.getXmlName(); ok {
@@ -300,7 +312,7 @@ func (s *Schema) getXMLTerminal() (*Schema, bool) {
 		return s, true
 	}
 	rv := s.getFattnedPolymorphicSchema()
-	if rv.Type == "array" && !s.isXmlWrapped() {
+	if rv.Type == "array" && !s.isItemsXmlWrapped() {
 		items, err := rv.GetItems()
 		if err != nil {
 			return nil, false
@@ -693,6 +705,28 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 				continue
 			}
 			rv.Properties[k] = sRef
+		}
+	}
+	return rv
+}
+
+func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
+	rv := newSchema(s.Schema, s.svc, s.key)
+	if rv.Properties == nil {
+		rv.Properties = make(openapi3.Schemas)
+	}
+	for k, val := range srs {
+		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
+		ss := newSchema(val.Value, s.svc, getPathSuffix(val.Ref))
+		if rv == nil {
+			rv = ss
+			continue
+		}
+		if ss.XML != nil {
+			rv.XML = ss.XML
+		}
+		if ss.Type != "" {
+			rv.Type = ss.Type
 		}
 		if ss.Items != nil {
 			rv.Items = ss.Items
