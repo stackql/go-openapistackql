@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	dummmyGitHubProv *Provider = &Provider{
+	dummmyContrivedProv *Provider = &Provider{
 		Name: "github",
 	}
 	dummmyGoogleProv *Provider = &Provider{
@@ -345,7 +345,7 @@ func TestMethodLevelVariableHostRoutingFutureProofed(t *testing.T) {
 	})
 	assert.NilError(t, err)
 
-	rvi, err := ops.Parameterize(dummmyGitHubProv, svc, params, nil)
+	rvi, err := ops.Parameterize(dummmyContrivedProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
@@ -357,7 +357,7 @@ func TestMethodLevelVariableHostRoutingFutureProofed(t *testing.T) {
 	})
 	assert.NilError(t, err)
 
-	rvi, err = ops.Parameterize(dummmyGitHubProv, svc, params, nil)
+	rvi, err = ops.Parameterize(dummmyContrivedProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
