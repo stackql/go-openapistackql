@@ -242,12 +242,58 @@ func (s *Schema) getDescendentInit(path []string) (*Schema, bool) {
 	return p.getDescendent(path[1:])
 }
 
-func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
-	if len(path) == 0 {
+func (s *Schema) getXmlAttribute(key string) (interface{}, bool) {
+	if s.XML != nil {
+		if xmlMap, ok := s.XML.(map[string]interface{}); ok {
+			rv, ok := xmlMap[key]
+			return rv, ok
+		}
+	}
+	return nil, false
+}
+
+func (s *Schema) getXmlName() (string, bool) {
+	if name, ok := s.getXmlAttribute("name"); ok {
+		nameStr, ok := name.(string)
+		return nameStr, ok
+	}
+	return "", false
+}
+
+func (s *Schema) isXmlWrapped() bool {
+	// This is a hack until aws.ec2 is fixed
+	if _, ok := s.getXmlName(); ok {
+		return true
+	}
+	wrapped, ok := s.getXmlAttribute("wrapped")
+	if !ok {
+		return false
+	}
+	wrappedBool, isBool := wrapped.(bool)
+	return isBool && wrappedBool
+}
+
+func (s *Schema) getXMLTerminal() (*Schema, bool) {
+	if !s.hasPolymorphicProperties() {
 		return s, true
 	}
+	rv := s.getFattnedPolymorphicSchema()
+	if rv.Type == "array" && !s.isXmlWrapped() {
+		items, err := rv.GetItems()
+		if err != nil {
+			return nil, false
+		}
+		return items, true
+	}
+	return rv, true
+}
+
+func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
+	if len(path) == 0 {
+		return s.getXMLTerminal()
+	}
 	if len(path) == 1 && path[0] == "*" {
-		return s, true
+		return s.getXMLTerminal()
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
