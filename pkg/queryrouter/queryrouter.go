@@ -34,101 +34,104 @@ type Router struct {
 	routes []*routers.Route
 }
 
+type srv struct {
+	schemes []string
+	host    urltranslate.QueryElement
+	base    string
+	server  *openapi3.Server
+}
+
 func NewRouter(doc *openapi3.T) (routers.Router, error) {
-	type srv struct {
-		schemes []string
-		host    urltranslate.QueryElement
-		base    string
-		server  *openapi3.Server
+	docLevelServers, err := extractScopedSrvSlice(doc.Servers)
+	if err != nil {
+		return nil, err
 	}
-	servers := make([]srv, 0, len(doc.Servers))
-	for _, server := range doc.Servers {
-		serverURLParameterised, err := urltranslate.ExtractParameterisedURL(server.URL)
-		if err != nil {
-			return nil, err
-		}
-		serverURL := serverURLParameterised.String()
-		var schemes []string
-		var u *url.URL
-		if strings.Contains(serverURL, "://") {
-			scheme0 := strings.Split(serverURL, "://")[0]
-			schemes = permutePart(scheme0, server)
-			u, err = url.Parse(bEncode(strings.Replace(serverURL, scheme0+"://", schemes[0]+"://", 1)))
-		} else {
-			u, err = url.Parse(bEncode(serverURL))
-		}
-		if err != nil {
-			return nil, err
-		}
-		path := bDecode(u.EscapedPath())
-		if len(path) > 0 && path[len(path)-1] == '/' {
-			path = path[:len(path)-1]
-		}
-		urlHost, err := urltranslate.ParseURLHost(bDecode(u.Host))
-		if err != nil {
-			return nil, err
-		}
-		hostElem, ok := serverURLParameterised.GetElementByString(urlHost.GetHost())
-		if !ok {
-			return nil, fmt.Errorf("element = '%s' unavailable in URL = '%s'", hostElem.FullString(), serverURLParameterised.Raw())
-		}
-		servers = append(servers, srv{
-			host:    hostElem, //u.Hostname()?
-			base:    path,
-			schemes: schemes, // scheme: []string{scheme0}, TODO: https://github.com/gorilla/mux/issues/624
-			server:  server,
-		})
-	}
-	if len(servers) == 0 {
-		servers = append(servers, srv{})
+	if len(docLevelServers) == 0 {
+		docLevelServers = append(docLevelServers, srv{})
 	}
 	muxRouter := mux.NewRouter().UseEncodedPath()
 	r := &Router{}
 	for _, path := range orderedPaths(doc.Paths) {
 		pathItem := doc.Paths[path]
+		pathLevelServers, err := extractScopedSrvSlice(pathItem.Servers)
+		if err != nil {
+			return nil, err
+		}
 
 		operations := pathItem.Operations()
 		methods := make([]string, 0, len(operations))
-		for method := range operations {
-			methods = append(methods, method)
+		for method, operation := range operations {
+			if operation.Servers != nil && len(*operation.Servers) > 0 {
+				opServers, err := extractScopedSrvSlice(*operation.Servers)
+				if err != nil {
+					return nil, err
+				}
+				err = r.addRoutes(muxRouter, doc, opServers, path, pathItem, method)
+				if err != nil {
+					return nil, err
+				}
+			} else {
+				methods = append(methods, method)
+			}
 		}
 		sort.Strings(methods)
 
-		for _, s := range servers {
-			muxRoute := muxRouter.Path(s.base + path).Methods(methods...)
-			qmIxd := strings.Index(path, "?")
-			if qmIxd > -1 && len(path) > qmIxd {
-				var pairs []string
-				kvs := strings.Split(path[qmIxd+1:], "&")
-				for _, v := range kvs {
-					pair := strings.Split(v, "=")
-					if len(pair) == 2 {
-						pairs = append(pairs, pair...)
-					}
-				}
-				muxRoute = muxRouter.Queries(pairs...).Methods(methods...)
-			}
-			if schemes := s.schemes; len(schemes) != 0 {
-				muxRoute.Schemes(schemes...)
-			}
-			if host := s.host; host != nil && host.FullString() != "" {
-				muxRoute.Host(host.FullString())
-			}
-			if err := muxRoute.GetError(); err != nil {
-				return nil, err
-			}
-			r.muxes = append(r.muxes, muxRoute)
-			r.routes = append(r.routes, &routers.Route{
-				Spec:      doc,
-				Server:    s.server,
-				Path:      path,
-				PathItem:  pathItem,
-				Method:    "",
-				Operation: nil,
-			})
+		servers := docLevelServers
+		if len(pathLevelServers) > 0 {
+			servers = pathLevelServers
 		}
+
+		err = r.addRoutes(muxRouter, doc, servers, path, pathItem, methods...)
+		if err != nil {
+			return nil, err
+		}
+
 	}
 	return r, nil
+}
+
+func (r *Router) addRoutes(
+	muxRouter *mux.Router,
+	doc *openapi3.T,
+	servers []srv,
+	path string,
+	pathItem *openapi3.PathItem,
+	methods ...string,
+) error {
+	for _, s := range servers {
+		muxRoute := muxRouter.Path(s.base + path).Methods(methods...)
+		qmIxd := strings.Index(path, "?")
+		if qmIxd > -1 && len(path) > qmIxd {
+			var pairs []string
+			kvs := strings.Split(path[qmIxd+1:], "&")
+			for _, v := range kvs {
+				pair := strings.Split(v, "=")
+				if len(pair) == 2 {
+					pairs = append(pairs, pair...)
+				}
+			}
+			muxRoute = muxRouter.Queries(pairs...).Methods(methods...)
+		}
+		if schemes := s.schemes; len(schemes) != 0 {
+			muxRoute.Schemes(schemes...)
+		}
+		if host := s.host; host != nil && host.FullString() != "" {
+			muxRoute.Host(host.FullString())
+		}
+		if err := muxRoute.GetError(); err != nil {
+			return err
+		}
+		r.muxes = append(r.muxes, muxRoute)
+		r.routes = append(r.routes, &routers.Route{
+			Spec:      doc,
+			Server:    s.server,
+			Path:      path,
+			PathItem:  pathItem,
+			Method:    "",
+			Operation: nil,
+		})
+	}
+	return nil
 }
 
 func (r *Router) FindRoute(req *http.Request) (*routers.Route, map[string]string, error) {
@@ -235,4 +238,55 @@ func permutePart(part0 string, srv *openapi3.Server) []string {
 	}
 	sort.Strings(parts)
 	return parts
+}
+
+func extractScopedSrvSlice(serverSlice openapi3.Servers) ([]srv, error) {
+	rv := make([]srv, 0, len(serverSlice))
+	for _, server := range serverSlice {
+		enrichedServer, err := extractSrv(server)
+		if err != nil {
+			return nil, err
+		}
+		rv = append(rv, enrichedServer)
+	}
+	return rv, nil
+}
+
+func extractSrv(server *openapi3.Server) (srv, error) {
+	var retVal srv
+	serverURLParameterised, err := urltranslate.ExtractParameterisedURL(server.URL)
+	if err != nil {
+		return retVal, err
+	}
+	serverURL := serverURLParameterised.String()
+	var schemes []string
+	var u *url.URL
+	if strings.Contains(serverURL, "://") {
+		scheme0 := strings.Split(serverURL, "://")[0]
+		schemes = permutePart(scheme0, server)
+		u, err = url.Parse(bEncode(strings.Replace(serverURL, scheme0+"://", schemes[0]+"://", 1)))
+	} else {
+		u, err = url.Parse(bEncode(serverURL))
+	}
+	if err != nil {
+		return retVal, err
+	}
+	path := bDecode(u.EscapedPath())
+	if len(path) > 0 && path[len(path)-1] == '/' {
+		path = path[:len(path)-1]
+	}
+	urlHost, err := urltranslate.ParseURLHost(bDecode(u.Host))
+	if err != nil {
+		return retVal, err
+	}
+	hostElem, ok := serverURLParameterised.GetElementByString(urlHost.GetHost())
+	if !ok {
+		return retVal, fmt.Errorf("element = '%s' unavailable in URL = '%s'", hostElem.FullString(), serverURLParameterised.Raw())
+	}
+	return srv{
+		host:    hostElem, //u.Hostname()?
+		base:    path,
+		schemes: schemes, // scheme: []string{scheme0}, TODO: https://github.com/gorilla/mux/issues/624
+		server:  server,
+	}, nil
 }

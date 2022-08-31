@@ -16,6 +16,9 @@ import (
 )
 
 var (
+	dummmyContrivedProv *Provider = &Provider{
+		Name: "github",
+	}
 	dummmyGoogleProv *Provider = &Provider{
 		Name: "google",
 	}
@@ -283,6 +286,78 @@ func TestVariableHostRoutingFutureProofed(t *testing.T) {
 	assert.NilError(t, err)
 
 	rvi, err = ops.Parameterize(dummmyK8sProv, svc, params, nil)
+	assert.NilError(t, err)
+	assert.Assert(t, rvi != nil)
+
+}
+
+func TestMethodLevelVariableHostRoutingFutureProofed(t *testing.T) {
+	setupFileRoot(t)
+
+	rdr, err := testutil.GetContrivedPagesResponseReader()
+
+	assert.NilError(t, err)
+
+	res := &http.Response{
+		Header:     http.Header{"Content-Type": []string{"application/json"}},
+		StatusCode: 200,
+		Body:       rdr,
+	}
+
+	b, err := GetServiceDocBytes(fmt.Sprintf("contrivedprovider/%s/services/contrived_service.yaml", "v0.1.0"))
+	assert.NilError(t, err)
+
+	l := NewLoader()
+
+	svc, err := l.LoadFromBytes(b)
+
+	assert.NilError(t, err)
+	assert.Assert(t, svc != nil)
+
+	// assert.Equal(t, svc.GetName(), "ec2")
+
+	rsc, err := svc.GetResource("pages")
+	assert.NilError(t, err)
+	assert.Assert(t, rsc != nil)
+
+	stringParams := map[string]interface{}{
+		"owner": "joeblow",
+		"repo":  "dummyapp",
+	}
+	ops, _, ok := rsc.GetFirstMethodMatchFromSQLVerb("select", stringParams)
+	assert.Assert(t, ok)
+	// assert.Assert(t, st != "")
+	assert.Assert(t, ops != nil)
+
+	processedResponse, err := ops.ProcessResponse(res)
+	assert.NilError(t, err)
+	assert.Assert(t, processedResponse != nil)
+
+	mc, ok := processedResponse.GetProcessedBody().(map[string]interface{})
+	assert.Assert(t, ok)
+	assert.Assert(t, mc["url"] == "https://api.github.com/repos/dummyorg/dummyapp.io/pages")
+
+	params := NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{
+		"origin": "some.vanity.url.com",
+		"owner":  "joeblow",
+		"repo":   "dummyapp",
+	})
+	assert.NilError(t, err)
+
+	rvi, err := ops.Parameterize(dummmyContrivedProv, svc, params, nil)
+	assert.NilError(t, err)
+	assert.Assert(t, rvi != nil)
+
+	params = NewHttpParameters(ops)
+	err = params.IngestMap(map[string]interface{}{
+		"origin": "201.0.255.3",
+		"owner":  "joeblow",
+		"repo":   "dummyapp",
+	})
+	assert.NilError(t, err)
+
+	rvi, err = ops.Parameterize(dummmyContrivedProv, svc, params, nil)
 	assert.NilError(t, err)
 	assert.Assert(t, rvi != nil)
 
