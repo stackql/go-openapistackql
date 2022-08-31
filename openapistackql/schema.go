@@ -242,12 +242,92 @@ func (s *Schema) getDescendentInit(path []string) (*Schema, bool) {
 	return p.getDescendent(path[1:])
 }
 
-func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
-	if len(path) == 0 {
+func (s *Schema) getXmlAttribute(key string) (interface{}, bool) {
+	if s.XML != nil {
+		if xmlMap, ok := s.XML.(map[string]interface{}); ok {
+			rv, ok := xmlMap[key]
+			return rv, ok
+		}
+	}
+	return nil, false
+}
+
+func (s *Schema) getXmlName() (string, bool) {
+	if name, ok := s.getXmlAttribute("name"); ok {
+		nameStr, ok := name.(string)
+		return nameStr, ok
+	}
+	if len(s.AllOf) > 0 {
+		for _, ss := range s.AllOf {
+			if ss.Value == nil {
+				continue
+			}
+			ns := newSchema(ss.Value, s.svc, "")
+			if sn, ok := ns.getXmlName(); ok {
+				return sn, true
+			}
+		}
+	}
+	return "", false
+}
+
+func (s *Schema) isItemsXmlWrapped() bool {
+	if s.Items != nil && s.Items.Value == nil {
+		itemsSchema := newSchema(s.Items.Value, s.svc, "")
+		return itemsSchema.isXmlWrapped()
+	}
+	if len(s.AllOf) > 0 {
+		fs := s.getFatItemsSchema(s.AllOf)
+		return fs.isXmlWrapped()
+	}
+	return false
+}
+
+func (s *Schema) isXmlWrapped() bool {
+	// This is a hack until aws.ec2 is fixed
+	if _, ok := s.getXmlName(); ok {
+		return true
+	}
+	wrapped, ok := s.getXmlAttribute("wrapped")
+	if !ok {
+		return false
+	}
+	wrappedBool, isBool := wrapped.(bool)
+	if len(s.AllOf) > 0 {
+		for _, ss := range s.AllOf {
+			if ss.Value == nil {
+				continue
+			}
+			ns := newSchema(ss.Value, s.svc, "")
+			if ns.isXmlWrapped() {
+				return true
+			}
+		}
+	}
+	return isBool && wrappedBool
+}
+
+func (s *Schema) getXMLTerminal() (*Schema, bool) {
+	if !s.hasPolymorphicProperties() {
 		return s, true
 	}
+	rv := s.getFattnedPolymorphicSchema()
+	if rv.Type == "array" && !s.isItemsXmlWrapped() {
+		items, err := rv.GetItems()
+		if err != nil {
+			return nil, false
+		}
+		return items, true
+	}
+	return rv, true
+}
+
+func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
+	if len(path) == 0 {
+		return s.getXMLTerminal()
+	}
 	if len(path) == 1 && path[0] == "*" {
-		return s, true
+		return s.getXMLTerminal()
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
@@ -630,6 +710,31 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 	return rv
 }
 
+func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
+	rv := newSchema(s.Schema, s.svc, s.key)
+	if rv.Properties == nil {
+		rv.Properties = make(openapi3.Schemas)
+	}
+	for k, val := range srs {
+		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
+		ss := newSchema(val.Value, s.svc, getPathSuffix(val.Ref))
+		if rv == nil {
+			rv = ss
+			continue
+		}
+		if ss.XML != nil {
+			rv.XML = ss.XML
+		}
+		if ss.Type != "" {
+			rv.Type = ss.Type
+		}
+		if ss.Items != nil {
+			rv.Items = ss.Items
+		}
+	}
+	return rv
+}
+
 func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
 	rv := newSchema(s.Schema, s.svc, s.key)
 	if rv.Properties == nil {
@@ -694,7 +799,7 @@ func (s *Schema) isNotSimple() bool {
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
-	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
+	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.Type != "array") {
 		var cols []ColumnDescriptor
 		if !omitColumns {
 			if s.isObjectSchemaImplicitlyUnioned() {
