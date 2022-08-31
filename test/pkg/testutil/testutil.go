@@ -84,6 +84,14 @@ func GetK8SNodesListMultiResponseReader() (io.ReadCloser, error) {
 	return os.Open(f)
 }
 
+func GetContrivedPagesResponseReader() (io.ReadCloser, error) {
+	f, err := fileutil.GetFilePathFromRepositoryRoot(path.Join("test", "input", "github-pages.json"))
+	if err != nil {
+		return nil, err
+	}
+	return os.Open(f)
+}
+
 func GetGoogleFoldersListResponseReader() (io.ReadCloser, error) {
 	f, err := fileutil.GetFilePathFromRepositoryRoot(path.Join("test", "input", "google-folders.json"))
 	if err != nil {

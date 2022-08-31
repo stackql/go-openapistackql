@@ -1,0 +1,14 @@
+id: contrivedprovider
+name: contrivedprovider
+version: v0.1.0
+providerServices:
+  contrived_service:
+    description: A contrived service for testing purposes.
+    id: contrived_service:v0.1.0
+    name: contrived_service
+    preferred: true
+    service:
+      $ref: contrivedprovider/v0.1.0/services/contrived_service.yaml
+    title: Contrived Service for Testing
+    version: v0.1.0
+openapi: 3.0.3
