@@ -291,7 +291,7 @@ func TestVariableHostRoutingFutureProofed(t *testing.T) {
 
 }
 
-func TestAllInOneVariableHostRoutingFutureProofed(t *testing.T) {
+func TestMethodLevelVariableHostRoutingFutureProofed(t *testing.T) {
 	setupFileRoot(t)
 
 	rdr, err := testutil.GetContrivedPagesResponseReader()
