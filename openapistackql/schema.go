@@ -257,6 +257,17 @@ func (s *Schema) getXmlName() (string, bool) {
 		nameStr, ok := name.(string)
 		return nameStr, ok
 	}
+	if len(s.AllOf) > 0 {
+		for _, ss := range s.AllOf {
+			if ss.Value == nil {
+				continue
+			}
+			ns := newSchema(ss.Value, s.svc, "")
+			if sn, ok := ns.getXmlName(); ok {
+				return sn, true
+			}
+		}
+	}
 	return "", false
 }
 
@@ -270,6 +281,17 @@ func (s *Schema) isXmlWrapped() bool {
 		return false
 	}
 	wrappedBool, isBool := wrapped.(bool)
+	if len(s.AllOf) > 0 {
+		for _, ss := range s.AllOf {
+			if ss.Value == nil {
+				continue
+			}
+			ns := newSchema(ss.Value, s.svc, "")
+			if ns.isXmlWrapped() {
+				return true
+			}
+		}
+	}
 	return isBool && wrappedBool
 }
 
