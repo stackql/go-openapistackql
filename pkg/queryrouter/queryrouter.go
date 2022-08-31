@@ -99,7 +99,7 @@ func (r *Router) addRoutes(
 	methods ...string,
 ) error {
 	for _, s := range servers {
-		muxRoute := muxRouter.Path(path).Methods(methods...)
+		muxRoute := muxRouter.Path(s.base + path).Methods(methods...)
 		qmIxd := strings.Index(path, "?")
 		if qmIxd > -1 && len(path) > qmIxd {
 			var pairs []string
