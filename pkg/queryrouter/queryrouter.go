@@ -99,12 +99,7 @@ func (r *Router) addRoutes(
 	methods ...string,
 ) error {
 	for _, s := range servers {
-		var muxRoute *mux.Route
-		if s.base == "" {
-			muxRoute = muxRouter.Path(path).Methods(methods...)
-		} else {
-			muxRoute = muxRouter.Host(s.base).Path(path).Methods(methods...)
-		}
+		muxRoute := muxRouter.Path(path).Methods(methods...)
 		qmIxd := strings.Index(path, "?")
 		if qmIxd > -1 && len(path) > qmIxd {
 			var pairs []string
