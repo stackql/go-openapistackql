@@ -672,6 +672,9 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 			}
 			rv.Properties[k] = sRef
 		}
+		if ss.Items != nil {
+			rv.Items = ss.Items
+		}
 	}
 	return rv
 }
