@@ -694,7 +694,7 @@ func (s *Schema) isNotSimple() bool {
 }
 
 func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
-	if s.Type == "object" || s.hasPropertiesOrPolymorphicProperties() {
+	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.Type != "array") {
 		var cols []ColumnDescriptor
 		if !omitColumns {
 			if s.isObjectSchemaImplicitlyUnioned() {
