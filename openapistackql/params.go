@@ -47,7 +47,11 @@ func (p *Parameter) GetSchema() (*Schema, bool) {
 }
 
 func (p *Parameter) IsRequired() bool {
-	return p.Required && !p.AllowEmptyValue
+	return isOpenapi3ParamRequired(&p.Parameter)
+}
+
+func isOpenapi3ParamRequired(param *openapi3.Parameter) bool {
+	return param.Required && !param.AllowEmptyValue
 }
 
 func (p *Parameter) ConditionIsValid(lhs string, rhs interface{}) bool {

@@ -464,7 +464,7 @@ func (m *OperationStore) getRequiredNonBodyParameters() map[string]Addressable {
 	}
 	for _, p := range m.OperationRef.Value.Parameters {
 		param := p.Value
-		if param != nil && param.Required {
+		if param != nil && isOpenapi3ParamRequired(param) {
 			retVal[param.Name] = NewParameter(p.Value, m.Service)
 		}
 	}
@@ -495,6 +495,7 @@ func (m *OperationStore) getOptionalParameters() map[string]Addressable {
 	}
 	for _, p := range m.OperationRef.Value.Parameters {
 		param := p.Value
+		// TODO: handle the `?param` where value is not only not required but should NEVER be sent
 		if param != nil && !param.Required {
 			retVal[param.Name] = NewParameter(p.Value, m.Service)
 		}
@@ -699,7 +700,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 				delete(copyParams, name)
 			} else if p.Value != nil && p.Value.Schema != nil && p.Value.Schema.Value != nil && p.Value.Schema.Value.Default != nil {
 				prefilledHeader.Set(name, fmt.Sprintf("%v", p.Value.Schema.Value.Default))
-			} else if p.Value.Required {
+			} else if isOpenapi3ParamRequired(p.Value) {
 				return nil, fmt.Errorf("OperationStore.Parameterize() failure; missing required header '%s'", name)
 			}
 		}
@@ -709,7 +710,7 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 				pathParams[name] = fmt.Sprintf("%v", val.Val)
 				delete(copyParams, name)
 			}
-			if !present && p.Value.Required {
+			if !present && isOpenapi3ParamRequired(p.Value) {
 				return nil, fmt.Errorf("OperationStore.Parameterize() failure; missing required path parameter '%s'", name)
 			}
 		} else if p.Value.In == openapi3.ParameterInQuery {
