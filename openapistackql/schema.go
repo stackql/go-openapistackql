@@ -1038,7 +1038,11 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string) (*respon
 	}
 }
 
-func (s *Schema) ProcessHttpResponse(r *http.Response, path string) (*response.Response, error) {
+func (s *Schema) ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+	return s.processHttpResponse(r, path, defaultMediaType)
+}
+
+func (s *Schema) processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
 	defer r.Body.Close()
 	target, err := s.unmarshalResponseAtPath(r, path)
 	if err == nil && r.StatusCode >= 400 {
@@ -1062,7 +1066,7 @@ func (s *Schema) ProcessHttpResponse(r *http.Response, path string) (*response.R
 }
 
 func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response, path string) (map[string]interface{}, error) {
-	target, err := s.ProcessHttpResponse(response, path)
+	target, err := s.processHttpResponse(response, path, "")
 	if err != nil {
 		return nil, err
 	}

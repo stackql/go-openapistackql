@@ -856,11 +856,11 @@ func (op *OperationStore) GetSelectSchemaAndObjectPath() (*Schema, string, error
 }
 
 func (op *OperationStore) ProcessResponse(response *http.Response) (*response.Response, error) {
-	responseSchema, _, err := op.GetResponseBodySchemaAndMediaType()
+	responseSchema, mediaType, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
 	}
-	return responseSchema.ProcessHttpResponse(response, op.lookupSelectItemsKey())
+	return responseSchema.processHttpResponse(response, op.lookupSelectItemsKey(), mediaType)
 }
 
 func (ops *OperationStore) lookupSelectItemsKey() string {
