@@ -62,7 +62,7 @@ func isAcceptableMediaType(mediaType string) bool {
 	}
 }
 
-func GetResponseMediaType(r *http.Response) (string, error) {
+func GetResponseMediaType(r *http.Response, defaultMediaType string) (string, error) {
 	rt := r.Header.Get("Content-Type")
 	var mediaType string
 	var err error
