@@ -35,6 +35,12 @@ func getNodeKeyVal(node *xmlquery.Node) (kv, error) {
 		if ts == "" {
 			return kv{isNull: true}, nil
 		}
+		if node.Parent != nil {
+			return kv{
+				k: node.Parent.Data,
+				v: node.Data,
+			}, nil
+		}
 		return kv{}, fmt.Errorf("cannot get kv for node")
 	default:
 		return kv{

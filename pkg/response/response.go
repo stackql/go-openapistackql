@@ -90,7 +90,7 @@ func (r *Response) ExtractElement(e httpelement.HTTPElement) (interface{}, error
 }
 
 func NewResponse(processedBody, rawBody interface{}, r *http.Response) *Response {
-	mt, _ := media.GetResponseMediaType(r)
+	mt, _ := media.GetResponseMediaType(r, "")
 	return &Response{
 		processedBody: processedBody,
 		rawBody:       rawBody,
