@@ -235,6 +235,9 @@ func GetSubObjTyped(xmlReader io.ReadCloser, path string, schema *openapi3.Schem
 			}
 			return []map[string]interface{}{mc}, doc, nil
 		case []map[string]string:
+			if len(raw) == 0 {
+				return nil, doc, nil
+			}
 			if len(raw) != 1 {
 				return nil, nil, fmt.Errorf("cannot ")
 			}
