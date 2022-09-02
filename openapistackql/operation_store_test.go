@@ -34,7 +34,7 @@ func TestPlaceholder(t *testing.T) {
 		Body:       ioutil.NopCloser(strings.NewReader(`{"a": { "b": [ "c" ] } }`)),
 	}
 	s := NewSchema(openapi3.NewSchema(), nil, "")
-	pr, err := s.ProcessHttpResponse(res, "")
+	pr, err := s.ProcessHttpResponseTesting(res, "", "")
 	assert.NilError(t, err)
 	assert.Assert(t, pr != nil)
 }
