@@ -73,5 +73,5 @@ func GetResponseMediaType(r *http.Response, defaultMediaType string) (string, er
 		}
 		return mediaType, nil
 	}
-	return "", nil
+	return defaultMediaType, nil
 }
