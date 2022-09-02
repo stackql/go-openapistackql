@@ -47,7 +47,7 @@ func (p *Parameter) GetSchema() (*Schema, bool) {
 }
 
 func (p *Parameter) IsRequired() bool {
-	return p.Required
+	return p.Required && !p.AllowEmptyValue
 }
 
 func (p *Parameter) ConditionIsValid(lhs string, rhs interface{}) bool {
