@@ -828,19 +828,18 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 				cols = s.getOneOfColumns()
 			}
 		}
-		return &Tabulation{columns: cols, name: s.GetName()}
+		return &Tabulation{columns: cols, name: s.GetName(), schema: s}
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
-
 			rv := newSchema(items, s.svc, "").Tabulate(omitColumns)
 			return rv
 		}
 	} else if s.Type == "string" {
 		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
 		if omitColumns {
-			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title}
+			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title, schema: s}
 		}
-		return &Tabulation{columns: []ColumnDescriptor{cd}, name: s.Title}
+		return &Tabulation{columns: []ColumnDescriptor{cd}, name: s.Title, schema: s}
 	}
 	return nil
 }

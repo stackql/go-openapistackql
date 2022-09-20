@@ -37,6 +37,7 @@ type Tabulation struct {
 	columns   []ColumnDescriptor
 	name      string
 	arrayType string
+	schema    *Schema
 }
 
 func GetTabulation(name, arrayType string) Tabulation {
@@ -45,6 +46,10 @@ func GetTabulation(name, arrayType string) Tabulation {
 
 func (t *Tabulation) GetColumns() []ColumnDescriptor {
 	return t.columns
+}
+
+func (t *Tabulation) GetSchema() *Schema {
+	return t.schema
 }
 
 func (t *Tabulation) PushBackColumn(col ColumnDescriptor) {
