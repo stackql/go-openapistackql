@@ -21,6 +21,8 @@ func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 		return []byte(sub)
 	case int:
 		return []byte(strconv.Itoa(sub))
+	case int64:
+		return []byte(strconv.FormatInt(sub, 10))
 	case float32:
 		return []byte(fmt.Sprintf("%f", sub))
 	case float64:

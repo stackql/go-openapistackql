@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"github.com/getkin/kin-openapi/openapi3"
 	"vitess.io/vitess/go/sqltypes"
 	"vitess.io/vitess/go/vt/sqlparser"
 )
@@ -20,6 +21,7 @@ type ColumnDescriptor struct {
 	Schema       *Schema
 	DecoratedCol string
 	Val          *sqlparser.SQLVal
+	Node         sqlparser.SQLNode
 }
 
 func (cd ColumnDescriptor) GetIdentifier() string {
@@ -29,8 +31,24 @@ func (cd ColumnDescriptor) GetIdentifier() string {
 	return cd.Name
 }
 
-func NewColumnDescriptor(alias string, name string, decoratedCol string, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
-	return ColumnDescriptor{Alias: alias, Name: name, DecoratedCol: decoratedCol, Schema: schema, Val: val}
+func (cd ColumnDescriptor) GetRepresentativeSchema() *Schema {
+	if cd.Node != nil {
+		switch nt := cd.Node.(type) {
+		case *sqlparser.ConvertExpr:
+			if nt.Type != nil && nt.Type.Type != "" {
+				return NewSchema(&openapi3.Schema{Type: nt.Type.Type}, cd.Schema.svc, cd.Schema.key)
+			}
+		// TODO: make this intelligent
+		case *sqlparser.FuncExpr:
+			return NewSchema(&openapi3.Schema{Type: "string"}, cd.Schema.svc, cd.Schema.key)
+		}
+
+	}
+	return cd.Schema
+}
+
+func NewColumnDescriptor(alias string, name string, decoratedCol string, node sqlparser.SQLNode, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
+	return ColumnDescriptor{Alias: alias, Name: name, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
 }
 
 type Tabulation struct {
