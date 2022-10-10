@@ -20,6 +20,7 @@ type ColumnDescriptor struct {
 	Schema       *Schema
 	DecoratedCol string
 	Val          *sqlparser.SQLVal
+	Node         sqlparser.SQLNode
 }
 
 func (cd ColumnDescriptor) GetIdentifier() string {
@@ -29,8 +30,8 @@ func (cd ColumnDescriptor) GetIdentifier() string {
 	return cd.Name
 }
 
-func NewColumnDescriptor(alias string, name string, decoratedCol string, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
-	return ColumnDescriptor{Alias: alias, Name: name, DecoratedCol: decoratedCol, Schema: schema, Val: val}
+func NewColumnDescriptor(alias string, name string, decoratedCol string, node sqlparser.SQLNode, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
+	return ColumnDescriptor{Alias: alias, Name: name, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
 }
 
 type Tabulation struct {
