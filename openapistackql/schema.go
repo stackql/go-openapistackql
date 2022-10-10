@@ -505,6 +505,18 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
 			ss, ok := schema.getDescendentInit(pathSplit)
+			if ok && ss.Items != nil && ss.Items.Value != nil {
+				rv, err := ss.GetItems()
+				if rv.key == "" {
+					for _, v := range rv.AllOf {
+						if v.Ref != "" {
+							rv.key = getPathSuffix(v.Ref)
+							break
+						}
+					}
+				}
+				return rv, key, err
+			}
 			if ok {
 				return ss, key, nil
 			}
