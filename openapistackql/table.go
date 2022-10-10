@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"github.com/getkin/kin-openapi/openapi3"
 	"vitess.io/vitess/go/sqltypes"
 	"vitess.io/vitess/go/vt/sqlparser"
 )
@@ -28,6 +29,18 @@ func (cd ColumnDescriptor) GetIdentifier() string {
 		return cd.Alias
 	}
 	return cd.Name
+}
+
+func (cd ColumnDescriptor) GetRepresentativeSchema() *Schema {
+	if cd.Node != nil {
+		switch nt := cd.Node.(type) {
+		case *sqlparser.ConvertExpr:
+			if nt.Type != nil && nt.Type.Type != "" {
+				return NewSchema(&openapi3.Schema{Type: nt.Type.Type}, cd.Schema.svc, cd.Schema.key)
+			}
+		}
+	}
+	return cd.Schema
 }
 
 func NewColumnDescriptor(alias string, name string, decoratedCol string, node sqlparser.SQLNode, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
