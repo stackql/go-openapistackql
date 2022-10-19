@@ -2,6 +2,7 @@ package openapistackql
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/stackql/go-openapistackql/pkg/querytranspose"
@@ -10,9 +11,71 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 )
 
+const (
+	ParamEncodeDelimiter string = "%"
+)
+
 type ParameterBinding struct {
 	Param Addressable // may originally be *openapi3.Parameter or *openapi3.ServerVariable, latter will be co-opted
 	Val   interface{}
+}
+
+type ParamMap map[string]ParameterBinding
+
+type ParamPair struct {
+	Key   string
+	Param ParameterBinding
+}
+
+type BodyMap map[string]interface{}
+
+type BodyParamPair struct {
+	Key string
+	Val interface{}
+}
+
+type EncodableString string
+
+func (es EncodableString) encodeWithPrefixAndKey(prefix, key string) string {
+	return ParamEncodeDelimiter + prefix + ParamEncodeDelimiter + key + ParamEncodeDelimiter + string(es) + ParamEncodeDelimiter
+}
+
+func (pm BodyMap) order() []BodyParamPair {
+	var rv []BodyParamPair
+	for k, v := range pm {
+		rv = append(rv, BodyParamPair{Key: k, Val: v})
+	}
+	sort.Slice(rv, func(i, j int) bool {
+		return rv[i].Key < rv[j].Key
+	})
+	return rv
+}
+
+func (pm ParamMap) order() []ParamPair {
+	var rv []ParamPair
+	for k, v := range pm {
+		rv = append(rv, ParamPair{Key: k, Param: v})
+	}
+	sort.Slice(rv, func(i, j int) bool {
+		return rv[i].Key < rv[j].Key
+	})
+	return rv
+}
+
+func (bm BodyMap) encodeWithPrefix(prefix string) string {
+	var sb strings.Builder
+	for _, v := range bm.order() {
+		sb.WriteString(ParamEncodeDelimiter + prefix + ParamEncodeDelimiter + v.Key + ParamEncodeDelimiter + fmt.Sprintf("%v", v.Val) + ParamEncodeDelimiter)
+	}
+	return sb.String()
+}
+
+func (pm ParamMap) encodeWithPrefix(prefix string) string {
+	var sb strings.Builder
+	for _, v := range pm.order() {
+		sb.WriteString(ParamEncodeDelimiter + prefix + ParamEncodeDelimiter + v.Key + ParamEncodeDelimiter + fmt.Sprintf("%v", v.Param.Val) + ParamEncodeDelimiter)
+	}
+	return sb.String()
 }
 
 func NewParameterBinding(param Addressable, val interface{}) ParameterBinding {
@@ -24,29 +87,41 @@ func NewParameterBinding(param Addressable, val interface{}) ParameterBinding {
 
 type HttpParameters struct {
 	opStore      *OperationStore
-	CookieParams map[string]ParameterBinding
-	HeaderParams map[string]ParameterBinding
-	PathParams   map[string]ParameterBinding
-	QueryParams  map[string]ParameterBinding
-	RequestBody  map[string]interface{}
-	ResponseBody map[string]interface{}
-	ServerParams map[string]ParameterBinding
-	Unassigned   map[string]ParameterBinding
-	Region       string
+	CookieParams ParamMap
+	HeaderParams ParamMap
+	PathParams   ParamMap
+	QueryParams  ParamMap
+	RequestBody  BodyMap
+	ResponseBody BodyMap
+	ServerParams ParamMap
+	Unassigned   ParamMap
+	Region       EncodableString
 }
 
 func NewHttpParameters(method *OperationStore) *HttpParameters {
 	return &HttpParameters{
 		opStore:      method,
-		CookieParams: make(map[string]ParameterBinding),
-		HeaderParams: make(map[string]ParameterBinding),
-		PathParams:   make(map[string]ParameterBinding),
-		QueryParams:  make(map[string]ParameterBinding),
-		RequestBody:  make(map[string]interface{}),
-		ResponseBody: make(map[string]interface{}),
-		ServerParams: make(map[string]ParameterBinding),
-		Unassigned:   make(map[string]ParameterBinding),
+		CookieParams: make(ParamMap),
+		HeaderParams: make(ParamMap),
+		PathParams:   make(ParamMap),
+		QueryParams:  make(ParamMap),
+		RequestBody:  make(BodyMap),
+		ResponseBody: make(BodyMap),
+		ServerParams: make(ParamMap),
+		Unassigned:   make(ParamMap),
 	}
+}
+
+func (hp *HttpParameters) Encode() string {
+	var sb strings.Builder
+	sb.WriteString(hp.CookieParams.encodeWithPrefix("cookie"))
+	sb.WriteString(hp.HeaderParams.encodeWithPrefix("header"))
+	sb.WriteString(hp.PathParams.encodeWithPrefix("path"))
+	sb.WriteString(hp.QueryParams.encodeWithPrefix("query"))
+	sb.WriteString(hp.RequestBody.encodeWithPrefix("requestBody"))
+	sb.WriteString(hp.Region.encodeWithPrefixAndKey("region", "region"))
+	sb.WriteString(hp.ServerParams.encodeWithPrefix("server"))
+	return sb.String()
 }
 
 func (hp *HttpParameters) IngestMap(m map[string]interface{}) error {
