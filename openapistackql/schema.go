@@ -407,6 +407,9 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 }
 
 func (s *Schema) GetItems() (*Schema, error) {
+	if len(s.AllOf) > 0 {
+		s = s.getFatItemsSchema(s.AllOf)
+	}
 	if s.Items != nil && s.Items.Value != nil {
 		itemsPathSplit := strings.Split(s.Items.Ref, "/")
 		return NewSchema(s.Items.Value, s.svc, itemsPathSplit[len(itemsPathSplit)-1]), nil
@@ -777,7 +780,8 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 }
 
 func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
-	rv := newSchema(s.Schema, s.svc, s.key)
+	copySchema := copyOpenapiSchema(s.Schema)
+	rv := newSchema(copySchema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
