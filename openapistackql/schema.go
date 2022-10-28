@@ -66,13 +66,7 @@ func copyOpenapiSchema(inSchema *openapi3.Schema) *openapi3.Schema {
 	rv := openapi3.NewSchema()
 	rv.Properties = properties
 
-	if inSchema.Items != nil {
-		var val *openapi3.Schema
-		if inSchema.Items.Value != nil {
-			val = copyOpenapiSchema(inSchema.Items.Value)
-		}
-		rv.Items = &openapi3.SchemaRef{Ref: inSchema.Items.Ref, Value: val}
-	}
+	rv.Items = inSchema.Items
 
 	rv.ExtensionProps = inSchema.ExtensionProps
 	rv.OneOf = inSchema.OneOf
