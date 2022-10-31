@@ -58,6 +58,56 @@ type Schema struct {
 	alwaysRequired bool
 }
 
+func copyOpenapiSchema(inSchema *openapi3.Schema) *openapi3.Schema {
+	properties := make(openapi3.Schemas)
+	for k, v := range inSchema.Properties {
+		properties[k] = v
+	}
+	rv := openapi3.NewSchema()
+	rv.Properties = properties
+
+	rv.Items = inSchema.Items
+
+	rv.ExtensionProps = inSchema.ExtensionProps
+	rv.OneOf = inSchema.OneOf
+	rv.AnyOf = inSchema.AnyOf
+	rv.AllOf = inSchema.AllOf
+	rv.Not = inSchema.Not
+	rv.Type = inSchema.Type
+	rv.Title = inSchema.Title
+	rv.Format = inSchema.Format
+	rv.Description = inSchema.Description
+	rv.Enum = inSchema.Enum
+	rv.Default = inSchema.Default
+	rv.Example = inSchema.Example
+	rv.ExternalDocs = inSchema.ExternalDocs
+	rv.UniqueItems = inSchema.UniqueItems
+	rv.ExclusiveMin = inSchema.ExclusiveMin
+	rv.ExclusiveMax = inSchema.ExclusiveMax
+	rv.Nullable = inSchema.Nullable
+	rv.ReadOnly = inSchema.ReadOnly
+	rv.WriteOnly = inSchema.WriteOnly
+	rv.AllowEmptyValue = inSchema.AllowEmptyValue
+	rv.XML = inSchema.XML
+	rv.Deprecated = inSchema.Deprecated
+	rv.Min = inSchema.Min
+	rv.Max = inSchema.Max
+	rv.MultipleOf = inSchema.MultipleOf
+	rv.MinLength = inSchema.MinLength
+	rv.MaxLength = inSchema.MaxLength
+	rv.Pattern = inSchema.Pattern
+	rv.MinItems = inSchema.MinItems
+	rv.MaxItems = inSchema.MaxItems
+	rv.Required = inSchema.Required
+	rv.MinProps = inSchema.MinProps
+	rv.MaxProps = inSchema.MaxProps
+	rv.AdditionalPropertiesAllowed = inSchema.AdditionalPropertiesAllowed
+	rv.AdditionalProperties = inSchema.AdditionalProperties
+	rv.Discriminator = inSchema.Discriminator
+
+	return rv
+}
+
 type Schemas map[string]*Schema
 
 func NewSchema(sc *openapi3.Schema, svc *Service, key string) *Schema {
@@ -357,6 +407,9 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 }
 
 func (s *Schema) GetItems() (*Schema, error) {
+	if len(s.AllOf) > 0 {
+		s = s.getFatItemsSchema(s.AllOf)
+	}
 	if s.Items != nil && s.Items.Value != nil {
 		itemsPathSplit := strings.Split(s.Items.Ref, "/")
 		return NewSchema(s.Items.Value, s.svc, itemsPathSplit[len(itemsPathSplit)-1]), nil
@@ -692,7 +745,11 @@ func (s *Schema) getXmlAlias() string {
 }
 
 func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
-	rv := newSchema(s.Schema, s.svc, s.key)
+	var copiedSchema *openapi3.Schema
+	if s.Schema != nil {
+		copiedSchema = copyOpenapiSchema(s.Schema)
+	}
+	rv := newSchema(copiedSchema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
@@ -723,7 +780,8 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 }
 
 func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
-	rv := newSchema(s.Schema, s.svc, s.key)
+	copySchema := copyOpenapiSchema(s.Schema)
+	rv := newSchema(copySchema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
