@@ -18,6 +18,7 @@ type ITable interface {
 type ColumnDescriptor struct {
 	Alias        string
 	Name         string
+	Qualifier    string
 	Schema       *Schema
 	DecoratedCol string
 	Val          *sqlparser.SQLVal
@@ -47,8 +48,12 @@ func (cd ColumnDescriptor) GetRepresentativeSchema() *Schema {
 	return cd.Schema
 }
 
-func NewColumnDescriptor(alias string, name string, decoratedCol string, node sqlparser.SQLNode, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
-	return ColumnDescriptor{Alias: alias, Name: name, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
+func NewColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
+	return newColumnDescriptor(alias, name, qualifier, decoratedCol, node, schema, val)
+}
+
+func newColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema *Schema, val *sqlparser.SQLVal) ColumnDescriptor {
+	return ColumnDescriptor{Alias: alias, Name: name, Qualifier: qualifier, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
 }
 
 type Tabulation struct {

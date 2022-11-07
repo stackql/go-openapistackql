@@ -690,11 +690,19 @@ func (s *Schema) getPropertiesColumns() []ColumnDescriptor {
 	for k, val := range s.Properties {
 		valSchema := val.Value
 		if valSchema != nil {
-			col := ColumnDescriptor{Name: k, Schema: NewSchema(
-				valSchema,
-				s.svc,
+			col := newColumnDescriptor(
+				"",
 				k,
-			)}
+				"",
+				"",
+				nil,
+				NewSchema(
+					valSchema,
+					s.svc,
+					k,
+				),
+				nil,
+			)
 			cols = append(cols, col)
 		}
 	}
@@ -905,7 +913,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 			return rv
 		}
 	} else if s.Type == "string" {
-		cd := ColumnDescriptor{Name: AnonymousColumnName, Schema: s}
+		cd := newColumnDescriptor("", AnonymousColumnName, "", "", nil, s, nil)
 		if omitColumns {
 			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title, schema: s}
 		}
