@@ -814,7 +814,11 @@ func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
 }
 
 func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
-	rv := newSchema(s.Schema, s.svc, s.key)
+	var copiedSchema *openapi3.Schema
+	if s.Schema != nil {
+		copiedSchema = copyOpenapiSchema(s.Schema)
+	}
+	rv := newSchema(copiedSchema, s.svc, s.key)
 	if rv.Properties == nil {
 		rv.Properties = make(openapi3.Schemas)
 	}
