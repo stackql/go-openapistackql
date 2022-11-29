@@ -178,17 +178,22 @@ func (rs *Resource) GetFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, 
 }
 
 func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[string]Addressable, error) {
-	targetSchema, key, err := method.GetSelectSchemaAndObjectPath()
+	targetSchema, _, err := method.GetSelectSchemaAndObjectPath()
 	if err != nil {
 		return nil, fmt.Errorf("getUnionRequiredParameters(): cannot infer fat required parameters: %s", err.Error())
 	}
 	if targetSchema == nil {
 		return nil, fmt.Errorf("getUnionRequiredParameters(): target schem is nil")
 	}
+	targetPath := targetSchema.GetPath()
 	rv := make(map[string]Addressable)
 	for _, m := range rs.Methods {
-		s, sk, err := m.GetSelectSchemaAndObjectPath()
-		if err == nil && s != nil && sk != "" && sk == key {
+		s, _, err := m.GetSelectSchemaAndObjectPath()
+		if err != nil || s == nil {
+			continue
+		}
+		methodSchemaPath := s.GetPath()
+		if err == nil && s != nil && methodSchemaPath != "" && methodSchemaPath == targetPath {
 			reqParams := m.getRequiredParameters()
 			for k, v := range reqParams {
 				existingParam, ok := rv[k]

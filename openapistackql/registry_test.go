@@ -524,7 +524,7 @@ func execTestRegistryCanHandlePolymorphismAllOf(t *testing.T, r RegistryAPI) {
 
 		assert.Equal(t, os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value.Type, "")
 
-		sVal := NewSchema(os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value, sv, "")
+		sVal := NewSchema(os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value, sv, "", os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Ref)
 
 		tab := sVal.Tabulate(false)
 

@@ -78,7 +78,7 @@ func (svc *Service) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) 
 func (svc *Service) GetSchemas() (map[string]*Schema, error) {
 	rv := make(map[string]*Schema)
 	for k, sv := range svc.Components.Schemas {
-		rv[k] = NewSchema(sv.Value, svc, k)
+		rv[k] = NewSchema(sv.Value, svc, k, sv.Ref)
 	}
 	return rv, nil
 }
@@ -93,7 +93,7 @@ func (svc *Service) GetSchema(key string) (*Schema, error) {
 	if responseSchema == nil {
 		return nil, fmt.Errorf("cannot find schema for key = '%s' in service title = '%s'", key, svcName)
 	}
-	return NewSchema(responseSchema, svc, key), nil
+	return NewSchema(responseSchema, svc, key, responseSref.Ref), nil
 }
 
 func extractExtensionValBytes(extMap map[string]interface{}, key string) ([]byte, error) {
