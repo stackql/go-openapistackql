@@ -337,6 +337,14 @@ func (m *OperationStore) GetSelectItemsKey() string {
 	return m.getSelectItemsKeySimple()
 }
 
+func (m *OperationStore) GetUnionRequiredParameters() (map[string]Addressable, error) {
+	return m.getUnionRequiredParameters()
+}
+
+func (m *OperationStore) getUnionRequiredParameters() (map[string]Addressable, error) {
+	return m.Resource.getUnionRequiredParameters(m)
+}
+
 func (m *OperationStore) getSelectItemsKeySimple() string {
 	if m.Response != nil {
 		return m.Response.ObjectKey

@@ -177,6 +177,36 @@ func (rs *Resource) GetFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, 
 	return rs.getFirstMethodFromSQLVerb(sqlVerb)
 }
 
+func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[string]Addressable, error) {
+	targetSchema, _, err := method.GetSelectSchemaAndObjectPath()
+	if err != nil {
+		return nil, fmt.Errorf("getUnionRequiredParameters(): cannot infer fat required parameters: %s", err.Error())
+	}
+	if targetSchema == nil {
+		return nil, fmt.Errorf("getUnionRequiredParameters(): target schem is nil")
+	}
+	targetPath := targetSchema.GetPath()
+	rv := method.getRequiredParameters()
+	for _, m := range rs.Methods {
+		s, _, err := m.GetSelectSchemaAndObjectPath()
+		if err != nil || s == nil {
+			continue
+		}
+		methodSchemaPath := s.GetPath()
+		if err == nil && s != nil && methodSchemaPath != "" && methodSchemaPath == targetPath {
+			reqParams := m.getRequiredParameters()
+			for k, v := range reqParams {
+				existingParam, ok := rv[k]
+				if ok && v.GetType() != existingParam.GetType() {
+					return nil, fmt.Errorf("getUnionRequiredParameters(): required params '%s' of conflicting types on resource = '%s'", k, rs.GetName())
+				}
+				rv[k] = v
+			}
+		}
+	}
+	return rv, nil
+}
+
 func (rs *Resource) getFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, string, bool) {
 	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
 	if err != nil {

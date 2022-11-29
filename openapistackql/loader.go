@@ -575,7 +575,7 @@ func (loader *Loader) resolveContentDefault(content openapi3.Content, svc *Servi
 	for _, mt := range preferredMediaTypes {
 		rv, ok := content[mt]
 		if ok && rv != nil && rv.Schema != nil && rv.Schema.Value != nil {
-			return NewSchema(rv.Schema.Value, svc, rv.Schema.Ref), mt, true
+			return NewSchema(rv.Schema.Value, svc, rv.Schema.Ref, rv.Schema.Ref), mt, true
 		}
 	}
 	return nil, "", false
@@ -625,7 +625,7 @@ func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operatio
 			return nil
 		}
 		sRef := op.RequestBody.Value.Content[bmt].Schema
-		s := NewSchema(sRef.Value, doc, sRef.Ref)
+		s := NewSchema(sRef.Value, doc, sRef.Ref, sRef.Ref)
 		component.Schema = s
 		return nil
 	} else {
@@ -708,7 +708,7 @@ func (loader *Loader) resolveExpectedResponse(doc *Service, op *openapi3.Operati
 		if textualRepresentation == "" && sRef.Value.Items != nil && sRef.Value.Items.Ref != "" {
 			textualRepresentation = fmt.Sprintf("[]%s", getPathSuffix(sRef.Value.Items.Ref))
 		}
-		s := NewSchema(sRef.Value, doc, textualRepresentation)
+		s := NewSchema(sRef.Value, doc, textualRepresentation, sRef.Ref)
 		component.Schema = s
 		return nil
 	} else {

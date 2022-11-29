@@ -37,11 +37,11 @@ func (cd ColumnDescriptor) GetRepresentativeSchema() *Schema {
 		switch nt := cd.Node.(type) {
 		case *sqlparser.ConvertExpr:
 			if nt.Type != nil && nt.Type.Type != "" {
-				return NewSchema(&openapi3.Schema{Type: nt.Type.Type}, cd.Schema.svc, cd.Schema.key)
+				return NewSchema(&openapi3.Schema{Type: nt.Type.Type}, cd.Schema.svc, cd.Schema.key, "")
 			}
 		// TODO: make this intelligent
 		case *sqlparser.FuncExpr:
-			return NewSchema(&openapi3.Schema{Type: "string"}, cd.Schema.svc, cd.Schema.key)
+			return NewSchema(&openapi3.Schema{Type: "string"}, cd.Schema.svc, cd.Schema.key, "")
 		}
 
 	}
