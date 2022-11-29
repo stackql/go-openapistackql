@@ -186,7 +186,7 @@ func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[stri
 		return nil, fmt.Errorf("getUnionRequiredParameters(): target schem is nil")
 	}
 	targetPath := targetSchema.GetPath()
-	rv := make(map[string]Addressable)
+	rv := method.getRequiredParameters()
 	for _, m := range rs.Methods {
 		s, _, err := m.GetSelectSchemaAndObjectPath()
 		if err != nil || s == nil {
