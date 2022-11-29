@@ -178,20 +178,22 @@ func (rs *Resource) GetFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, 
 }
 
 func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[string]Addressable, error) {
-	targetSchema, _, err := method.GetSelectSchemaAndObjectPath()
+	targetSchema, key, err := method.GetSelectSchemaAndObjectPath()
 	if err != nil {
-		return nil, fmt.Errorf("cannot infer fat required parameters: %s", err.Error())
+		return nil, fmt.Errorf("getUnionRequiredParameters(): cannot infer fat required parameters: %s", err.Error())
 	}
-	payloadSchemaName := targetSchema.getName()
+	if targetSchema == nil {
+		return nil, fmt.Errorf("getUnionRequiredParameters(): target schem is nil")
+	}
 	rv := make(map[string]Addressable)
 	for _, m := range rs.Methods {
-		s, _, err := m.GetSelectSchemaAndObjectPath()
-		if err == nil && s != nil && s.getName() == payloadSchemaName {
+		s, sk, err := m.GetSelectSchemaAndObjectPath()
+		if err == nil && s != nil && sk != "" && sk == key {
 			reqParams := m.getRequiredParameters()
 			for k, v := range reqParams {
 				existingParam, ok := rv[k]
 				if ok && v.GetType() == existingParam.GetType() {
-					return nil, fmt.Errorf("required params '%s' of conflicting types on resource = '%s'", k, rs.GetName())
+					return nil, fmt.Errorf("getUnionRequiredParameters(): required params '%s' of conflicting types on resource = '%s'", k, rs.GetName())
 				}
 				reqParams[k] = v
 			}
