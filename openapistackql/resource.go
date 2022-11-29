@@ -197,7 +197,7 @@ func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[stri
 			reqParams := m.getRequiredParameters()
 			for k, v := range reqParams {
 				existingParam, ok := rv[k]
-				if ok && v.GetType() == existingParam.GetType() {
+				if ok && v.GetType() != existingParam.GetType() {
 					return nil, fmt.Errorf("getUnionRequiredParameters(): required params '%s' of conflicting types on resource = '%s'", k, rs.GetName())
 				}
 				rv[k] = v
