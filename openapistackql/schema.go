@@ -947,6 +947,9 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 			return NewSchema(items, s.svc, "", s.Items.Ref).ToDescriptionMap(extended)
 		}
 	}
+	// TODO:
+	//     - Ensure this logic conforms to openapi3 doc rules.
+	//     - Add integration testing to ensure same, corner cases.
 	if s.Type == "object" {
 		for k, v := range s.Properties {
 			p := v.Value
