@@ -20,6 +20,8 @@ func (qt StackQLConfig) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "queryTranspose":
 		return qt.QueryTranspose, nil
+	case "views":
+		return qt.Views, nil
 	default:
 		return nil, fmt.Errorf("could not resolve token '%s' from QueryTranspose doc object", token)
 	}
@@ -33,6 +35,14 @@ func (cfg *StackQLConfig) isObjectSchemaImplicitlyUnioned() bool {
 }
 
 func (cfg *StackQLConfig) GetView(viewName string) (*View, bool) {
+	if cfg.Views != nil {
+		v, ok := cfg.Views[viewName]
+		return &v, ok
+	}
+	return nil, false
+}
+
+func (cfg *StackQLConfig) GetViews(viewName string) (*View, bool) {
 	if cfg.Views != nil {
 		v, ok := cfg.Views[viewName]
 		return &v, ok
