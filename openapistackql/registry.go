@@ -40,6 +40,7 @@ type RegistryAPI interface {
 	ListLocallyAvailableProviders() map[string]ProviderDescription
 	GetDocBytes(string) ([]byte, error)
 	GetLatestAvailableVersion(string) (string, error)
+	GetLatestPublishedVersion(string) (string, error)
 	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
 	GetResourcesShallowFromURL(ps *ProviderService) (*ResourceRegister, error)
@@ -211,6 +212,10 @@ func (r *Registry) ListAllAvailableProviders() (map[string]ProviderDescription, 
 }
 
 func (r *Registry) ListAllProviderVersions(prov string) (map[string]ProviderDescription, error) {
+	return r.listAllProviderVersions(prov)
+}
+
+func (r *Registry) listAllProviderVersions(prov string) (map[string]ProviderDescription, error) {
 	if r.isFile() {
 		return nil, fmt.Errorf("'registry list' is meaningless in local mode")
 	}
@@ -666,4 +671,24 @@ func (r *Registry) getLatestAvailableVersion(providerName string) (string, error
 		}
 	}
 	return semver.FindLatestStable(deStrSlice)
+}
+
+func (r *Registry) GetLatestPublishedVersion(providerName string) (string, error) {
+	return r.getLatestPublishedVersion(providerName)
+}
+
+func (r *Registry) getLatestPublishedVersion(providerName string) (string, error) {
+	p, err := r.listAllProviderVersions(providerName)
+	if err != nil {
+		return "", err
+	}
+	description, ok := p[providerName]
+	if !ok {
+		return "", fmt.Errorf("could not resolve provider '%s'", providerName)
+	}
+	latestVersion, err := semver.FindLatest(description.Versions)
+	if err != nil {
+		return "", err
+	}
+	return latestVersion, nil
 }
