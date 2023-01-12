@@ -524,6 +524,11 @@ func operationBackwardsCompatibility(component *OperationStore, sr *ServiceRef) 
 }
 
 func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component *OperationStore, pir *PathItemRef, sr *ServiceRef) (err error) {
+
+	if component == nil {
+		return errors.New("invalid operation: value MUST be an object")
+	}
+
 	if component.OperationRef != nil && component.OperationRef.Value != nil {
 		if loader.visitedOperation == nil {
 			loader.visitedOperation = make(map[*openapi3.Operation]struct{})
@@ -532,11 +537,18 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 			return nil
 		}
 		loader.visitedOperation[component.OperationRef.Value] = struct{}{}
+	} else if component.StackQLConfig != nil && component.StackQLConfig.Views != nil {
+		component.Service = doc
+		component.ProviderService = doc.ProviderService
+		component.Provider = doc.Provider
+		component.Resource = rsc
+		return nil
 	}
+	component.Service = doc
+	component.ProviderService = doc.ProviderService
+	component.Provider = doc.Provider
+	component.Resource = rsc
 
-	if component == nil {
-		return errors.New("invalid operation: value MUST be an object")
-	}
 	operationBackwardsCompatibility(component, sr)
 	pk := component.OperationRef.ExtractPathItem()
 	pi, ok := doc.Paths[pk]
@@ -556,10 +568,6 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 
 	component.OperationRef.Value = op
 	component.PathItem = pi
-	component.Service = doc
-	component.ProviderService = doc.ProviderService
-	component.Provider = doc.Provider
-	component.Resource = rsc
 	err = loader.extractAndMergeQueryTransposeOpLevel(component)
 	if err != nil {
 		return err
