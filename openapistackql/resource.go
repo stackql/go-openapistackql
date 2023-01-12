@@ -72,6 +72,13 @@ func (r *Resource) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	return r.StackQLConfig.Pagination.RequestToken, true
 }
 
+func (r *Resource) GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool) {
+	if r.StackQLConfig != nil {
+		return r.StackQLConfig.GetViewBodyDDLForSQLDialect(sqlDialect, "")
+	}
+	return "", false
+}
+
 func (r *Resource) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
