@@ -7,11 +7,11 @@ import (
 )
 
 type StackQLConfig struct {
-	QueryTranspose   *Transform      `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
-	RequestTranslate *Transform      `json:"requestTranslate,omitempty" yaml:"requestTranslate,omitempty"`
-	Pagination       *Pagination     `json:"pagination,omitempty" yaml:"pagination,omitempty"`
-	Variations       *Variations     `json:"variations,omitempty" yaml:"variations,omitempty"`
-	Views            map[string]View `json:"views" yaml:"views"`
+	QueryTranspose   *Transform       `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	RequestTranslate *Transform       `json:"requestTranslate,omitempty" yaml:"requestTranslate,omitempty"`
+	Pagination       *Pagination      `json:"pagination,omitempty" yaml:"pagination,omitempty"`
+	Variations       *Variations      `json:"variations,omitempty" yaml:"variations,omitempty"`
+	Views            map[string]*View `json:"views" yaml:"views"`
 }
 
 var _ jsonpointer.JSONPointable = (StackQLConfig)(StackQLConfig{})
@@ -37,15 +37,26 @@ func (cfg *StackQLConfig) isObjectSchemaImplicitlyUnioned() bool {
 func (cfg *StackQLConfig) GetView(viewName string) (*View, bool) {
 	if cfg.Views != nil {
 		v, ok := cfg.Views[viewName]
-		return &v, ok
+		return v, ok
 	}
 	return nil, false
+}
+
+func (cfg *StackQLConfig) GetViewBodyDDLForSQLDialect(sqlDialect string, viewName string) (string, bool) {
+	if cfg.Views != nil {
+		v, ok := cfg.Views[viewName]
+		if !ok || v == nil {
+			return "", false
+		}
+		return v.GetDDLForSqlDialect(sqlDialect)
+	}
+	return "", false
 }
 
 func (cfg *StackQLConfig) GetViews(viewName string) (*View, bool) {
 	if cfg.Views != nil {
 		v, ok := cfg.Views[viewName]
-		return &v, ok
+		return v, ok
 	}
 	return nil, false
 }

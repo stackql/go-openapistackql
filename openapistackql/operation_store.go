@@ -146,6 +146,13 @@ func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[str
 	return op.parameterMatch(params)
 }
 
+func (op *OperationStore) GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool) {
+	if op.StackQLConfig != nil {
+		return op.StackQLConfig.GetViewBodyDDLForSQLDialect(sqlDialect, "")
+	}
+	return "", false
+}
+
 func (op *OperationStore) GetQueryTransposeAlgorithm() string {
 	if op.StackQLConfig != nil && op.StackQLConfig.QueryTranspose != nil && op.StackQLConfig.QueryTranspose.Algorithm != "" {
 		return op.StackQLConfig.QueryTranspose.Algorithm
