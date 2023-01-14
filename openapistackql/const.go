@@ -20,3 +20,7 @@ const (
 	RequestBodyKeyDelimiter string = "__"
 	RequestBodyBaseKey      string = RequestBodyKeyPrefix + RequestBodyKeyDelimiter
 )
+
+const (
+	ViewKeyResourceLevelSelect string = "select"
+)
