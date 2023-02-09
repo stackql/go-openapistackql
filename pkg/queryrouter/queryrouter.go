@@ -110,7 +110,7 @@ func (r *Router) addRoutes(
 					pairs = append(pairs, pair...)
 				}
 			}
-			muxRoute = muxRouter.Queries(pairs...).Methods(methods...)
+			muxRoute = muxRoute.Queries(pairs...).Methods(methods...)
 		}
 		if schemes := s.schemes; len(schemes) != 0 {
 			muxRoute.Schemes(schemes...)
