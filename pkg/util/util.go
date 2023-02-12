@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/stackql/go-openapistackql/pkg/response"
-	"vitess.io/vitess/go/vt/sqlparser"
+	"github.com/stackql/stackql-parser/go/vt/sqlparser"
 )
 
 func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {

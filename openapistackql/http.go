@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/stackql/go-openapistackql/pkg/querytranspose"
-	"vitess.io/vitess/go/vt/sqlparser"
+	"github.com/stackql/stackql-parser/go/vt/sqlparser"
 
 	"github.com/getkin/kin-openapi/openapi3"
 )
