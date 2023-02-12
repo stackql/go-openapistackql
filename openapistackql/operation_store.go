@@ -23,7 +23,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"vitess.io/vitess/go/sqltypes"
+	"github.com/stackql/stackql-parser/go/sqltypes"
 )
 
 const (

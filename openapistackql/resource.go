@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/go-openapi/jsonpointer"
-	"vitess.io/vitess/go/sqltypes"
+	"github.com/stackql/stackql-parser/go/sqltypes"
 )
 
 type ResourceRegister struct {

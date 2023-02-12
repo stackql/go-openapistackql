@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/stackql/stackql-parser/go/sqltypes"
 	yaml "gopkg.in/yaml.v3"
-	"vitess.io/vitess/go/sqltypes"
 )
 
 type Service struct {
