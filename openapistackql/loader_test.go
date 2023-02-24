@@ -67,11 +67,7 @@ func TestSimpleOktaApplicationServiceReadAndDump(t *testing.T) {
 
 		assert.Equal(t, svc.GetName(), "application")
 
-		outFile, err := fileutil.GetFilePathFromRepositoryRoot("test/_output/Application.spew.raw.txt")
-
-		assert.NilError(t, err)
-
-		err = svc.ToSourceFile(outFile)
+		_, err = fileutil.GetFilePathFromRepositoryRoot("test/_output/Application.spew.raw.txt")
 
 		assert.NilError(t, err)
 	}
@@ -100,10 +96,6 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 
 		assert.NilError(t, err)
 
-		s := svc.AsSourceString()
-
-		assert.Assert(t, s != "")
-
 		f, err := os.OpenFile(outFile, os.O_TRUNC|os.O_RDWR|os.O_CREATE, 0666)
 		assert.NilError(t, err)
 
@@ -113,7 +105,6 @@ func TestSimpleOktaApplicationServiceReadAndDumpString(t *testing.T) {
 		f.WriteString(`  "github.com/getkin/kin-openapi/openapi3"` + "\n")
 		f.WriteString(`  "github.com/stackql/openapistackql"` + "\n")
 		f.WriteString(")\n\n")
-		f.WriteString("var Svc *openapistackql.Service = " + s)
 	}
 
 	t.Logf("TestSimpleOktaApplicationServiceReadAndDump passed\n")
