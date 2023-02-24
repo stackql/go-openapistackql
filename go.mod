@@ -13,7 +13,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.10.1
-	github.com/stackql/go-spew v1.1.3-alpha24
 	github.com/stackql/go-suffix-map v0.0.1-alpha01
 	github.com/stackql/stackql-parser v0.0.13-alpha03
 	github.com/stackql/stackql-provider-registry v0.0.1-rc01
