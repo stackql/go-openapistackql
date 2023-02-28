@@ -673,9 +673,10 @@ func (s *Schema) toFlatDescriptionMap(extended bool) map[string]interface{} {
 func (s *Schema) GetAllColumns() []string {
 	log.Infoln(fmt.Sprintf("s = %v", *s))
 	var retVal []string
-	if s.Type == "object" || (s.Properties != nil && len(s.Properties) > 0) {
-		for k, val := range s.Properties {
-			valSchema := val.Value
+	properties := s.getProperties()
+	if s.Type == "object" || (len(properties) > 0) {
+		for k, val := range properties {
+			valSchema := val.Schema
 			if valSchema != nil {
 				retVal = append(retVal, k)
 			}
