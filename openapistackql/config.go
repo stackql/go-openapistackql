@@ -13,6 +13,7 @@ type StackQLConfig struct {
 	Variations       *Variations                 `json:"variations,omitempty" yaml:"variations,omitempty"`
 	Views            map[string]*View            `json:"views" yaml:"views"`
 	ExternalTables   map[string]SQLExternalTable `json:"sqlExternalTables" yaml:"sqlExternalTables"`
+	Auth             *AuthDTO                    `json:"auth,omitempty" yaml:"auth,omitempty"`
 }
 
 var _ jsonpointer.JSONPointable = (StackQLConfig)(StackQLConfig{})
@@ -41,6 +42,10 @@ func (cfg *StackQLConfig) GetView(viewName string) (*View, bool) {
 		return v, ok
 	}
 	return nil, false
+}
+
+func (cfg *StackQLConfig) GetAuth() (*AuthDTO, bool) {
+	return cfg.Auth, cfg.Auth != nil
 }
 
 func (cfg *StackQLConfig) GetViewBodyDDLForSQLDialect(sqlDialect string, viewName string) (string, bool) {
