@@ -42,6 +42,13 @@ type ProviderService struct {
 	StackQLConfig *StackQLConfig `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
+func (pr *Provider) GetAuth() (*AuthDTO, bool) {
+	if pr.StackQLConfig != nil {
+		return pr.StackQLConfig.GetAuth()
+	}
+	return nil, false
+}
+
 func (pr *Provider) GetQueryTransposeAlgorithm() string {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.QueryTranspose == nil {
 		return ""
