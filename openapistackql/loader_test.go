@@ -28,8 +28,8 @@ func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["application"]
-		if !ok {
+		ps, err := pr.GetProviderService("application")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
 		}
 
@@ -210,8 +210,8 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["compute"]
-		if !ok {
+		ps, err := pr.GetProviderService("compute")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for google.compute")
 		}
 
@@ -270,8 +270,8 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["compute"]
-		if !ok {
+		ps, err := pr.GetProviderService("compute")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for google.compute")
 		}
 
@@ -286,7 +286,11 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 		}
 
 		assert.Assert(t, rr != nil)
-		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+		atTypes, ok := rr.GetResource("acceleratorTypes")
+		if !ok {
+			t.Fatalf("Test failed: could not locate resource acceleratorTypes")
+		}
+		assert.Equal(t, atTypes.GetID(), "google.compute.acceleratorTypes")
 
 		t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 	}
@@ -308,7 +312,11 @@ func TestIndirectGoogleComputeResourcesJsonRead(t *testing.T) {
 		}
 
 		assert.Assert(t, rr != nil)
-		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+		atTypes, ok := rr.GetResource("acceleratorTypes")
+		if !ok {
+			t.Fatalf("Test failed: could not locate resource acceleratorTypes")
+		}
+		assert.Equal(t, atTypes.GetID(), "google.compute.acceleratorTypes")
 	}
 
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
@@ -331,9 +339,17 @@ func TestIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T) {
 		}
 
 		assert.Assert(t, rr != nil)
-		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+		atTypes, ok := rr.GetResource("acceleratorTypes")
+		if !ok {
+			t.Fatalf("Test failed: could not locate resource acceleratorTypes")
+		}
+		assert.Equal(t, atTypes.GetID(), "google.compute.acceleratorTypes")
 
-		sb, err := GetServiceDocBytes(rr.Resources["acceleratorTypes"].Methods["get"].OperationRef.ExtractServiceDocPath())
+		getMethod, err := atTypes.FindMethod("get")
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+		sb, err := GetServiceDocBytes(getMethod.GetOperationRef().ExtractServiceDocPath())
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}

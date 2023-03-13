@@ -41,15 +41,15 @@ type RegistryAPI interface {
 	GetDocBytes(string) ([]byte, error)
 	GetLatestAvailableVersion(string) (string, error)
 	GetLatestPublishedVersion(string) (string, error)
-	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
-	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
-	GetResourcesShallowFromURL(ps *ProviderService) (*ResourceRegister, error)
-	GetService(ps *ProviderService) (*Service, error)
-	GetServiceFragment(*ProviderService, string) (*Service, error)
-	GetServiceFromProviderService(*ProviderService) (*Service, error)
+	GetResourcesShallowFromProvider(Provider, string) (ResourceRegister, error)
+	GetResourcesShallowFromProviderService(ProviderService) (ResourceRegister, error)
+	GetResourcesShallowFromURL(ps ProviderService) (ResourceRegister, error)
+	GetService(ps ProviderService) (Service, error)
+	GetServiceFragment(ProviderService, string) (Service, error)
+	GetServiceFromProviderService(ProviderService) (Service, error)
 	GetServiceDocBytes(string) ([]byte, error)
 	GetResourcesRegisterDocBytes(string) ([]byte, error)
-	LoadProviderByName(string, string) (*Provider, error)
+	LoadProviderByName(string, string) (Provider, error)
 }
 
 type RegistryConfig struct {
@@ -296,7 +296,7 @@ func (r *Registry) pullAndPersistProviderArchive(prov string, version string) er
 	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), pr))
 }
 
-func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
+func (r *Registry) LoadProviderByName(prov string, version string) (Provider, error) {
 	b, err := r.getProviderDocBytes(prov, version)
 	if err != nil {
 		return nil, err
@@ -312,24 +312,24 @@ func (r *Registry) GetResourcesRegisterDocBytes(url string) ([]byte, error) {
 	return r.getVerifiedDocBytes(url)
 }
 
-func (r *Registry) GetService(ps *ProviderService) (*Service, error) {
-	url := ps.ServiceRef.Ref
+func (r *Registry) GetService(ps ProviderService) (Service, error) {
+	url := ps.getServiceRefRef()
 	b, err := r.getVerifiedDocBytes(url)
 	if err != nil {
 		return nil, err
 	}
 	return LoadServiceDocFromBytes(ps, b)
 }
-func (r *Registry) GetResourcesShallowFromProvider(pr *Provider, serviceKey string) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallowFromProvider(pr Provider, serviceKey string) (ResourceRegister, error) {
 	return pr.getResourcesShallowWithRegistry(r, serviceKey)
 }
 
-func (r *Registry) GetResourcesShallowFromProviderService(pr *ProviderService) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallowFromProviderService(pr ProviderService) (ResourceRegister, error) {
 	return pr.getResourcesShallowWithRegistry(r)
 }
 
-func (r *Registry) GetResourcesShallowFromURL(ps *ProviderService) (*ResourceRegister, error) {
-	url := ps.ResourcesRef.Ref
+func (r *Registry) GetResourcesShallowFromURL(ps ProviderService) (ResourceRegister, error) {
+	url := ps.getResourcesRefRef()
 	b, err := r.getVerifiedDocBytes(url)
 	if err != nil {
 		return nil, err
@@ -337,17 +337,17 @@ func (r *Registry) GetResourcesShallowFromURL(ps *ProviderService) (*ResourceReg
 	return loadResourcesShallow(ps, b)
 }
 
-func (r *Registry) GetServiceFromProviderService(ps *ProviderService) (*Service, error) {
-	if ps.ServiceRef == nil || ps.ServiceRef.Ref == "" {
+func (r *Registry) GetServiceFromProviderService(ps ProviderService) (Service, error) {
+	if ps.getServiceRefRef() == "" {
 		return nil, fmt.Errorf("no service reachable for %s", ps.GetName())
 	}
 	return r.GetService(ps)
 }
 
-func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (*Service, error) {
+func (r *Registry) GetServiceFragment(ps ProviderService, resourceKey string) (Service, error) {
 
-	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
-		if ps.ServiceRef == nil || ps.ServiceRef.Ref == "" {
+	if ps.getResourcesRefRef() == "" {
+		if ps.getServiceRefRef() == "" {
 			return nil, fmt.Errorf("no service or resources reachable for %s", ps.GetName())
 		}
 		return r.GetService(ps)
@@ -356,7 +356,7 @@ func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (
 	if err != nil {
 		return nil, err
 	}
-	rsc, ok := rr.Resources[resourceKey]
+	rsc, ok := rr.GetResource(resourceKey)
 	if !ok {
 		return nil, fmt.Errorf("cannot locate resource for key = '%s'", resourceKey)
 	}
@@ -375,8 +375,8 @@ func (r *Registry) GetServiceFragment(ps *ProviderService, resourceKey string) (
 	if err != nil {
 		return nil, err
 	}
-	ps.ServiceRef.Value = svc
-	return ps.ServiceRef.Value, nil
+	ps.setService(svc)
+	return svc, nil
 }
 
 func (r *Registry) checkSignature(docUrl string, verFile, sigFile io.ReadCloser) (*edcrypto.VerifierResponse, error) {

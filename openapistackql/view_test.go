@@ -3,7 +3,7 @@ package openapistackql_test
 import (
 	"testing"
 
-	"github.com/stackql/go-openapistackql/openapistackql"
+	. "github.com/stackql/go-openapistackql/openapistackql"
 	"gopkg.in/yaml.v3"
 
 	"gotest.tools/assert"
@@ -24,7 +24,7 @@ ddl: select * from someprovider.someservice.someresource
 
 func TestSimpleViewApi(t *testing.T) {
 
-	var v openapistackql.View
+	v := GetTestingView()
 	err := yaml.Unmarshal([]byte(simpleYamlLoadTestInput), &v)
 	if err != nil {
 		t.Fatalf("TestSimpleViewApi failed at unmarshal step, err = '%s'", err.Error())
@@ -47,7 +47,7 @@ func TestSimpleViewApi(t *testing.T) {
 
 func TestNoFallbackViewApi(t *testing.T) {
 
-	var v openapistackql.View
+	v := GetTestingView()
 	err := yaml.Unmarshal([]byte(noFallbackYamlLoadTestInput), &v)
 	if err != nil {
 		t.Fatalf("TestNoFallbackViewApi failed at unmarshal step, err = '%s'", err.Error())

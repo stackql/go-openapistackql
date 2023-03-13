@@ -9,33 +9,41 @@ import (
 	"github.com/stackql/stackql-parser/go/sqltypes"
 )
 
-type ResourceRegister struct {
-	ServiceDocPath  *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
-	Resources       map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
-	ProviderService *ProviderService     `json:"-" yaml:"-"` // upwards traversal
-	Provider        *Provider            `json:"-" yaml:"-"` // upwards traversal
+var (
+	_ Resource                  = &standardResource{}
+	_ jsonpointer.JSONPointable = standardResource{}
+)
+
+type Resource interface {
+	ITable
+	GetQueryTransposeAlgorithm() string
+	GetID() string
+	GetTitle() string
+	GetDescription() string
+	GetSelectorAlgorithm() string
+	GetMethods() Methods
+	GetServiceDocPath() *ServiceRef
+	GetRequestTranslateAlgorithm() string
+	GetPaginationRequestTokenSemantic() (TokenSemantic, bool)
+	GetPaginationResponseTokenSemantic() (TokenSemantic, bool)
+	FindMethod(key string) (OperationStore, error)
+	GetFirstMethodFromSQLVerb(sqlVerb string) (OperationStore, string, bool)
+	GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (OperationStore, map[string]interface{}, bool)
+	GetService() (Service, bool)
+	GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool)
+	GetMethodsMatched() Methods
+	ToMap(extended bool) map[string]interface{}
+	// unexported mutators
+	getSQLVerbs() map[string][]OperationStoreRef
+	setProvider(p Provider)
+	setService(s Service)
+	setProviderService(ps ProviderService)
+	getUnionRequiredParameters(method OperationStore) (map[string]Addressable, error)
+	setMethod(string, *standardOperationStore)
+	mutateSQLVerb(k string, idx int, v OperationStoreRef)
 }
 
-func (rr *ResourceRegister) ObtainServiceDocUrl(resourceKey string) string {
-	var rv string
-	if rr.ServiceDocPath != nil {
-		rv = rr.ServiceDocPath.Ref
-	}
-	rsc, ok := rr.Resources[resourceKey]
-	if ok && rsc.ServiceDocPath != nil && rsc.ServiceDocPath.Ref != "" {
-		rv = rsc.ServiceDocPath.Ref
-	}
-	return rv
-}
-
-func NewResourceRegister() *ResourceRegister {
-	return &ResourceRegister{
-		ServiceDocPath: &ServiceRef{},
-		Resources:      make(map[string]*Resource),
-	}
-}
-
-type Resource struct {
+type standardResource struct {
 	ID                string                         `json:"id" yaml:"id"`       // Required
 	Name              string                         `json:"name" yaml:"name"`   // Required
 	Title             string                         `json:"title" yaml:"title"` // Required
@@ -45,50 +53,119 @@ type Resource struct {
 	ServiceDocPath    *ServiceRef                    `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	SQLVerbs          map[string][]OperationStoreRef `json:"sqlVerbs" yaml:"sqlVerbs"`
 	BaseUrl           string                         `json:"baseUrl,omitempty" yaml:"baseUrl,omitempty"` // hack
-	StackQLConfig     *StackQLConfig                 `json:"config,omitempty" yaml:"config,omitempty"`
-	Service           *Service                       `json:"-" yaml:"-"` // upwards traversal
-	ProviderService   *ProviderService               `json:"-" yaml:"-"` // upwards traversal
-	Provider          *Provider                      `json:"-" yaml:"-"` // upwards traversal
+	StackQLConfig     *standardStackQLConfig         `json:"config,omitempty" yaml:"config,omitempty"`
+	Service           Service                        `json:"-" yaml:"-"` // upwards traversal
+	ProviderService   ProviderService                `json:"-" yaml:"-"` // upwards traversal
+	Provider          Provider                       `json:"-" yaml:"-"` // upwards traversal
 }
 
-func (r *Resource) GetQueryTransposeAlgorithm() string {
+func NewEmptyResource() Resource {
+	return &standardResource{
+		Methods:  make(Methods),
+		SQLVerbs: make(map[string][]OperationStoreRef),
+	}
+}
+
+func (r *standardResource) GetService() (Service, bool) {
+	if r.Service == nil {
+		return nil, false
+	}
+	return r.Service, true
+}
+
+func (r *standardResource) getSQLVerbs() map[string][]OperationStoreRef {
+	return r.SQLVerbs
+}
+
+func (r *standardResource) setService(s Service) {
+	r.Service = s
+}
+
+func (r *standardResource) mutateSQLVerb(k string, idx int, v OperationStoreRef) {
+	r.SQLVerbs[k][idx] = v
+}
+
+func (r *standardResource) setMethod(k string, v *standardOperationStore) {
+	if v == nil {
+		return
+	}
+	r.Methods[k] = *v
+}
+
+func (r *standardResource) setProvider(p Provider) {
+	r.Provider = p
+}
+
+func (r *standardResource) setProviderService(ps ProviderService) {
+	r.ProviderService = ps
+}
+
+func (r *standardResource) GetID() string {
+	return r.ID
+}
+
+func (r *standardResource) GetTitle() string {
+	return r.Title
+}
+
+func (r *standardResource) GetDescription() string {
+	return r.Description
+}
+
+func (r *standardResource) GetSelectorAlgorithm() string {
+	return r.SelectorAlgorithm
+}
+
+func (r *standardResource) GetMethods() Methods {
+	return r.Methods
+}
+
+func (r *standardResource) GetServiceDocPath() *ServiceRef {
+	return r.ServiceDocPath
+}
+
+func (r *standardResource) GetQueryTransposeAlgorithm() string {
 	if r.StackQLConfig == nil || r.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
 	return r.StackQLConfig.QueryTranspose.Algorithm
 }
 
-func (r *Resource) GetRequestTranslateAlgorithm() string {
+func (r *standardResource) GetRequestTranslateAlgorithm() string {
 	if r.StackQLConfig == nil || r.StackQLConfig.RequestTranslate == nil {
 		return ""
 	}
 	return r.StackQLConfig.RequestTranslate.Algorithm
 }
 
-func (r *Resource) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
-	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.RequestToken == nil {
-		return nil, false
+func (r *standardResource) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
+	if r.StackQLConfig != nil {
+		pag, pagExists := r.StackQLConfig.GetPagination()
+		if pagExists && pag.GetRequestToken() != nil {
+			return pag.GetRequestToken(), true
+		}
 	}
-	return r.StackQLConfig.Pagination.RequestToken, true
+	return nil, false
 }
 
-func (r *Resource) GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool) {
+func (r *standardResource) GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool) {
 	if r.StackQLConfig != nil {
 		return r.StackQLConfig.GetViewBodyDDLForSQLDialect(sqlDialect, ViewKeyResourceLevelSelect)
 	}
 	return "", false
 }
 
-func (r *Resource) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
-	if r.StackQLConfig == nil || r.StackQLConfig.Pagination == nil || r.StackQLConfig.Pagination.ResponseToken == nil {
-		return nil, false
+func (r *standardResource) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
+	if r.StackQLConfig != nil {
+		pag, pagExists := r.StackQLConfig.GetPagination()
+		if pagExists && pag.GetResponseToken() != nil {
+			return pag.GetResponseToken(), true
+		}
 	}
-	return r.StackQLConfig.Pagination.ResponseToken, true
+	return nil, false
 }
 
-var _ jsonpointer.JSONPointable = (Resource)(Resource{})
-
-func (rsc Resource) JSONLookup(token string) (interface{}, error) {
+func (rsc standardResource) JSONLookup(token string) (interface{}, error) {
 	if rsc.Methods == nil {
 		return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
 	}
@@ -103,41 +180,15 @@ func (rsc Resource) JSONLookup(token string) (interface{}, error) {
 	return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
 }
 
-type MethodSet []*OperationStore
-
-func (ms MethodSet) GetFirstMatch(params map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
-	return ms.getFirstMatch(params)
-}
-
-func (ms MethodSet) GetFirst() (*OperationStore, string, bool) {
-	return ms.getFirst()
-}
-
-func (ms MethodSet) getFirstMatch(params map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
-	for _, m := range ms {
-		if remainingParams, ok := m.ParameterMatch(params); ok {
-			return m, remainingParams, true
-		}
-	}
-	return nil, params, false
-}
-
-func (ms MethodSet) getFirst() (*OperationStore, string, bool) {
-	for _, m := range ms {
-		return m, m.getName(), true
-	}
-	return nil, "", false
-}
-
-func (rs *Resource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
+func (rs *standardResource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	return rs.getDefaultMethodKeysForSQLVerb(sqlVerb)
 }
 
-func (rs *Resource) GetMethodsMatched() Methods {
+func (rs *standardResource) GetMethodsMatched() Methods {
 	return rs.getMethodsMatched()
 }
 
-func (rs *Resource) matchSQLVerbs() {
+func (rs *standardResource) matchSQLVerbs() {
 	for k, v := range rs.SQLVerbs {
 		for _, or := range v {
 			orp := &or
@@ -153,26 +204,26 @@ func (rs *Resource) matchSQLVerbs() {
 	}
 }
 
-func (rs *Resource) getMethodsMatched() Methods {
+func (rs *standardResource) getMethodsMatched() Methods {
 	rs.matchSQLVerbs()
 	rv := rs.Methods
 	for k, v := range rv {
 		m := v
-		sqlVerb := m.SQLVerb
+		sqlVerb := m.GetSQLVerb()
 		if sqlVerb == "" {
 			sqlVerb = rs.getDefaultSQLVerbForMethodKey(k)
 		}
-		m.SQLVerb = sqlVerb
+		m.setSQLVerb(sqlVerb)
 		rv[k] = m
 	}
 	return rv
 }
 
-func (rs *Resource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
+func (rs *standardResource) GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (OperationStore, map[string]interface{}, bool) {
 	return rs.getFirstMethodMatchFromSQLVerb(sqlVerb, parameters)
 }
 
-func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (*OperationStore, map[string]interface{}, bool) {
+func (rs *standardResource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (OperationStore, map[string]interface{}, bool) {
 	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
 	if err != nil {
 		return nil, parameters, false
@@ -180,11 +231,11 @@ func (rs *Resource) getFirstMethodMatchFromSQLVerb(sqlVerb string, parameters ma
 	return ms.getFirstMatch(parameters)
 }
 
-func (rs *Resource) GetFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, string, bool) {
+func (rs *standardResource) GetFirstMethodFromSQLVerb(sqlVerb string) (OperationStore, string, bool) {
 	return rs.getFirstMethodFromSQLVerb(sqlVerb)
 }
 
-func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[string]Addressable, error) {
+func (rs *standardResource) getUnionRequiredParameters(method OperationStore) (map[string]Addressable, error) {
 	targetSchema, _, err := method.GetSelectSchemaAndObjectPath()
 	if err != nil {
 		return nil, fmt.Errorf("getUnionRequiredParameters(): cannot infer fat required parameters: %s", err.Error())
@@ -214,7 +265,7 @@ func (rs *Resource) getUnionRequiredParameters(method *OperationStore) (map[stri
 	return rv, nil
 }
 
-func (rs *Resource) getFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, string, bool) {
+func (rs *standardResource) getFirstMethodFromSQLVerb(sqlVerb string) (OperationStore, string, bool) {
 	ms, err := rs.getMethodsForSQLVerb(sqlVerb)
 	if err != nil {
 		return nil, "", false
@@ -222,7 +273,7 @@ func (rs *Resource) getFirstMethodFromSQLVerb(sqlVerb string) (*OperationStore, 
 	return ms.getFirst()
 }
 
-func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
+func (rs *standardResource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	switch strings.ToLower(sqlVerb) {
 	case "insert":
 		return []string{"insert", "create"}
@@ -235,7 +286,7 @@ func (rs *Resource) getDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
 	}
 }
 
-func (rs *Resource) getDefaultSQLVerbForMethodKey(methodName string) string {
+func (rs *standardResource) getDefaultSQLVerbForMethodKey(methodName string) string {
 	switch strings.ToLower(methodName) {
 	case "insert", "create":
 		return "insert"
@@ -248,7 +299,7 @@ func (rs *Resource) getDefaultSQLVerbForMethodKey(methodName string) string {
 	}
 }
 
-func (rs *Resource) getMethodsForSQLVerb(sqlVerb string) (MethodSet, error) {
+func (rs *standardResource) getMethodsForSQLVerb(sqlVerb string) (MethodSet, error) {
 	var retVal MethodSet
 	v, ok := rs.SQLVerbs[sqlVerb]
 	if ok {
@@ -275,7 +326,7 @@ func (rs *Resource) getMethodsForSQLVerb(sqlVerb string) (MethodSet, error) {
 	return nil, fmt.Errorf("could not resolve SQL verb '%s'", sqlVerb)
 }
 
-func (rs *Resource) GetSelectableObject() string {
+func (rs *standardResource) GetSelectableObject() string {
 	if m, ok := rs.Methods["list"]; ok {
 		sc, _, err := m.getResponseBodySchemaAndMediaType()
 		if err == nil {
@@ -285,7 +336,7 @@ func (rs *Resource) GetSelectableObject() string {
 	return ""
 }
 
-func (rs *Resource) FindOperationStore(sel OperationSelector) (*OperationStore, error) {
+func (rs *standardResource) FindOperationStore(sel OperationSelector) (OperationStore, error) {
 	switch rs.SelectorAlgorithm {
 	case "", "standard":
 		return rs.findOperationStoreStandard(sel)
@@ -293,31 +344,31 @@ func (rs *Resource) FindOperationStore(sel OperationSelector) (*OperationStore, 
 	return nil, fmt.Errorf("cannot search for operation with selector algorithm = '%s'", rs.SelectorAlgorithm)
 }
 
-func (rs *Resource) findOperationStoreStandard(sel OperationSelector) (*OperationStore, error) {
+func (rs *standardResource) findOperationStoreStandard(sel OperationSelector) (OperationStore, error) {
 	rv, err := rs.Methods.FindFromSelector(sel)
 	if err == nil {
 		return rv, nil
 	}
-	return nil, fmt.Errorf("could not locate operation for resource = %s and sql verb  = %s", rs.Name, sel.SQLVerb)
+	return nil, fmt.Errorf("could not locate operation for resource = %s and sql verb  = %s", rs.Name, sel.GetSQLVerb())
 }
 
-func (r *Resource) ConditionIsValid(lhs string, rhs interface{}) bool {
+func (r *standardResource) ConditionIsValid(lhs string, rhs interface{}) bool {
 	elem := r.ToMap(true)[lhs]
 	return reflect.TypeOf(elem) == reflect.TypeOf(rhs)
 }
 
-func (r *Resource) FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error) {
+func (r *standardResource) FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error) {
 	return predicate(r)
 }
 
-func (r *Resource) FindMethod(key string) (*OperationStore, error) {
+func (r *standardResource) FindMethod(key string) (OperationStore, error) {
 	if r.Methods == nil {
 		return nil, fmt.Errorf("cannot find method with key = '%s' from nil methods", key)
 	}
 	return r.Methods.FindMethod(key)
 }
 
-func (rs *Resource) ToMap(extended bool) map[string]interface{} {
+func (rs *standardResource) ToMap(extended bool) map[string]interface{} {
 	retVal := make(map[string]interface{})
 	retVal["id"] = rs.ID
 	retVal["name"] = rs.Name
@@ -326,7 +377,7 @@ func (rs *Resource) ToMap(extended bool) map[string]interface{} {
 	return retVal
 }
 
-func (rs *Resource) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
+func (rs *standardResource) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	val, ok := rs.ToMap(true)[lhs]
 	rv, err := InterfaceToSQLType(val)
 	if !ok {
@@ -335,7 +386,7 @@ func (rs *Resource) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	return rv, err
 }
 
-func (rs *Resource) GetKey(lhs string) (interface{}, error) {
+func (rs *standardResource) GetKey(lhs string) (interface{}, error) {
 	val, ok := rs.ToMap(true)[lhs]
 	if !ok {
 		return nil, fmt.Errorf("key '%s' no preset in metadata_service", lhs)
@@ -343,25 +394,25 @@ func (rs *Resource) GetKey(lhs string) (interface{}, error) {
 	return val, nil
 }
 
-func (rs *Resource) KeyExists(lhs string) bool {
+func (rs *standardResource) KeyExists(lhs string) bool {
 	_, ok := rs.ToMap(true)[lhs]
 	return ok
 }
 
-func (rs *Resource) GetRequiredParameters() map[string]Addressable {
+func (rs *standardResource) GetRequiredParameters() map[string]Addressable {
 	return nil
 }
 
-func (rs *Resource) GetName() string {
+func (rs *standardResource) GetName() string {
 	return rs.Name
 }
 
 func ResourceConditionIsValid(lhs string, rhs interface{}) bool {
-	rs := &Resource{}
+	rs := &standardResource{}
 	return rs.ConditionIsValid(lhs, rhs)
 }
 
 func ResourceKeyExists(key string) bool {
-	rs := &Resource{}
+	rs := &standardResource{}
 	return rs.KeyExists(key)
 }

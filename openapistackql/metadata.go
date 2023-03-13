@@ -60,18 +60,18 @@ func GetResourcesHeader(extended bool) []string {
 }
 
 type MetadataStore struct {
-	Store map[string]*Service
+	Store map[string]Service
 }
 
-func (ms *MetadataStore) GetServices() ([]*Service, error) {
-	var retVal []*Service
+func (ms *MetadataStore) GetServices() ([]Service, error) {
+	var retVal []Service
 	for _, svc := range ms.Store {
 		retVal = append(retVal, svc)
 	}
 	return retVal, nil
 }
 
-func (ms *MetadataStore) GetResources(serviceName string) (map[string]*Resource, error) {
+func (ms *MetadataStore) GetResources(serviceName string) (map[string]Resource, error) {
 	svc, ok := ms.Store[serviceName]
 	if !ok {
 		return nil, fmt.Errorf("cannnot find service %s", serviceName)
@@ -79,7 +79,7 @@ func (ms *MetadataStore) GetResources(serviceName string) (map[string]*Resource,
 	return svc.GetResources()
 }
 
-func (ms *MetadataStore) GetResource(serviceName string, resourceName string) (*Resource, error) {
+func (ms *MetadataStore) GetResource(serviceName string, resourceName string) (Resource, error) {
 	rscs, err := ms.GetResources(serviceName)
 	if err != nil {
 		return nil, err

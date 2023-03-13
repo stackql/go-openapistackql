@@ -6,23 +6,52 @@ import (
 	"github.com/go-openapi/jsonpointer"
 )
 
+var (
+	_ TokenSemantic = &standardTokenSemantic{}
+)
+
 type TokenSemanticArgs map[string]interface{}
 
-type TokenSemantic struct {
+type TokenSemantic interface {
+	JSONLookup(token string) (interface{}, error)
+	GetAlgorithm() string
+	GetArgs() TokenSemanticArgs
+	GetKey() string
+	GetLocation() string
+	GetTransformer() (TokenTransformer, error)
+}
+
+type standardTokenSemantic struct {
 	Algorithm string            `json:"algorithm,omitempty" yaml:"algorithm,omitempty"`
 	Args      TokenSemanticArgs `json:"args,omitempty" yaml:"args,omitempty"`
 	Key       string            `json:"key,omitempty" yaml:"key,omitempty"`
 	Location  string            `json:"location,omitempty" yaml:"location,omitempty"`
 }
 
-func (ts *TokenSemantic) GetTransformer() (TokenTransformer, error) {
+func (ts *standardTokenSemantic) GetTransformer() (TokenTransformer, error) {
 	tl := NewStandardTransformerLocator()
 	return tl.GetTransformer(ts)
 }
 
-var _ jsonpointer.JSONPointable = (TokenSemantic)(TokenSemantic{})
+func (ts *standardTokenSemantic) GetAlgorithm() string {
+	return ts.Algorithm
+}
 
-func (qt TokenSemantic) JSONLookup(token string) (interface{}, error) {
+func (ts *standardTokenSemantic) GetArgs() TokenSemanticArgs {
+	return ts.Args
+}
+
+func (ts *standardTokenSemantic) GetKey() string {
+	return ts.Key
+}
+
+func (ts *standardTokenSemantic) GetLocation() string {
+	return ts.Location
+}
+
+var _ jsonpointer.JSONPointable = (TokenSemantic)(&standardTokenSemantic{})
+
+func (qt *standardTokenSemantic) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "algorithm":
 		return qt.Algorithm, nil

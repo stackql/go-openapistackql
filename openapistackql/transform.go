@@ -6,13 +6,22 @@ import (
 	"github.com/go-openapi/jsonpointer"
 )
 
-type Transform struct {
+type Transform interface {
+	JSONLookup(token string) (interface{}, error)
+	GetAlgorithm() string
+}
+
+type standardTransform struct {
 	Algorithm string `json:"algorithm,omitempty" yaml:"algorithm,omitempty"`
 }
 
-var _ jsonpointer.JSONPointable = (Transform)(Transform{})
+func (ts standardTransform) GetAlgorithm() string {
+	return ts.Algorithm
+}
 
-func (qt Transform) JSONLookup(token string) (interface{}, error) {
+var _ jsonpointer.JSONPointable = (Transform)(standardTransform{})
+
+func (qt standardTransform) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "algorithm":
 		return qt.Algorithm, nil

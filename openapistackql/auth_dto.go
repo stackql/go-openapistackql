@@ -6,7 +6,23 @@ import (
 	"github.com/go-openapi/jsonpointer"
 )
 
-type AuthDTO struct {
+var (
+	_ jsonpointer.JSONPointable = (AuthDTO)(standardAuthDTO{})
+	_ AuthDTO                   = standardAuthDTO{}
+)
+
+type AuthDTO interface {
+	JSONLookup(token string) (interface{}, error)
+	GetType() string
+	GetKeyID() string
+	GetKeyIDEnvVar() string
+	GetKeyFilePath() string
+	GetKeyEnvVar() string
+	GetScopes() []string
+	GetValuePrefix() string
+}
+
+type standardAuthDTO struct {
 	Scopes      []string `json:"scopes,omitempty" yaml:"scopes,omitempty"`
 	Type        string   `json:"type" yaml:"type"`
 	ValuePrefix string   `json:"valuePrefix" yaml:"valuePrefix"`
@@ -16,9 +32,35 @@ type AuthDTO struct {
 	KeyEnvVar   string   `json:"credentialsenvvar" yaml:"credentialsenvvar"`
 }
 
-var _ jsonpointer.JSONPointable = (AuthDTO)(AuthDTO{})
+func (qt standardAuthDTO) GetType() string {
+	return qt.Type
+}
 
-func (qt AuthDTO) JSONLookup(token string) (interface{}, error) {
+func (qt standardAuthDTO) GetKeyID() string {
+	return qt.KeyID
+}
+
+func (qt standardAuthDTO) GetKeyIDEnvVar() string {
+	return qt.KeyIDEnvVar
+}
+
+func (qt standardAuthDTO) GetKeyFilePath() string {
+	return qt.KeyFilePath
+}
+
+func (qt standardAuthDTO) GetKeyEnvVar() string {
+	return qt.KeyEnvVar
+}
+
+func (qt standardAuthDTO) GetScopes() []string {
+	return qt.Scopes
+}
+
+func (qt standardAuthDTO) GetValuePrefix() string {
+	return qt.ValuePrefix
+}
+
+func (qt standardAuthDTO) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "keyID":
 		return qt.KeyID, nil

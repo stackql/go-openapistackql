@@ -16,15 +16,11 @@ import (
 )
 
 var (
-	dummmyContrivedProv *Provider = &Provider{
-		Name: "github",
-	}
-	dummmyGoogleProv *Provider = &Provider{
-		Name: "google",
-	}
-	dummmyK8sProv *Provider = &Provider{
-		Name: "k8s",
-	}
+	dummmyContrivedProv Provider = NewProvider("", "github", "", "")
+
+	dummmyGoogleProv Provider = NewProvider("", "google", "", "")
+
+	dummmyK8sProv Provider = NewProvider("", "k8s", "", "")
 )
 
 func TestPlaceholder(t *testing.T) {

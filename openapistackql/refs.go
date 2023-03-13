@@ -74,10 +74,14 @@ func (opr OperationRef) extractFragment() string {
 
 type OperationStoreRef struct {
 	Ref   string `json:"$ref" yaml:"$ref"`
-	Value *OperationStore
+	Value *standardOperationStore
 }
 
-func (osr OperationStoreRef) extractMethodItem() string {
+func (osr *OperationStoreRef) hasValue() bool {
+	return osr.Value != nil
+}
+
+func (osr *OperationStoreRef) extractMethodItem() string {
 	return extractSuffix(osr.Ref)
 }
 
@@ -88,12 +92,12 @@ type PathItemRef struct {
 
 type ServiceRef struct {
 	Ref   string `json:"$ref" yaml:"$ref"`
-	Value *Service
+	Value *standardService
 }
 
 type ResourcesRef struct {
 	Ref   string `json:"$ref" yaml:"$ref"`
-	Value *ResourceRegister
+	Value *standardResourceRegister
 }
 
 var _ jsonpointer.JSONPointable = (*OperationRef)(nil)
