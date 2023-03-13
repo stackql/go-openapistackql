@@ -28,8 +28,8 @@ func TestSimpleOktaApplicationServiceRead(t *testing.T) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["application"]
-		if !ok {
+		ps, err := pr.GetProviderService("application")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
 		}
 
@@ -210,8 +210,8 @@ func TestSimpleGoogleComputeServiceJsonReadAndDumpString(t *testing.T) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["compute"]
-		if !ok {
+		ps, err := pr.GetProviderService("compute")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for google.compute")
 		}
 
@@ -270,8 +270,8 @@ func TestSimpleGoogleComputeResourcesJsonRead(t *testing.T) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["compute"]
-		if !ok {
+		ps, err := pr.GetProviderService("compute")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for google.compute")
 		}
 

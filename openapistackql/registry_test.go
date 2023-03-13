@@ -149,8 +149,8 @@ func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAP
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["application"]
-		if !ok {
+		ps, err := pr.GetProviderService("application")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
 		}
 		svc, err := r.GetService(ps)
@@ -294,8 +294,8 @@ func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["application"]
-		if !ok {
+		ps, err := pr.GetProviderService("application")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
 		}
 		svc, err := r.GetService(ps)

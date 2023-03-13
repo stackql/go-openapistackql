@@ -14,9 +14,9 @@ import (
 type Service struct {
 	*openapi3.T
 	rsc             map[string]*Resource
-	StackQLConfig   *StackQLConfig   `json:"-" yaml:"-"`
-	ProviderService *ProviderService `json:"-" yaml:"-"` // upwards traversal
-	Provider        *Provider        `json:"-" yaml:"-"` // upwards traversal
+	StackQLConfig   *StackQLConfig    `json:"-" yaml:"-"`
+	ProviderService *ProviderService  `json:"-" yaml:"-"` // upwards traversal
+	Provider        *standardProvider `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (sv *Service) iDiscoveryDoc() {}

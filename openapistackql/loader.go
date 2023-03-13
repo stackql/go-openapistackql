@@ -297,11 +297,11 @@ func (svc *Service) ToYaml() ([]byte, error) {
 	return yamlconv.JSONToYAML(j)
 }
 
-func (pr *Provider) ToJson() ([]byte, error) {
+func (pr *standardProvider) ToJson() ([]byte, error) {
 	return pr.MarshalJSON()
 }
 
-func (pr *Provider) ToYaml() ([]byte, error) {
+func (pr *standardProvider) ToYaml() ([]byte, error) {
 	j, err := pr.ToJson()
 	if err != nil {
 		return nil, err
@@ -317,7 +317,7 @@ func (svc *Service) ToYamlFile(filePath string) error {
 	return os.WriteFile(filePath, bytes, ConfigFilesMode)
 }
 
-func (pr *Provider) ToYamlFile(filePath string) error {
+func (pr *standardProvider) ToYamlFile(filePath string) error {
 	bytes, err := pr.ToYaml()
 	if err != nil {
 		return err
@@ -340,7 +340,7 @@ func LoadServiceDocFromBytes(ps *ProviderService, bytes []byte) (*Service, error
 	return loadServiceDocFromBytes(ps, bytes)
 }
 
-func LoadProviderDocFromBytes(bytes []byte) (*Provider, error) {
+func LoadProviderDocFromBytes(bytes []byte) (Provider, error) {
 	return loadProviderDocFromBytes(bytes)
 }
 
@@ -352,7 +352,7 @@ func LoadServiceDocFromFile(ps *ProviderService, fileName string) (*Service, err
 	return loadServiceDocFromBytes(ps, bytes)
 }
 
-func LoadProviderDocFromFile(fileName string) (*Provider, error) {
+func LoadProviderDocFromFile(fileName string) (Provider, error) {
 	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return nil, err
@@ -389,7 +389,7 @@ func GetServiceDocBytes(url string) ([]byte, error) {
 	return getServiceDocBytes(url)
 }
 
-func LoadProviderByName(prov, version string) (*Provider, error) {
+func LoadProviderByName(prov, version string) (Provider, error) {
 	b, err := GetProviderDocBytes(path.Join(prov, version))
 	if err != nil {
 		return nil, err
@@ -478,8 +478,8 @@ func LoadServiceSubsetDocFromBytes(rr *ResourceRegister, resourceKey string, byt
 	return loader.LoadFromBytesAndResources(rr, resourceKey, bytes)
 }
 
-func loadProviderDocFromBytes(bytes []byte) (*Provider, error) {
-	var prov Provider
+func loadProviderDocFromBytes(bytes []byte) (Provider, error) {
+	var prov standardProvider
 	err := yaml.Unmarshal(bytes, &prov)
 	if err != nil {
 		return nil, err

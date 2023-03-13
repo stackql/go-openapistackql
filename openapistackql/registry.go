@@ -41,7 +41,7 @@ type RegistryAPI interface {
 	GetDocBytes(string) ([]byte, error)
 	GetLatestAvailableVersion(string) (string, error)
 	GetLatestPublishedVersion(string) (string, error)
-	GetResourcesShallowFromProvider(*Provider, string) (*ResourceRegister, error)
+	GetResourcesShallowFromProvider(Provider, string) (*ResourceRegister, error)
 	GetResourcesShallowFromProviderService(*ProviderService) (*ResourceRegister, error)
 	GetResourcesShallowFromURL(ps *ProviderService) (*ResourceRegister, error)
 	GetService(ps *ProviderService) (*Service, error)
@@ -49,7 +49,7 @@ type RegistryAPI interface {
 	GetServiceFromProviderService(*ProviderService) (*Service, error)
 	GetServiceDocBytes(string) ([]byte, error)
 	GetResourcesRegisterDocBytes(string) ([]byte, error)
-	LoadProviderByName(string, string) (*Provider, error)
+	LoadProviderByName(string, string) (Provider, error)
 }
 
 type RegistryConfig struct {
@@ -296,7 +296,7 @@ func (r *Registry) pullAndPersistProviderArchive(prov string, version string) er
 	return compression.DecompressToPath(rdr, path.Join(r.getLocalDocRoot(), pr))
 }
 
-func (r *Registry) LoadProviderByName(prov string, version string) (*Provider, error) {
+func (r *Registry) LoadProviderByName(prov string, version string) (Provider, error) {
 	b, err := r.getProviderDocBytes(prov, version)
 	if err != nil {
 		return nil, err
@@ -320,7 +320,7 @@ func (r *Registry) GetService(ps *ProviderService) (*Service, error) {
 	}
 	return LoadServiceDocFromBytes(ps, b)
 }
-func (r *Registry) GetResourcesShallowFromProvider(pr *Provider, serviceKey string) (*ResourceRegister, error) {
+func (r *Registry) GetResourcesShallowFromProvider(pr Provider, serviceKey string) (*ResourceRegister, error) {
 	return pr.getResourcesShallowWithRegistry(r, serviceKey)
 }
 

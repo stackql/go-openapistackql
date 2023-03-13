@@ -15,7 +15,23 @@ type ResponseKeys struct {
 	DeleteItemsKey string `json:"deleteItemsKey,omitempty" yaml:"deleteItemsKey,omitempty"`
 }
 
-type Provider struct {
+type Provider interface {
+	Debug() string
+	GetAuth() (*AuthDTO, bool)
+	GetPaginationRequestTokenSemantic() (*TokenSemantic, bool)
+	GetPaginationResponseTokenSemantic() (*TokenSemantic, bool)
+	GetProviderService(key string) (*ProviderService, error)
+	GetQueryTransposeAlgorithm() string
+	GetRequestTranslateAlgorithm() string
+	GetResourcesShallow(serviceKey string) (*ResourceRegister, error)
+	JSONLookup(token string) (interface{}, error)
+	MarshalJSON() ([]byte, error)
+	UnmarshalJSON(data []byte) error
+	//
+	getResourcesShallowWithRegistry(registry *Registry, serviceKey string) (*ResourceRegister, error)
+}
+
+type standardProvider struct {
 	openapi3.ExtensionProps
 	ResponseKeys
 	FilePath         string                      `json:"-" yaml:"-"`
@@ -30,40 +46,40 @@ type Provider struct {
 
 type ProviderService struct {
 	openapi3.ExtensionProps
-	ID            string         `json:"id" yaml:"id"`           // Required
-	Name          string         `json:"name" yaml:"name"`       // Required
-	Title         string         `json:"title" yaml:"title"`     // Required
-	Version       string         `json:"version" yaml:"version"` // Required
-	Description   string         `json:"description" yaml:"description"`
-	Preferred     bool           `json:"preferred" yaml:"preferred"`
-	ServiceRef    *ServiceRef    `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
-	ResourcesRef  *ResourcesRef  `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
-	Provider      *Provider      `json:"-" yaml:"-"`                                     // upwards traversal
-	StackQLConfig *StackQLConfig `json:"config,omitempty" yaml:"config,omitempty"`
+	ID            string            `json:"id" yaml:"id"`           // Required
+	Name          string            `json:"name" yaml:"name"`       // Required
+	Title         string            `json:"title" yaml:"title"`     // Required
+	Version       string            `json:"version" yaml:"version"` // Required
+	Description   string            `json:"description" yaml:"description"`
+	Preferred     bool              `json:"preferred" yaml:"preferred"`
+	ServiceRef    *ServiceRef       `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
+	ResourcesRef  *ResourcesRef     `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
+	Provider      *standardProvider `json:"-" yaml:"-"`                                     // upwards traversal
+	StackQLConfig *StackQLConfig    `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
-func (pr *Provider) GetAuth() (*AuthDTO, bool) {
+func (pr *standardProvider) GetAuth() (*AuthDTO, bool) {
 	if pr.StackQLConfig != nil {
 		return pr.StackQLConfig.GetAuth()
 	}
 	return nil, false
 }
 
-func (pr *Provider) GetQueryTransposeAlgorithm() string {
+func (pr *standardProvider) GetQueryTransposeAlgorithm() string {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
 	return pr.StackQLConfig.QueryTranspose.Algorithm
 }
 
-func (pr *Provider) GetRequestTranslateAlgorithm() string {
+func (pr *standardProvider) GetRequestTranslateAlgorithm() string {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.RequestTranslate == nil {
 		return ""
 	}
 	return pr.StackQLConfig.RequestTranslate.Algorithm
 }
 
-func (pr *Provider) isObjectSchemaImplicitlyUnioned() bool {
+func (pr *standardProvider) isObjectSchemaImplicitlyUnioned() bool {
 	if pr.StackQLConfig != nil {
 		return pr.StackQLConfig.isObjectSchemaImplicitlyUnioned()
 	}
@@ -98,14 +114,14 @@ func (sv *ProviderService) GetPaginationResponseTokenSemantic() (*TokenSemantic,
 	return sv.StackQLConfig.Pagination.ResponseToken, true
 }
 
-func (pr *Provider) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
+func (pr *standardProvider) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
 	return pr.StackQLConfig.Pagination.RequestToken, true
 }
 
-func (pr *Provider) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
+func (pr *standardProvider) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
 	}
@@ -133,11 +149,11 @@ func getResourcesShallow(ps *ProviderService) (*ResourceRegister, error) {
 	return loadResourcesShallow(ps, b)
 }
 
-func (pr *Provider) MarshalJSON() ([]byte, error) {
+func (pr *standardProvider) MarshalJSON() ([]byte, error) {
 	return jsoninfo.MarshalStrictStruct(pr)
 }
 
-func (pr *Provider) UnmarshalJSON(data []byte) error {
+func (pr *standardProvider) UnmarshalJSON(data []byte) error {
 	return jsoninfo.UnmarshalStrictStruct(data, pr)
 }
 
@@ -180,7 +196,7 @@ func (ps *ProviderService) GetKey(lhs string) (interface{}, error) {
 	return val, nil
 }
 
-func (pr *Provider) getServiceWithRegistry(registry *Registry, key string) (*Service, error) {
+func (pr *standardProvider) getServiceWithRegistry(registry *Registry, key string) (*Service, error) {
 	sh, err := pr.getProviderService(key)
 	if err != nil {
 		return nil, err
@@ -188,7 +204,7 @@ func (pr *Provider) getServiceWithRegistry(registry *Registry, key string) (*Ser
 	return sh.getServiceWithRegistry(registry)
 }
 
-func (pr *Provider) GetService(key string) (*Service, error) {
+func (pr *standardProvider) GetService(key string) (*Service, error) {
 	sh, err := pr.getProviderService(key)
 	if err != nil {
 		return nil, err
@@ -196,7 +212,7 @@ func (pr *Provider) GetService(key string) (*Service, error) {
 	return sh.GetService()
 }
 
-func (pr *Provider) getResourcesShallowWithRegistry(registry *Registry, serviceKey string) (*ResourceRegister, error) {
+func (pr *standardProvider) getResourcesShallowWithRegistry(registry *Registry, serviceKey string) (*ResourceRegister, error) {
 	sh, err := pr.getProviderService(serviceKey)
 	if err != nil {
 		return nil, err
@@ -204,7 +220,7 @@ func (pr *Provider) getResourcesShallowWithRegistry(registry *Registry, serviceK
 	return sh.getResourcesShallowWithRegistry(registry)
 }
 
-func (pr *Provider) GetResourcesShallow(serviceKey string) (*ResourceRegister, error) {
+func (pr *standardProvider) GetResourcesShallow(serviceKey string) (*ResourceRegister, error) {
 	sh, err := pr.getProviderService(serviceKey)
 	if err != nil {
 		return nil, err
@@ -212,7 +228,7 @@ func (pr *Provider) GetResourcesShallow(serviceKey string) (*ResourceRegister, e
 	return sh.GetResourcesShallow()
 }
 
-func (pr *Provider) getProviderService(key string) (*ProviderService, error) {
+func (pr *standardProvider) getProviderService(key string) (*ProviderService, error) {
 	sh, ok := pr.ProviderServices[key]
 	if !ok {
 		return nil, fmt.Errorf("cannot resolve service with key = '%s'", key)
@@ -220,7 +236,7 @@ func (pr *Provider) getProviderService(key string) (*ProviderService, error) {
 	return sh, nil
 }
 
-func (pr *Provider) GetProviderService(key string) (*ProviderService, error) {
+func (pr *standardProvider) GetProviderService(key string) (*ProviderService, error) {
 	return pr.getProviderService(key)
 }
 
@@ -378,9 +394,9 @@ func (ps *ProviderService) KeyExists(lhs string) bool {
 	return ok
 }
 
-var _ jsonpointer.JSONPointable = (Provider)(Provider{})
+var _ jsonpointer.JSONPointable = (Provider)(&standardProvider{})
 
-func (prov Provider) JSONLookup(token string) (interface{}, error) {
+func (prov *standardProvider) JSONLookup(token string) (interface{}, error) {
 	if prov.ProviderServices == nil {
 		return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
 	}
@@ -391,8 +407,8 @@ func (prov Provider) JSONLookup(token string) (interface{}, error) {
 	return &ps, nil
 }
 
-func NewProvider(id, name, title, version string) *Provider {
-	return &Provider{
+func NewProvider(id, name, title, version string) Provider {
+	return &standardProvider{
 		ID:      id,
 		Name:    name,
 		Title:   title,
@@ -400,8 +416,8 @@ func NewProvider(id, name, title, version string) *Provider {
 	}
 }
 
-func (pr *Provider) iDiscoveryDoc() {}
+func (pr *standardProvider) iDiscoveryDoc() {}
 
-func (pr *Provider) Debug() string {
+func (pr *standardProvider) Debug() string {
 	return fmt.Sprintf("%v", pr)
 }

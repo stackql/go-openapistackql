@@ -13,7 +13,7 @@ type ResourceRegister struct {
 	ServiceDocPath  *ServiceRef          `json:"serviceDoc,omitempty" yaml:"serviceDoc,omitempty"`
 	Resources       map[string]*Resource `json:"resources,omitempty" yaml:"resources,omitempty"`
 	ProviderService *ProviderService     `json:"-" yaml:"-"` // upwards traversal
-	Provider        *Provider            `json:"-" yaml:"-"` // upwards traversal
+	Provider        *standardProvider    `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (rr *ResourceRegister) ObtainServiceDocUrl(resourceKey string) string {
@@ -48,7 +48,7 @@ type Resource struct {
 	StackQLConfig     *StackQLConfig                 `json:"config,omitempty" yaml:"config,omitempty"`
 	Service           *Service                       `json:"-" yaml:"-"` // upwards traversal
 	ProviderService   *ProviderService               `json:"-" yaml:"-"` // upwards traversal
-	Provider          *Provider                      `json:"-" yaml:"-"` // upwards traversal
+	Provider          *standardProvider              `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (r *Resource) GetQueryTransposeAlgorithm() string {

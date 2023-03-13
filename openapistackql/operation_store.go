@@ -135,11 +135,11 @@ type OperationStore struct {
 	Response     *ExpectedResponse      `json:"response" yaml:"response"`
 	Servers      *openapi3.Servers      `json:"servers" yaml:"servers"`
 	// private
-	parameterizedPath string           `json:"-" yaml:"-"`
-	ProviderService   *ProviderService `json:"-" yaml:"-"` // upwards traversal
-	Provider          *Provider        `json:"-" yaml:"-"` // upwards traversal
-	Service           *Service         `json:"-" yaml:"-"` // upwards traversal
-	Resource          *Resource        `json:"-" yaml:"-"` // upwards traversal
+	parameterizedPath string            `json:"-" yaml:"-"`
+	ProviderService   *ProviderService  `json:"-" yaml:"-"` // upwards traversal
+	Provider          *standardProvider `json:"-" yaml:"-"` // upwards traversal
+	Service           *Service          `json:"-" yaml:"-"` // upwards traversal
+	Resource          *Resource         `json:"-" yaml:"-"` // upwards traversal
 }
 
 func (op *OperationStore) ParameterMatch(params map[string]interface{}) (map[string]interface{}, bool) {
@@ -689,7 +689,7 @@ func (op *OperationStore) marshalBody(body interface{}, expectedRequest *Expecte
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.BodyMediaType)
 }
 
-func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, inputParams *HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
+func (op *OperationStore) Parameterize(prov Provider, parentDoc *Service, inputParams *HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
 	copyParams := make(map[string]interface{})
 	flatParameters, err := inputParams.ToFlatMap()
