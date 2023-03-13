@@ -75,15 +75,15 @@ func (svc *Service) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) 
 	return svc.StackQLConfig.Pagination.ResponseToken, true
 }
 
-func (svc *Service) GetSchemas() (map[string]*Schema, error) {
-	rv := make(map[string]*Schema)
+func (svc *Service) GetSchemas() (map[string]*standardSchema, error) {
+	rv := make(map[string]*standardSchema)
 	for k, sv := range svc.Components.Schemas {
 		rv[k] = NewSchema(sv.Value, svc, k, sv.Ref)
 	}
 	return rv, nil
 }
 
-func (svc *Service) GetSchema(key string) (*Schema, error) {
+func (svc *Service) GetSchema(key string) (*standardSchema, error) {
 	svcName := svc.Info.Title
 	responseSref, ok := svc.Components.Schemas[key]
 	if !ok {

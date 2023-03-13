@@ -109,7 +109,7 @@ func NewOperationSelector(slqVerb string, params map[string]interface{}) Operati
 
 type ExpectedRequest struct {
 	BodyMediaType string `json:"mediaType,omitempty" yaml:"mediaType,omitempty"`
-	Schema        *Schema
+	Schema        *standardSchema
 	Required      []string `json:"required,omitempty" yaml:"required,omitempty"`
 }
 
@@ -117,7 +117,7 @@ type ExpectedResponse struct {
 	BodyMediaType string `json:"mediaType,omitempty" yaml:"mediaType,omitempty"`
 	OpenAPIDocKey string `json:"openAPIDocKey,omitempty" yaml:"openAPIDocKey,omitempty"`
 	ObjectKey     string `json:"objectKey,omitempty" yaml:"objectKey,omitempty"`
-	Schema        *Schema
+	Schema        *standardSchema
 }
 
 type OperationStore struct {
@@ -821,11 +821,11 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	return requestValidationInput, nil
 }
 
-func (op *OperationStore) GetRequestBodySchema() (*Schema, error) {
+func (op *OperationStore) GetRequestBodySchema() (*standardSchema, error) {
 	return op.getRequestBodySchema()
 }
 
-func (op *OperationStore) getRequestBodySchema() (*Schema, error) {
+func (op *OperationStore) getRequestBodySchema() (*standardSchema, error) {
 	if op.Request != nil {
 		return op.Request.Schema, nil
 	}
@@ -851,18 +851,18 @@ func (op *OperationStore) IsRequiredRequestBodyProperty(key string) bool {
 	return false
 }
 
-func (op *OperationStore) GetResponseBodySchemaAndMediaType() (*Schema, string, error) {
+func (op *OperationStore) GetResponseBodySchemaAndMediaType() (*standardSchema, string, error) {
 	return op.getResponseBodySchemaAndMediaType()
 }
 
-func (op *OperationStore) getResponseBodySchemaAndMediaType() (*Schema, string, error) {
+func (op *OperationStore) getResponseBodySchemaAndMediaType() (*standardSchema, string, error) {
 	if op.Response != nil && op.Response.Schema != nil {
 		return op.Response.Schema, op.Response.BodyMediaType, nil
 	}
 	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
 }
 
-func (op *OperationStore) GetSelectSchemaAndObjectPath() (*Schema, string, error) {
+func (op *OperationStore) GetSelectSchemaAndObjectPath() (Schema, string, error) {
 	k := op.lookupSelectItemsKey()
 	if op.Response != nil && op.Response.Schema != nil {
 		return op.Response.Schema.getSelectItemsSchema(k, op.getOptimalResponseMediaType())

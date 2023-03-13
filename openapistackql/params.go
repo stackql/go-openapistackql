@@ -39,7 +39,7 @@ func (p *Parameter) GetLocation() string {
 	return p.In
 }
 
-func (p *Parameter) GetSchema() (*Schema, bool) {
+func (p *Parameter) GetSchema() (Schema, bool) {
 	if p.Schema != nil && p.Schema.Value != nil {
 		return NewSchema(p.Schema.Value, p.svc, "", p.Schema.Ref), true
 	}

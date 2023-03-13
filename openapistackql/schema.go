@@ -25,7 +25,46 @@ const (
 
 var (
 	AnonymousColumnName string = defaultAnonymousColumnName
+	_                   Schema = (*standardSchema)(nil)
 )
+
+type Schema interface {
+	ConditionIsValid(lhs string, rhs interface{}) bool
+	DeprecatedProcessHttpResponse(response *http.Response, path string) (map[string]interface{}, error)
+	FindByPath(path string, visited map[string]bool) Schema
+	GetAllColumns() []string
+	GetItemProperty(k string) (Schema, bool)
+	GetItems() (Schema, error)
+	GetName() string
+	GetPath() string
+	GetProperties() (Schemas, error)
+	GetProperty(propertyKey string) (Schema, error)
+	GetSelectionName() string
+	GetType() string
+	IsArrayRef() bool
+	IsBoolean() bool
+	IsFloat() bool
+	IsIntegral() bool
+	IsRequired(key string) bool
+	ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error)
+	ToDescriptionMap(extended bool) map[string]interface{}
+	// not exported, but essential
+	deprecatedGetSelectItemsSchema(key string, mediaType string) (Schema, string, error)
+	getAllOf() openapi3.SchemaRefs
+	getDescendent(path []string) (Schema, bool)
+	getFatItemsSchema(srs openapi3.SchemaRefs) Schema
+	getItemsRef() (*openapi3.SchemaRef, bool)
+	getKey() string
+	getOpenapiSchema() (*openapi3.Schema, bool)
+	getPropertiesColumns() []ColumnDescriptor
+	getXmlAlias() string
+	getXMLChild(path string, isTerminal bool) (Schema, bool)
+	getXMLDescendent(path []string) (Schema, bool)
+	isXmlWrapped() bool
+	setKey(string)
+	unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, interface{}, error)
+	unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, *xmlquery.Node, error)
+}
 
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(providerType, lhs, rhs)
@@ -47,11 +86,46 @@ func providerTypeConditionIsValid(providerType string, lhs string, rhs interface
 	}
 }
 
-func (s *Schema) ConditionIsValid(lhs string, rhs interface{}) bool {
+func (s *standardSchema) GetItemProperty(k string) (Schema, bool) {
+	raw, ok := s.Items.Value.Properties[k]
+	if !ok {
+		return nil, false
+	}
+	return NewSchema(raw.Value, s.svc, k, ""), ok
+}
+
+func (s *standardSchema) getItemsRef() (*openapi3.SchemaRef, bool) {
+	if s.Items != nil {
+		return s.Items, true
+	}
+	return nil, false
+}
+
+func (s *standardSchema) getKey() string {
+	return s.key
+}
+
+func (s *standardSchema) GetType() string {
+	return s.Type
+}
+
+func (s *standardSchema) setKey(k string) {
+	s.key = k
+}
+
+func (s *standardSchema) ConditionIsValid(lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(s.Type, lhs, rhs)
 }
 
-type Schema struct {
+func (s *standardSchema) getAllOf() openapi3.SchemaRefs {
+	return s.AllOf
+}
+
+func (s *standardSchema) getOpenapiSchema() (*openapi3.Schema, bool) {
+	return s.Schema, s.Schema != nil
+}
+
+type standardSchema struct {
 	*openapi3.Schema
 	svc            *Service
 	key            string
@@ -109,17 +183,17 @@ func copyOpenapiSchema(inSchema *openapi3.Schema) *openapi3.Schema {
 	return rv
 }
 
-type Schemas map[string]*Schema
+type Schemas map[string]Schema
 
-func NewSchema(sc *openapi3.Schema, svc *Service, key string, path string) *Schema {
+func NewSchema(sc *openapi3.Schema, svc *Service, key string, path string) *standardSchema {
 	return newSchema(sc, svc, key, path)
 }
 
-func (sc *Schema) GetPath() string {
+func (sc *standardSchema) GetPath() string {
 	return sc.path
 }
 
-func newSchema(sc *openapi3.Schema, svc *Service, key string, path string) *Schema {
+func newSchema(sc *openapi3.Schema, svc *Service, key string, path string) *standardSchema {
 	var alwaysRequired bool
 	if sc.Extensions != nil {
 		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {
@@ -128,7 +202,7 @@ func newSchema(sc *openapi3.Schema, svc *Service, key string, path string) *Sche
 			}
 		}
 	}
-	return &Schema{
+	return &standardSchema{
 		Schema:         sc,
 		svc:            svc,
 		key:            key,
@@ -137,18 +211,18 @@ func newSchema(sc *openapi3.Schema, svc *Service, key string, path string) *Sche
 	}
 }
 
-func (s *Schema) isObjectSchemaImplicitlyUnioned() bool {
+func (s *standardSchema) isObjectSchemaImplicitlyUnioned() bool {
 	if s.svc == nil {
 		return false
 	}
 	return s.svc.isObjectSchemaImplicitlyUnioned()
 }
 
-func (s *Schema) GetProperties() (Schemas, error) {
+func (s *standardSchema) GetProperties() (Schemas, error) {
 	return s.getProperties(), nil
 }
 
-func (s *Schema) getProperties() Schemas {
+func (s *standardSchema) getProperties() Schemas {
 	retVal := make(Schemas)
 	if s.isObjectSchemaImplicitlyUnioned() {
 		return s.getInplicitlyUnionedProperties()
@@ -170,7 +244,7 @@ func (s *Schema) getProperties() Schemas {
 // This is a horrendous hack to cover weird `properties` + `allOf` seen
 // all across azure autorest docs.  It is opt-in via config and
 // should, nay must, be removed when time permits
-func (s *Schema) getInplicitlyUnionedProperties() Schemas {
+func (s *standardSchema) getInplicitlyUnionedProperties() Schemas {
 	retVal := make(Schemas)
 	if s.hasPolymorphicProperties() {
 		ss := s.getFattnedPolymorphicSchema()
@@ -191,22 +265,22 @@ func getPathSuffix(path string) string {
 	return pathSplit[len(pathSplit)-1]
 }
 
-func (s *Schema) GetName() string {
+func (s *standardSchema) GetName() string {
 	return s.getName()
 }
 
-func (s *Schema) GetSelectionName() string {
+func (s *standardSchema) GetSelectionName() string {
 	if s.Items != nil {
 		return getPathSuffix(s.Items.Ref)
 	}
 	return s.getName()
 }
 
-func (s *Schema) getName() string {
+func (s *standardSchema) getName() string {
 	return getPathSuffix(s.key)
 }
 
-func (s *Schema) getXMLALiasOrName() string {
+func (s *standardSchema) getXMLALiasOrName() string {
 	xa := s.getXmlAlias()
 	if xa != "" {
 		return xa
@@ -214,7 +288,7 @@ func (s *Schema) getXMLALiasOrName() string {
 	return s.getName()
 }
 
-func (s *Schema) IsRequired(key string) bool {
+func (s *standardSchema) IsRequired(key string) bool {
 	for _, req := range s.Required {
 		if req == key {
 			return true
@@ -223,7 +297,7 @@ func (s *Schema) IsRequired(key string) bool {
 	return false
 }
 
-func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
+func (s *standardSchema) getXMLChild(path string, isTerminal bool) (Schema, bool) {
 	xmlAlias := s.getXmlAlias()
 	if xmlAlias == path {
 		return s, true
@@ -264,7 +338,7 @@ func (s *Schema) getXMLChild(path string, isTerminal bool) (*Schema, bool) {
 	return nil, false
 }
 
-func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
+func (s *standardSchema) getXMLDescendentInit(path []string) (Schema, bool) {
 	if len(path) == 0 {
 		return s, true
 	}
@@ -284,7 +358,7 @@ func (s *Schema) getXMLDescendentInit(path []string) (*Schema, bool) {
 	return p.getXMLDescendent(path[1:])
 }
 
-func (s *Schema) getDescendentInit(path []string) (*Schema, bool) {
+func (s *standardSchema) getDescendentInit(path []string) (Schema, bool) {
 	if len(path) == 0 {
 		return s, true
 	}
@@ -298,7 +372,7 @@ func (s *Schema) getDescendentInit(path []string) (*Schema, bool) {
 	return p.getDescendent(path[1:])
 }
 
-func (s *Schema) getXmlAttribute(key string) (interface{}, bool) {
+func (s *standardSchema) getXmlAttribute(key string) (interface{}, bool) {
 	if s.XML != nil {
 		if xmlMap, ok := s.XML.(map[string]interface{}); ok {
 			rv, ok := xmlMap[key]
@@ -308,7 +382,7 @@ func (s *Schema) getXmlAttribute(key string) (interface{}, bool) {
 	return nil, false
 }
 
-func (s *Schema) getXmlName() (string, bool) {
+func (s *standardSchema) getXmlName() (string, bool) {
 	if name, ok := s.getXmlAttribute("name"); ok {
 		nameStr, ok := name.(string)
 		return nameStr, ok
@@ -327,7 +401,7 @@ func (s *Schema) getXmlName() (string, bool) {
 	return "", false
 }
 
-func (s *Schema) isItemsXmlWrapped() bool {
+func (s *standardSchema) isItemsXmlWrapped() bool {
 	if s.Items != nil && s.Items.Value == nil {
 		itemsSchema := newSchema(s.Items.Value, s.svc, "", s.Items.Ref)
 		return itemsSchema.isXmlWrapped()
@@ -339,7 +413,7 @@ func (s *Schema) isItemsXmlWrapped() bool {
 	return false
 }
 
-func (s *Schema) isXmlWrapped() bool {
+func (s *standardSchema) isXmlWrapped() bool {
 	// This is a hack until aws.ec2 is fixed
 	if _, ok := s.getXmlName(); ok {
 		return true
@@ -363,7 +437,7 @@ func (s *Schema) isXmlWrapped() bool {
 	return isBool && wrappedBool
 }
 
-func (s *Schema) getXMLTerminal() (*Schema, bool) {
+func (s *standardSchema) getXMLTerminal() (Schema, bool) {
 	if !s.hasPolymorphicProperties() {
 		return s, true
 	}
@@ -378,7 +452,7 @@ func (s *Schema) getXMLTerminal() (*Schema, bool) {
 	return rv, true
 }
 
-func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
+func (s *standardSchema) getXMLDescendent(path []string) (Schema, bool) {
 	if len(path) == 0 {
 		return s.getXMLTerminal()
 	}
@@ -395,7 +469,7 @@ func (s *Schema) getXMLDescendent(path []string) (*Schema, bool) {
 	return p.getXMLDescendent(path[1:])
 }
 
-func (s *Schema) getDescendent(path []string) (*Schema, bool) {
+func (s *standardSchema) getDescendent(path []string) (Schema, bool) {
 	if len(path) == 0 {
 		return s, true
 	}
@@ -412,9 +486,15 @@ func (s *Schema) getDescendent(path []string) (*Schema, bool) {
 	return p.getDescendent(path[1:])
 }
 
-func (s *Schema) GetItems() (*Schema, error) {
+func (s *standardSchema) GetItems() (Schema, error) {
 	if len(s.AllOf) > 0 {
-		s = s.getFatItemsSchema(s.AllOf)
+		ns := s.getFatItemsSchema(s.getAllOf())
+		switch ns := ns.(type) {
+		case *standardSchema:
+			s = ns
+		default:
+			return nil, fmt.Errorf("failed to get items for schema with type = '%T'", ns)
+		}
 	}
 	if s.Items != nil && s.Items.Value != nil {
 		itemsPathSplit := strings.Split(s.Items.Ref, "/")
@@ -423,7 +503,7 @@ func (s *Schema) GetItems() (*Schema, error) {
 	return nil, fmt.Errorf("no items present in schema with key = '%s'", s.key)
 }
 
-func (s *Schema) GetProperty(propertyKey string) (*Schema, error) {
+func (s *standardSchema) GetProperty(propertyKey string) (Schema, error) {
 	rv, ok := s.getProperty(propertyKey)
 	if !ok {
 		return nil, fmt.Errorf("failed to get property '%s'", propertyKey)
@@ -431,7 +511,7 @@ func (s *Schema) GetProperty(propertyKey string) (*Schema, error) {
 	return rv, nil
 }
 
-func (s *Schema) getProperty(propertyKey string) (*Schema, bool) {
+func (s *standardSchema) getProperty(propertyKey string) (Schema, bool) {
 	var sc *openapi3.SchemaRef
 	var ok bool
 	if s.hasPolymorphicProperties() {
@@ -446,19 +526,19 @@ func (s *Schema) getProperty(propertyKey string) (*Schema, bool) {
 	return NewSchema(sc.Value, s.svc, getPathSuffix(sc.Ref), sc.Ref), true
 }
 
-func (s *Schema) IsIntegral() bool {
+func (s *standardSchema) IsIntegral() bool {
 	return s.Type == "int" || s.Type == "integer"
 }
 
-func (s *Schema) IsBoolean() bool {
+func (s *standardSchema) IsBoolean() bool {
 	return s.Type == "bool" || s.Type == "boolean"
 }
 
-func (s *Schema) IsFloat() bool {
+func (s *standardSchema) IsFloat() bool {
 	return s.Type == "float" || s.Type == "float64"
 }
 
-func (sc *Schema) GetPropertySchema(key string) (*Schema, error) {
+func (sc *standardSchema) GetPropertySchema(key string) (*standardSchema, error) {
 	absentErr := fmt.Errorf("property schema not present for key '%s'", key)
 	sh, ok := sc.Properties[key]
 	if !ok {
@@ -472,7 +552,7 @@ func (sc *Schema) GetPropertySchema(key string) (*Schema, error) {
 	), nil
 }
 
-func (sc *Schema) GetItemsSchema() (*Schema, error) {
+func (sc *standardSchema) GetItemsSchema() (Schema, error) {
 	absentErr := fmt.Errorf("items schema not present")
 	sh := sc.Items
 	if sh.Value != nil {
@@ -486,11 +566,11 @@ func (sc *Schema) GetItemsSchema() (*Schema, error) {
 	return nil, absentErr
 }
 
-func (schema *Schema) GetSelectListItems(key string) (*Schema, string) {
+func (schema *standardSchema) GetSelectListItems(key string) (Schema, string) {
 	return schema.getSelectListItems(key)
 }
 
-func (schema *Schema) getSelectListItems(key string) (*Schema, string) {
+func (schema *standardSchema) getSelectListItems(key string) (Schema, string) {
 	propS, ok := schema.Properties[key]
 	if !ok {
 		return nil, ""
@@ -507,7 +587,7 @@ func (schema *Schema) getSelectListItems(key string) (*Schema, string) {
 	return nil, ""
 }
 
-func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, string, error) {
+func (schema *standardSchema) GetSelectSchema(itemsKey, mediaType string) (Schema, string, error) {
 	if itemsKey == AnonymousColumnName {
 		switch schema.Type {
 		case "string", "integer":
@@ -525,7 +605,7 @@ func (schema *Schema) GetSelectSchema(itemsKey, mediaType string) (*Schema, stri
 }
 
 // TODO: implement upwards-searchable configurable type set matching
-func (schema *Schema) extractMediaTypeSynonym(mediaType string) string {
+func (schema *standardSchema) extractMediaTypeSynonym(mediaType string) string {
 	m, ok := media.DefaultMediaFuzzyMatcher.Find(mediaType)
 	if ok {
 		return m
@@ -533,7 +613,7 @@ func (schema *Schema) extractMediaTypeSynonym(mediaType string) string {
 	return mediaType
 }
 
-func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
+func (schema *standardSchema) getSelectItemsSchema(key string, mediaType string) (Schema, string, error) {
 	log.Infoln(fmt.Sprintf("schema.getSelectItemsSchema() key = '%s'", key))
 	if key == "" {
 		if schema.Items != nil && schema.Items.Value != nil {
@@ -546,17 +626,20 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 		pathResolver := openapitopath.NewXPathResolver()
 		pathSplit := pathResolver.ToPathSlice(key)
 		ss, ok := schema.getXMLDescendentInit(pathSplit)
-		if ok && ss.Items != nil && ss.Items.Value != nil {
-			rv, err := ss.GetItems()
-			if rv.key == "" {
-				for _, v := range rv.AllOf {
-					if v.Ref != "" {
-						rv.key = getPathSuffix(v.Ref)
-						break
+		if ok {
+			_, itemsRefExists := ss.getItemsRef()
+			if itemsRefExists {
+				rv, err := ss.GetItems()
+				if rv.getKey() == "" {
+					for _, v := range rv.getAllOf() {
+						if v.Ref != "" {
+							rv.setKey(getPathSuffix(v.Ref))
+							break
+						}
 					}
 				}
+				return rv, key, err
 			}
-			return rv, key, err
 		}
 		if ok {
 			return ss, key, nil
@@ -567,17 +650,20 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 			pathResolver := openapitopath.NewJSONPathResolver()
 			pathSplit := pathResolver.ToPathSlice(key)
 			ss, ok := schema.getDescendentInit(pathSplit)
-			if ok && ss.Items != nil && ss.Items.Value != nil {
-				rv, err := ss.GetItems()
-				if rv.key == "" {
-					for _, v := range rv.AllOf {
-						if v.Ref != "" {
-							rv.key = getPathSuffix(v.Ref)
-							break
+			if ok {
+				_, itemsRefExists := ss.getItemsRef()
+				if itemsRefExists {
+					rv, err := ss.GetItems()
+					if rv.getKey() == "" {
+						for _, v := range rv.getAllOf() {
+							if v.Ref != "" {
+								rv.setKey(getPathSuffix(v.Ref))
+								break
+							}
 						}
 					}
+					return rv, key, err
 				}
-				return rv, key, err
 			}
 			if ok {
 				return ss, key, nil
@@ -590,7 +676,7 @@ func (schema *Schema) getSelectItemsSchema(key string, mediaType string) (*Schem
 	}
 }
 
-func (schema *Schema) deprecatedGetSelectItemsSchema(key string, mediaType string) (*Schema, string, error) {
+func (schema *standardSchema) deprecatedGetSelectItemsSchema(key string, mediaType string) (Schema, string, error) {
 	var itemS *openapi3.Schema
 	var schemaPath string
 	log.Infoln(fmt.Sprintf("schema.deprecatedGetSelectItemsSchema() key = '%s'", key))
@@ -624,7 +710,7 @@ func (schema *Schema) deprecatedGetSelectItemsSchema(key string, mediaType strin
 	return nil, "", fmt.Errorf("could not find items for key = '%s'", key)
 }
 
-func (s *Schema) getType() string {
+func (s *standardSchema) getType() string {
 	if s.Type != "" {
 		return s.Type
 	}
@@ -636,7 +722,7 @@ func (s *Schema) getType() string {
 	return ""
 }
 
-func (s *Schema) getTitle() string {
+func (s *standardSchema) getTitle() string {
 	if s.Title != "" {
 		return s.Title
 	}
@@ -648,7 +734,7 @@ func (s *Schema) getTitle() string {
 	return ""
 }
 
-func (s *Schema) getDescription() string {
+func (s *standardSchema) getDescription() string {
 	if s.Description != "" {
 		return s.Description
 	}
@@ -660,7 +746,7 @@ func (s *Schema) getDescription() string {
 	return ""
 }
 
-func (s *Schema) toFlatDescriptionMap(extended bool) map[string]interface{} {
+func (s *standardSchema) toFlatDescriptionMap(extended bool) map[string]interface{} {
 	retVal := make(map[string]interface{})
 	retVal["name"] = s.getTitle()
 	retVal["type"] = s.getType()
@@ -670,14 +756,14 @@ func (s *Schema) toFlatDescriptionMap(extended bool) map[string]interface{} {
 	return retVal
 }
 
-func (s *Schema) GetAllColumns() []string {
+func (s *standardSchema) GetAllColumns() []string {
 	log.Infoln(fmt.Sprintf("s = %v", *s))
 	var retVal []string
 	properties := s.getProperties()
 	if s.Type == "object" || (len(properties) > 0) {
 		for k, val := range properties {
-			valSchema := val.Schema
-			if valSchema != nil {
+			_, valSchemaExists := val.getOpenapiSchema()
+			if valSchemaExists {
 				retVal = append(retVal, k)
 			}
 		}
@@ -694,11 +780,11 @@ func (s *Schema) GetAllColumns() []string {
 	return retVal
 }
 
-func (s *Schema) IsArrayRef() bool {
+func (s *standardSchema) IsArrayRef() bool {
 	return s.Items != nil && s.Items.Value != nil
 }
 
-func (s *Schema) getPropertiesColumns() []ColumnDescriptor {
+func (s *standardSchema) getPropertiesColumns() []ColumnDescriptor {
 	var cols []ColumnDescriptor
 	for k, val := range s.Properties {
 		valSchema := val.Value
@@ -723,15 +809,15 @@ func (s *Schema) getPropertiesColumns() []ColumnDescriptor {
 	return cols
 }
 
-func (s *Schema) getAllOfColumns() []ColumnDescriptor {
+func (s *standardSchema) getAllOfColumns() []ColumnDescriptor {
 	return s.getAllSchemaRefsColumns(s.AllOf)
 }
 
-func (s *Schema) getAnyOfColumns() []ColumnDescriptor {
+func (s *standardSchema) getAnyOfColumns() []ColumnDescriptor {
 	return s.getAllSchemaRefsColumns(s.AnyOf)
 }
 
-func (s *Schema) getOneOfColumns() []ColumnDescriptor {
+func (s *standardSchema) getOneOfColumns() []ColumnDescriptor {
 	return s.getAllSchemaRefsColumns(s.OneOf)
 }
 
@@ -743,7 +829,7 @@ func getSchemaName(sr *openapi3.SchemaRef) string {
 	return ""
 }
 
-func (s *Schema) getXmlAlias() string {
+func (s *standardSchema) getXmlAlias() string {
 	switch xml := s.XML.(type) {
 	case map[string]interface{}:
 		name, ok := xml["name"]
@@ -766,7 +852,7 @@ func (s *Schema) getXmlAlias() string {
 	return ""
 }
 
-func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
+func (s *standardSchema) getFatSchema(srs openapi3.SchemaRefs) *standardSchema {
 	var copiedSchema *openapi3.Schema
 	if s.Schema != nil {
 		copiedSchema = copyOpenapiSchema(s.Schema)
@@ -801,7 +887,7 @@ func (s *Schema) getFatSchema(srs openapi3.SchemaRefs) *Schema {
 	return rv
 }
 
-func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
+func (s *standardSchema) getFatItemsSchema(srs openapi3.SchemaRefs) Schema {
 	copySchema := copyOpenapiSchema(s.Schema)
 	rv := newSchema(copySchema, s.svc, s.key, s.path)
 	if rv.Properties == nil {
@@ -827,7 +913,7 @@ func (s *Schema) getFatItemsSchema(srs openapi3.SchemaRefs) *Schema {
 	return rv
 }
 
-func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
+func (s *standardSchema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) Schema {
 	var copiedSchema *openapi3.Schema
 	if s.Schema != nil {
 		copiedSchema = copyOpenapiSchema(s.Schema)
@@ -860,32 +946,32 @@ func (s *Schema) getFatSchemaWithOverwrites(srs openapi3.SchemaRefs) *Schema {
 	return rv
 }
 
-func (s *Schema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
+func (s *standardSchema) getAllSchemaRefsColumns(srs openapi3.SchemaRefs) []ColumnDescriptor {
 	sc := s.getFatSchema(srs)
 	st := sc.Tabulate(false)
 	return st.GetColumns()
 }
 
-func (s *Schema) getAllSchemaRefsColumnsShallow(srs openapi3.SchemaRefs) []ColumnDescriptor {
+func (s *standardSchema) getAllSchemaRefsColumnsShallow(srs openapi3.SchemaRefs) []ColumnDescriptor {
 	sc := s.getFatSchemaWithOverwrites(srs)
 	return sc.getPropertiesColumns()
 }
 
-func (s *Schema) hasPolymorphicProperties() bool {
+func (s *standardSchema) hasPolymorphicProperties() bool {
 	if len(s.AllOf) > 0 || len(s.AnyOf) > 0 || len(s.OneOf) > 0 {
 		return true
 	}
 	return false
 }
 
-func (s *Schema) hasPropertiesOrPolymorphicProperties() bool {
+func (s *standardSchema) hasPropertiesOrPolymorphicProperties() bool {
 	if s.Properties != nil && len(s.Properties) > 0 {
 		return true
 	}
 	return s.hasPolymorphicProperties()
 }
 
-func (s *Schema) isNotSimple() bool {
+func (s *standardSchema) isNotSimple() bool {
 	switch s.Type {
 	case "object", "array", "":
 		return true
@@ -894,7 +980,7 @@ func (s *Schema) isNotSimple() bool {
 	}
 }
 
-func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
+func (s *standardSchema) Tabulate(omitColumns bool) *Tabulation {
 	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.Type != "array") {
 		var cols []ColumnDescriptor
 		if !omitColumns {
@@ -940,7 +1026,7 @@ func (s *Schema) Tabulate(omitColumns bool) *Tabulation {
 	return nil
 }
 
-func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
+func (s *standardSchema) ToDescriptionMap(extended bool) map[string]interface{} {
 	retVal := make(map[string]interface{})
 	if s.Type == "array" {
 		items := s.Items.Value
@@ -980,7 +1066,7 @@ func (s *Schema) ToDescriptionMap(extended bool) map[string]interface{} {
 	return retVal
 }
 
-func (s *Schema) getFattnedPolymorphicSchema() *Schema {
+func (s *standardSchema) getFattnedPolymorphicSchema() *standardSchema {
 	if len(s.AllOf) > 0 {
 		return s.getFatSchema(s.AllOf)
 	}
@@ -993,7 +1079,7 @@ func (s *Schema) getFattnedPolymorphicSchema() *Schema {
 	return nil
 }
 
-func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
+func (s *standardSchema) FindByPath(path string, visited map[string]bool) Schema {
 	if visited == nil {
 		visited = make(map[string]bool)
 	}
@@ -1044,11 +1130,11 @@ func (s *Schema) FindByPath(path string, visited map[string]bool) *Schema {
 	return nil
 }
 
-func (s *Schema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, *xmlquery.Node, error) {
+func (s *standardSchema) unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, *xmlquery.Node, error) {
 	return xmlmap.GetSubObjTyped(body, path, s.Schema)
 }
 
-func (s *Schema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, interface{}, error) {
+func (s *standardSchema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, interface{}, error) {
 	var target interface{}
 	err := json.NewDecoder(body).Decode(&target)
 	if err != nil {
@@ -1061,7 +1147,7 @@ func (s *Schema) unmarshalJSONResponseBody(body io.ReadCloser, path string) (int
 	return processedResponse, target, nil
 }
 
-func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
+func (s *standardSchema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	body := r.Body
 	if body != nil {
 		defer body.Close()
@@ -1092,7 +1178,7 @@ func (s *Schema) unmarshalResponse(r *http.Response) (interface{}, error) {
 	return target, err
 }
 
-func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+func (s *standardSchema) unmarshalResponseAtPath(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
 
 	mediaType, err := media.GetResponseMediaType(r, defaultMediaType)
 	if err != nil {
@@ -1136,11 +1222,11 @@ func (s *Schema) unmarshalResponseAtPath(r *http.Response, path string, defaultM
 	}
 }
 
-func (s *Schema) ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+func (s *standardSchema) ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
 	return s.processHttpResponse(r, path, defaultMediaType)
 }
 
-func (s *Schema) processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+func (s *standardSchema) processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
 	defer r.Body.Close()
 	target, err := s.unmarshalResponseAtPath(r, path, defaultMediaType)
 	if err == nil && r.StatusCode >= 400 {
@@ -1163,7 +1249,7 @@ func (s *Schema) processHttpResponse(r *http.Response, path string, defaultMedia
 	return target, err
 }
 
-func (s *Schema) DeprecatedProcessHttpResponse(response *http.Response, path string) (map[string]interface{}, error) {
+func (s *standardSchema) DeprecatedProcessHttpResponse(response *http.Response, path string) (map[string]interface{}, error) {
 	target, err := s.processHttpResponse(response, path, "")
 	if err != nil {
 		return nil, err

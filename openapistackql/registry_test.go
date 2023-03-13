@@ -471,17 +471,17 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 
 		assert.Assert(t, items != nil)
 
-		name, nameExists := items.Items.Value.Properties["name"]
+		name, nameExists := items.GetItemProperty("name")
 
 		assert.Assert(t, nameExists)
 
-		assert.Equal(t, name.Value.Type, "string")
+		assert.Equal(t, name.GetType(), "string")
 
-		id, idExists := items.Items.Value.Properties["id"]
+		id, idExists := items.GetItemProperty("id")
 
 		assert.Assert(t, idExists)
 
-		assert.Equal(t, id.Value.Type, "string")
+		assert.Equal(t, id.GetType(), "string")
 	}
 
 }
