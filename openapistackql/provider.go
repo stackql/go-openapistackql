@@ -2,12 +2,10 @@ package openapistackql
 
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/getkin/kin-openapi/jsoninfo"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/go-openapi/jsonpointer"
-	"github.com/stackql/stackql-parser/go/sqltypes"
 )
 
 type ResponseKeys struct {
@@ -18,12 +16,16 @@ type ResponseKeys struct {
 type Provider interface {
 	Debug() string
 	GetAuth() (*AuthDTO, bool)
+	GetDeleteItemsKey() string
+	GetName() string
+	GetProviderServices() map[string]*ProviderService
 	GetPaginationRequestTokenSemantic() (*TokenSemantic, bool)
 	GetPaginationResponseTokenSemantic() (*TokenSemantic, bool)
 	GetProviderService(key string) (*ProviderService, error)
 	GetQueryTransposeAlgorithm() string
 	GetRequestTranslateAlgorithm() string
 	GetResourcesShallow(serviceKey string) (*ResourceRegister, error)
+	GetStackQLConfig() (*StackQLConfig, bool)
 	JSONLookup(token string) (interface{}, error)
 	MarshalJSON() ([]byte, error)
 	UnmarshalJSON(data []byte) error
@@ -44,25 +46,27 @@ type standardProvider struct {
 	StackQLConfig    *StackQLConfig              `json:"config,omitempty" yaml:"config,omitempty"`
 }
 
-type ProviderService struct {
-	openapi3.ExtensionProps
-	ID            string            `json:"id" yaml:"id"`           // Required
-	Name          string            `json:"name" yaml:"name"`       // Required
-	Title         string            `json:"title" yaml:"title"`     // Required
-	Version       string            `json:"version" yaml:"version"` // Required
-	Description   string            `json:"description" yaml:"description"`
-	Preferred     bool              `json:"preferred" yaml:"preferred"`
-	ServiceRef    *ServiceRef       `json:"service,omitempty" yaml:"service,omitempty"`     // will be lazy evaluated
-	ResourcesRef  *ResourcesRef     `json:"resources,omitempty" yaml:"resources,omitempty"` // will be lazy evaluated
-	Provider      *standardProvider `json:"-" yaml:"-"`                                     // upwards traversal
-	StackQLConfig *StackQLConfig    `json:"config,omitempty" yaml:"config,omitempty"`
-}
-
 func (pr *standardProvider) GetAuth() (*AuthDTO, bool) {
 	if pr.StackQLConfig != nil {
 		return pr.StackQLConfig.GetAuth()
 	}
 	return nil, false
+}
+
+func (pr *standardProvider) GetProviderServices() map[string]*ProviderService {
+	return pr.ProviderServices
+}
+
+func (pr *standardProvider) GetName() string {
+	return pr.Name
+}
+
+func (pr *standardProvider) GetStackQLConfig() (*StackQLConfig, bool) {
+	return pr.StackQLConfig, pr.StackQLConfig != nil
+}
+
+func (pr *standardProvider) GetDeleteItemsKey() string {
+	return pr.DeleteItemsKey
 }
 
 func (pr *standardProvider) GetQueryTransposeAlgorithm() string {
@@ -86,34 +90,6 @@ func (pr *standardProvider) isObjectSchemaImplicitlyUnioned() bool {
 	return false
 }
 
-func (sv *ProviderService) GetQueryTransposeAlgorithm() string {
-	if sv.StackQLConfig == nil || sv.StackQLConfig.QueryTranspose == nil {
-		return ""
-	}
-	return sv.StackQLConfig.QueryTranspose.Algorithm
-}
-
-func (sv *ProviderService) GetRequestTranslateAlgorithm() string {
-	if sv.StackQLConfig == nil || sv.StackQLConfig.RequestTranslate == nil {
-		return ""
-	}
-	return sv.StackQLConfig.RequestTranslate.Algorithm
-}
-
-func (sv *ProviderService) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
-	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.RequestToken == nil {
-		return nil, false
-	}
-	return sv.StackQLConfig.Pagination.RequestToken, true
-}
-
-func (sv *ProviderService) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
-	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.ResponseToken == nil {
-		return nil, false
-	}
-	return sv.StackQLConfig.Pagination.ResponseToken, true
-}
-
 func (pr *standardProvider) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
 	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
@@ -128,72 +104,12 @@ func (pr *standardProvider) GetPaginationResponseTokenSemantic() (*TokenSemantic
 	return pr.StackQLConfig.Pagination.ResponseToken, true
 }
 
-func (sv *ProviderService) ConditionIsValid(lhs string, rhs interface{}) bool {
-	elem := sv.ToMap()[lhs]
-	return reflect.TypeOf(elem) == reflect.TypeOf(rhs)
-}
-
-func getService(ps *ProviderService) (*Service, error) {
-	b, err := getServiceDocBytes(ps.ServiceRef.Ref)
-	if err != nil {
-		return nil, err
-	}
-	return LoadServiceDocFromBytes(ps, b)
-}
-
-func getResourcesShallow(ps *ProviderService) (*ResourceRegister, error) {
-	b, err := getServiceDocBytes(ps.ResourcesRef.Ref)
-	if err != nil {
-		return nil, err
-	}
-	return loadResourcesShallow(ps, b)
-}
-
 func (pr *standardProvider) MarshalJSON() ([]byte, error) {
 	return jsoninfo.MarshalStrictStruct(pr)
 }
 
 func (pr *standardProvider) UnmarshalJSON(data []byte) error {
 	return jsoninfo.UnmarshalStrictStruct(data, pr)
-}
-
-func (pr *ProviderService) MarshalJSON() ([]byte, error) {
-	return jsoninfo.MarshalStrictStruct(pr)
-}
-
-func (pr *ProviderService) UnmarshalJSON(data []byte) error {
-	return jsoninfo.UnmarshalStrictStruct(data, pr)
-}
-
-func (ps *ProviderService) FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error) {
-	return predicate(ps)
-}
-
-func (ps *ProviderService) ToMap() map[string]interface{} {
-	retVal := make(map[string]interface{})
-	retVal["id"] = ps.ID
-	retVal["name"] = ps.Name
-	retVal["title"] = ps.Title
-	retVal["description"] = ps.Description
-	retVal["version"] = ps.Version
-	return retVal
-}
-
-func (ps *ProviderService) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
-	val, ok := ps.ToMap()[lhs]
-	rv, err := InterfaceToSQLType(val)
-	if !ok {
-		return rv, fmt.Errorf("key '%s' no preset in providerService", lhs)
-	}
-	return rv, err
-}
-
-func (ps *ProviderService) GetKey(lhs string) (interface{}, error) {
-	val, ok := ps.ToMap()[lhs]
-	if !ok {
-		return nil, fmt.Errorf("key '%s' no preset in providerService", lhs)
-	}
-	return val, nil
 }
 
 func (pr *standardProvider) getServiceWithRegistry(registry *Registry, key string) (*Service, error) {
@@ -238,160 +154,6 @@ func (pr *standardProvider) getProviderService(key string) (*ProviderService, er
 
 func (pr *standardProvider) GetProviderService(key string) (*ProviderService, error) {
 	return pr.getProviderService(key)
-}
-
-func (ps *ProviderService) getServiceWithRegistry(registry *Registry) (*Service, error) {
-	if ps.ServiceRef.Value != nil {
-		return ps.ServiceRef.Value, nil
-	}
-	if registry != nil {
-		return registry.GetService(ps)
-	}
-	svc, err := getService(ps)
-	if err != nil {
-		return nil, err
-	}
-	ps.ServiceRef.Value = svc
-	return ps.ServiceRef.Value, nil
-}
-
-func (ps *ProviderService) GetService() (*Service, error) {
-	if ps.ServiceRef.Value != nil {
-		return ps.ServiceRef.Value, nil
-	}
-	svc, err := getService(ps)
-	if err != nil {
-		return nil, err
-	}
-	ps.ServiceRef.Value = svc
-	return ps.ServiceRef.Value, nil
-}
-
-func (ps *ProviderService) getService() (*Service, error) {
-	if ps.ServiceRef.Value != nil {
-		return ps.ServiceRef.Value, nil
-	}
-	svc, err := getService(ps)
-	if err != nil {
-		return nil, err
-	}
-	ps.ServiceRef.Value = svc
-	return ps.ServiceRef.Value, nil
-}
-
-func (ps *ProviderService) getServiceDocRef(rr *ResourceRegister, rsc *Resource) ServiceRef {
-	var rv ServiceRef
-	if ps.ServiceRef != nil && ps.ServiceRef.Ref != "" {
-		rv = *ps.ServiceRef
-	}
-	if rr.ServiceDocPath != nil && rr.ServiceDocPath.Ref != "" {
-		rv = *rr.ServiceDocPath
-	}
-	if rsc.ServiceDocPath != nil && rsc.ServiceDocPath.Ref != "" {
-		rv = *rsc.ServiceDocPath
-	}
-	return rv
-}
-
-func (ps *ProviderService) GetServiceFragment(resourceKey string) (*Service, error) {
-
-	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
-		return ps.GetService()
-	}
-	rr, err := ps.GetResourcesShallow()
-	if err != nil {
-		return nil, err
-	}
-	rsc, ok := rr.Resources[resourceKey]
-	if !ok {
-		return nil, fmt.Errorf("cannot locate resource for key = '%s'", resourceKey)
-	}
-	sdRef := ps.getServiceDocRef(rr, rsc)
-	if sdRef.Ref == "" {
-		return nil, fmt.Errorf("no service doc available for resourceKey = '%s'", resourceKey)
-	}
-	if sdRef.Value != nil {
-		return sdRef.Value, nil
-	}
-	sb, err := getServiceDocBytes(sdRef.Ref)
-	if err != nil {
-		return nil, err
-	}
-	svc, err := LoadServiceSubsetDocFromBytes(rr, resourceKey, sb)
-	if err != nil {
-		return nil, err
-	}
-	ps.ServiceRef.Value = svc
-	return ps.ServiceRef.Value, nil
-}
-
-func (ps *ProviderService) PeekServiceFragment(resourceKey string) (*Service, bool) {
-	if ps.ServiceRef == nil || ps.ServiceRef.Value == nil || ps.ServiceRef.Value.rsc == nil {
-		return nil, false
-	}
-	_, ok := ps.ServiceRef.Value.rsc[resourceKey]
-	if !ok {
-		return nil, false
-	}
-	return ps.ServiceRef.Value, true
-}
-
-func (ps *ProviderService) getResourcesShallowWithRegistry(registry *Registry) (*ResourceRegister, error) {
-	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
-		if ps.ServiceRef != nil || ps.ServiceRef.Ref != "" {
-			svc, err := ps.getServiceWithRegistry(registry)
-			if err != nil {
-				return nil, err
-			}
-			rv := &ResourceRegister{
-				ServiceDocPath: ps.ServiceRef,
-				Resources:      svc.rsc,
-			}
-			return rv, nil
-		}
-		return nil, fmt.Errorf("cannot resolve shallow resources")
-	}
-	if ps.ResourcesRef.Value != nil {
-		return ps.ResourcesRef.Value, nil
-	}
-	if registry != nil {
-		return registry.GetResourcesShallowFromURL(ps)
-	}
-	return getResourcesShallow(ps)
-}
-
-func (ps *ProviderService) GetResourcesShallow() (*ResourceRegister, error) {
-	if ps.ResourcesRef == nil || ps.ResourcesRef.Ref == "" {
-		if ps.ServiceRef != nil || ps.ServiceRef.Ref != "" {
-			svc, err := ps.GetService()
-			if err != nil {
-				return nil, err
-			}
-			rv := &ResourceRegister{
-				ServiceDocPath: ps.ServiceRef,
-				Resources:      svc.rsc,
-			}
-			return rv, nil
-		}
-		return nil, fmt.Errorf("cannot resolve shallow resources")
-	}
-	if ps.ResourcesRef.Value != nil {
-		return ps.ResourcesRef.Value, nil
-	}
-	return getResourcesShallow(ps)
-}
-
-func (ps *ProviderService) GetName() string {
-	return ps.Name
-}
-
-func (ps *ProviderService) GetRequiredParameters() map[string]Addressable {
-	return nil
-}
-
-func (ps *ProviderService) KeyExists(lhs string) bool {
-	_, ok := ps.ToMap()[lhs]
-	return ok
 }
 
 var _ jsonpointer.JSONPointable = (Provider)(&standardProvider{})
