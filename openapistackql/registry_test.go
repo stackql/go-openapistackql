@@ -465,7 +465,7 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 
 		assert.NilError(t, err)
 
-		assert.Equal(t, sc.Type, "object")
+		assert.Equal(t, sc.GetType(), "object")
 
 		items, _ := sc.GetSelectListItems("items")
 

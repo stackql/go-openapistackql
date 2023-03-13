@@ -40,8 +40,8 @@ type DiscoveryDoc interface {
 type Loader struct {
 	*openapi3.Loader
 	//
-	visitedExpectedRequest  map[*standardSchema]struct{}
-	visitedExpectedResponse map[*standardSchema]struct{}
+	visitedExpectedRequest  map[Schema]struct{}
+	visitedExpectedResponse map[Schema]struct{}
 	visitedOperation        map[*openapi3.Operation]struct{}
 	visitedOperationStore   map[*OperationStore]struct{}
 	visitedPathItem         map[*openapi3.PathItem]struct{}
@@ -328,8 +328,8 @@ func (pr *Provider) ToYamlFile(filePath string) error {
 func NewLoader() *Loader {
 	return &Loader{
 		&openapi3.Loader{Context: context.Background()},
-		make(map[*standardSchema]struct{}),
-		make(map[*standardSchema]struct{}),
+		make(map[Schema]struct{}),
+		make(map[Schema]struct{}),
 		make(map[*openapi3.Operation]struct{}),
 		make(map[*OperationStore]struct{}),
 		make(map[*openapi3.PathItem]struct{}),
@@ -575,7 +575,7 @@ func (loader *Loader) resolveOperationRef(doc *Service, rsc *Resource, component
 	return loader.extractAndMergeGraphQL(component)
 }
 
-func (loader *Loader) resolveContentDefault(content openapi3.Content, svc *Service) (*standardSchema, string, bool) {
+func (loader *Loader) resolveContentDefault(content openapi3.Content, svc *Service) (Schema, string, bool) {
 	if content == nil {
 		return nil, "", false
 	}
@@ -616,7 +616,7 @@ func (loader *Loader) findBestResponseDefault(responses openapi3.Responses) (*op
 func (loader *Loader) resolveExpectedRequest(doc *Service, op *openapi3.Operation, component *ExpectedRequest) (err error) {
 	if component != nil && component.Schema != nil {
 		if loader.visitedExpectedRequest == nil {
-			loader.visitedExpectedRequest = make(map[*standardSchema]struct{})
+			loader.visitedExpectedRequest = make(map[Schema]struct{})
 		}
 		if _, ok := loader.visitedExpectedRequest[component.Schema]; ok {
 			return nil
@@ -693,7 +693,7 @@ func resolveSQLVerbFromResource(rsc *Resource, component *OperationStoreRef, sql
 func (loader *Loader) resolveExpectedResponse(doc *Service, op *openapi3.Operation, component *ExpectedResponse) (err error) {
 	if component != nil && component.Schema != nil {
 		if loader.visitedExpectedResponse == nil {
-			loader.visitedExpectedResponse = make(map[*standardSchema]struct{})
+			loader.visitedExpectedResponse = make(map[Schema]struct{})
 		}
 		if _, ok := loader.visitedExpectedResponse[component.Schema]; ok {
 			return nil

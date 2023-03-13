@@ -109,7 +109,7 @@ func NewOperationSelector(slqVerb string, params map[string]interface{}) Operati
 
 type ExpectedRequest struct {
 	BodyMediaType string `json:"mediaType,omitempty" yaml:"mediaType,omitempty"`
-	Schema        *standardSchema
+	Schema        Schema
 	Required      []string `json:"required,omitempty" yaml:"required,omitempty"`
 }
 
@@ -117,7 +117,7 @@ type ExpectedResponse struct {
 	BodyMediaType string `json:"mediaType,omitempty" yaml:"mediaType,omitempty"`
 	OpenAPIDocKey string `json:"openAPIDocKey,omitempty" yaml:"openAPIDocKey,omitempty"`
 	ObjectKey     string `json:"objectKey,omitempty" yaml:"objectKey,omitempty"`
-	Schema        *standardSchema
+	Schema        Schema
 }
 
 type OperationStore struct {
@@ -384,7 +384,7 @@ func (m *OperationStore) IsAwaitable() bool {
 	if err != nil {
 		return false
 	}
-	return strings.HasSuffix(rs.key, "Operation")
+	return strings.HasSuffix(rs.getKey(), "Operation")
 }
 
 func (m *OperationStore) FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error) {
@@ -414,7 +414,7 @@ func (m *OperationStore) getRequestBodyAttributes() (map[string]Addressable, err
 	if s != nil {
 		propz := s.getProperties()
 		for k, v := range propz {
-			isRequired := slices.Contains(s.Required, k)
+			isRequired := slices.Contains(s.GetRequired(), k)
 			renamedKey := m.renameRequestBodyAttribute(k)
 			if isRequired {
 				rv[renamedKey] = NewRequiredAddressableRequestBodyProperty(renamedKey, v)
@@ -435,7 +435,7 @@ func (m *OperationStore) getRequestBodyAttributesNoRename() (map[string]Addressa
 	if s != nil {
 		propz := s.getProperties()
 		for k, v := range propz {
-			isRequired := slices.Contains(s.Required, k)
+			isRequired := slices.Contains(s.GetRequired(), k)
 			if isRequired {
 				rv[k] = NewRequiredAddressableRequestBodyProperty(k, v)
 			} else {
@@ -821,11 +821,11 @@ func (op *OperationStore) Parameterize(prov *Provider, parentDoc *Service, input
 	return requestValidationInput, nil
 }
 
-func (op *OperationStore) GetRequestBodySchema() (*standardSchema, error) {
+func (op *OperationStore) GetRequestBodySchema() (Schema, error) {
 	return op.getRequestBodySchema()
 }
 
-func (op *OperationStore) getRequestBodySchema() (*standardSchema, error) {
+func (op *OperationStore) getRequestBodySchema() (Schema, error) {
 	if op.Request != nil {
 		return op.Request.Schema, nil
 	}
@@ -851,11 +851,11 @@ func (op *OperationStore) IsRequiredRequestBodyProperty(key string) bool {
 	return false
 }
 
-func (op *OperationStore) GetResponseBodySchemaAndMediaType() (*standardSchema, string, error) {
+func (op *OperationStore) GetResponseBodySchemaAndMediaType() (Schema, string, error) {
 	return op.getResponseBodySchemaAndMediaType()
 }
 
-func (op *OperationStore) getResponseBodySchemaAndMediaType() (*standardSchema, string, error) {
+func (op *OperationStore) getResponseBodySchemaAndMediaType() (Schema, string, error) {
 	if op.Response != nil && op.Response.Schema != nil {
 		return op.Response.Schema, op.Response.BodyMediaType, nil
 	}
@@ -887,11 +887,11 @@ func (ops *OperationStore) lookupSelectItemsKey() string {
 	if responseSchema == nil || err != nil {
 		return ""
 	}
-	switch responseSchema.Type {
+	switch responseSchema.GetType() {
 	case "string", "integer":
 		return AnonymousColumnName
 	}
-	if _, ok := responseSchema.getProperty(defaultSelectItemsKey); ok {
+	if _, ok := responseSchema.getRawProperty(defaultSelectItemsKey); ok {
 		return defaultSelectItemsKey
 	}
 	return ""

@@ -19,7 +19,7 @@ type ColumnDescriptor struct {
 	Alias        string
 	Name         string
 	Qualifier    string
-	Schema       *standardSchema
+	Schema       Schema
 	DecoratedCol string
 	Val          *sqlparser.SQLVal
 	Node         sqlparser.SQLNode
@@ -32,27 +32,27 @@ func (cd ColumnDescriptor) GetIdentifier() string {
 	return cd.Name
 }
 
-func (cd ColumnDescriptor) GetRepresentativeSchema() *standardSchema {
+func (cd ColumnDescriptor) GetRepresentativeSchema() Schema {
 	if cd.Node != nil {
 		switch nt := cd.Node.(type) {
 		case *sqlparser.ConvertExpr:
 			if nt.Type != nil && nt.Type.Type != "" {
-				return NewSchema(&openapi3.Schema{Type: nt.Type.Type}, cd.Schema.svc, cd.Schema.key, "")
+				return NewSchema(&openapi3.Schema{Type: nt.Type.Type}, cd.Schema.getService(), cd.Schema.getKey(), "")
 			}
 		// TODO: make this intelligent
 		case *sqlparser.FuncExpr:
-			return NewSchema(&openapi3.Schema{Type: "string"}, cd.Schema.svc, cd.Schema.key, "")
+			return NewSchema(&openapi3.Schema{Type: "string"}, cd.Schema.getService(), cd.Schema.getKey(), "")
 		}
 
 	}
 	return cd.Schema
 }
 
-func NewColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema *standardSchema, val *sqlparser.SQLVal) ColumnDescriptor {
+func NewColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema Schema, val *sqlparser.SQLVal) ColumnDescriptor {
 	return newColumnDescriptor(alias, name, qualifier, decoratedCol, node, schema, val)
 }
 
-func newColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema *standardSchema, val *sqlparser.SQLVal) ColumnDescriptor {
+func newColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema Schema, val *sqlparser.SQLVal) ColumnDescriptor {
 	return ColumnDescriptor{Alias: alias, Name: name, Qualifier: qualifier, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
 }
 
