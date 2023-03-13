@@ -45,7 +45,9 @@ type Schema interface {
 	GetSelectListItems(key string) (Schema, string)
 	GetTitle() string
 	GetType() string
+	GetPropertySchema(key string) (Schema, error)
 	GetRequired() []string
+	GetSelectSchema(itemsKey, mediaType string) (Schema, string, error)
 	IsArrayRef() bool
 	IsBoolean() bool
 	IsFloat() bool
@@ -55,6 +57,7 @@ type Schema interface {
 	ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error)
 	SetProperties(openapi3.Schemas)
 	SetType(string)
+	SetKey(string)
 	Tabulate(omitColumns bool) *Tabulation
 	ToDescriptionMap(extended bool) map[string]interface{}
 	// not exported, but essential
@@ -181,6 +184,10 @@ func (s *standardSchema) GetTitle() string {
 
 func (s *standardSchema) IsReadOnly() bool {
 	return s.ReadOnly
+}
+
+func (s *standardSchema) SetKey(k string) {
+	s.setKey(k)
 }
 
 func (s *standardSchema) setKey(k string) {
