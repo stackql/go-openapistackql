@@ -84,6 +84,10 @@ type OperationStore interface {
 	GetPaginationResponseTokenSemantic() (TokenSemantic, bool)
 	MarshalBody(body interface{}, expectedRequest ExpectedRequest) ([]byte, error)
 	GetRequestBodySchema() (Schema, error)
+	GetNonBodyParameters() map[string]Addressable
+	IsAwaitable() bool
+	DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error)
+	GetRequestTranslateAlgorithm() string
 	//
 	getName() string
 	getServerVariable(key string) (*openapi3.ServerVariable, bool)
