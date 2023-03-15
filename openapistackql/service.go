@@ -27,7 +27,8 @@ type Service interface {
 	GetComponents() openapi3.Components
 	GetName() string
 	GetResource(resourceName string) (Resource, error)
-
+	GetSchema(key string) (Schema, error)
+	GetContactURL() string
 	//
 	iDiscoveryDoc()
 	isObjectSchemaImplicitlyUnioned() bool
@@ -47,6 +48,13 @@ type standardService struct {
 	StackQLConfig   StackQLConfig   `json:"-" yaml:"-"`
 	ProviderService ProviderService `json:"-" yaml:"-"` // upwards traversal
 	Provider        Provider        `json:"-" yaml:"-"` // upwards traversal
+}
+
+func (sv *standardService) GetContactURL() string {
+	if sv.Info == nil || sv.Info.Contact == nil {
+		return ""
+	}
+	return sv.Info.Contact.URL
 }
 
 func (sv *standardService) getPath(k string) (*openapi3.PathItem, bool) {

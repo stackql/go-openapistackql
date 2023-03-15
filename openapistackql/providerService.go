@@ -25,6 +25,9 @@ type ProviderService interface {
 	GetName() string
 	GetID() string
 	GetServiceFragment(resourceKey string) (Service, error)
+	GetResourcesRefRef() string
+	PeekServiceFragment(resourceKey string) (Service, bool)
+	SetServiceRefVal(Service) bool
 	//
 	getResourcesShallowWithRegistry(registry RegistryAPI) (ResourceRegister, error)
 	getServiceRefRef() string
@@ -50,6 +53,16 @@ type standardProviderService struct {
 	Service       Service                `json:"-" yaml:"-"`
 }
 
+func (sv *standardProviderService) SetServiceRefVal(svc Service) bool {
+	switch svc := svc.(type) {
+	case *standardService:
+		sv.ServiceRef.Value = svc
+		return true
+	default:
+		return false
+	}
+}
+
 func (sv *standardProviderService) setProvider(provider Provider) {
 	sv.Provider = provider
 }
@@ -67,6 +80,10 @@ func (sv *standardProviderService) getServiceRefRef() string {
 		return ""
 	}
 	return sv.ServiceRef.Ref
+}
+
+func (sv *standardProviderService) GetResourcesRefRef() string {
+	return sv.getResourcesRefRef()
 }
 
 func (sv *standardProviderService) getResourcesRefRef() string {

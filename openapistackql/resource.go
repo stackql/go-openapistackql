@@ -29,6 +29,8 @@ type Resource interface {
 	FindMethod(key string) (OperationStore, error)
 	GetFirstMethodFromSQLVerb(sqlVerb string) (OperationStore, string, bool)
 	GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (OperationStore, map[string]interface{}, bool)
+	GetService() (Service, bool)
+	GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool)
 	//
 	// unexported mutators
 	getSQLVerbs() map[string][]OperationStoreRef
@@ -54,6 +56,13 @@ type standardResource struct {
 	Service           Service                        `json:"-" yaml:"-"` // upwards traversal
 	ProviderService   ProviderService                `json:"-" yaml:"-"` // upwards traversal
 	Provider          Provider                       `json:"-" yaml:"-"` // upwards traversal
+}
+
+func (r *standardResource) GetService() (Service, bool) {
+	if r.Service == nil {
+		return nil, false
+	}
+	return r.Service, true
 }
 
 func (r *standardResource) getSQLVerbs() map[string][]OperationStoreRef {

@@ -18,6 +18,7 @@ type TokenSemantic interface {
 	GetArgs() TokenSemanticArgs
 	GetKey() string
 	GetLocation() string
+	GetTransformer() (TokenTransformer, error)
 }
 
 type standardTokenSemantic struct {

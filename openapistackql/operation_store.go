@@ -76,6 +76,14 @@ type OperationStore interface {
 	Parameterize(prov Provider, parentDoc Service, inputParams *HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error)
 	GetSelectItemsKey() string
 	GetResponseBodySchemaAndMediaType() (Schema, string, error)
+	GetRequiredParameters() map[string]Addressable
+	GetOptionalParameters() map[string]Addressable
+	GetParameter(paramKey string) (Addressable, bool)
+	GetUnionRequiredParameters() (map[string]Addressable, error)
+	GetName() string
+	GetPaginationResponseTokenSemantic() (TokenSemantic, bool)
+	MarshalBody(body interface{}, expectedRequest ExpectedRequest) ([]byte, error)
+	GetRequestBodySchema() (Schema, error)
 	//
 	getName() string
 	getServerVariable(key string) (*openapi3.ServerVariable, bool)
