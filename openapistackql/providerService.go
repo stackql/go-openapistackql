@@ -123,10 +123,11 @@ func (sv *standardProviderService) GetProvider() (Provider, bool) {
 }
 
 func (sv *standardProviderService) GetQueryTransposeAlgorithm() string {
-	if sv.StackQLConfig == nil || sv.StackQLConfig.GetQueryTranspose() == nil {
+	qt, qtExists := sv.StackQLConfig.GetQueryTranspose()
+	if sv.StackQLConfig == nil || !qtExists {
 		return ""
 	}
-	return sv.StackQLConfig.QueryTranspose.Algorithm
+	return qt.GetAlgorithm()
 }
 
 func (sv *standardProviderService) GetRequestTranslateAlgorithm() string {
@@ -137,10 +138,10 @@ func (sv *standardProviderService) GetRequestTranslateAlgorithm() string {
 }
 
 func (sv *standardProviderService) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
-	if sv.StackQLConfig == nil || sv.StackQLConfig.GetPagination() == nil || sv.StackQLConfig.GetPagination().GetRequestToken() == nil {
+	if sv.StackQLConfig == nil || sv.StackQLConfig.Pagination == nil || sv.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
-	return sv.StackQLConfig.GetPagination().GetRequestToken(), true
+	return sv.StackQLConfig.Pagination.RequestToken, true
 }
 
 func (sv *standardProviderService) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {

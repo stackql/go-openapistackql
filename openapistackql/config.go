@@ -14,10 +14,10 @@ var (
 type StackQLConfig interface {
 	GetAuth() (AuthDTO, bool)
 	GetViewBodyDDLForSQLDialect(sqlDialect string, viewName string) (string, bool)
-	GetQueryTranspose() Transform
-	GetRequestTranslate() Transform
-	GetPagination() Pagination
-	GetVariations() Variations
+	GetQueryTranspose() (Transform, bool)
+	GetRequestTranslate() (Transform, bool)
+	GetPagination() (Pagination, bool)
+	GetVariations() (Variations, bool)
 	GetViews() map[string]View
 	GetExternalTables() map[string]SQLExternalTable
 	//
@@ -45,20 +45,32 @@ func (qt standardStackQLConfig) JSONLookup(token string) (interface{}, error) {
 	}
 }
 
-func (cfg *standardStackQLConfig) GetQueryTranspose() Transform {
-	return cfg.QueryTranspose
+func (cfg *standardStackQLConfig) GetQueryTranspose() (Transform, bool) {
+	if cfg.QueryTranspose == nil {
+		return nil, false
+	}
+	return cfg.QueryTranspose, true
 }
 
-func (cfg *standardStackQLConfig) GetRequestTranslate() Transform {
-	return cfg.RequestTranslate
+func (cfg *standardStackQLConfig) GetRequestTranslate() (Transform, bool) {
+	if cfg.RequestTranslate == nil {
+		return nil, false
+	}
+	return cfg.RequestTranslate, true
 }
 
-func (cfg *standardStackQLConfig) GetPagination() Pagination {
-	return cfg.Pagination
+func (cfg *standardStackQLConfig) GetPagination() (Pagination, bool) {
+	if cfg.Pagination == nil {
+		return nil, false
+	}
+	return cfg.Pagination, true
 }
 
-func (cfg *standardStackQLConfig) GetVariations() Variations {
-	return cfg.Variations
+func (cfg *standardStackQLConfig) GetVariations() (Variations, bool) {
+	if cfg.Variations == nil {
+		return nil, false
+	}
+	return cfg.Variations, true
 }
 
 func (cfg *standardStackQLConfig) GetViews() map[string]View {

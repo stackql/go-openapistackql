@@ -271,8 +271,9 @@ func (op *standardOperationStore) GetViewBodyDDLForSQLDialect(sqlDialect string)
 }
 
 func (op *standardOperationStore) GetQueryTransposeAlgorithm() string {
-	if op.StackQLConfig != nil && op.StackQLConfig.GetQueryTranspose() != nil && op.StackQLConfig.GetQueryTranspose().GetAlgorithm() != "" {
-		return op.StackQLConfig.GetQueryTranspose().GetAlgorithm()
+	transpose, transposeExists := op.StackQLConfig.GetQueryTranspose()
+	if op.StackQLConfig != nil && transposeExists && transpose.GetAlgorithm() != "" {
+		return transpose.GetAlgorithm()
 	}
 	if op.Resource != nil && op.Resource.GetQueryTransposeAlgorithm() != "" {
 		return op.Resource.GetQueryTransposeAlgorithm()
@@ -290,8 +291,9 @@ func (op *standardOperationStore) GetQueryTransposeAlgorithm() string {
 }
 
 func (op *standardOperationStore) GetRequestTranslateAlgorithm() string {
-	if op.StackQLConfig != nil && op.StackQLConfig.GetRequestTranslate() != nil && op.StackQLConfig.GetRequestTranslate().GetAlgorithm() != "" {
-		return op.StackQLConfig.GetRequestTranslate().GetAlgorithm()
+	translate, translateExists := op.StackQLConfig.GetRequestTranslate()
+	if op.StackQLConfig != nil && translateExists && translate.GetAlgorithm() != "" {
+		return translate.GetAlgorithm()
 	}
 	if op.Resource != nil && op.Resource.GetRequestTranslateAlgorithm() != "" {
 		return op.Resource.GetRequestTranslateAlgorithm()
@@ -309,8 +311,9 @@ func (op *standardOperationStore) GetRequestTranslateAlgorithm() string {
 }
 
 func (op *standardOperationStore) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
-	if op.StackQLConfig != nil && op.StackQLConfig.GetPagination() != nil && op.StackQLConfig.GetPagination().GetRequestToken() != nil {
-		return op.StackQLConfig.GetPagination().GetRequestToken(), true
+	pag, pagExists := op.StackQLConfig.GetPagination()
+	if op.StackQLConfig != nil && pagExists && pag.GetRequestToken() != nil {
+		return pag.GetRequestToken(), true
 	}
 	if op.Resource != nil {
 		if ts, ok := op.Resource.GetPaginationRequestTokenSemantic(); ok {
@@ -336,8 +339,9 @@ func (op *standardOperationStore) GetPaginationRequestTokenSemantic() (TokenSema
 }
 
 func (op *standardOperationStore) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
-	if op.StackQLConfig != nil && op.StackQLConfig.GetPagination() != nil && op.StackQLConfig.GetPagination().GetResponseToken() != nil {
-		return op.StackQLConfig.GetPagination().GetResponseToken(), true
+	pag, pagExists := op.StackQLConfig.GetPagination()
+	if op.StackQLConfig != nil && pagExists && pag.GetResponseToken() != nil {
+		return pag.GetResponseToken(), true
 	}
 	if op.Resource != nil {
 		if ts, ok := op.Resource.GetPaginationResponseTokenSemantic(); ok {

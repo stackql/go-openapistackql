@@ -125,7 +125,7 @@ func (r *standardResource) GetServiceDocPath() *ServiceRef {
 }
 
 func (r *standardResource) GetQueryTransposeAlgorithm() string {
-	if r.StackQLConfig == nil || r.StackQLConfig.GetQueryTranspose() == nil {
+	if r.StackQLConfig == nil || r.StackQLConfig.QueryTranspose == nil {
 		return ""
 	}
 	return r.StackQLConfig.QueryTranspose.Algorithm
@@ -139,10 +139,11 @@ func (r *standardResource) GetRequestTranslateAlgorithm() string {
 }
 
 func (r *standardResource) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
-	if r.StackQLConfig == nil || r.StackQLConfig.GetPagination() == nil || r.StackQLConfig.GetPagination().GetRequestToken() == nil {
+	pag, pagExists := r.StackQLConfig.GetPagination()
+	if r.StackQLConfig == nil || !pagExists || pag.GetRequestToken() == nil {
 		return nil, false
 	}
-	return r.StackQLConfig.GetPagination().GetRequestToken(), true
+	return pag.GetRequestToken(), true
 }
 
 func (r *standardResource) GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool) {
@@ -153,10 +154,11 @@ func (r *standardResource) GetViewBodyDDLForSQLDialect(sqlDialect string) (strin
 }
 
 func (r *standardResource) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
-	if r.StackQLConfig == nil || r.StackQLConfig.GetPagination() == nil || r.StackQLConfig.GetPagination().GetResponseToken() == nil {
+	pag, pagExists := r.StackQLConfig.GetPagination()
+	if r.StackQLConfig == nil || !pagExists || pag.GetResponseToken() == nil {
 		return nil, false
 	}
-	return r.StackQLConfig.GetPagination().GetResponseToken(), true
+	return pag.GetResponseToken(), true
 }
 
 func (rsc standardResource) JSONLookup(token string) (interface{}, error) {

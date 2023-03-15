@@ -100,17 +100,17 @@ func (pr *standardProvider) isObjectSchemaImplicitlyUnioned() bool {
 }
 
 func (pr *standardProvider) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
-	if pr.StackQLConfig == nil || pr.StackQLConfig.GetPagination() == nil || pr.StackQLConfig.GetPagination().GetRequestToken() == nil {
+	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.RequestToken == nil {
 		return nil, false
 	}
-	return pr.StackQLConfig.GetPagination().GetRequestToken(), true
+	return pr.StackQLConfig.Pagination.RequestToken, true
 }
 
 func (pr *standardProvider) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
-	if pr.StackQLConfig == nil || pr.StackQLConfig.GetPagination() == nil || pr.StackQLConfig.GetPagination().GetResponseToken() == nil {
+	if pr.StackQLConfig == nil || pr.StackQLConfig.Pagination == nil || pr.StackQLConfig.Pagination.ResponseToken == nil {
 		return nil, false
 	}
-	return pr.StackQLConfig.GetPagination().GetResponseToken(), true
+	return pr.StackQLConfig.Pagination.ResponseToken, true
 }
 
 func (pr *standardProvider) MarshalJSON() ([]byte, error) {

@@ -128,31 +128,35 @@ func (svc *standardService) IsPreferred() bool {
 }
 
 func (svc *standardService) GetQueryTransposeAlgorithm() string {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.GetQueryTranspose() == nil {
+	qt, qtExists := svc.StackQLConfig.GetQueryTranspose()
+	if svc.StackQLConfig == nil || !qtExists {
 		return ""
 	}
-	return svc.StackQLConfig.GetQueryTranspose().GetAlgorithm()
+	return qt.GetAlgorithm()
 }
 
 func (svc *standardService) GetRequestTranslateAlgorithm() string {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.GetRequestTranslate() == nil {
+	rt, rtExists := svc.StackQLConfig.GetRequestTranslate()
+	if svc.StackQLConfig == nil || !rtExists {
 		return ""
 	}
-	return svc.StackQLConfig.GetRequestTranslate().GetAlgorithm()
+	return rt.GetAlgorithm()
 }
 
 func (svc *standardService) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.GetPagination() == nil || svc.StackQLConfig.GetPagination().GetRequestToken() == nil {
+	pag, pagExists := svc.StackQLConfig.GetPagination()
+	if svc.StackQLConfig == nil || !pagExists || pag.GetRequestToken() == nil {
 		return nil, false
 	}
-	return svc.StackQLConfig.GetPagination().GetRequestToken(), true
+	return pag.GetRequestToken(), true
 }
 
 func (svc *standardService) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.GetPagination() == nil || svc.StackQLConfig.GetPagination().GetResponseToken() == nil {
+	pag, pagExists := svc.StackQLConfig.GetPagination()
+	if svc.StackQLConfig == nil || !pagExists || pag.GetResponseToken() == nil {
 		return nil, false
 	}
-	return svc.StackQLConfig.GetPagination().GetResponseToken(), true
+	return pag.GetResponseToken(), true
 }
 
 func (svc *standardService) GetSchemas() (map[string]Schema, error) {
