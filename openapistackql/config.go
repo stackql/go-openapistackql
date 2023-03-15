@@ -6,19 +6,35 @@ import (
 	"github.com/go-openapi/jsonpointer"
 )
 
-type StackQLConfig struct {
-	QueryTranspose   *Transform                  `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
-	RequestTranslate *Transform                  `json:"requestTranslate,omitempty" yaml:"requestTranslate,omitempty"`
-	Pagination       *Pagination                 `json:"pagination,omitempty" yaml:"pagination,omitempty"`
-	Variations       *Variations                 `json:"variations,omitempty" yaml:"variations,omitempty"`
-	Views            map[string]*View            `json:"views" yaml:"views"`
-	ExternalTables   map[string]SQLExternalTable `json:"sqlExternalTables" yaml:"sqlExternalTables"`
-	Auth             *AuthDTO                    `json:"auth,omitempty" yaml:"auth,omitempty"`
+var (
+	_ jsonpointer.JSONPointable = standardStackQLConfig{}
+	_ StackQLConfig             = &standardStackQLConfig{}
+)
+
+type StackQLConfig interface {
+	GetAuth() (AuthDTO, bool)
+	GetViewBodyDDLForSQLDialect(sqlDialect string, viewName string) (string, bool)
+	GetQueryTranspose() Transform
+	GetRequestTranslate() Transform
+	GetPagination() Pagination
+	GetVariations() Variations
+	GetViews() map[string]View
+	GetExternalTables() map[string]SQLExternalTable
+	//
+	isObjectSchemaImplicitlyUnioned() bool
 }
 
-var _ jsonpointer.JSONPointable = (StackQLConfig)(StackQLConfig{})
+type standardStackQLConfig struct {
+	QueryTranspose   *standardTransform                  `json:"queryParamTranspose,omitempty" yaml:"queryParamTranspose,omitempty"`
+	RequestTranslate *standardTransform                  `json:"requestTranslate,omitempty" yaml:"requestTranslate,omitempty"`
+	Pagination       *standardPagination                 `json:"pagination,omitempty" yaml:"pagination,omitempty"`
+	Variations       *standardVariations                 `json:"variations,omitempty" yaml:"variations,omitempty"`
+	Views            map[string]*standardView            `json:"views" yaml:"views"`
+	ExternalTables   map[string]standardSQLExternalTable `json:"sqlExternalTables" yaml:"sqlExternalTables"`
+	Auth             *standardAuthDTO                    `json:"auth,omitempty" yaml:"auth,omitempty"`
+}
 
-func (qt StackQLConfig) JSONLookup(token string) (interface{}, error) {
+func (qt standardStackQLConfig) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "queryTranspose":
 		return qt.QueryTranspose, nil
@@ -29,14 +45,40 @@ func (qt StackQLConfig) JSONLookup(token string) (interface{}, error) {
 	}
 }
 
-func (cfg *StackQLConfig) isObjectSchemaImplicitlyUnioned() bool {
+func (cfg *standardStackQLConfig) GetQueryTranspose() Transform {
+	return cfg.QueryTranspose
+}
+
+func (cfg *standardStackQLConfig) GetRequestTranslate() Transform {
+	return cfg.RequestTranslate
+}
+
+func (cfg *standardStackQLConfig) GetPagination() Pagination {
+	return cfg.Pagination
+}
+
+func (cfg *standardStackQLConfig) GetVariations() Variations {
+	return cfg.Variations
+}
+
+func (cfg *standardStackQLConfig) GetViews() map[string]View {
+	rv := make(map[string]View, len(cfg.Views))
+	if cfg.Views != nil {
+		for k, v := range cfg.Views {
+			rv[k] = v
+		}
+	}
+	return rv
+}
+
+func (cfg *standardStackQLConfig) isObjectSchemaImplicitlyUnioned() bool {
 	if cfg.Variations != nil {
-		return cfg.Variations.IsObjectSchemaImplicitlyUnioned
+		return cfg.Variations.IsObjectSchemaImplicitlyUnioned()
 	}
 	return false
 }
 
-func (cfg *StackQLConfig) GetView(viewName string) (*View, bool) {
+func (cfg *standardStackQLConfig) GetView(viewName string) (View, bool) {
 	if cfg.Views != nil {
 		v, ok := cfg.Views[viewName]
 		return v, ok
@@ -44,11 +86,22 @@ func (cfg *StackQLConfig) GetView(viewName string) (*View, bool) {
 	return nil, false
 }
 
-func (cfg *StackQLConfig) GetAuth() (*AuthDTO, bool) {
+func (cfg *standardStackQLConfig) GetAuth() (AuthDTO, bool) {
 	return cfg.Auth, cfg.Auth != nil
 }
 
-func (cfg *StackQLConfig) GetViewBodyDDLForSQLDialect(sqlDialect string, viewName string) (string, bool) {
+func (cfg *standardStackQLConfig) GetExternalTables() map[string]SQLExternalTable {
+	rv := make(map[string]SQLExternalTable, len(cfg.ExternalTables))
+	if cfg.ExternalTables != nil {
+		for k, v := range cfg.ExternalTables {
+			rv[k] = v
+		}
+		return rv
+	}
+	return nil
+}
+
+func (cfg *standardStackQLConfig) GetViewBodyDDLForSQLDialect(sqlDialect string, viewName string) (string, bool) {
 	if cfg.Views != nil {
 		v, ok := cfg.Views[viewName]
 		if !ok || v == nil {
@@ -57,12 +110,4 @@ func (cfg *StackQLConfig) GetViewBodyDDLForSQLDialect(sqlDialect string, viewNam
 		return v.GetDDLForSqlDialect(sqlDialect)
 	}
 	return "", false
-}
-
-func (cfg *StackQLConfig) GetViews(viewName string) (*View, bool) {
-	if cfg.Views != nil {
-		v, ok := cfg.Views[viewName]
-		return v, ok
-	}
-	return nil, false
 }

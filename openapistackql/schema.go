@@ -74,7 +74,7 @@ type Schema interface {
 	setItemsRef(*openapi3.SchemaRef)
 	setPropertyOpenapi3(k string, ps *openapi3.SchemaRef)
 	getPropertiesColumns() []ColumnDescriptor
-	getService() *Service
+	getService() Service
 	getFatSchema(srs openapi3.SchemaRefs) Schema
 	getXml() (interface{}, bool)
 	getXmlAlias() string
@@ -208,13 +208,13 @@ func (s *standardSchema) getOpenapiSchema() (*openapi3.Schema, bool) {
 
 type standardSchema struct {
 	*openapi3.Schema
-	svc            *Service
+	svc            Service
 	key            string
 	alwaysRequired bool
 	path           string
 }
 
-func (s *standardSchema) getService() *Service {
+func (s *standardSchema) getService() Service {
 	return s.svc
 }
 
@@ -270,7 +270,7 @@ func copyOpenapiSchema(inSchema *openapi3.Schema) *openapi3.Schema {
 
 type Schemas map[string]Schema
 
-func NewSchema(sc *openapi3.Schema, svc *Service, key string, path string) Schema {
+func NewSchema(sc *openapi3.Schema, svc Service, key string, path string) Schema {
 	return newSchema(sc, svc, key, path)
 }
 
@@ -285,7 +285,7 @@ func (sc *standardSchema) GetAdditionalProperties() (Schema, bool) {
 	return NewSchema(sc.AdditionalProperties.Value, sc.svc, "additionalProperties", sc.AdditionalProperties.Ref), true
 }
 
-func newSchema(sc *openapi3.Schema, svc *Service, key string, path string) Schema {
+func newSchema(sc *openapi3.Schema, svc Service, key string, path string) Schema {
 	var alwaysRequired bool
 	if sc.Extensions != nil {
 		if ar, ok := sc.Extensions[ExtensionKeyAlwaysRequired]; ok {

@@ -86,7 +86,7 @@ func NewParameterBinding(param Addressable, val interface{}) ParameterBinding {
 }
 
 type HttpParameters struct {
-	opStore      *OperationStore
+	opStore      OperationStore
 	CookieParams ParamMap
 	HeaderParams ParamMap
 	PathParams   ParamMap
@@ -98,7 +98,7 @@ type HttpParameters struct {
 	Region       EncodableString
 }
 
-func NewHttpParameters(method *OperationStore) *HttpParameters {
+func NewHttpParameters(method OperationStore) *HttpParameters {
 	return &HttpParameters{
 		opStore:      method,
 		CookieParams: make(ParamMap),
@@ -133,7 +133,7 @@ func (hp *HttpParameters) IngestMap(m map[string]interface{}) error {
 				In:   "server",
 				Name: k,
 			}
-			svc := hp.opStore.Service
+			svc := hp.opStore.GetService()
 			hp.StoreParameter(NewParameter(param, svc), v)
 		} else {
 			return fmt.Errorf("could not place parameter '%s'", k)

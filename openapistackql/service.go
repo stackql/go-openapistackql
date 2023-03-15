@@ -11,21 +11,89 @@ import (
 	yaml "gopkg.in/yaml.v3"
 )
 
-type Service struct {
-	*openapi3.T
-	rsc             map[string]*Resource
-	StackQLConfig   *StackQLConfig    `json:"-" yaml:"-"`
-	ProviderService *ProviderService  `json:"-" yaml:"-"` // upwards traversal
-	Provider        *standardProvider `json:"-" yaml:"-"` // upwards traversal
+var (
+	_ Service = &standardService{}
+)
+
+type Service interface {
+	GetT() *openapi3.T
+	GetQueryTransposeAlgorithm() string
+	IsPreferred() bool
+	GetRequestTranslateAlgorithm() string
+	GetPaginationRequestTokenSemantic() (TokenSemantic, bool)
+	GetPaginationResponseTokenSemantic() (TokenSemantic, bool)
+	GetServers() []*openapi3.Server
+	GetResources() (map[string]Resource, error)
+	GetComponents() openapi3.Components
+	GetName() string
+	GetResource(resourceName string) (Resource, error)
+
+	//
+	iDiscoveryDoc()
+	isObjectSchemaImplicitlyUnioned() bool
+	getExtension(key string) (interface{}, bool)
+	setStackQLConfig(config StackQLConfig)
+	setResourceMap(rsc map[string]*standardResource)
+	setProvider(provider Provider)
+	getProvider() Provider
+	getProviderService() ProviderService
+	setProviderService(providerService ProviderService)
+	getPath(k string) (*openapi3.PathItem, bool)
 }
 
-func (sv *Service) iDiscoveryDoc() {}
+type standardService struct {
+	*openapi3.T
+	rsc             map[string]*standardResource
+	StackQLConfig   StackQLConfig   `json:"-" yaml:"-"`
+	ProviderService ProviderService `json:"-" yaml:"-"` // upwards traversal
+	Provider        Provider        `json:"-" yaml:"-"` // upwards traversal
+}
 
-func (sv *Service) GetT() *openapi3.T {
+func (sv *standardService) getPath(k string) (*openapi3.PathItem, bool) {
+	rv, ok := sv.T.Paths[k]
+	return rv, ok
+}
+
+func (sv *standardService) getProviderService() ProviderService {
+	return sv.ProviderService
+}
+
+func (sv *standardService) getProvider() Provider {
+	return sv.Provider
+}
+
+func (sv *standardService) GetComponents() openapi3.Components {
+	return sv.T.Components
+}
+
+func (sv *standardService) setProvider(provider Provider) {
+	sv.Provider = provider
+}
+
+func (sv *standardService) setProviderService(providerService ProviderService) {
+	sv.ProviderService = providerService
+}
+
+func (sv *standardService) setStackQLConfig(config StackQLConfig) {
+	sv.StackQLConfig = config
+}
+
+func (sv *standardService) getExtension(key string) (interface{}, bool) {
+	rv, ok := sv.T.Extensions[key]
+	return rv, ok
+}
+
+func (sv *standardService) setResourceMap(rsc map[string]*standardResource) {
+	sv.rsc = rsc
+}
+
+func (sv *standardService) iDiscoveryDoc() {}
+
+func (sv *standardService) GetT() *openapi3.T {
 	return sv.T
 }
 
-func (sv *Service) isObjectSchemaImplicitlyUnioned() bool {
+func (sv *standardService) isObjectSchemaImplicitlyUnioned() bool {
 	if sv.StackQLConfig != nil {
 		return sv.StackQLConfig.isObjectSchemaImplicitlyUnioned()
 	}
@@ -35,47 +103,51 @@ func (sv *Service) isObjectSchemaImplicitlyUnioned() bool {
 	return sv.Provider.isObjectSchemaImplicitlyUnioned()
 }
 
-func NewService(t *openapi3.T) *Service {
-	svc := &Service{
+func NewService(t *openapi3.T) Service {
+	svc := &standardService{
 		T:   t,
-		rsc: make(map[string]*Resource),
+		rsc: make(map[string]*standardResource),
 	}
 	return svc
 }
 
-func (svc *Service) IsPreferred() bool {
+func (svc *standardService) GetServers() []*openapi3.Server {
+	return svc.T.Servers
+}
+
+func (svc *standardService) IsPreferred() bool {
 	return false
 }
 
-func (svc *Service) GetQueryTransposeAlgorithm() string {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.QueryTranspose == nil {
+func (svc *standardService) GetQueryTransposeAlgorithm() string {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.GetQueryTranspose() == nil {
 		return ""
 	}
-	return svc.StackQLConfig.QueryTranspose.Algorithm
+	return svc.StackQLConfig.GetQueryTranspose().GetAlgorithm()
 }
 
-func (svc *Service) GetRequestTranslateAlgorithm() string {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.RequestTranslate == nil {
+func (svc *standardService) GetRequestTranslateAlgorithm() string {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.GetRequestTranslate() == nil {
 		return ""
 	}
-	return svc.StackQLConfig.RequestTranslate.Algorithm
+	return svc.StackQLConfig.GetRequestTranslate().GetAlgorithm()
 }
 
-func (svc *Service) GetPaginationRequestTokenSemantic() (*TokenSemantic, bool) {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.Pagination == nil || svc.StackQLConfig.Pagination.RequestToken == nil {
+func (svc *standardService) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.GetPagination() == nil || svc.StackQLConfig.GetPagination().GetRequestToken() == nil {
 		return nil, false
 	}
-	return svc.StackQLConfig.Pagination.RequestToken, true
+	return svc.StackQLConfig.GetPagination().GetRequestToken(), true
 }
 
-func (svc *Service) GetPaginationResponseTokenSemantic() (*TokenSemantic, bool) {
-	if svc.StackQLConfig == nil || svc.StackQLConfig.Pagination == nil || svc.StackQLConfig.Pagination.ResponseToken == nil {
+func (svc *standardService) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
+	if svc.StackQLConfig == nil || svc.StackQLConfig.GetPagination() == nil || svc.StackQLConfig.GetPagination().GetResponseToken() == nil {
 		return nil, false
 	}
-	return svc.StackQLConfig.Pagination.ResponseToken, true
+	return svc.StackQLConfig.GetPagination().GetResponseToken(), true
 }
 
-func (svc *Service) GetSchemas() (map[string]Schema, error) {
+func (svc *standardService) GetSchemas() (map[string]Schema, error) {
 	rv := make(map[string]Schema)
 	for k, sv := range svc.Components.Schemas {
 		rv[k] = NewSchema(sv.Value, svc, k, sv.Ref)
@@ -83,7 +155,7 @@ func (svc *Service) GetSchemas() (map[string]Schema, error) {
 	return rv, nil
 }
 
-func (svc *Service) GetSchema(key string) (Schema, error) {
+func (svc *standardService) GetSchema(key string) (Schema, error) {
 	svcName := svc.Info.Title
 	responseSref, ok := svc.Components.Schemas[key]
 	if !ok {
@@ -109,14 +181,14 @@ func extractExtensionValBytes(extMap map[string]interface{}, key string) ([]byte
 	return nil, fmt.Errorf("could not find extension key = '%s'", key)
 }
 
-func (svc *Service) GetName() string {
+func (svc *standardService) GetName() string {
 	if sn, err := extractExtensionValBytes(svc.Info.Extensions, "x-serviceName"); err == nil {
 		return strings.Trim(string(sn), `"`)
 	}
 	return svc.Info.Title
 }
 
-func (svc *Service) ToMap() map[string]interface{} {
+func (svc *standardService) ToMap() map[string]interface{} {
 	retVal := make(map[string]interface{})
 	if svc.Info == nil {
 		svc.Info = &openapi3.Info{}
@@ -129,12 +201,12 @@ func (svc *Service) ToMap() map[string]interface{} {
 	return retVal
 }
 
-func (sv *Service) KeyExists(lhs string) bool {
+func (sv *standardService) KeyExists(lhs string) bool {
 	_, ok := sv.ToMap()[lhs]
 	return ok
 }
 
-func (sv *Service) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
+func (sv *standardService) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	val, ok := sv.ToMap()[lhs]
 	rv, err := InterfaceToSQLType(val)
 	if !ok {
@@ -143,11 +215,11 @@ func (sv *Service) GetKeyAsSqlVal(lhs string) (sqltypes.Value, error) {
 	return rv, err
 }
 
-func (rs *Service) GetRequiredParameters() map[string]Addressable {
+func (rs *standardService) GetRequiredParameters() map[string]Addressable {
 	return nil
 }
 
-func (sv *Service) GetKey(lhs string) (interface{}, error) {
+func (sv *standardService) GetKey(lhs string) (interface{}, error) {
 	val, ok := sv.ToMap()[lhs]
 	if !ok {
 		return nil, fmt.Errorf("key '%s' no preset in metadata_service", lhs)
@@ -155,25 +227,29 @@ func (sv *Service) GetKey(lhs string) (interface{}, error) {
 	return val, nil
 }
 
-func (sv *Service) FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error) {
+func (sv *standardService) FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error) {
 	return predicate(sv)
 }
 
 func ServiceKeyExists(key string) bool {
-	sv := ProviderService{}
+	sv := &standardProviderService{}
 	return sv.KeyExists(key)
 }
 
-func (sv *Service) ConditionIsValid(lhs string, rhs interface{}) bool {
+func (sv *standardService) ConditionIsValid(lhs string, rhs interface{}) bool {
 	elem := sv.ToMap()[lhs]
 	return reflect.TypeOf(elem) == reflect.TypeOf(rhs)
 }
 
-func (svc *Service) GetResources() (map[string]*Resource, error) {
-	return svc.rsc, nil
+func (svc *standardService) GetResources() (map[string]Resource, error) {
+	rv := make(map[string]Resource, len(svc.rsc))
+	for k, v := range svc.rsc {
+		rv[k] = v
+	}
+	return rv, nil
 }
 
-func (svc *Service) GetResource(resourceName string) (*Resource, error) {
+func (svc *standardService) GetResource(resourceName string) (Resource, error) {
 	rscs, err := svc.GetResources()
 	if err != nil {
 		return nil, err
@@ -186,6 +262,6 @@ func (svc *Service) GetResource(resourceName string) (*Resource, error) {
 }
 
 func ServiceConditionIsValid(lhs string, rhs interface{}) bool {
-	sv := &ProviderService{}
+	sv := &standardProviderService{}
 	return sv.ConditionIsValid(lhs, rhs)
 }

@@ -2,34 +2,38 @@ package openapistackql
 
 import "fmt"
 
-type NamedSchema struct {
+var (
+	_ Addressable = &namedSchema{}
+)
+
+type namedSchema struct {
 	s          Schema
 	name       string
 	location   string
 	isRequired bool
 }
 
-func (ns *NamedSchema) GetLocation() string {
+func (ns *namedSchema) GetLocation() string {
 	return ns.location
 }
 
-func (ns *NamedSchema) GetName() string {
+func (ns *namedSchema) GetName() string {
 	return ns.name
 }
 
-func (ns *NamedSchema) GetSchema() (Schema, bool) {
+func (ns *namedSchema) GetSchema() (Schema, bool) {
 	return ns.s, true
 }
 
-func (ns *NamedSchema) GetType() string {
+func (ns *namedSchema) GetType() string {
 	return ns.s.GetType()
 }
 
-func (ns *NamedSchema) IsRequired() bool {
+func (ns *namedSchema) IsRequired() bool {
 	return ns.isRequired
 }
 
-func (ns *NamedSchema) ConditionIsValid(lhs string, rhs interface{}) bool {
+func (ns *namedSchema) ConditionIsValid(lhs string, rhs interface{}) bool {
 	return providerTypeConditionIsValid(ns.s.GetType(), lhs, rhs)
 }
 
@@ -42,7 +46,7 @@ func NewOptionalAddressableRequestBodyProperty(name string, s Schema) Addressabl
 }
 
 func newAddressableRequestBodyProperty(name string, s Schema, isRequired bool) Addressable {
-	return &NamedSchema{
+	return &namedSchema{
 		s:          s,
 		name:       name,
 		location:   "requestBody",

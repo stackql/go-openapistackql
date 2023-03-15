@@ -6,13 +6,26 @@ import (
 	"github.com/go-openapi/jsonpointer"
 )
 
-type Variations struct {
-	IsObjectSchemaImplicitlyUnioned bool `json:"isObjectSchemaImplicitlyUnioned,omitempty" yaml:"isObjectSchemaImplicitlyUnioned,omitempty"`
+var (
+	_ Variations = standardVariations{}
+)
+
+type Variations interface {
+	JSONLookup(token string) (interface{}, error)
+	IsObjectSchemaImplicitlyUnioned() bool
 }
 
-var _ jsonpointer.JSONPointable = (Variations)(Variations{})
+type standardVariations struct {
+	IsObjectSchemaImplicitlyUnionedVal bool `json:"isObjectSchemaImplicitlyUnioned,omitempty" yaml:"isObjectSchemaImplicitlyUnioned,omitempty"`
+}
 
-func (qt Variations) JSONLookup(token string) (interface{}, error) {
+var _ jsonpointer.JSONPointable = (Variations)(standardVariations{})
+
+func (qt standardVariations) IsObjectSchemaImplicitlyUnioned() bool {
+	return qt.IsObjectSchemaImplicitlyUnionedVal
+}
+
+func (qt standardVariations) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "isObjectImplicitlyUnioned":
 		return qt.IsObjectSchemaImplicitlyUnioned, nil
