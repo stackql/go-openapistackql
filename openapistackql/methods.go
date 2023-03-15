@@ -15,7 +15,8 @@ func (ms Methods) FindMethod(key string) (OperationStore, error) {
 
 func (ms Methods) OrderMethods() ([]OperationStore, error) {
 	var selectBin, insertBin, deleteBin, updateBin, execBin []OperationStore
-	for k, v := range ms {
+	for k, pv := range ms {
+		v := pv
 		switch v.GetSQLVerb() {
 		case "select":
 			v.setMethodKey(k)
