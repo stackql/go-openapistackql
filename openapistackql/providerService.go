@@ -123,11 +123,13 @@ func (sv *standardProviderService) GetProvider() (Provider, bool) {
 }
 
 func (sv *standardProviderService) GetQueryTransposeAlgorithm() string {
-	qt, qtExists := sv.StackQLConfig.GetQueryTranspose()
-	if sv.StackQLConfig == nil || !qtExists {
-		return ""
+	if sv.StackQLConfig != nil {
+		qt, qtExists := sv.StackQLConfig.GetQueryTranspose()
+		if qtExists {
+			return qt.GetAlgorithm()
+		}
 	}
-	return qt.GetAlgorithm()
+	return ""
 }
 
 func (sv *standardProviderService) GetRequestTranslateAlgorithm() string {

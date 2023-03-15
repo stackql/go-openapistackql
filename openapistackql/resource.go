@@ -139,11 +139,13 @@ func (r *standardResource) GetRequestTranslateAlgorithm() string {
 }
 
 func (r *standardResource) GetPaginationRequestTokenSemantic() (TokenSemantic, bool) {
-	pag, pagExists := r.StackQLConfig.GetPagination()
-	if r.StackQLConfig == nil || !pagExists || pag.GetRequestToken() == nil {
-		return nil, false
+	if r.StackQLConfig != nil {
+		pag, pagExists := r.StackQLConfig.GetPagination()
+		if pagExists && pag.GetRequestToken() != nil {
+			return pag.GetRequestToken(), true
+		}
 	}
-	return pag.GetRequestToken(), true
+	return nil, false
 }
 
 func (r *standardResource) GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool) {
@@ -154,11 +156,13 @@ func (r *standardResource) GetViewBodyDDLForSQLDialect(sqlDialect string) (strin
 }
 
 func (r *standardResource) GetPaginationResponseTokenSemantic() (TokenSemantic, bool) {
-	pag, pagExists := r.StackQLConfig.GetPagination()
-	if r.StackQLConfig == nil || !pagExists || pag.GetResponseToken() == nil {
-		return nil, false
+	if r.StackQLConfig != nil {
+		pag, pagExists := r.StackQLConfig.GetPagination()
+		if pagExists && pag.GetResponseToken() != nil {
+			return pag.GetResponseToken(), true
+		}
 	}
-	return pag.GetResponseToken(), true
+	return nil, false
 }
 
 func (rsc standardResource) JSONLookup(token string) (interface{}, error) {
