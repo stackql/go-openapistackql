@@ -28,6 +28,11 @@ type ProviderService interface {
 	GetResourcesRefRef() string
 	PeekServiceFragment(resourceKey string) (Service, bool)
 	SetServiceRefVal(Service) bool
+	IsPreferred() bool
+	FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error)
+	GetTitle() string
+	GetVersion() string
+	GetDescription() string
 	//
 	getResourcesShallowWithRegistry(registry RegistryAPI) (ResourceRegister, error)
 	getServiceRefRef() string
@@ -51,6 +56,22 @@ type standardProviderService struct {
 	Provider      Provider               `json:"-" yaml:"-"`                                     // upwards traversal
 	StackQLConfig *standardStackQLConfig `json:"config,omitempty" yaml:"config,omitempty"`
 	Service       Service                `json:"-" yaml:"-"`
+}
+
+func (sv *standardProviderService) GetTitle() string {
+	return sv.Title
+}
+
+func (sv *standardProviderService) GetVersion() string {
+	return sv.Version
+}
+
+func (sv *standardProviderService) GetDescription() string {
+	return sv.Description
+}
+
+func (sv *standardProviderService) IsPreferred() bool {
+	return sv.Preferred
 }
 
 func (sv *standardProviderService) SetServiceRefVal(svc Service) bool {

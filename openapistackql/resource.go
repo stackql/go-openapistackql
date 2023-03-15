@@ -31,7 +31,8 @@ type Resource interface {
 	GetFirstMethodMatchFromSQLVerb(sqlVerb string, parameters map[string]interface{}) (OperationStore, map[string]interface{}, bool)
 	GetService() (Service, bool)
 	GetViewBodyDDLForSQLDialect(sqlDialect string) (string, bool)
-	//
+	GetMethodsMatched() Methods
+	ToMap(extended bool) map[string]interface{}
 	// unexported mutators
 	getSQLVerbs() map[string][]OperationStoreRef
 	setProvider(p Provider)

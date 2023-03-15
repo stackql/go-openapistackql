@@ -90,6 +90,7 @@ type OperationStore interface {
 	GetRequestTranslateAlgorithm() string
 	IsRequiredRequestBodyProperty(key string) bool
 	GetPaginationRequestTokenSemantic() (TokenSemantic, bool)
+	IsNullary() bool
 	//
 	getName() string
 	getServerVariable(key string) (*openapi3.ServerVariable, bool)
