@@ -135,6 +135,12 @@ type standardOperationStore struct {
 	Resource          Resource        `json:"-" yaml:"-"` // upwards traversal
 }
 
+func NewEmptyOperationStore() OperationStore {
+	return &standardOperationStore{
+		Parameters: make(map[string]interface{}),
+	}
+}
+
 func (op *standardOperationStore) setPathItem(pi *openapi3.PathItem) {
 	op.PathItem = pi
 }

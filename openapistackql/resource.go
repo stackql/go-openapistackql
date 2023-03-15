@@ -59,6 +59,13 @@ type standardResource struct {
 	Provider          Provider                       `json:"-" yaml:"-"` // upwards traversal
 }
 
+func NewEmptyResource() Resource {
+	return &standardResource{
+		Methods:  make(Methods),
+		SQLVerbs: make(map[string][]OperationStoreRef),
+	}
+}
+
 func (r *standardResource) GetService() (Service, bool) {
 	if r.Service == nil {
 		return nil, false

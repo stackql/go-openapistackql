@@ -58,6 +58,10 @@ type standardProviderService struct {
 	Service       Service                `json:"-" yaml:"-"`
 }
 
+func NewEmptyProviderService() ProviderService {
+	return &standardProviderService{}
+}
+
 func (sv *standardProviderService) GetTitle() string {
 	return sv.Title
 }
