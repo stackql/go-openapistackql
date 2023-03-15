@@ -15,9 +15,9 @@ var (
 )
 
 type Resource interface {
+	ITable
 	GetQueryTransposeAlgorithm() string
 	GetID() string
-	GetName() string
 	GetTitle() string
 	GetDescription() string
 	GetSelectorAlgorithm() string

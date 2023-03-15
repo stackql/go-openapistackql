@@ -51,6 +51,7 @@ func combineOperationStoreSlices(opSlices ...[]OperationStore) []OperationStore 
 }
 
 type OperationStore interface {
+	ITable
 	GetMethodKey() string
 	GetSQLVerb() string
 	GetGraphQL() GraphQL
@@ -80,7 +81,6 @@ type OperationStore interface {
 	GetOptionalParameters() map[string]Addressable
 	GetParameter(paramKey string) (Addressable, bool)
 	GetUnionRequiredParameters() (map[string]Addressable, error)
-	GetName() string
 	GetPaginationResponseTokenSemantic() (TokenSemantic, bool)
 	MarshalBody(body interface{}, expectedRequest ExpectedRequest) ([]byte, error)
 	GetRequestBodySchema() (Schema, error)
@@ -91,6 +91,8 @@ type OperationStore interface {
 	IsRequiredRequestBodyProperty(key string) bool
 	GetPaginationRequestTokenSemantic() (TokenSemantic, bool)
 	IsNullary() bool
+	ToPresentationMap(extended bool) map[string]interface{}
+	GetColumnOrder(extended bool) []string
 	//
 	getName() string
 	getServerVariable(key string) (*openapi3.ServerVariable, bool)

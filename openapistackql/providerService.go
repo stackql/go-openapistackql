@@ -10,10 +10,12 @@ import (
 )
 
 var (
-	_ ProviderService = (*standardProviderService)(nil)
+	_ ProviderService = &standardProviderService{}
+	_ ITable          = &standardProviderService{}
 )
 
 type ProviderService interface {
+	ITable
 	GetQueryTransposeAlgorithm() string
 	GetProvider() (Provider, bool)
 	GetService() (Service, error)
@@ -22,14 +24,12 @@ type ProviderService interface {
 	GetPaginationRequestTokenSemantic() (TokenSemantic, bool)
 	GetPaginationResponseTokenSemantic() (TokenSemantic, bool)
 	ConditionIsValid(lhs string, rhs interface{}) bool
-	GetName() string
 	GetID() string
 	GetServiceFragment(resourceKey string) (Service, error)
 	GetResourcesRefRef() string
 	PeekServiceFragment(resourceKey string) (Service, bool)
 	SetServiceRefVal(Service) bool
 	IsPreferred() bool
-	FilterBy(predicate func(interface{}) (ITable, error)) (ITable, error)
 	GetTitle() string
 	GetVersion() string
 	GetDescription() string
