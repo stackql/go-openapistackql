@@ -88,6 +88,8 @@ type OperationStore interface {
 	IsAwaitable() bool
 	DeprecatedProcessResponse(response *http.Response) (map[string]interface{}, error)
 	GetRequestTranslateAlgorithm() string
+	IsRequiredRequestBodyProperty(key string) bool
+	GetPaginationRequestTokenSemantic() (TokenSemantic, bool)
 	//
 	getName() string
 	getServerVariable(key string) (*openapi3.ServerVariable, bool)
