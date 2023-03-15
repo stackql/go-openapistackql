@@ -32,10 +32,10 @@ type SQLExternalTable interface {
 }
 
 type standardSQLExternalTable struct {
-	CatalogName string              `json:"catalogName" yaml:"catalogName"`
-	SchemaName  string              `json:"schemaName" yaml:"schemaName"`
-	Name        string              `json:"name" yaml:"name"`
-	Columns     []SQLExternalColumn `json:"columns" yaml:"columns"`
+	CatalogName string                       `json:"catalogName" yaml:"catalogName"`
+	SchemaName  string                       `json:"schemaName" yaml:"schemaName"`
+	Name        string                       `json:"name" yaml:"name"`
+	Columns     []*standardSQLExternalColumn `json:"columns" yaml:"columns"`
 }
 
 func (t standardSQLExternalTable) GetCatalogName() string {
@@ -51,7 +51,11 @@ func (t standardSQLExternalTable) GetName() string {
 }
 
 func (t standardSQLExternalTable) GetColumns() []SQLExternalColumn {
-	return t.Columns
+	var rv []SQLExternalColumn
+	for _, c := range t.Columns {
+		rv = append(rv, c)
+	}
+	return rv
 }
 
 type SQLExternalColumn interface {
