@@ -131,7 +131,7 @@ func (svc *standardService) GetQueryTransposeAlgorithm() string {
 	if svc.StackQLConfig != nil {
 		qt, qtExists := svc.StackQLConfig.GetQueryTranspose()
 		if qtExists {
-			qt.GetAlgorithm()
+			return qt.GetAlgorithm()
 		}
 	}
 	return ""
