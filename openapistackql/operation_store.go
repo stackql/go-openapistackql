@@ -74,7 +74,7 @@ type OperationStore interface {
 	GetQueryTransposeAlgorithm() string
 	GetSelectSchemaAndObjectPath() (Schema, string, error)
 	ProcessResponse(response *http.Response) (*response.Response, error)
-	Parameterize(prov Provider, parentDoc Service, inputParams *HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error)
+	Parameterize(prov Provider, parentDoc Service, inputParams HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error)
 	GetSelectItemsKey() string
 	GetResponseBodySchemaAndMediaType() (Schema, string, error)
 	GetRequiredParameters() map[string]Addressable
@@ -818,7 +818,7 @@ func (op *standardOperationStore) marshalBody(body interface{}, expectedRequest 
 	return nil, fmt.Errorf("media type = '%s' not supported", expectedRequest.GetBodyMediaType())
 }
 
-func (op *standardOperationStore) Parameterize(prov Provider, parentDoc Service, inputParams *HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
+func (op *standardOperationStore) Parameterize(prov Provider, parentDoc Service, inputParams HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error) {
 	params := op.OperationRef.Value.Parameters
 	copyParams := make(map[string]interface{})
 	flatParameters, err := inputParams.ToFlatMap()
@@ -840,7 +840,7 @@ func (op *standardOperationStore) Parameterize(prov Provider, parentDoc Service,
 		if p.Value.In == openapi3.ParameterInHeader {
 			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInHeader)
 			if present {
-				prefilledHeader.Set(name, fmt.Sprintf("%v", val.Val))
+				prefilledHeader.Set(name, fmt.Sprintf("%v", val.GetVal()))
 				delete(copyParams, name)
 			} else if p.Value != nil && p.Value.Schema != nil && p.Value.Schema.Value != nil && p.Value.Schema.Value.Default != nil {
 				prefilledHeader.Set(name, fmt.Sprintf("%v", p.Value.Schema.Value.Default))
@@ -851,7 +851,7 @@ func (op *standardOperationStore) Parameterize(prov Provider, parentDoc Service,
 		if p.Value.In == openapi3.ParameterInPath {
 			val, present := inputParams.GetParameter(p.Value.Name, openapi3.ParameterInPath)
 			if present {
-				pathParams[name] = fmt.Sprintf("%v", val.Val)
+				pathParams[name] = fmt.Sprintf("%v", val.GetVal())
 				delete(copyParams, name)
 			}
 			if !present && isOpenapi3ParamRequired(p.Value) {
