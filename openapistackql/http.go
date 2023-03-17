@@ -156,6 +156,8 @@ type HttpParameters interface {
 	SetResponseBodyParam(key string, val interface{})
 	SetServerParam(key string, svc Service, val interface{})
 	SetRequestBodyParam(key string, val interface{})
+	SetRequestBody(map[string]interface{})
+	GetRequestBody() map[string]interface{}
 }
 
 type standardHttpParameters struct {
@@ -183,6 +185,14 @@ func NewHttpParameters(method OperationStore) HttpParameters {
 		ServerParams: make(ParamMap),
 		Unassigned:   make(ParamMap),
 	}
+}
+
+func (hp *standardHttpParameters) GetRequestBody() map[string]interface{} {
+	return hp.RequestBody
+}
+
+func (hp *standardHttpParameters) SetRequestBody(body map[string]interface{}) {
+	hp.RequestBody = body
 }
 
 func (hp *standardHttpParameters) SetRequestBodyParam(key string, val interface{}) {
