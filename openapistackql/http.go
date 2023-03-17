@@ -138,7 +138,7 @@ func (pm ParamMap) encodeWithPrefix(prefix string) string {
 	return sb.String()
 }
 
-func NewstandardParameterBinding(param Addressable, val interface{}) ParameterBinding {
+func NewParameterBinding(param Addressable, val interface{}) ParameterBinding {
 	return &standardParameterBinding{
 		Param: param,
 		Val:   val,
@@ -153,6 +153,9 @@ type HttpParameters interface {
 	GetParameter(paramName, paramIn string) (ParameterBinding, bool)
 	GetRemainingQueryParamsFlatMap(keysRemaining map[string]interface{}) (map[string]interface{}, error)
 	GetServerParameterFlatMap() (map[string]interface{}, error)
+	SetResponsetBodyParam(key string, val interface{})
+	SetServerParam(key string, svc Service, val interface{})
+	SetRequestBodyParam(key string, val interface{})
 }
 
 type standardHttpParameters struct {
@@ -180,6 +183,18 @@ func NewHttpParameters(method OperationStore) HttpParameters {
 		ServerParams: make(ParamMap),
 		Unassigned:   make(ParamMap),
 	}
+}
+
+func (hp *standardHttpParameters) SetRequestBodyParam(key string, val interface{}) {
+	hp.RequestBody[key] = val
+}
+
+func (hp *standardHttpParameters) SetResponsetBodyParam(key string, val interface{}) {
+	hp.ResponseBody[key] = val
+}
+
+func (hp *standardHttpParameters) SetServerParam(key string, svc Service, val interface{}) {
+	hp.ServerParams[key] = NewParameterBinding(NewParameter(&openapi3.Parameter{In: "server"}, svc), val)
 }
 
 func (hp *standardHttpParameters) Encode() string {
@@ -214,23 +229,23 @@ func (hp *standardHttpParameters) IngestMap(m map[string]interface{}) error {
 
 func (hp *standardHttpParameters) StoreParameter(param Addressable, val interface{}) {
 	if param.GetLocation() == openapi3.ParameterInPath {
-		hp.PathParams[param.GetName()] = NewstandardParameterBinding(param, val)
+		hp.PathParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
 	if param.GetLocation() == openapi3.ParameterInQuery {
-		hp.QueryParams[param.GetName()] = NewstandardParameterBinding(param, val)
+		hp.QueryParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
 	if param.GetLocation() == openapi3.ParameterInHeader {
-		hp.HeaderParams[param.GetName()] = NewstandardParameterBinding(param, val)
+		hp.HeaderParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
 	if param.GetLocation() == openapi3.ParameterInCookie {
-		hp.CookieParams[param.GetName()] = NewstandardParameterBinding(param, val)
+		hp.CookieParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
 	if param.GetLocation() == "server" {
-		hp.ServerParams[param.GetName()] = NewstandardParameterBinding(param, val)
+		hp.ServerParams[param.GetName()] = NewParameterBinding(param, val)
 		return
 	}
 }
@@ -335,7 +350,7 @@ func (hp *standardHttpParameters) ToFlatMap() (map[string]interface{}, error) {
 			return nil, err
 		}
 		for mk, mv := range m {
-			val := NewstandardParameterBinding(nil, mv)
+			val := NewParameterBinding(nil, mv)
 			err = hp.updateStuff(mk, val, rv, visited)
 			if err != nil {
 				return nil, err
@@ -377,7 +392,7 @@ func (hp *standardHttpParameters) GetRemainingQueryParamsFlatMap(keysRemaining m
 			if !ok {
 				continue
 			}
-			val := NewstandardParameterBinding(nil, mv)
+			val := NewParameterBinding(nil, mv)
 			err = hp.updateStuff(mk, val, rv, visited)
 			if err != nil {
 				return nil, err
