@@ -60,7 +60,7 @@ func (sp *standardParamPair) GetParamBinding() ParameterBinding {
 	return sp.Param
 }
 
-type standardBodyMap map[string]interface{}
+type BodyMap map[string]interface{}
 
 type BodyParamPair interface {
 	GetKey() string
@@ -100,7 +100,7 @@ func newstandardParamPair(k string, v ParameterBinding) ParamPair {
 	}
 }
 
-func (pm standardBodyMap) order() []BodyParamPair {
+func (pm BodyMap) order() []BodyParamPair {
 	var rv []BodyParamPair
 	for k, v := range pm {
 		rv = append(rv, newstandardBodyParamPair(k, v))
@@ -122,7 +122,7 @@ func (pm ParamMap) order() []ParamPair {
 	return rv
 }
 
-func (bm standardBodyMap) encodeWithPrefix(prefix string) string {
+func (bm BodyMap) encodeWithPrefix(prefix string) string {
 	var sb strings.Builder
 	for _, v := range bm.order() {
 		sb.WriteString(ParamEncodeDelimiter + prefix + ParamEncodeDelimiter + v.GetKey() + ParamEncodeDelimiter + fmt.Sprintf("%v", v.GetVal()) + ParamEncodeDelimiter)
@@ -164,8 +164,8 @@ type standardHttpParameters struct {
 	HeaderParams ParamMap
 	PathParams   ParamMap
 	QueryParams  ParamMap
-	RequestBody  standardBodyMap
-	ResponseBody standardBodyMap
+	RequestBody  BodyMap
+	ResponseBody BodyMap
 	ServerParams ParamMap
 	Unassigned   ParamMap
 	Region       EncodableString
@@ -178,8 +178,8 @@ func NewHttpParameters(method OperationStore) HttpParameters {
 		HeaderParams: make(ParamMap),
 		PathParams:   make(ParamMap),
 		QueryParams:  make(ParamMap),
-		RequestBody:  make(standardBodyMap),
-		ResponseBody: make(standardBodyMap),
+		RequestBody:  make(BodyMap),
+		ResponseBody: make(BodyMap),
 		ServerParams: make(ParamMap),
 		Unassigned:   make(ParamMap),
 	}
