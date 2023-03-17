@@ -153,7 +153,7 @@ type HttpParameters interface {
 	GetParameter(paramName, paramIn string) (ParameterBinding, bool)
 	GetRemainingQueryParamsFlatMap(keysRemaining map[string]interface{}) (map[string]interface{}, error)
 	GetServerParameterFlatMap() (map[string]interface{}, error)
-	SetResponsetBodyParam(key string, val interface{})
+	SetResponseBodyParam(key string, val interface{})
 	SetServerParam(key string, svc Service, val interface{})
 	SetRequestBodyParam(key string, val interface{})
 }
@@ -189,7 +189,7 @@ func (hp *standardHttpParameters) SetRequestBodyParam(key string, val interface{
 	hp.RequestBody[key] = val
 }
 
-func (hp *standardHttpParameters) SetResponsetBodyParam(key string, val interface{}) {
+func (hp *standardHttpParameters) SetResponseBodyParam(key string, val interface{}) {
 	hp.ResponseBody[key] = val
 }
 
