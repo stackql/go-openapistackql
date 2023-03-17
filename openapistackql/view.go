@@ -8,16 +8,26 @@ import (
 )
 
 var (
-	sqlDialectRegex *regexp.Regexp = regexp.MustCompile(`sqlDialect(?:\s)*==(?:\s)*"(?P<sqlDialect>[^<>"\s]*)"`)
+	sqlDialectRegex *regexp.Regexp            = regexp.MustCompile(`sqlDialect(?:\s)*==(?:\s)*"(?P<sqlDialect>[^<>"\s]*)"`)
+	_               View                      = &standardView{}
+	_               jsonpointer.JSONPointable = standardView{}
 )
 
-type View struct {
-	Predicate string `json:"predicate" yaml:"predicate"`
-	DDL       string `json:"ddl" yaml:"ddl"`
-	Fallback  *View  `json:"fallback" yaml:"fallback"` // Future proofing for predicate failover
+type View interface {
+	GetDDLForSqlDialect(sqlBackend string) (string, bool)
 }
 
-func (v *View) getSqlDialectName() string {
+func GetTestingView() standardView {
+	return standardView{}
+}
+
+type standardView struct {
+	Predicate string        `json:"predicate" yaml:"predicate"`
+	DDL       string        `json:"ddl" yaml:"ddl"`
+	Fallback  *standardView `json:"fallback" yaml:"fallback"` // Future proofing for predicate failover
+}
+
+func (v *standardView) getSqlDialectName() string {
 	inputString := v.Predicate
 	for i, name := range sqlDialectRegex.SubexpNames() {
 		if name == "sqlDialect" {
@@ -30,7 +40,7 @@ func (v *View) getSqlDialectName() string {
 	return ""
 }
 
-func (v *View) GetDDLForSqlDialect(sqlBackend string) (string, bool) {
+func (v *standardView) GetDDLForSqlDialect(sqlBackend string) (string, bool) {
 	sqlBackendAccepted := v.getSqlDialectName()
 	if sqlBackendAccepted == "" {
 		return v.DDL, true
@@ -45,9 +55,7 @@ func (v *View) GetDDLForSqlDialect(sqlBackend string) (string, bool) {
 
 }
 
-var _ jsonpointer.JSONPointable = (View)(View{})
-
-func (qt View) JSONLookup(token string) (interface{}, error) {
+func (qt standardView) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "ddl":
 		return qt.DDL, nil

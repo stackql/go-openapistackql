@@ -14,7 +14,7 @@ func NewParameterSuffixMap() *ParameterSuffixMap {
 	}
 }
 
-func MakeSuffixMapFromParameterMap(m map[string]*Parameter) *ParameterSuffixMap {
+func MakeSuffixMapFromParameterMap(m map[string]Addressable) *ParameterSuffixMap {
 	m2 := make(map[string]interface{})
 	for k, v := range m {
 		m2[k] = v
@@ -24,20 +24,20 @@ func MakeSuffixMapFromParameterMap(m map[string]*Parameter) *ParameterSuffixMap 
 	}
 }
 
-func (psm *ParameterSuffixMap) Get(k string) (*Parameter, bool) {
+func (psm *ParameterSuffixMap) Get(k string) (Addressable, bool) {
 	rv, ok := psm.sm.Get(k)
 	if !ok {
 		return nil, false
 	}
-	crv, ok := rv.(*Parameter)
+	crv, ok := rv.(*standardParameter)
 	return crv, ok
 }
 
-func (psm *ParameterSuffixMap) GetAll() map[string]*Parameter {
+func (psm *ParameterSuffixMap) GetAll() map[string]Addressable {
 	m := psm.sm.GetAll()
-	rv := make(map[string]*Parameter)
+	rv := make(map[string]Addressable)
 	for k, v := range m {
-		p, ok := v.(*Parameter)
+		p, ok := v.(*standardParameter)
 		if ok {
 			rv[k] = p
 		}

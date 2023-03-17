@@ -10,17 +10,31 @@ import (
 )
 
 var (
-	linksNextRegex *regexp.Regexp = regexp.MustCompile(`.*<(?P<nextURL>[^>]*)>;\ rel="next".*`)
+	linksNextRegex *regexp.Regexp            = regexp.MustCompile(`.*<(?P<nextURL>[^>]*)>;\ rel="next".*`)
+	_              Pagination                = &standardPagination{}
+	_              jsonpointer.JSONPointable = standardPagination{}
 )
 
-type Pagination struct {
-	RequestToken  *TokenSemantic `json:"requestToken,omitempty" yaml:"requestToken,omitempty"`
-	ResponseToken *TokenSemantic `json:"responseToken,omitempty" yaml:"responseToken,omitempty"`
+type Pagination interface {
+	JSONLookup(token string) (interface{}, error)
+	GetRequestToken() TokenSemantic
+	GetResponseToken() TokenSemantic
 }
 
-var _ jsonpointer.JSONPointable = (Pagination)(Pagination{})
+type standardPagination struct {
+	RequestToken  *standardTokenSemantic `json:"requestToken,omitempty" yaml:"requestToken,omitempty"`
+	ResponseToken *standardTokenSemantic `json:"responseToken,omitempty" yaml:"responseToken,omitempty"`
+}
 
-func (qt Pagination) JSONLookup(token string) (interface{}, error) {
+func (qt *standardPagination) GetRequestToken() TokenSemantic {
+	return qt.RequestToken
+}
+
+func (qt *standardPagination) GetResponseToken() TokenSemantic {
+	return qt.ResponseToken
+}
+
+func (qt standardPagination) JSONLookup(token string) (interface{}, error) {
 	switch token {
 	case "requestToken":
 		return qt.RequestToken, nil
@@ -34,7 +48,7 @@ func (qt Pagination) JSONLookup(token string) (interface{}, error) {
 type TokenTransformer func(interface{}) (interface{}, error)
 
 type TransformerLocator interface {
-	GetTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error)
+	GetTransformer(tokenSemantic TokenSemantic) (TokenTransformer, error)
 }
 
 type StandardTransformerLocator struct{}
@@ -43,8 +57,8 @@ func NewStandardTransformerLocator() TransformerLocator {
 	return &StandardTransformerLocator{}
 }
 
-func (stl *StandardTransformerLocator) GetTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error) {
-	switch strings.ToLower(tokenSemantic.Location) {
+func (stl *StandardTransformerLocator) GetTransformer(tokenSemantic TokenSemantic) (TokenTransformer, error) {
+	switch strings.ToLower(tokenSemantic.GetLocation()) {
 	case "header":
 		return getHeaderTransformer(tokenSemantic)
 	default:
@@ -52,8 +66,8 @@ func (stl *StandardTransformerLocator) GetTransformer(tokenSemantic *TokenSemant
 	}
 }
 
-func getHeaderTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error) {
-	if tokenSemantic.Algorithm == "" && strings.ToLower(tokenSemantic.Key) == "link" && strings.ToLower(tokenSemantic.Location) == "header" {
+func getHeaderTransformer(tokenSemantic TokenSemantic) (TokenTransformer, error) {
+	if tokenSemantic.GetAlgorithm() == "" && strings.ToLower(tokenSemantic.GetKey()) == "link" && strings.ToLower(tokenSemantic.GetLocation()) == "header" {
 		return defaultLinkHeaderTransformer, nil
 	}
 
@@ -62,7 +76,7 @@ func getHeaderTransformer(tokenSemantic *TokenSemantic) (TokenTransformer, error
 		if !ok {
 			return nil, fmt.Errorf("cannot ingest purported http header of type = '%T'", h)
 		}
-		s := h.Values(tokenSemantic.Key)
+		s := h.Values(tokenSemantic.GetKey())
 		resArr := linksNextRegex.FindStringSubmatch(strings.Join(s, ","))
 		if len(resArr) == 2 {
 			return resArr[1], nil

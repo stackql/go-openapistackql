@@ -149,8 +149,8 @@ func execTestRegistrySimpleOktaApplicationServiceRead(t *testing.T, r RegistryAP
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["application"]
-		if !ok {
+		ps, err := pr.GetProviderService("application")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
 		}
 		svc, err := r.GetService(ps)
@@ -203,7 +203,11 @@ func execTestRegistryIndirectGoogleComputeResourcesJsonRead(t *testing.T, r Regi
 		}
 
 		assert.Assert(t, rr != nil)
-		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+		aTypes, ok := rr.GetResource("acceleratorTypes")
+		if !ok {
+			t.Fatalf("Test failed: could not locate resource acceleratorTypes")
+		}
+		assert.Equal(t, aTypes.GetID(), "google.compute.acceleratorTypes")
 	}
 	t.Logf("TestSimpleGoogleComputeResourcesJsonRead passed\n")
 }
@@ -222,16 +226,25 @@ func execTestRegistryIndirectGoogleComputeServiceSubsetJsonRead(t *testing.T, r 
 		}
 
 		assert.Assert(t, rr != nil)
-		assert.Equal(t, rr.Resources["acceleratorTypes"].ID, "google.compute.acceleratorTypes")
+		aTypes, ok := rr.GetResource("acceleratorTypes")
+		if !ok {
+			t.Fatalf("Test failed: could not locate resource acceleratorTypes")
+		}
+		assert.Equal(t, aTypes.GetID(), "google.compute.acceleratorTypes")
 
-		sv, err := r.GetService(rr.Resources["acceleratorTypes"].Methods["get"].ProviderService)
+		m, err := aTypes.FindMethod("get")
+		if err != nil {
+			t.Fatalf("Test failed: %v", err)
+		}
+
+		psv, err := r.GetService(m.GetProviderService())
 
 		if err != nil {
 			t.Fatalf("Test failed: %v", err)
 		}
-		assert.Assert(t, sv != nil)
+		assert.Assert(t, psv != nil)
 
-		sn := sv.GetName()
+		sn := psv.GetName()
 
 		assert.Equal(t, sn, "compute")
 	}
@@ -294,8 +307,8 @@ func execTestRegistrySimpleOktaPullAndPersist(t *testing.T, r RegistryAPI) {
 			t.Fatalf("Test failed: %v", err)
 		}
 
-		ps, ok := pr.ProviderServices["application"]
-		if !ok {
+		ps, err := pr.GetProviderService("application")
+		if err != nil {
 			t.Fatalf("Test failed: could not locate ProviderService for okta.application")
 		}
 		svc, err := r.GetService(ps)
@@ -351,7 +364,7 @@ func execTestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs(t 
 
 		assert.Assert(t, len(remainingParams) == 0)
 
-		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.acceleratorTypes.aggregatedList")
+		assert.Equal(t, os.GetOperationRef().Value.OperationID, "compute.acceleratorTypes.aggregatedList")
 	}
 
 	t.Logf("TestRegistryIndirectGoogleComputeServiceMethodResolutionSeparateDocs passed\n")
@@ -397,11 +410,11 @@ func execTestRegistryCanHandleArrayResponts(t *testing.T, r RegistryAPI) {
 
 		assert.Assert(t, len(remainingParams) == 0)
 
-		assert.Equal(t, os.OperationRef.Value.OperationID, "repos/list-for-org")
+		assert.Equal(t, os.GetOperationRef().Value.OperationID, "repos/list-for-org")
 
-		assert.Equal(t, os.OperationRef.Value.Responses["200"].Value.Content["application/json"].Schema.Value.Type, "array")
+		assert.Equal(t, os.GetOperationRef().Value.Responses["200"].Value.Content["application/json"].Schema.Value.Type, "array")
 
-		props := os.OperationRef.Value.Responses["200"].Value.Content["application/json"].Schema.Value.Items.Value.Properties
+		props := os.GetOperationRef().Value.Responses["200"].Value.Content["application/json"].Schema.Value.Items.Value.Properties
 
 		name, nameExists := props["name"]
 
@@ -459,29 +472,29 @@ func execTestRegistryCanHandleUnspecifiedResponseWithDefaults(t *testing.T, r Re
 
 		assert.Assert(t, len(remainingParams) == 0)
 
-		assert.Equal(t, os.OperationRef.Value.OperationID, "compute.disks.list")
+		assert.Equal(t, os.GetOperationRef().Value.OperationID, "compute.disks.list")
 
 		sc, _, err := os.GetResponseBodySchemaAndMediaType()
 
 		assert.NilError(t, err)
 
-		assert.Equal(t, sc.Type, "object")
+		assert.Equal(t, sc.GetType(), "object")
 
 		items, _ := sc.GetSelectListItems("items")
 
 		assert.Assert(t, items != nil)
 
-		name, nameExists := items.Items.Value.Properties["name"]
+		name, nameExists := items.GetItemProperty("name")
 
 		assert.Assert(t, nameExists)
 
-		assert.Equal(t, name.Value.Type, "string")
+		assert.Equal(t, name.GetType(), "string")
 
-		id, idExists := items.Items.Value.Properties["id"]
+		id, idExists := items.GetItemProperty("id")
 
 		assert.Assert(t, idExists)
 
-		assert.Equal(t, id.Value.Type, "string")
+		assert.Equal(t, id.GetType(), "string")
 	}
 
 }
@@ -516,15 +529,15 @@ func execTestRegistryCanHandlePolymorphismAllOf(t *testing.T, r RegistryAPI) {
 
 		assert.NilError(t, err)
 
-		os, ok := rsc.Methods.FindMethod("create_from_manifest")
+		os, ok := rsc.GetMethods().FindMethod("create_from_manifest")
 
 		assert.Assert(t, ok)
 
-		assert.Equal(t, os.OperationRef.Value.OperationID, "apps/create-from-manifest")
+		assert.Equal(t, os.GetOperationRef().Value.OperationID, "apps/create-from-manifest")
 
-		assert.Equal(t, os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value.Type, "")
+		assert.Equal(t, os.GetOperationRef().Value.Responses["201"].Value.Content["application/json"].Schema.Value.Type, "")
 
-		sVal := NewSchema(os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Value, sv, "", os.OperationRef.Value.Responses["201"].Value.Content["application/json"].Schema.Ref)
+		sVal := NewSchema(os.GetOperationRef().Value.Responses["201"].Value.Content["application/json"].Schema.Value, sv, "", os.GetOperationRef().Value.Responses["201"].Value.Content["application/json"].Schema.Ref)
 
 		tab := sVal.Tabulate(false)
 
