@@ -16,10 +16,15 @@ type ITable interface {
 }
 
 type ColumnDescriptor interface {
+	GetAlias() string
+	GetDecoratedCol() string
 	GetIdentifier() string
-	GetRepresentativeSchema() Schema
 	GetName() string
-	getSchema() Schema
+	GetNode() sqlparser.SQLNode
+	GetQualifier() string
+	GetRepresentativeSchema() Schema
+	GetSchema() Schema
+	GetVal() *sqlparser.SQLVal
 	setName(string)
 }
 
@@ -33,6 +38,26 @@ type standardColumnDescriptor struct {
 	Node         sqlparser.SQLNode
 }
 
+func (cd standardColumnDescriptor) GetVal() *sqlparser.SQLVal {
+	return cd.Val
+}
+
+func (cd standardColumnDescriptor) GetNode() sqlparser.SQLNode {
+	return cd.Node
+}
+
+func (cd standardColumnDescriptor) GetDecoratedCol() string {
+	return cd.DecoratedCol
+}
+
+func (cd standardColumnDescriptor) GetQualifier() string {
+	return cd.Qualifier
+}
+
+func (cd standardColumnDescriptor) GetAlias() string {
+	return cd.Alias
+}
+
 func (cd standardColumnDescriptor) setName(name string) {
 	cd.Name = name
 }
@@ -41,7 +66,7 @@ func (cd standardColumnDescriptor) GetName() string {
 	return cd.Name
 }
 
-func (cd standardColumnDescriptor) getSchema() Schema {
+func (cd standardColumnDescriptor) GetSchema() Schema {
 	return cd.Schema
 }
 
@@ -117,8 +142,8 @@ func (t *standardTabulation) GetName() string {
 
 func (t *standardTabulation) RenameColumnsToXml() Tabulation {
 	for i, v := range t.columns {
-		if v.getSchema() != nil {
-			alias := v.getSchema().getXmlAlias()
+		if v.GetSchema() != nil {
+			alias := v.GetSchema().getXmlAlias()
 			if alias != "" {
 				t.columns[i].setName(alias)
 			}
