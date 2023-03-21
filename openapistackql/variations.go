@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	_ Variations = standardVariations{}
+	_ Variations                = standardVariations{}
+	_ jsonpointer.JSONPointable = (Variations)(standardVariations{})
 )
 
 type Variations interface {
@@ -18,8 +19,6 @@ type Variations interface {
 type standardVariations struct {
 	IsObjectSchemaImplicitlyUnionedVal bool `json:"isObjectSchemaImplicitlyUnioned,omitempty" yaml:"isObjectSchemaImplicitlyUnioned,omitempty"`
 }
-
-var _ jsonpointer.JSONPointable = (Variations)(standardVariations{})
 
 func (qt standardVariations) IsObjectSchemaImplicitlyUnioned() bool {
 	return qt.IsObjectSchemaImplicitlyUnionedVal

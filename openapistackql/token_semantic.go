@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	_ TokenSemantic = &standardTokenSemantic{}
+	_ TokenSemantic             = &standardTokenSemantic{}
+	_ jsonpointer.JSONPointable = (TokenSemantic)(&standardTokenSemantic{})
 )
 
 type TokenSemanticArgs map[string]interface{}
@@ -48,8 +49,6 @@ func (ts *standardTokenSemantic) GetKey() string {
 func (ts *standardTokenSemantic) GetLocation() string {
 	return ts.Location
 }
-
-var _ jsonpointer.JSONPointable = (TokenSemantic)(&standardTokenSemantic{})
 
 func (qt *standardTokenSemantic) JSONLookup(token string) (interface{}, error) {
 	switch token {
