@@ -25,7 +25,7 @@ const (
 
 var (
 	AnonymousColumnName string = defaultAnonymousColumnName
-	_                   Schema = (*standardSchema)(nil)
+	_                   Schema = &standardSchema{}
 )
 
 type Schema interface {
@@ -58,7 +58,7 @@ type Schema interface {
 	SetProperties(openapi3.Schemas)
 	SetType(string)
 	SetKey(string)
-	Tabulate(omitColumns bool) *Tabulation
+	Tabulate(omitColumns bool) Tabulation
 	ToDescriptionMap(extended bool) map[string]interface{}
 	// not exported, but essential
 	deprecatedGetSelectItemsSchema(key string, mediaType string) (Schema, string, error)
@@ -1068,7 +1068,7 @@ func (s *standardSchema) isNotSimple() bool {
 	}
 }
 
-func (s *standardSchema) Tabulate(omitColumns bool) *Tabulation {
+func (s *standardSchema) Tabulate(omitColumns bool) Tabulation {
 	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.Type != "array") {
 		var cols []ColumnDescriptor
 		if !omitColumns {
@@ -1076,16 +1076,16 @@ func (s *standardSchema) Tabulate(omitColumns bool) *Tabulation {
 				keysUsed := make(map[string]struct{})
 				cols = s.getPropertiesColumns()
 				for _, col := range cols {
-					keysUsed[col.Name] = struct{}{}
+					keysUsed[col.GetName()] = struct{}{}
 				}
 				var additionalCols []ColumnDescriptor
 				if len(s.AllOf) > 0 {
 					additionalCols = s.getAllSchemaRefsColumnsShallow(s.AllOf)
 				}
 				for _, col := range additionalCols {
-					if _, ok := keysUsed[col.Name]; !ok {
+					if _, ok := keysUsed[col.GetName()]; !ok {
 						cols = append(cols, col)
-						keysUsed[col.Name] = struct{}{}
+						keysUsed[col.GetName()] = struct{}{}
 					}
 				}
 			} else if len(s.Properties) > 0 {
@@ -1098,7 +1098,7 @@ func (s *standardSchema) Tabulate(omitColumns bool) *Tabulation {
 				cols = s.getOneOfColumns()
 			}
 		}
-		return &Tabulation{columns: cols, name: s.GetName(), schema: s}
+		return newStandardTabulation(s.GetName(), cols, s)
 	} else if s.Type == "array" {
 		if items := s.Items.Value; items != nil {
 			rv := newSchema(items, s.svc, "", s.Items.Ref).Tabulate(omitColumns)
@@ -1107,9 +1107,9 @@ func (s *standardSchema) Tabulate(omitColumns bool) *Tabulation {
 	} else if s.Type == "string" {
 		cd := newColumnDescriptor("", AnonymousColumnName, "", "", nil, s, nil)
 		if omitColumns {
-			return &Tabulation{columns: []ColumnDescriptor{}, name: s.Title, schema: s}
+			return newStandardTabulation(s.Title, []ColumnDescriptor{}, s)
 		}
-		return &Tabulation{columns: []ColumnDescriptor{cd}, name: s.Title, schema: s}
+		return newStandardTabulation(s.Title, []ColumnDescriptor{cd}, s)
 	}
 	return nil
 }

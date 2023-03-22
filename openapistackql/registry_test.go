@@ -546,7 +546,7 @@ func execTestRegistryCanHandlePolymorphismAllOf(t *testing.T, r RegistryAPI) {
 		for _, expectedProperty := range []string{"pem", "description"} {
 			found := false
 			for _, col := range colz {
-				if col.Name == expectedProperty {
+				if col.GetName() == expectedProperty {
 					found = true
 					break
 				}

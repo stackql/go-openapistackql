@@ -15,7 +15,20 @@ type ITable interface {
 	FilterBy(func(interface{}) (ITable, error)) (ITable, error)
 }
 
-type ColumnDescriptor struct {
+type ColumnDescriptor interface {
+	GetAlias() string
+	GetDecoratedCol() string
+	GetIdentifier() string
+	GetName() string
+	GetNode() sqlparser.SQLNode
+	GetQualifier() string
+	GetRepresentativeSchema() Schema
+	GetSchema() Schema
+	GetVal() *sqlparser.SQLVal
+	setName(string)
+}
+
+type standardColumnDescriptor struct {
 	Alias        string
 	Name         string
 	Qualifier    string
@@ -25,14 +38,46 @@ type ColumnDescriptor struct {
 	Node         sqlparser.SQLNode
 }
 
-func (cd ColumnDescriptor) GetIdentifier() string {
+func (cd standardColumnDescriptor) GetVal() *sqlparser.SQLVal {
+	return cd.Val
+}
+
+func (cd standardColumnDescriptor) GetNode() sqlparser.SQLNode {
+	return cd.Node
+}
+
+func (cd standardColumnDescriptor) GetDecoratedCol() string {
+	return cd.DecoratedCol
+}
+
+func (cd standardColumnDescriptor) GetQualifier() string {
+	return cd.Qualifier
+}
+
+func (cd standardColumnDescriptor) GetAlias() string {
+	return cd.Alias
+}
+
+func (cd standardColumnDescriptor) setName(name string) {
+	cd.Name = name
+}
+
+func (cd standardColumnDescriptor) GetName() string {
+	return cd.Name
+}
+
+func (cd standardColumnDescriptor) GetSchema() Schema {
+	return cd.Schema
+}
+
+func (cd standardColumnDescriptor) GetIdentifier() string {
 	if cd.Alias != "" {
 		return cd.Alias
 	}
 	return cd.Name
 }
 
-func (cd ColumnDescriptor) GetRepresentativeSchema() Schema {
+func (cd standardColumnDescriptor) GetRepresentativeSchema() Schema {
 	if cd.Node != nil {
 		switch nt := cd.Node.(type) {
 		case *sqlparser.ConvertExpr:
@@ -53,10 +98,18 @@ func NewColumnDescriptor(alias string, name string, qualifier string, decoratedC
 }
 
 func newColumnDescriptor(alias string, name string, qualifier string, decoratedCol string, node sqlparser.SQLNode, schema Schema, val *sqlparser.SQLVal) ColumnDescriptor {
-	return ColumnDescriptor{Alias: alias, Name: name, Qualifier: qualifier, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
+	return standardColumnDescriptor{Alias: alias, Name: name, Qualifier: qualifier, DecoratedCol: decoratedCol, Schema: schema, Val: val, Node: node}
 }
 
-type Tabulation struct {
+type Tabulation interface {
+	GetColumns() []ColumnDescriptor
+	GetSchema() Schema
+	PushBackColumn(col ColumnDescriptor)
+	GetName() string
+	RenameColumnsToXml() Tabulation
+}
+
+type standardTabulation struct {
 	columns   []ColumnDescriptor
 	name      string
 	arrayType string
@@ -64,31 +117,35 @@ type Tabulation struct {
 }
 
 func GetTabulation(name, arrayType string) Tabulation {
-	return Tabulation{name: name, arrayType: arrayType}
+	return &standardTabulation{name: name, arrayType: arrayType}
 }
 
-func (t *Tabulation) GetColumns() []ColumnDescriptor {
+func newStandardTabulation(name string, columns []ColumnDescriptor, schema *standardSchema) Tabulation {
+	return &standardTabulation{name: name, columns: columns, schema: schema}
+}
+
+func (t *standardTabulation) GetColumns() []ColumnDescriptor {
 	return t.columns
 }
 
-func (t *Tabulation) GetSchema() *standardSchema {
+func (t *standardTabulation) GetSchema() Schema {
 	return t.schema
 }
 
-func (t *Tabulation) PushBackColumn(col ColumnDescriptor) {
+func (t *standardTabulation) PushBackColumn(col ColumnDescriptor) {
 	t.columns = append(t.columns, col)
 }
 
-func (t *Tabulation) GetName() string {
+func (t *standardTabulation) GetName() string {
 	return t.name
 }
 
-func (t *Tabulation) RenameColumnsToXml() *Tabulation {
+func (t *standardTabulation) RenameColumnsToXml() Tabulation {
 	for i, v := range t.columns {
-		if v.Schema != nil {
-			alias := v.Schema.getXmlAlias()
+		if v.GetSchema() != nil {
+			alias := v.GetSchema().getXmlAlias()
 			if alias != "" {
-				t.columns[i].Name = alias
+				t.columns[i].setName(alias)
 			}
 		}
 	}
