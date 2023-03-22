@@ -1,6 +1,7 @@
 package openapistackql
 
 import (
+	"encoding/base64"
 	"fmt"
 
 	"github.com/go-openapi/jsonpointer"
@@ -13,6 +14,7 @@ var (
 
 type AuthDTO interface {
 	JSONLookup(token string) (interface{}, error)
+	GetInlineBasicCredentials() string
 	GetType() string
 	GetKeyID() string
 	GetKeyIDEnvVar() string
@@ -23,13 +25,17 @@ type AuthDTO interface {
 }
 
 type standardAuthDTO struct {
-	Scopes      []string `json:"scopes,omitempty" yaml:"scopes,omitempty"`
-	Type        string   `json:"type" yaml:"type"`
-	ValuePrefix string   `json:"valuePrefix" yaml:"valuePrefix"`
-	KeyID       string   `json:"keyID" yaml:"keyID"`
-	KeyIDEnvVar string   `json:"keyIDenvvar" yaml:"keyIDenvvar"`
-	KeyFilePath string   `json:"credentialsfilepath" yaml:"credentialsfilepath"`
-	KeyEnvVar   string   `json:"credentialsenvvar" yaml:"credentialsenvvar"`
+	Scopes       []string `json:"scopes,omitempty" yaml:"scopes,omitempty"`
+	Type         string   `json:"type" yaml:"type"`
+	ValuePrefix  string   `json:"valuePrefix" yaml:"valuePrefix"`
+	KeyID        string   `json:"keyID" yaml:"keyID"`
+	KeyIDEnvVar  string   `json:"keyIDenvvar" yaml:"keyIDenvvar"`
+	KeyFilePath  string   `json:"credentialsfilepath" yaml:"credentialsfilepath"`
+	KeyEnvVar    string   `json:"credentialsenvvar" yaml:"credentialsenvvar"`
+	ApiKeyStr    string   `json:"api_key" yaml:"api_key"`
+	ApiSecretStr string   `json:"api_secret" yaml:"api_secret"`
+	Username     string   `json:"username" yaml:"username"`
+	Password     string   `json:"password" yaml:"password"`
 }
 
 func (qt standardAuthDTO) GetType() string {
@@ -58,6 +64,20 @@ func (qt standardAuthDTO) GetScopes() []string {
 
 func (qt standardAuthDTO) GetValuePrefix() string {
 	return qt.ValuePrefix
+}
+
+func (qt standardAuthDTO) GetInlineBasicCredentials() string {
+	if qt.Username != "" && qt.Password != "" {
+		plaintext := fmt.Sprintf("%s:%s", qt.Username, qt.Password)
+		encoded := base64.StdEncoding.EncodeToString([]byte(plaintext))
+		return encoded
+	}
+	if qt.ApiKeyStr != "" && qt.ApiSecretStr != "" {
+		plaintext := fmt.Sprintf("%s:%s", qt.ApiKeyStr, qt.ApiSecretStr)
+		encoded := base64.StdEncoding.EncodeToString([]byte(plaintext))
+		return encoded
+	}
+	return ""
 }
 
 func (qt standardAuthDTO) JSONLookup(token string) (interface{}, error) {
