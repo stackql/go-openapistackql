@@ -1196,7 +1196,7 @@ func (s *standardSchema) FindByPath(path string, visited map[string]bool) Schema
 	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.isNotSimple()) {
 		if s.hasPolymorphicProperties() && !s.isAlreadyExpanded() {
 			fs := s.getFattnedPolymorphicSchema()
-			s.setAlreadyExpanded(true)
+			fs.setAlreadyExpanded(true)
 			return fs.FindByPath(path, visited)
 		}
 		for k, v := range s.Properties {
