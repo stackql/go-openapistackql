@@ -92,6 +92,8 @@ type Schema interface {
 	processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error)
 	getSelectItemsSchema(key string, mediaType string) (Schema, string, error)
 	getProperties() Schemas
+	hasPolymorphicProperties() bool
+	getFattnedPolymorphicSchema() Schema
 }
 
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
@@ -952,7 +954,11 @@ func (s *standardSchema) getFatSchema(srs openapi3.SchemaRefs) Schema {
 	newProperties := make(openapi3.Schemas)
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
+
 		ss := newSchema(val.Value, s.svc, getPathSuffix(val.Ref), val.Ref)
+		if ss.hasPolymorphicProperties() {
+			ss = ss.getFattnedPolymorphicSchema()
+		}
 		if rv == nil {
 			rv = ss
 			continue
