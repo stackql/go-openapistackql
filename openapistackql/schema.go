@@ -94,6 +94,8 @@ type Schema interface {
 	getProperties() Schemas
 	hasPolymorphicProperties() bool
 	getFattnedPolymorphicSchema() Schema
+	setAlreadyExpanded(alreadyExpanded bool)
+	isAlreadyExpanded() bool
 }
 
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
@@ -210,10 +212,11 @@ func (s *standardSchema) getOpenapiSchema() (*openapi3.Schema, bool) {
 
 type standardSchema struct {
 	*openapi3.Schema
-	svc            Service
-	key            string
-	alwaysRequired bool
-	path           string
+	svc             Service
+	key             string
+	alwaysRequired  bool
+	path            string
+	alreadyExpanded bool
 }
 
 func (s *standardSchema) getService() Service {
@@ -1058,6 +1061,14 @@ func (s *standardSchema) hasPolymorphicProperties() bool {
 	return false
 }
 
+func (s *standardSchema) isAlreadyExpanded() bool {
+	return s.alreadyExpanded
+}
+
+func (s *standardSchema) setAlreadyExpanded(alreadyExpanded bool) {
+	s.alreadyExpanded = alreadyExpanded
+}
+
 func (s *standardSchema) hasPropertiesOrPolymorphicProperties() bool {
 	if s.Properties != nil && len(s.Properties) > 0 {
 		return true
@@ -1183,8 +1194,9 @@ func (s *standardSchema) FindByPath(path string, visited map[string]bool) Schema
 	}
 	remainingPath := strings.TrimPrefix(path, s.key)
 	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.isNotSimple()) {
-		if s.hasPolymorphicProperties() {
+		if s.hasPolymorphicProperties() && !s.isAlreadyExpanded() {
 			fs := s.getFattnedPolymorphicSchema()
+			s.setAlreadyExpanded(true)
 			return fs.FindByPath(path, visited)
 		}
 		for k, v := range s.Properties {
