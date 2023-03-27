@@ -41,7 +41,7 @@ func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 		return []byte(fmt.Sprintf(`{ "marshallingError": {"type": "array", "error": "%s"}}`, err.Error()))
 	case nil:
 		return []byte("null")
-	case *response.Response:
+	case response.Response:
 		if isErrorCol {
 			return []byte(sub.Error())
 		}

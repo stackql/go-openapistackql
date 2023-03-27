@@ -54,7 +54,7 @@ type Schema interface {
 	IsIntegral() bool
 	IsReadOnly() bool
 	IsRequired(key string) bool
-	ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error)
+	ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (response.Response, error)
 	SetProperties(openapi3.Schemas)
 	SetType(string)
 	SetKey(string)
@@ -89,7 +89,7 @@ type Schema interface {
 	toFlatDescriptionMap(extended bool) map[string]interface{}
 	unmarshalJSONResponseBody(body io.ReadCloser, path string) (interface{}, interface{}, error)
 	unmarshalXMLResponseBody(body io.ReadCloser, path string) (interface{}, *xmlquery.Node, error)
-	processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error)
+	processHttpResponse(r *http.Response, path string, defaultMediaType string) (response.Response, error)
 	getSelectItemsSchema(key string, mediaType string) (Schema, string, error)
 	getProperties() Schemas
 	hasPolymorphicProperties() bool
@@ -1284,7 +1284,7 @@ func (s *standardSchema) unmarshalResponse(r *http.Response) (interface{}, error
 	return target, err
 }
 
-func (s *standardSchema) unmarshalResponseAtPath(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+func (s *standardSchema) unmarshalResponseAtPath(r *http.Response, path string, defaultMediaType string) (response.Response, error) {
 
 	mediaType, err := media.GetResponseMediaType(r, defaultMediaType)
 	if err != nil {
@@ -1328,11 +1328,11 @@ func (s *standardSchema) unmarshalResponseAtPath(r *http.Response, path string, 
 	}
 }
 
-func (s *standardSchema) ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+func (s *standardSchema) ProcessHttpResponseTesting(r *http.Response, path string, defaultMediaType string) (response.Response, error) {
 	return s.processHttpResponse(r, path, defaultMediaType)
 }
 
-func (s *standardSchema) processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error) {
+func (s *standardSchema) processHttpResponse(r *http.Response, path string, defaultMediaType string) (response.Response, error) {
 	defer r.Body.Close()
 	target, err := s.unmarshalResponseAtPath(r, path, defaultMediaType)
 	if err == nil && r.StatusCode >= 400 {
