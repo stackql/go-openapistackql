@@ -92,6 +92,10 @@ type Schema interface {
 	processHttpResponse(r *http.Response, path string, defaultMediaType string) (*response.Response, error)
 	getSelectItemsSchema(key string, mediaType string) (Schema, string, error)
 	getProperties() Schemas
+	hasPolymorphicProperties() bool
+	getFattnedPolymorphicSchema() Schema
+	setAlreadyExpanded(alreadyExpanded bool)
+	isAlreadyExpanded() bool
 }
 
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
@@ -208,10 +212,11 @@ func (s *standardSchema) getOpenapiSchema() (*openapi3.Schema, bool) {
 
 type standardSchema struct {
 	*openapi3.Schema
-	svc            Service
-	key            string
-	alwaysRequired bool
-	path           string
+	svc             Service
+	key             string
+	alwaysRequired  bool
+	path            string
+	alreadyExpanded bool
 }
 
 func (s *standardSchema) getService() Service {
@@ -952,7 +957,11 @@ func (s *standardSchema) getFatSchema(srs openapi3.SchemaRefs) Schema {
 	newProperties := make(openapi3.Schemas)
 	for k, val := range srs {
 		log.Debugf("processing composite key number = %d, id = '%s'\n", k, val.Ref)
+
 		ss := newSchema(val.Value, s.svc, getPathSuffix(val.Ref), val.Ref)
+		if ss.hasPolymorphicProperties() {
+			ss = ss.getFattnedPolymorphicSchema()
+		}
 		if rv == nil {
 			rv = ss
 			continue
@@ -1050,6 +1059,14 @@ func (s *standardSchema) hasPolymorphicProperties() bool {
 		return true
 	}
 	return false
+}
+
+func (s *standardSchema) isAlreadyExpanded() bool {
+	return s.alreadyExpanded
+}
+
+func (s *standardSchema) setAlreadyExpanded(alreadyExpanded bool) {
+	s.alreadyExpanded = alreadyExpanded
 }
 
 func (s *standardSchema) hasPropertiesOrPolymorphicProperties() bool {
@@ -1177,8 +1194,9 @@ func (s *standardSchema) FindByPath(path string, visited map[string]bool) Schema
 	}
 	remainingPath := strings.TrimPrefix(path, s.key)
 	if s.Type == "object" || (s.hasPropertiesOrPolymorphicProperties() && s.isNotSimple()) {
-		if s.hasPolymorphicProperties() {
+		if s.hasPolymorphicProperties() && !s.isAlreadyExpanded() {
 			fs := s.getFattnedPolymorphicSchema()
+			fs.setAlreadyExpanded(true)
 			return fs.FindByPath(path, visited)
 		}
 		for k, v := range s.Properties {
