@@ -12,7 +12,20 @@ import (
 	"github.com/stackql/go-openapistackql/pkg/xmlmap"
 )
 
-type Response struct {
+var (
+	_ Response = &basicResponse{}
+)
+
+type Response interface {
+	GetHttpResponse() *http.Response
+	GetBody() interface{}
+	GetProcessedBody() interface{}
+	ExtractElement(e httpelement.HTTPElement) (interface{}, error)
+	Error() string
+	String() string
+}
+
+type basicResponse struct {
 	_             struct{}
 	rawBody       interface{}
 	processedBody interface{}
@@ -20,23 +33,23 @@ type Response struct {
 	bodyMediaType string
 }
 
-func (r *Response) GetHttpResponse() *http.Response {
+func (r *basicResponse) GetHttpResponse() *http.Response {
 	return r.httpResponse
 }
 
-func (r *Response) GetBody() interface{} {
+func (r *basicResponse) GetBody() interface{} {
 	return r.rawBody
 }
 
-func (r *Response) GetProcessedBody() interface{} {
+func (r *basicResponse) GetProcessedBody() interface{} {
 	return r.processedBody
 }
 
-func (r *Response) String() string {
+func (r *basicResponse) String() string {
 	return r.string()
 }
 
-func (r *Response) string() string {
+func (r *basicResponse) string() string {
 	var baseString string
 	switch body := r.processedBody.(type) {
 	case map[string]interface{}:
@@ -61,7 +74,7 @@ func (r *Response) string() string {
 	return ""
 }
 
-func (r *Response) Error() string {
+func (r *basicResponse) Error() string {
 	baseString := r.string()
 	if baseString != "" {
 		return fmt.Sprintf(`{ "httpError": %s }`, baseString)
@@ -69,7 +82,7 @@ func (r *Response) Error() string {
 	return `{ "httpError": { "message": "unknown error" } }`
 }
 
-func (r *Response) ExtractElement(e httpelement.HTTPElement) (interface{}, error) {
+func (r *basicResponse) ExtractElement(e httpelement.HTTPElement) (interface{}, error) {
 	elementLocation := e.GetLocation()
 	switch elementLocation {
 	case httpelement.BodyAttribute:
@@ -89,9 +102,9 @@ func (r *Response) ExtractElement(e httpelement.HTTPElement) (interface{}, error
 	}
 }
 
-func NewResponse(processedBody, rawBody interface{}, r *http.Response) *Response {
+func NewResponse(processedBody, rawBody interface{}, r *http.Response) Response {
 	mt, _ := media.GetResponseMediaType(r, "")
-	return &Response{
+	return &basicResponse{
 		processedBody: processedBody,
 		rawBody:       rawBody,
 		httpResponse:  r,

@@ -73,7 +73,7 @@ type OperationStore interface {
 	GetOperationParameter(key string) (Addressable, bool)
 	GetQueryTransposeAlgorithm() string
 	GetSelectSchemaAndObjectPath() (Schema, string, error)
-	ProcessResponse(response *http.Response) (*response.Response, error)
+	ProcessResponse(response *http.Response) (response.Response, error)
 	Parameterize(prov Provider, parentDoc Service, inputParams HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error)
 	GetSelectItemsKey() string
 	GetResponseBodySchemaAndMediaType() (Schema, string, error)
@@ -999,7 +999,7 @@ func (op *standardOperationStore) GetSelectSchemaAndObjectPath() (Schema, string
 	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
 }
 
-func (op *standardOperationStore) ProcessResponse(response *http.Response) (*response.Response, error) {
+func (op *standardOperationStore) ProcessResponse(response *http.Response) (response.Response, error) {
 	responseSchema, mediaType, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
