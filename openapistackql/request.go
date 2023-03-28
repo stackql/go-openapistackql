@@ -31,8 +31,8 @@ type standardHTTPPreparator struct {
 
 func NewHTTPPreparator(
 	prov Provider,
-	m OperationStore,
 	svc Service,
+	m OperationStore,
 	insertValOnlyRows map[int]map[int]interface{},
 	paramMap map[int]map[string]interface{},
 	parameters streaming.MapStream,
