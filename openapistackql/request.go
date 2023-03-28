@@ -35,6 +35,7 @@ func NewHTTPPreparator(
 	svc Service,
 	insertValOnlyRows map[int]map[int]interface{},
 	paramMap map[int]map[string]interface{},
+	parameters streaming.MapStream,
 	execContext ExecContext,
 	logger *logrus.Logger,
 ) HTTPPreparator {
@@ -44,6 +45,7 @@ func NewHTTPPreparator(
 		svc:               svc,
 		insertValOnlyRows: insertValOnlyRows,
 		paramMap:          paramMap,
+		parameters:        parameters,
 		execContext:       execContext,
 		logger:            logger,
 	}
