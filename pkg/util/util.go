@@ -7,12 +7,11 @@ import (
 	"strconv"
 
 	"github.com/stackql/go-openapistackql/pkg/response"
-	"github.com/stackql/stackql-parser/go/vt/sqlparser"
 )
 
 func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 	switch sub := subject.(type) {
-	case bool, sqlparser.BoolVal:
+	case bool:
 		if sub == true {
 			return []byte("true")
 		}
