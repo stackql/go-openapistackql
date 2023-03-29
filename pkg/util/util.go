@@ -7,12 +7,11 @@ import (
 	"strconv"
 
 	"github.com/stackql/go-openapistackql/pkg/response"
-	"github.com/stackql/stackql-parser/go/vt/sqlparser"
 )
 
 func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 	switch sub := subject.(type) {
-	case bool, sqlparser.BoolVal:
+	case bool:
 		if sub == true {
 			return []byte("true")
 		}
@@ -41,7 +40,7 @@ func InterfaceToBytes(subject interface{}, isErrorCol bool) []byte {
 		return []byte(fmt.Sprintf(`{ "marshallingError": {"type": "array", "error": "%s"}}`, err.Error()))
 	case nil:
 		return []byte("null")
-	case *response.Response:
+	case response.Response:
 		if isErrorCol {
 			return []byte(sub.Error())
 		}
