@@ -748,7 +748,8 @@ func (m *standardOperationStore) ToPresentationMap(extended bool) map[string]int
 	sort.Strings(requiredParamNames)
 	sort.Strings(requiredBodyParamNames)
 	sort.Strings(requiredServerParamNames)
-	requiredParamNames = append(requiredServerParamNames, requiredParamNames, requiredBodyParamNames...)
+	requiredParamNames = append(requiredParamNames, requiredBodyParamNames...)
+	requiredParamNames = append(requiredParamNames, requiredServerParamNames...)
 
 	sqlVerb := m.SQLVerb
 	if sqlVerb == "" {
