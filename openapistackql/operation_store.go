@@ -624,6 +624,14 @@ func (m *standardOperationStore) getRequiredParameters() map[string]Addressable 
 	for k, v := range ss {
 		retVal[k] = v
 	}
+	if m.Service != nil && len(m.Service.GetServers()) > 0 {
+		servers := m.Service.GetServers()
+		sv := servers[0]
+		serverVarMap := getServerVariablesMap(sv, m.Service)
+		for k, v := range serverVarMap {
+			retVal[k] = v
+		}
+	}
 	return retVal
 }
 
