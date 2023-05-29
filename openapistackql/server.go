@@ -12,6 +12,17 @@ func ObtainServerURLsFromServers(svs []*openapi3.Server, vars map[string]string)
 	return obtainServerURLsFromServers(svs, vars)
 }
 
+func getServerVariablesMap(sv *openapi3.Server, svc Service) map[string]Addressable {
+	retVal := make(map[string]Addressable)
+	for k, v := range sv.Variables {
+		s := openapi3.NewSchema()
+		s.Type = "string"
+		s.Default = v.Default
+		retVal[k] = newAddressableServerVariable(k, newSchema(s, svc, "", ""), true)
+	}
+	return retVal
+}
+
 func obtainServerURLsFromServers(svs []*openapi3.Server, vars map[string]string) ([]string, error) {
 	var retVal []string
 	if vars == nil {

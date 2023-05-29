@@ -624,6 +624,14 @@ func (m *standardOperationStore) getRequiredParameters() map[string]Addressable 
 	for k, v := range ss {
 		retVal[k] = v
 	}
+	if m.Service != nil && len(m.Service.GetServers()) > 0 {
+		servers := m.Service.GetServers()
+		sv := servers[0]
+		serverVarMap := getServerVariablesMap(sv, m.Service)
+		for k, v := range serverVarMap {
+			retVal[k] = v
+		}
+	}
 	return retVal
 }
 
@@ -727,9 +735,21 @@ func (m *standardOperationStore) ToPresentationMap(extended bool) map[string]int
 		}
 	}
 
+	var requiredServerParamNames []string
+	if m.Service != nil && len(m.Service.GetServers()) > 0 {
+		servers := m.Service.GetServers()
+		sv := servers[0]
+		serverVarMap := getServerVariablesMap(sv, m.Service)
+		for k := range serverVarMap {
+			requiredServerParamNames = append(requiredServerParamNames, k)
+		}
+	}
+
 	sort.Strings(requiredParamNames)
 	sort.Strings(requiredBodyParamNames)
+	sort.Strings(requiredServerParamNames)
 	requiredParamNames = append(requiredParamNames, requiredBodyParamNames...)
+	requiredParamNames = append(requiredParamNames, requiredServerParamNames...)
 
 	sqlVerb := m.SQLVerb
 	if sqlVerb == "" {

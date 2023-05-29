@@ -54,6 +54,15 @@ func newAddressableRequestBodyProperty(name string, s Schema, isRequired bool) A
 	}
 }
 
+func newAddressableServerVariable(name string, s Schema, isRequired bool) Addressable {
+	return &namedSchema{
+		s:          s,
+		name:       name,
+		location:   "server",
+		isRequired: isRequired,
+	}
+}
+
 type Addressable interface {
 	ConditionIsValid(lhs string, rhs interface{}) bool
 	GetLocation() string
