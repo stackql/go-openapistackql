@@ -19,6 +19,7 @@ type AuthDTO interface {
 	GetKeyID() string
 	GetKeyIDEnvVar() string
 	GetKeyFilePath() string
+	GetKeyFilePathEnvVar() string
 	GetKeyEnvVar() string
 	GetScopes() []string
 	GetValuePrefix() string
@@ -35,6 +36,7 @@ type standardAuthDTO struct {
 	KeyID              string   `json:"keyID" yaml:"keyID"`
 	KeyIDEnvVar        string   `json:"keyIDenvvar" yaml:"keyIDenvvar"`
 	KeyFilePath        string   `json:"credentialsfilepath" yaml:"credentialsfilepath"`
+	KeyFilePathEnvVar  string   `json:"credentialsfilepathenvvar" yaml:"credentialsfilepathenvvar"`
 	KeyEnvVar          string   `json:"credentialsenvvar" yaml:"credentialsenvvar"`
 	ApiKeyStr          string   `json:"api_key" yaml:"api_key"`
 	ApiSecretStr       string   `json:"api_secret" yaml:"api_secret"`
@@ -60,6 +62,10 @@ func (qt standardAuthDTO) GetKeyIDEnvVar() string {
 
 func (qt standardAuthDTO) GetKeyFilePath() string {
 	return qt.KeyFilePath
+}
+
+func (qt standardAuthDTO) GetKeyFilePathEnvVar() string {
+	return qt.KeyFilePathEnvVar
 }
 
 func (qt standardAuthDTO) GetKeyEnvVar() string {
@@ -110,6 +116,8 @@ func (qt standardAuthDTO) JSONLookup(token string) (interface{}, error) {
 		return qt.KeyID, nil
 	case "credentialsfilepath":
 		return qt.KeyFilePath, nil
+	case "credentialsfilepathenvvar":
+		return qt.KeyFilePathEnvVar, nil
 	case "credentialsenvvar":
 		return qt.KeyEnvVar, nil
 	case "keyIDenvvar":
