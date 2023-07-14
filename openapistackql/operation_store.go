@@ -55,6 +55,7 @@ type OperationStore interface {
 	GetMethodKey() string
 	GetSQLVerb() string
 	GetGraphQL() GraphQL
+	GetInverse() (OperationInverse, bool)
 	GetStackQLConfig() StackQLConfig
 	GetParameters() map[string]Addressable
 	GetPathItem() *openapi3.PathItem
@@ -127,6 +128,7 @@ type standardOperationStore struct {
 	Request      *standardExpectedRequest  `json:"request" yaml:"request"`
 	Response     *standardExpectedResponse `json:"response" yaml:"response"`
 	Servers      *openapi3.Servers         `json:"servers" yaml:"servers"`
+	Inverse      *operationInverse         `json:"inverse" yaml:"inverse"`
 	// private
 	parameterizedPath string          `json:"-" yaml:"-"`
 	ProviderService   ProviderService `json:"-" yaml:"-"` // upwards traversal
@@ -203,6 +205,10 @@ func (op *standardOperationStore) GetSQLVerb() string {
 
 func (op *standardOperationStore) GetGraphQL() GraphQL {
 	return op.GraphQL
+}
+
+func (op *standardOperationStore) GetInverse() (OperationInverse, bool) {
+	return op.Inverse, op.Inverse != nil
 }
 
 func (op *standardOperationStore) GetStackQLConfig() StackQLConfig {
