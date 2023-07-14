@@ -166,18 +166,25 @@ func (r *standardResource) GetPaginationResponseTokenSemantic() (TokenSemantic, 
 }
 
 func (rsc standardResource) JSONLookup(token string) (interface{}, error) {
-	if rsc.Methods == nil {
-		return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
-	}
 	ss := strings.Split(token, "/")
-	if len(ss) > 1 && ss[len(ss)-2] == "methods" {
+	tokenRoot := ""
+	if len(ss) > 1 {
+		tokenRoot = ss[len(ss)-2]
+	}
+	switch tokenRoot {
+	case "methods":
+		if rsc.Methods == nil {
+			return nil, fmt.Errorf("Provider.JSONLookup() failure due to prov.ProviderServices == nil")
+		}
 		m, ok := rsc.Methods[ss[len(ss)-1]]
 		if !ok {
 			return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
 		}
 		return &m, nil
+	default:
+		val, _, err := jsonpointer.GetForToken(rsc.Service.GetT(), token)
+		return val, err
 	}
-	return nil, fmt.Errorf("cannot resolve json pointer path '%s'", token)
 }
 
 func (rs *standardResource) GetDefaultMethodKeysForSQLVerb(sqlVerb string) []string {
