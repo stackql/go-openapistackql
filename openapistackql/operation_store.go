@@ -1028,6 +1028,8 @@ func (op *standardOperationStore) GetSelectSchemaAndObjectPath() (Schema, string
 type ProcessedOperationResponse interface {
 	GetResponse() (response.Response, bool)
 	GetReversal() (HTTPPreparator, bool)
+	GetReversalError() (error, bool)
+	setReversalError(error)
 }
 
 func newStandardOperationResponse(response response.Response, reversal HTTPPreparator) ProcessedOperationResponse {
@@ -1038,8 +1040,17 @@ func newStandardOperationResponse(response response.Response, reversal HTTPPrepa
 }
 
 type standardOperationResponse struct {
-	response response.Response
-	reversal HTTPPreparator
+	response      response.Response
+	reversal      HTTPPreparator
+	reversalError error
+}
+
+func (sor *standardOperationResponse) GetReversalError() (error, bool) {
+	return sor.reversalError, sor.reversalError != nil
+}
+
+func (sor *standardOperationResponse) setReversalError(err error) {
+	sor.reversalError = err
 }
 
 func (sor *standardOperationResponse) GetResponse() (response.Response, bool) {
@@ -1061,11 +1072,19 @@ func (op *standardOperationStore) ProcessResponse(response *http.Response) (Proc
 	if inverseExists {
 		inverseOpStore, inverseOpStoreExists := inverse.GetOperationStore()
 		if inverseOpStoreExists {
+			paramMap, err := inverse.GetParamMap(rv)
+			if err != nil {
+				retVal := newStandardOperationResponse(rv, nil)
+				retVal.setReversalError(err)
+				return retVal, nil
+			}
 			reversal = newHTTPPreparator(
 				inverseOpStore.GetProvider(),
 				inverseOpStore.GetService(),
 				inverseOpStore,
-				nil, //TODO: populate this
+				map[int]map[string]interface{}{
+					0: paramMap,
+				},
 				nil,
 				nil,
 				nil,
