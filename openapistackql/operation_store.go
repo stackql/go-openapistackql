@@ -74,7 +74,7 @@ type OperationStore interface {
 	GetOperationParameter(key string) (Addressable, bool)
 	GetQueryTransposeAlgorithm() string
 	GetSelectSchemaAndObjectPath() (Schema, string, error)
-	ProcessResponse(response *http.Response) (response.Response, error)
+	ProcessResponse(*http.Response) (ProcessedOperationResponse, error)
 	Parameterize(prov Provider, parentDoc Service, inputParams HttpParameters, requestBody interface{}) (*openapi3filter.RequestValidationInput, error)
 	GetSelectItemsKey() string
 	GetResponseBodySchemaAndMediaType() (Schema, string, error)
@@ -1025,12 +1025,54 @@ func (op *standardOperationStore) GetSelectSchemaAndObjectPath() (Schema, string
 	return nil, "", fmt.Errorf("no response body for operation =  %s", op.GetName())
 }
 
-func (op *standardOperationStore) ProcessResponse(response *http.Response) (response.Response, error) {
+type ProcessedOperationResponse interface {
+	GetResponse() (response.Response, bool)
+	GetReversal() (HTTPPreparator, bool)
+}
+
+func newStandardOperationResponse(response response.Response, reversal HTTPPreparator) ProcessedOperationResponse {
+	return &standardOperationResponse{
+		response: response,
+		reversal: reversal,
+	}
+}
+
+type standardOperationResponse struct {
+	response response.Response
+	reversal HTTPPreparator
+}
+
+func (sor *standardOperationResponse) GetResponse() (response.Response, bool) {
+	return sor.response, sor.response != nil
+}
+
+func (sor *standardOperationResponse) GetReversal() (HTTPPreparator, bool) {
+	return sor.reversal, sor.reversal != nil
+}
+
+func (op *standardOperationStore) ProcessResponse(response *http.Response) (ProcessedOperationResponse, error) {
 	responseSchema, mediaType, err := op.GetResponseBodySchemaAndMediaType()
 	if err != nil {
 		return nil, err
 	}
-	return responseSchema.processHttpResponse(response, op.lookupSelectItemsKey(), mediaType)
+	rv, err := responseSchema.processHttpResponse(response, op.lookupSelectItemsKey(), mediaType)
+	var reversal HTTPPreparator
+	inverse, inverseExists := op.GetInverse()
+	if inverseExists {
+		inverseOpStore, inverseOpStoreExists := inverse.GetOperationStore()
+		if inverseOpStoreExists {
+			reversal = newHTTPPreparator(
+				inverseOpStore.GetProvider(),
+				inverseOpStore.GetService(),
+				inverseOpStore,
+				nil,
+				nil,
+				nil,
+				nil,
+			)
+		}
+	}
+	return newStandardOperationResponse(rv, reversal), err
 }
 
 func (ops *standardOperationStore) lookupSelectItemsKey() string {

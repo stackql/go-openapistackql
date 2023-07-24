@@ -36,6 +36,18 @@ func NewHTTPPreparator(
 	execContext ExecContext,
 	logger *logrus.Logger,
 ) HTTPPreparator {
+	return newHTTPPreparator(prov, svc, m, paramMap, parameters, execContext, logger)
+}
+
+func newHTTPPreparator(
+	prov Provider,
+	svc Service,
+	m OperationStore,
+	paramMap map[int]map[string]interface{},
+	parameters streaming.MapStream,
+	execContext ExecContext,
+	logger *logrus.Logger,
+) HTTPPreparator {
 	return &standardHTTPPreparator{
 		prov:        prov,
 		m:           m,
