@@ -48,6 +48,10 @@ func newHTTPPreparator(
 	execContext ExecContext,
 	logger *logrus.Logger,
 ) HTTPPreparator {
+	if logger == nil {
+		logger = logrus.New()
+		logger.SetOutput(io.Discard)
+	}
 	return &standardHTTPPreparator{
 		prov:        prov,
 		m:           m,

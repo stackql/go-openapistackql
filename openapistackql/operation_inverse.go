@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/jsonpointer"
+	"github.com/stackql/go-openapistackql/pkg/response"
 )
 
 var (
@@ -18,7 +19,7 @@ type OperationTokens interface {
 	GetTokenSemantic(key string) (TokenSemantic, bool)
 }
 
-type operationTokens map[string]standardTokenSemantic
+type operationTokens map[string]*standardTokenSemantic
 
 func (oits operationTokens) JSONLookup(token string) (interface{}, error) {
 	if tokenSemantic, ok := oits[token]; ok {
@@ -29,13 +30,14 @@ func (oits operationTokens) JSONLookup(token string) (interface{}, error) {
 
 func (oits operationTokens) GetTokenSemantic(key string) (TokenSemantic, bool) {
 	tokenSemantic, ok := oits[key]
-	return &tokenSemantic, ok
+	return tokenSemantic, ok
 }
 
 type OperationInverse interface {
 	JSONLookup(token string) (interface{}, error)
 	GetOperationStore() (OperationStore, bool)
 	GetTokens() (OperationTokens, bool)
+	GetParamMap(response.Response) (map[string]interface{}, error)
 }
 
 type operationInverse struct {
@@ -55,10 +57,31 @@ func (oi *operationInverse) JSONLookup(token string) (interface{}, error) {
 }
 
 func (oi *operationInverse) GetOperationStore() (OperationStore, bool) {
+	return oi.getOperationStore()
+}
+
+func (oi *operationInverse) getOperationStore() (OperationStore, bool) {
 	if oi.OpRef.Ref == "" || oi.OpRef.Value == nil {
 		return nil, false
 	}
 	return oi.OpRef.Value, true
+}
+
+func (oi *operationInverse) GetParamMap(res response.Response) (map[string]interface{}, error) {
+	return oi.getParamMap(res)
+}
+
+func (oi *operationInverse) getParamMap(res response.Response) (map[string]interface{}, error) {
+	rv := make(map[string]interface{})
+	for k, v := range oi.ReverseTokens {
+		tokenKey := k
+		val, err := v.GetProcessedToken(res)
+		if err != nil {
+			return nil, err
+		}
+		rv[tokenKey] = val
+	}
+	return rv, nil
 }
 
 func (oi *operationInverse) GetTokens() (OperationTokens, bool) {
