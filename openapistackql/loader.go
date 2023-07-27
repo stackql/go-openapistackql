@@ -719,6 +719,17 @@ func resolveSQLVerbFromResource(rsc Resource, component *OperationStoreRef, sqlV
 	if !ok {
 		return nil, fmt.Errorf("operation store ref type '%T' not supported", osv)
 	}
+	if resolved.Inverse != nil && resolved.Inverse.OpRef.Ref != "" {
+		val, _, err := jsonpointer.GetForToken(rsc, resolved.Inverse.OpRef.Ref)
+		if err != nil {
+			return nil, err
+		}
+		inverseOp, valOk := val.(*standardOperationStore)
+		if !valOk {
+			return nil, fmt.Errorf("operation store ref type '%T' not supported", val)
+		}
+		resolved.Inverse.OpRef.Value = inverseOp
+	}
 	rv := resolved
 	rv.setSQLVerb(sqlVerb)
 	return rv, nil
