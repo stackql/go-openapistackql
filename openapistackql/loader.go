@@ -746,11 +746,12 @@ func (l *standardLoader) latePassResolveInverse(svc Service, component *Operatio
 	input := component.Value
 	if input.Inverse != nil && input.Inverse.OpRef != nil && input.Inverse.OpRef.Ref != "" {
 		// err := l.resolveOperationRef(svc, input.Resource, input.Inverse.OpRef.Value, nil, nil)
-		sop, err := resolveSQLVerbFromResource(input.Resource, input.Inverse.OpRef, "")
+		// sop, err := resolveSQLVerbFromResource(input.Resource, input.Inverse.OpRef, "")
+		err := l.resolveSQLVerb(input.Resource, input.Inverse.OpRef, "")
 		if err != nil {
 			return err
 		}
-		input.Inverse.OpRef.Value = sop
+		// input.Inverse.OpRef.Value = sop
 		return nil
 	}
 	return nil

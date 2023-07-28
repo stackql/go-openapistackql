@@ -61,7 +61,7 @@ func (oi *operationInverse) GetOperationStore() (OperationStore, bool) {
 }
 
 func (oi *operationInverse) getOperationStore() (OperationStore, bool) {
-	if oi.OpRef != nil && oi.OpRef.Ref == "" || oi.OpRef.Value == nil {
+	if oi.OpRef != nil && (oi.OpRef.Ref == "" || oi.OpRef.Value == nil) {
 		return nil, false
 	}
 	return oi.OpRef.Value, true
