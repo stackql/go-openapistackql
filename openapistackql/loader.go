@@ -267,7 +267,11 @@ func (l *standardLoader) mergeResourcesScoped(svc Service, svcUrl string, rr Res
 	return nil
 }
 
-func (l *standardLoader) mergeResource(svc Service, rsc Resource, sr *ServiceRef) error {
+func (l *standardLoader) mergeResource(svc Service,
+	rsc Resource,
+	sr *ServiceRef,
+) error {
+	rsc.setService(svc) // must happen before resolving inverses
 	for k, vOp := range rsc.GetMethods() {
 		v := vOp
 		v.setMethodKey(k)
@@ -318,7 +322,6 @@ func (l *standardLoader) mergeResource(svc Service, rsc Resource, sr *ServiceRef
 			rsc.mutateSQLVerb(sqlVerb, i, cur)
 		}
 	}
-	rsc.setService(svc)
 	rsc.setProvider(svc.getProvider())
 	rsc.setProviderService(svc.getProviderService())
 	return nil
