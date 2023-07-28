@@ -311,7 +311,7 @@ func (l *standardLoader) mergeResource(svc Service, rsc Resource, sr *ServiceRef
 	for sqlVerb, dir := range rsc.getSQLVerbs() {
 		for i, v := range dir {
 			cur := v
-			_, err := latePassResolveInverse(rsc, &cur)
+			_, err := latePassResolveInverse(svc, &cur)
 			if err != nil {
 				return err
 			}
@@ -746,13 +746,13 @@ func resolveSQLVerbFromResource(rsc Resource, component *OperationStoreRef, sqlV
 	return rv, nil
 }
 
-func latePassResolveInverse(rsc Resource, component *OperationStoreRef) (*standardOperationStore, error) {
+func latePassResolveInverse(svc Service, component *OperationStoreRef) (*standardOperationStore, error) {
 	if component == nil || component.Value == nil {
 		return nil, fmt.Errorf("late pass: operation store ref not supplied")
 	}
 	input := component.Value
 	if input.Inverse != nil && input.Inverse.OpRef.Ref != "" {
-		val, _, err := jsonpointer.GetForToken(rsc, input.Inverse.OpRef.Ref)
+		val, _, err := jsonpointer.GetForToken(svc, input.Inverse.OpRef.Ref)
 		if err != nil {
 			return nil, err
 		}
