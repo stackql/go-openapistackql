@@ -275,6 +275,7 @@ func (l *standardLoader) mergeResource(svc Service,
 	for k, vOp := range rsc.GetMethods() {
 		v := vOp
 		v.setMethodKey(k)
+		// TODO: replicate this for the damned inverse
 		err := l.resolveOperationRef(svc, rsc, &v, v.GetPathRef(), sr)
 		if err != nil {
 			return err
@@ -315,7 +316,7 @@ func (l *standardLoader) mergeResource(svc Service,
 	for sqlVerb, dir := range rsc.getSQLVerbs() {
 		for i, v := range dir {
 			cur := v
-			_, err := latePassResolveInverse(svc, &cur)
+			err := l.latePassResolveInverse(svc, &cur)
 			if err != nil {
 				return err
 			}
@@ -569,7 +570,7 @@ func operationBackwardsCompatibility(component OperationStore, sr *ServiceRef) {
 	//
 }
 
-func (loader *standardLoader) resolveOperationRef(doc Service, rsc Resource, component OperationStore, pir *PathItemRef, sr *ServiceRef) (err error) {
+func (loader *standardLoader) resolveOperationRef(doc Service, rsc Resource, component OperationStore, _ *PathItemRef, sr *ServiceRef) (err error) {
 
 	if component == nil {
 		return errors.New("invalid operation: value MUST be an object")
@@ -753,23 +754,19 @@ func resolveSQLVerbFromResource(rsc Resource, component *OperationStoreRef, sqlV
 	return rv, nil
 }
 
-func latePassResolveInverse(svc Service, component *OperationStoreRef) (*standardOperationStore, error) {
+func (l *standardLoader) latePassResolveInverse(svc Service, component *OperationStoreRef) error {
 	if component == nil || component.Value == nil {
-		return nil, fmt.Errorf("late pass: operation store ref not supplied")
+		return fmt.Errorf("late pass: operation store ref not supplied")
 	}
 	input := component.Value
 	if input.Inverse != nil && input.Inverse.OpRef != nil && input.Inverse.OpRef.Ref != "" {
-		val, _, err := jsonpointer.GetForToken(svc, input.Inverse.OpRef.Ref)
+		err := l.resolveOperationRef(svc, input.Resource, input.Inverse.OpRef.Value, nil, nil)
 		if err != nil {
-			return nil, err
+			return err
 		}
-		inverseOp, valOk := val.(*standardOperationStore)
-		if !valOk {
-			return nil, fmt.Errorf("operation store ref type '%T' not supported", val)
-		}
-		input.Inverse.OpRef.Value = inverseOp
+		return nil
 	}
-	return input, nil
+	return nil
 }
 
 func (loader *standardLoader) resolveExpectedResponse(doc Service, op *openapi3.Operation, component ExpectedResponse) (err error) {
