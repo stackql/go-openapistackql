@@ -126,6 +126,32 @@ func (value OperationRef) JSONLookup(token string) (interface{}, error) {
 	return ptr, err
 }
 
+var _ jsonpointer.JSONPointable = (*OperationStoreRef)(nil)
+
+func (value *OperationStoreRef) MarshalJSON() ([]byte, error) {
+	return jsoninfo.MarshalRef(value.Ref, value.Value)
+}
+
+func (value *OperationStoreRef) UnmarshalJSON(data []byte) error {
+	return jsoninfo.UnmarshalRef(data, &value.Ref, &value.Value)
+}
+
+// func (value *OperationStoreRef) Validate(ctx context.Context) error {
+// 	if v := value.Value; v != nil {
+// 		return v.Validate(ctx)
+// 	}
+// 	return foundUnresolvedRef(value.Ref)
+// }
+
+func (value OperationStoreRef) JSONLookup(token string) (interface{}, error) {
+	if token == "$ref" {
+		return value.Ref, nil
+	}
+
+	ptr, _, err := jsonpointer.GetForToken(value.Value, token)
+	return ptr, err
+}
+
 func foundUnresolvedRef(ref string) error {
 	return fmt.Errorf("found unresolved ref: %q", ref)
 }
