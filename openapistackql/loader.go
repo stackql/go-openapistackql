@@ -307,6 +307,17 @@ func (l *standardLoader) mergeResource(svc Service, rsc Resource, sr *ServiceRef
 			rsc.mutateSQLVerb(sqlVerb, i, cur)
 		}
 	}
+	// TODO: add second pass for inverse ops
+	for sqlVerb, dir := range rsc.getSQLVerbs() {
+		for i, v := range dir {
+			cur := v
+			_, err := latePassResolveInverse(rsc, &cur)
+			if err != nil {
+				return err
+			}
+			rsc.mutateSQLVerb(sqlVerb, i, cur)
+		}
+	}
 	rsc.setService(svc)
 	rsc.setProvider(svc.getProvider())
 	rsc.setProviderService(svc.getProviderService())
@@ -733,6 +744,25 @@ func resolveSQLVerbFromResource(rsc Resource, component *OperationStoreRef, sqlV
 	rv := resolved
 	rv.setSQLVerb(sqlVerb)
 	return rv, nil
+}
+
+func latePassResolveInverse(rsc Resource, component *OperationStoreRef) (*standardOperationStore, error) {
+	if component == nil || component.Value == nil {
+		return nil, fmt.Errorf("late pass: operation store ref not supplied")
+	}
+	input := component.Value
+	if input.Inverse != nil && input.Inverse.OpRef.Ref != "" {
+		val, _, err := jsonpointer.GetForToken(rsc, input.Inverse.OpRef.Ref)
+		if err != nil {
+			return nil, err
+		}
+		inverseOp, valOk := val.(*standardOperationStore)
+		if !valOk {
+			return nil, fmt.Errorf("operation store ref type '%T' not supported", val)
+		}
+		input.Inverse.OpRef.Value = inverseOp
+	}
+	return input, nil
 }
 
 func (loader *standardLoader) resolveExpectedResponse(doc Service, op *openapi3.Operation, component ExpectedResponse) (err error) {
