@@ -41,13 +41,13 @@ type OperationInverse interface {
 }
 
 type operationInverse struct {
-	OpRef         *OperationStoreRef `json:"operation" yaml:"operation"`
+	OpRef         *OperationStoreRef `json:"sqlVerb" yaml:"sqlVerb"`
 	ReverseTokens operationTokens    `json:"tokens,omitempty" yaml:"tokens,omitempty"`
 }
 
 func (oi *operationInverse) JSONLookup(token string) (interface{}, error) {
 	switch token {
-	case "inverse":
+	case "sqlVerb":
 		return oi.OpRef, nil
 	case "tokens":
 		return oi.ReverseTokens, nil
