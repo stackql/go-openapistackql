@@ -733,8 +733,12 @@ func resolveSQLVerbFromResource(rsc Resource, component *OperationStoreRef, sqlV
 	if !ok {
 		return nil, fmt.Errorf("operation store ref type '%T' not supported", osv)
 	}
-	if resolved.Inverse != nil && resolved.Inverse.OpRef.Ref != "" {
-		val, _, err := jsonpointer.GetForToken(rsc, resolved.Inverse.OpRef.Ref)
+	if resolved.Inverse != nil && resolved.Inverse.OpRef != nil && resolved.Inverse.OpRef.Ref != "" {
+		svc, svcPresent := rsc.GetService()
+		if !svcPresent {
+			return nil, fmt.Errorf("service not found")
+		}
+		val, _, err := jsonpointer.GetForToken(svc.GetT(), resolved.Inverse.OpRef.Ref)
 		if err != nil {
 			return nil, err
 		}
@@ -754,7 +758,7 @@ func latePassResolveInverse(svc Service, component *OperationStoreRef) (*standar
 		return nil, fmt.Errorf("late pass: operation store ref not supplied")
 	}
 	input := component.Value
-	if input.Inverse != nil && input.Inverse.OpRef.Ref != "" {
+	if input.Inverse != nil && input.Inverse.OpRef != nil && input.Inverse.OpRef.Ref != "" {
 		val, _, err := jsonpointer.GetForToken(svc, input.Inverse.OpRef.Ref)
 		if err != nil {
 			return nil, err

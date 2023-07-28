@@ -41,8 +41,8 @@ type OperationInverse interface {
 }
 
 type operationInverse struct {
-	OpRef         OperationStoreRef `json:"operation" yaml:"operation"`
-	ReverseTokens operationTokens   `json:"tokens,omitempty" yaml:"tokens,omitempty"`
+	OpRef         *OperationStoreRef `json:"operation" yaml:"operation"`
+	ReverseTokens operationTokens    `json:"tokens,omitempty" yaml:"tokens,omitempty"`
 }
 
 func (oi *operationInverse) JSONLookup(token string) (interface{}, error) {
@@ -61,7 +61,7 @@ func (oi *operationInverse) GetOperationStore() (OperationStore, bool) {
 }
 
 func (oi *operationInverse) getOperationStore() (OperationStore, bool) {
-	if oi.OpRef.Ref == "" || oi.OpRef.Value == nil {
+	if oi.OpRef != nil && oi.OpRef.Ref == "" || oi.OpRef.Value == nil {
 		return nil, false
 	}
 	return oi.OpRef.Value, true
