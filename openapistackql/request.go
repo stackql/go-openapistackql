@@ -18,36 +18,48 @@ type HTTPPreparator interface {
 }
 
 type standardHTTPPreparator struct {
-	prov              Provider
-	m                 OperationStore
-	svc               Service
-	insertValOnlyRows map[int]map[int]interface{}
-	paramMap          map[int]map[string]interface{}
-	paramList         []HttpParameters
-	execContext       ExecContext
-	logger            *logrus.Logger
-	parameters        streaming.MapStream
+	prov        Provider
+	m           OperationStore
+	svc         Service
+	paramMap    map[int]map[string]interface{}
+	execContext ExecContext
+	logger      *logrus.Logger
+	parameters  streaming.MapStream
 }
 
 func NewHTTPPreparator(
 	prov Provider,
 	svc Service,
 	m OperationStore,
-	insertValOnlyRows map[int]map[int]interface{},
 	paramMap map[int]map[string]interface{},
 	parameters streaming.MapStream,
 	execContext ExecContext,
 	logger *logrus.Logger,
 ) HTTPPreparator {
+	return newHTTPPreparator(prov, svc, m, paramMap, parameters, execContext, logger)
+}
+
+func newHTTPPreparator(
+	prov Provider,
+	svc Service,
+	m OperationStore,
+	paramMap map[int]map[string]interface{},
+	parameters streaming.MapStream,
+	execContext ExecContext,
+	logger *logrus.Logger,
+) HTTPPreparator {
+	if logger == nil {
+		logger = logrus.New()
+		logger.SetOutput(io.Discard)
+	}
 	return &standardHTTPPreparator{
-		prov:              prov,
-		m:                 m,
-		svc:               svc,
-		insertValOnlyRows: insertValOnlyRows,
-		paramMap:          paramMap,
-		parameters:        parameters,
-		execContext:       execContext,
-		logger:            logger,
+		prov:        prov,
+		m:           m,
+		svc:         svc,
+		paramMap:    paramMap,
+		parameters:  parameters,
+		execContext: execContext,
+		logger:      logger,
 	}
 }
 

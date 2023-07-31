@@ -62,8 +62,14 @@ func (stl *StandardTransformerLocator) GetTransformer(tokenSemantic TokenSemanti
 	case "header":
 		return getHeaderTransformer(tokenSemantic)
 	default:
-		return nil, nil
+		return getNopTransformer()
 	}
+}
+
+func getNopTransformer() (TokenTransformer, error) {
+	return func(input interface{}) (interface{}, error) {
+		return input, nil
+	}, nil
 }
 
 func getHeaderTransformer(tokenSemantic TokenSemantic) (TokenTransformer, error) {

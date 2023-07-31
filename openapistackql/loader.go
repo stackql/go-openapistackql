@@ -267,10 +267,15 @@ func (l *standardLoader) mergeResourcesScoped(svc Service, svcUrl string, rr Res
 	return nil
 }
 
-func (l *standardLoader) mergeResource(svc Service, rsc Resource, sr *ServiceRef) error {
+func (l *standardLoader) mergeResource(svc Service,
+	rsc Resource,
+	sr *ServiceRef,
+) error {
+	rsc.setService(svc) // must happen before resolving inverses
 	for k, vOp := range rsc.GetMethods() {
 		v := vOp
 		v.setMethodKey(k)
+		// TODO: replicate this for the damned inverse
 		err := l.resolveOperationRef(svc, rsc, &v, v.GetPathRef(), sr)
 		if err != nil {
 			return err
@@ -307,7 +312,17 @@ func (l *standardLoader) mergeResource(svc Service, rsc Resource, sr *ServiceRef
 			rsc.mutateSQLVerb(sqlVerb, i, cur)
 		}
 	}
-	rsc.setService(svc)
+	// TODO: add second pass for inverse ops
+	for sqlVerb, dir := range rsc.getSQLVerbs() {
+		for i, v := range dir {
+			cur := v
+			err := l.latePassResolveInverse(svc, &cur)
+			if err != nil {
+				return err
+			}
+			rsc.mutateSQLVerb(sqlVerb, i, cur)
+		}
+	}
 	rsc.setProvider(svc.getProvider())
 	rsc.setProviderService(svc.getProviderService())
 	return nil
@@ -555,7 +570,7 @@ func operationBackwardsCompatibility(component OperationStore, sr *ServiceRef) {
 	//
 }
 
-func (loader *standardLoader) resolveOperationRef(doc Service, rsc Resource, component OperationStore, pir *PathItemRef, sr *ServiceRef) (err error) {
+func (loader *standardLoader) resolveOperationRef(doc Service, rsc Resource, component OperationStore, _ *PathItemRef, sr *ServiceRef) (err error) {
 
 	if component == nil {
 		return errors.New("invalid operation: value MUST be an object")
@@ -722,6 +737,24 @@ func resolveSQLVerbFromResource(rsc Resource, component *OperationStoreRef, sqlV
 	rv := resolved
 	rv.setSQLVerb(sqlVerb)
 	return rv, nil
+}
+
+func (l *standardLoader) latePassResolveInverse(svc Service, component *OperationStoreRef) error {
+	if component == nil || component.Value == nil {
+		return fmt.Errorf("late pass: operation store ref not supplied")
+	}
+	input := component.Value
+	if input.Inverse != nil && input.Inverse.OpRef != nil && input.Inverse.OpRef.Ref != "" {
+		// err := l.resolveOperationRef(svc, input.Resource, input.Inverse.OpRef.Value, nil, nil)
+		// sop, err := resolveSQLVerbFromResource(input.Resource, input.Inverse.OpRef, "")
+		err := l.resolveSQLVerb(input.Resource, input.Inverse.OpRef, "")
+		if err != nil {
+			return err
+		}
+		// input.Inverse.OpRef.Value = sop
+		return nil
+	}
+	return nil
 }
 
 func (loader *standardLoader) resolveExpectedResponse(doc Service, op *openapi3.Operation, component ExpectedResponse) (err error) {

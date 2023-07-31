@@ -4,6 +4,9 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/jsonpointer"
+
+	"github.com/stackql/go-openapistackql/pkg/httpelement"
+	"github.com/stackql/go-openapistackql/pkg/response"
 )
 
 var (
@@ -20,6 +23,7 @@ type TokenSemantic interface {
 	GetKey() string
 	GetLocation() string
 	GetTransformer() (TokenTransformer, error)
+	GetProcessedToken(res response.Response) (interface{}, error)
 }
 
 type standardTokenSemantic struct {
@@ -30,8 +34,43 @@ type standardTokenSemantic struct {
 }
 
 func (ts *standardTokenSemantic) GetTransformer() (TokenTransformer, error) {
+	return ts.getTransformer()
+}
+
+func (ts *standardTokenSemantic) getTransformer() (TokenTransformer, error) {
 	tl := NewStandardTransformerLocator()
 	return tl.GetTransformer(ts)
+}
+
+func (ts *standardTokenSemantic) GetProcessedToken(res response.Response) (interface{}, error) {
+	return ts.getProcessedToken(res)
+}
+
+func (ts *standardTokenSemantic) getProcessedToken(res response.Response) (interface{}, error) {
+	rawToken, err := ts.getRawToken(res)
+	if err != nil {
+		return nil, err
+	}
+	transformer, transformerErr := ts.getTransformer()
+	if transformerErr != nil {
+		return nil, transformerErr
+	}
+	processedToken, processedTokenErr := transformer(rawToken)
+	if processedTokenErr != nil {
+		return nil, processedTokenErr
+	}
+	return processedToken, nil
+}
+
+func (ts *standardTokenSemantic) getRawToken(res response.Response) (interface{}, error) {
+	httpElement, err := httpelement.NewHTTPElement(
+		ts.Key,
+		ts.Location,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return res.ExtractElement(httpElement)
 }
 
 func (ts *standardTokenSemantic) GetAlgorithm() string {
