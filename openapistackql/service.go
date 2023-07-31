@@ -76,10 +76,40 @@ func (sv *standardService) GetComponents() openapi3.Components {
 
 func (sv *standardService) setProvider(provider Provider) {
 	sv.Provider = provider
+	for _, rsc := range sv.rsc {
+		rsc.setProvider(provider)
+		if len(rsc.Methods) > 0 {
+			for _, m := range rsc.Methods {
+				m.setProvider(provider)
+				if m.Inverse != nil {
+					inverseOpStore, inverseOpStoreExists := m.Inverse.getOperationStore()
+					if inverseOpStoreExists {
+						inverseOpStore.setProvider(provider)
+					}
+				}
+			}
+		}
+
+	}
 }
 
 func (sv *standardService) setProviderService(providerService ProviderService) {
 	sv.ProviderService = providerService
+	for _, rsc := range sv.rsc {
+		rsc.setProviderService(providerService)
+		if len(rsc.Methods) > 0 {
+			for _, m := range rsc.Methods {
+				m.setProviderService(providerService)
+				if m.Inverse != nil {
+					inverseOpStore, inverseOpStoreExists := m.Inverse.getOperationStore()
+					if inverseOpStoreExists {
+						inverseOpStore.setProviderService(providerService)
+					}
+				}
+			}
+		}
+
+	}
 }
 
 func (sv *standardService) setStackQLConfig(config StackQLConfig) {
