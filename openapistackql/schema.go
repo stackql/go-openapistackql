@@ -95,6 +95,7 @@ type Schema interface {
 	getFattnedPolymorphicSchema() Schema
 	setAlreadyExpanded(alreadyExpanded bool)
 	isAlreadyExpanded() bool
+	getAdditionalProperties() (Schema, bool)
 }
 
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
@@ -115,6 +116,19 @@ func providerTypeConditionIsValid(providerType string, lhs string, rhs interface
 	default:
 		return false
 	}
+}
+
+func (s *standardSchema) getAdditionalProperties() (Schema, bool) {
+	if s.AdditionalProperties != nil && s.AdditionalProperties.Value != nil {
+		return newSchema(
+				s.AdditionalProperties.Value,
+				s.svc,
+				"",
+				"additionalProperties",
+			),
+			true
+	}
+	return nil, false
 }
 
 func (s *standardSchema) setPropertyOpenapi3(k string, ps *openapi3.SchemaRef) {
@@ -574,6 +588,10 @@ func (s *standardSchema) getDescendent(path []string) (Schema, bool) {
 	}
 	if items, err := s.GetItems(); path[0] == "[*]" && err == nil {
 		return items.getDescendent(path[1:])
+	}
+	additionalProperties, hasAdditionalProperties := s.getAdditionalProperties()
+	if hasAdditionalProperties && path[0] == "[*]" {
+		return additionalProperties.getDescendent(path[1:])
 	}
 	p, ok := s.getProperty(path[0])
 	if !ok {
