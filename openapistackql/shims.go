@@ -25,8 +25,8 @@ func parseRequestBodyParam(k string, v interface{}, s Schema) *requestBodyParam 
 			if s != nil {
 				isStringRestrictedRaw, hasStr := s.getExtension(ExtensionKeyStringOnly)
 				if hasStr {
-					boolStr, isBoolStr := isStringRestrictedRaw.(string)
-					if isBoolStr && boolStr == "true" {
+					boolBytes, isBoolStr := isStringRestrictedRaw.([]byte)
+					if isBoolStr && string(boolBytes) == "true" {
 						isStringRestricted = true
 					}
 				}
