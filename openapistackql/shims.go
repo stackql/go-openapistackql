@@ -24,8 +24,11 @@ func parseRequestBodyParam(k string, v interface{}, s Schema) *requestBodyParam 
 			var isStringRestricted bool
 			if s != nil {
 				isStringRestrictedRaw, hasStr := s.getExtension(ExtensionKeyStringOnly)
-				if hasStr && isStringRestrictedRaw.(bool) {
-					isStringRestricted = true
+				if hasStr {
+					boolStr, isBoolStr := isStringRestrictedRaw.(string)
+					if isBoolStr && boolStr == "true" {
+						isStringRestricted = true
+					}
 				}
 			}
 			var js map[string]interface{}
