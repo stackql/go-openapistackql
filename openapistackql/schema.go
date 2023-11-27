@@ -329,8 +329,11 @@ func (s *standardSchema) getExtension(k string) (interface{}, bool) {
 	if s.Extensions == nil {
 		return nil, false
 	}
-	v, ok := s.Extensions[k]
-	return v, ok
+	v, err := extractExtensionValBytes(s.Extensions, k)
+	if err != nil || v == nil {
+		return nil, false
+	}
+	return v, true
 }
 
 func (s *standardSchema) isObjectSchemaImplicitlyUnioned() bool {
