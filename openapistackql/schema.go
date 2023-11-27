@@ -96,6 +96,7 @@ type Schema interface {
 	setAlreadyExpanded(alreadyExpanded bool)
 	isAlreadyExpanded() bool
 	getAdditionalProperties() (Schema, bool)
+	getExtension(k string) (interface{}, bool)
 }
 
 func ProviderTypeConditionIsValid(providerType string, lhs string, rhs interface{}) bool {
@@ -322,6 +323,17 @@ func newSchema(sc *openapi3.Schema, svc Service, key string, path string) Schema
 		alwaysRequired: alwaysRequired,
 		path:           path,
 	}
+}
+
+func (s *standardSchema) getExtension(k string) (interface{}, bool) {
+	if s.Extensions == nil {
+		return nil, false
+	}
+	v, err := extractExtensionValBytes(s.Extensions, k)
+	if err != nil || v == nil {
+		return nil, false
+	}
+	return v, true
 }
 
 func (s *standardSchema) isObjectSchemaImplicitlyUnioned() bool {
