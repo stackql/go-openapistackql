@@ -13,6 +13,7 @@ const (
 	ExtensionKeyConfig         string = "x-stackQL-config"
 	ExtensionKeyProvider       string = "x-stackql-provider"
 	ExtensionKeyResources      string = "x-stackQL-resources"
+	ExtensionKeyStringOnly     string = "x-stackQL-stringOnly"
 )
 
 const (

@@ -15,16 +15,19 @@ type requestBodyParam struct {
 	Val interface{}
 }
 
-func parseRequestBodyParam(k string, v interface{}) *requestBodyParam {
+func parseRequestBodyParam(k string, v interface{}, s Schema) *requestBodyParam {
 	trimmedKey := strings.TrimPrefix(k, constants.RequestBodyBaseKey)
 	var parsedVal interface{}
 	if trimmedKey != k { //nolint:nestif // keep for now
 		switch vt := v.(type) {
 		case string:
+			isStringRestricted, _ := s.getExtension(ExtensionKeyStringOnly)
 			var js map[string]interface{}
 			var jArr []interface{}
 			//nolint:gocritic // keep for now
-			if json.Unmarshal([]byte(vt), &js) == nil {
+			if isStringRestricted.(bool) {
+				parsedVal = vt
+			} else if json.Unmarshal([]byte(vt), &js) == nil {
 				parsedVal = js
 			} else if json.Unmarshal([]byte(vt), &jArr) == nil {
 				parsedVal = jArr
@@ -74,7 +77,8 @@ func splitHTTPParameters(
 				reqMap.StoreParameter(param, v)
 			} else {
 				if requestSchema != nil {
-					rbp := parseRequestBodyParam(k, v)
+					prop, _ := requestSchema.GetProperty(k)
+					rbp := parseRequestBodyParam(k, v, prop)
 					if rbp != nil {
 						reqMap.SetRequestBodyParam(rbp.Key, rbp.Val)
 						continue
